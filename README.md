@@ -14,6 +14,7 @@ An educational website covering cybersecurity fundamentals: the threat landscape
 | `cia-triad.html` | CIA Triad |
 | `access-control.html` | Access Control |
 | `protection.html` | Protection Mechanisms |
+| `team.html` | Team |
 | `404.html` | Not found page |
 
 ## Structure

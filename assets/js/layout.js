@@ -9,7 +9,8 @@
     { href: 'threats.html', label: 'Threats' },
     { href: 'cia-triad.html', label: 'CIA Triad' },
     { href: 'access-control.html', label: 'Access Control' },
-    { href: 'protection.html', label: 'Protection' }
+    { href: 'protection.html', label: 'Protection' },
+    { href: 'team.html', label: 'Team' }
   ];
 
   var LOGO =
@@ -72,7 +73,7 @@
             '<p class="text-[13px] text-mtext leading-relaxed max-w-xs">Foundational cybersecurity education. Protect your data, your network, and your people.</p>' +
           '</div>' +
           footerCol('Course Modules', [['Threat Landscape', 'threats.html'], ['CIA Triad', 'cia-triad.html'], ['Access Control', 'access-control.html'], ['Protection Mechanisms', 'protection.html']]) +
-          footerCol('Platform', [['Home', 'index.html'], ['About', 'about.html'], ['Back to top', '#main']]) +
+          footerCol('Platform', [['Home', 'index.html'], ['About', 'about.html'], ['Team', 'team.html'], ['Back to top', '#main']]) +
         '</div>' +
         '<div class="mt-12 pt-6 border-t border-brder flex flex-col sm:flex-row gap-4 justify-between text-[12px] text-mtext">' +
           '<p>&copy; ' + new Date().getFullYear() + ' CYS401 Cybersecurity Fundamentals. Educational content purposes only.</p>' +
