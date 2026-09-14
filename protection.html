@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Protection | CYS401</title>
+    <meta
+      name="description"
+      content="Protection mechanisms: defense in depth, abstraction, data hiding, and encryption."
+    />
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <meta name="theme-color" content="#09090B" />
+    <link rel="canonical" href="https://shoug-alomran.github.io/cys401/protection.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CYS401" />
+    <meta property="og:title" content="Protection | CYS401" />
+    <meta property="og:description" content="Protection mechanisms: defense in depth, abstraction, data hiding, and encryption." />
+    <meta property="og:url" content="https://shoug-alomran.github.io/cys401/protection.html" />
+    <meta property="og:image" content="https://shoug-alomran.github.io/cys401/assets/img/og-banner.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="CYS401 — Learn to Defend What Matters. Cybersecurity fundamentals." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Protection | CYS401" />
+    <meta name="twitter:description" content="Protection mechanisms: defense in depth, abstraction, data hiding, and encryption." />
+    <meta name="twitter:image" content="https://shoug-alomran.github.io/cys401/assets/img/og-banner.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body
+    class="bg-main text-ptext font-sans antialiased selection:bg-pred selection:text-white"
+  >
+    <div id="site-header"></div>
+
+    <main id="main" class="pt-[72px]">
+      <!-- Hero -->
+      <section class="py-20 lg:py-24 border-b border-brder overflow-hidden">
+        <div
+          class="max-w-content mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-center"
+        >
+          <div>
+            <p
+              class="text-[12px] font-medium text-pred uppercase tracking-[0.2em] mb-5"
+            >
+              Security Controls
+            </p>
+            <h1
+              class="text-[36px] sm:text-[48px] md:text-[42px] lg:text-[52px] 2xl:text-[60px] font-semibold leading-[1.1] tracking-tight mb-6"
+            >
+              Protection Beyond a Single Defense
+            </h1>
+            <p class="text-[16px] text-stext leading-relaxed max-w-md">
+              Effective cybersecurity uses multiple protection mechanisms to
+              restrict access, conceal sensitive information, and reduce the
+              impact of security failures.
+            </p>
+          </div>
+          <div
+            class="relative h-72 flex items-center justify-center"
+            aria-hidden="true"
+          >
+            <div
+              class="absolute w-72 h-72 rounded-full border border-brder"
+            ></div>
+            <div
+              class="absolute w-56 h-56 rounded-full border border-dashed border-brder2 animate-spin-slow"
+            >
+              <span
+                class="absolute top-4 right-8 w-2 h-2 rounded-full bg-success shadow-[0_0_8px_#22C55E]"
+              ></span
+              ><span
+                class="absolute bottom-6 left-4 w-2 h-2 rounded-full bg-success shadow-[0_0_8px_#22C55E]"
+              ></span>
+            </div>
+            <div class="absolute w-40 h-40 rounded-full border border-rborder">
+              <span
+                class="absolute -top-1 left-1/2 w-2 h-2 rounded-full bg-pred"
+              ></span>
+            </div>
+            <div
+              class="absolute w-24 h-24 rounded-full border border-pred/60 bg-pred/5"
+            ></div>
+            <span
+              class="relative w-12 h-12 rounded-xl bg-main border border-pred flex items-center justify-center glow-red-strong"
+              ><svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#FAFAFA"
+                stroke-width="2"
+              >
+                <ellipse cx="12" cy="5" rx="8" ry="3" />
+                <path
+                  d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"
+                /></svg
+            ></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Layering -->
+      <section class="py-24 border-b border-brder bg-sec">
+        <div class="max-w-content mx-auto px-6">
+          <div class="text-center max-w-2xl mx-auto mb-12 reveal">
+            <p
+              class="text-[11px] font-medium text-mtext uppercase tracking-widest mb-3"
+            >
+              01 &mdash; Layering
+            </p>
+            <h2 class="text-[28px] sm:text-[32px] font-semibold mb-4">
+              One Defense Is Never Enough
+            </h2>
+            <p class="text-[14px] text-stext leading-relaxed">
+              Defense in Depth uses multiple security controls in a series, so
+              an attacker must overcome several protective layers rather than a
+              single control. If one layer fails, others remain to provide
+              resistance.
+            </p>
+          </div>
+          <div
+            class="reveal max-w-3xl mx-auto bg-card border border-brder rounded-card p-5 sm:p-10"
+          >
+            <div class="flex justify-end mb-4">
+              <button
+                type="button"
+                id="breach-btn"
+                class="text-[10px] font-semibold uppercase tracking-wider border border-rborder bg-sred/40 hover:bg-sred text-bred rounded-full px-3 py-1 transition-colors"
+              >
+                Simulate a layer failure
+              </button>
+            </div>
+            <ol id="layers" class="flex flex-col items-center gap-2"></ol>
+            <div class="flex flex-col items-center mt-2">
+              <span class="text-mtext text-[12px]" aria-hidden="true"
+                >&darr;</span
+              >
+              <div
+                class="mt-2 w-44 rounded-xl border border-pred bg-sred/60 py-6 text-center glow-red-strong"
+              >
+                <span
+                  class="w-8 h-8 mx-auto mb-3 rounded-full bg-bred flex items-center justify-center"
+                  ><span class="w-3 h-1 bg-white rounded"></span
+                ></span>
+                <p class="text-[13px] font-semibold uppercase">Critical Data</p>
+                <p
+                  id="data-state"
+                  class="text-[9px] font-semibold uppercase tracking-wider text-bred mt-1"
+                >
+                  Secured
+                </p>
+              </div>
+            </div>
+            <p
+              class="text-center mt-8 text-[10px] uppercase tracking-[0.2em] text-mtext"
+            >
+              Multiple controls. Multiple barriers. Reduced exposure.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Abstraction -->
+      <section class="py-24 border-b border-brder">
+        <div
+          class="max-w-content mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-center"
+        >
+          <div class="reveal">
+            <p
+              class="text-[11px] font-medium text-mtext uppercase tracking-widest mb-3"
+            >
+              02 &mdash; Abstraction
+            </p>
+            <h2 class="text-[28px] sm:text-[32px] font-semibold mb-5">
+              Secure Groups, Not Individuals
+            </h2>
+            <p class="text-[14px] text-stext leading-relaxed mb-6">
+              Abstraction improves efficiency by placing similar elements into
+              groups, classes, or roles and assigning security controls,
+              restrictions, or permissions collectively. This reduces management
+              complexity and ensures policy consistency across the organization.
+            </p>
+            <div
+              class="flex items-center gap-4 bg-card border border-brder rounded-xl p-4"
+            >
+              <span
+                class="w-9 h-9 rounded-lg bg-sred flex items-center justify-center text-bred"
+                aria-hidden="true"
+                ><svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="12" cy="6" r="3" />
+                  <circle cx="5" cy="18" r="3" />
+                  <circle cx="19" cy="18" r="3" /></svg
+              ></span>
+              <div>
+                <p class="text-[13px] font-semibold">Scalable Security</p>
+                <p class="text-[11px] text-mtext">
+                  Update permissions once for entire user classes.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="reveal bg-card border border-brder rounded-card p-6">
+            <div
+              class="flex items-center justify-between border-b border-brder pb-4 mb-6"
+            >
+              <div class="flex items-center gap-3">
+                <span
+                  class="w-9 h-9 rounded-full bg-pred flex items-center justify-center text-[12px] font-bold"
+                  >SA</span
+                >
+                <div>
+                  <p class="text-[13px] font-semibold">Security Analyst</p>
+                  <p class="text-[9px] uppercase tracking-wider text-mtext">
+                    Access Role Definition
+                  </p>
+                </div>
+              </div>
+              <span class="text-mtext" aria-hidden="true">&#9881;</span>
+            </div>
+            <div
+              class="grid grid-cols-1 sm:grid-cols-[1fr_auto_1fr] md:grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-4 items-center"
+            >
+              <ul class="space-y-2 text-[12px]">
+                <li
+                  class="flex items-center gap-3 bg-main border border-brder rounded-lg px-3 py-2"
+                >
+                  <span
+                    class="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 text-[8px] flex items-center justify-center"
+                    >U1</span
+                  >User 01
+                </li>
+                <li
+                  class="flex items-center gap-3 bg-main border border-brder rounded-lg px-3 py-2"
+                >
+                  <span
+                    class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 text-[8px] flex items-center justify-center"
+                    >U2</span
+                  >User 02
+                </li>
+                <li
+                  class="flex items-center gap-3 bg-main border border-brder rounded-lg px-3 py-2"
+                >
+                  <span
+                    class="w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 text-[8px] flex items-center justify-center"
+                    >U3</span
+                  >User 03
+                </li>
+              </ul>
+              <span
+                class="hidden sm:block md:hidden lg:block w-10 h-px bg-brder2"
+                aria-hidden="true"
+              ></span>
+              <div class="border border-rborder bg-sred/30 rounded-xl p-4">
+                <p
+                  class="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-wider mb-3"
+                >
+                  <span class="text-bred">&#9673;</span>Assigned Permissions
+                </p>
+                <ul class="space-y-2 text-[12px] text-stext">
+                  <li class="flex justify-between">
+                    View Reports <span class="text-success">&#10003;</span>
+                  </li>
+                  <li class="flex justify-between">
+                    Analyze Events <span class="text-success">&#10003;</span>
+                  </li>
+                  <li class="flex justify-between">
+                    Modify Users <span class="text-bred">&#10005;</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Data hiding -->
+      <section class="py-24 border-b border-brder bg-sec">
+        <div
+          class="max-w-content mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-center"
+        >
+          <div class="reveal order-2 md:order-1 space-y-5">
+            <div
+              class="bg-card border border-brder border-r-2 border-r-success rounded-xl p-5"
+            >
+              <p
+                class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-wider mb-5"
+              >
+                <span
+                  class="w-7 h-7 rounded bg-success/10 text-success flex items-center justify-center"
+                  >&#10003;</span
+                >Authorized User View
+              </p>
+              <dl class="grid grid-cols-2 gap-4 text-[12px]">
+                <div>
+                  <dt class="text-[9px] uppercase text-mtext mb-1">
+                    Full Name
+                  </dt>
+                  <dd class="font-semibold">Sara Ahmed</dd>
+                </div>
+                <div>
+                  <dt class="text-[9px] uppercase text-mtext mb-1">
+                    Employee ID
+                  </dt>
+                  <dd class="font-semibold">28419</dd>
+                </div>
+                <div>
+                  <dt class="text-[9px] uppercase text-mtext mb-1">
+                    Security Level
+                  </dt>
+                  <dd class="font-semibold text-success">Internal</dd>
+                </div>
+                <div>
+                  <dt class="text-[9px] uppercase text-mtext mb-1">
+                    Access Key
+                  </dt>
+                  <dd class="font-mono">7X92-K4P1</dd>
+                </div>
+              </dl>
+            </div>
+            <div
+              class="bg-card border border-brder border-r-2 border-r-pred rounded-xl p-5"
+            >
+              <p
+                class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-wider mb-5"
+              >
+                <span
+                  class="w-7 h-7 rounded bg-sred text-bred flex items-center justify-center"
+                  >&#8856;</span
+                >Unauthorized Subject View
+              </p>
+              <dl class="grid grid-cols-2 gap-4 text-[12px]">
+                <div>
+                  <dt class="text-[9px] uppercase text-mtext mb-1">
+                    Full Name
+                  </dt>
+                  <dd class="font-semibold">Sara Ahmed</dd>
+                </div>
+                <div>
+                  <dt class="text-[9px] uppercase text-mtext mb-1">
+                    Employee ID
+                  </dt>
+                  <dd class="font-semibold tracking-widest">
+                    &bull;&bull;&bull;&bull;&bull;
+                  </dd>
+                </div>
+                <div>
+                  <dt class="text-[9px] uppercase text-mtext mb-1">
+                    Security Level
+                  </dt>
+                  <dd class="font-semibold text-bred">Restricted</dd>
+                </div>
+                <div>
+                  <dt class="text-[9px] uppercase text-mtext mb-1">
+                    Access Key
+                  </dt>
+                  <dd class="tracking-widest">
+                    &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+          <div class="reveal order-1 md:order-2">
+            <p
+              class="text-[11px] font-medium text-mtext uppercase tracking-widest mb-3"
+            >
+              03 &mdash; Data Hiding
+            </p>
+            <h2 class="text-[28px] sm:text-[32px] font-semibold mb-5">
+              What You Cannot Access, You Cannot Expose
+            </h2>
+            <p class="text-[14px] text-stext leading-relaxed mb-6">
+              Data hiding intentionally positions information so that it is not
+              viewable or accessible to an unauthorized subject. By masking or
+              restricting the visibility of specific data fields based on
+              identity, we minimize the potential for accidental or malicious
+              data leaks.
+            </p>
+            <p class="flex items-center gap-2 text-[12px] text-success">
+              <span aria-hidden="true">&#9737;</span>Implementation:
+              Column-level security and dynamic masking.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Encryption -->
+      <section class="py-24 border-b border-brder">
+        <div class="max-w-content mx-auto px-6">
+          <div class="text-center max-w-2xl mx-auto mb-12 reveal">
+            <p
+              class="text-[11px] font-medium text-mtext uppercase tracking-widest mb-3"
+            >
+              04 &mdash; Encryption
+            </p>
+            <h2 class="text-[28px] sm:text-[32px] font-semibold mb-4">
+              Make Information Meaningless to the Wrong Recipient
+            </h2>
+            <p class="text-[14px] text-stext leading-relaxed">
+              Encryption hides the meaning or intent of communication from
+              unintended recipients. It transforms readable data into a coded
+              format that can only be unlocked with a specific cryptographic
+              key.
+            </p>
+          </div>
+          <div
+            class="reveal bg-card border border-brder rounded-card p-6 sm:p-8"
+          >
+            <div
+              class="flex flex-col lg:flex-row items-center justify-between gap-4"
+            >
+              <div
+                class="w-full max-w-sm lg:w-40 bg-main border border-brder rounded-lg p-4"
+              >
+                <p class="text-[9px] uppercase text-mtext mb-1">
+                  Readable Data
+                </p>
+                <p class="text-[12px] font-semibold uppercase mb-3">
+                  Confidential Report
+                </p>
+                <div class="h-1 bg-success rounded"></div>
+              </div>
+              <span class="text-bred rotate-90 lg:rotate-0" aria-hidden="true"
+                >&rarr;</span
+              >
+              <div class="flex flex-col items-center">
+                <span
+                  class="w-12 h-12 rounded-full border border-pred bg-sred flex items-center justify-center text-bred glow-red-strong"
+                  aria-hidden="true"
+                  >&#8635;</span
+                >
+                <p
+                  class="mt-2 text-[9px] font-semibold uppercase tracking-wider text-bred"
+                >
+                  Encryption
+                </p>
+                <p class="text-[8px] text-mtext">Cypher Key</p>
+              </div>
+              <span class="text-bred rotate-90 lg:rotate-0" aria-hidden="true"
+                >&rarr;</span
+              >
+              <div
+                class="w-full max-w-sm lg:w-44 bg-main border border-brder rounded-lg p-4"
+              >
+                <p class="text-[9px] uppercase text-mtext mb-1">
+                  Encrypted Data
+                </p>
+                <p
+                  id="cipher"
+                  class="text-[12px] font-mono text-bred mb-3 truncate"
+                >
+                  A7F9C2E81D5B6A...3F
+                </p>
+                <div class="h-1 bg-elevated rounded overflow-hidden">
+                  <div class="h-full w-1/3 bg-pred"></div>
+                </div>
+              </div>
+              <span class="text-bred rotate-90 lg:rotate-0" aria-hidden="true"
+                >&rarr;</span
+              >
+              <div class="flex flex-col items-center">
+                <span
+                  class="w-12 h-12 rounded-full border border-success bg-success/10 flex items-center justify-center text-success glow-green"
+                  aria-hidden="true"
+                  >&#9906;</span
+                >
+                <p
+                  class="mt-2 text-[9px] font-semibold uppercase tracking-wider text-success"
+                >
+                  Decryption
+                </p>
+                <p class="text-[8px] text-mtext">Auth Key</p>
+              </div>
+              <span
+                class="text-success rotate-90 lg:rotate-0"
+                aria-hidden="true"
+                >&rarr;</span
+              >
+              <div
+                class="w-full max-w-sm lg:w-40 bg-main border border-brder rounded-lg p-4"
+              >
+                <p class="text-[9px] uppercase text-mtext mb-1">
+                  Readable Data
+                </p>
+                <p class="text-[12px] font-semibold uppercase mb-3">
+                  Confidential Report
+                </p>
+                <div class="h-1 bg-success rounded"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Working together -->
+      <section class="py-24">
+        <div class="max-w-content mx-auto px-6">
+          <div
+            class="reveal relative bg-card border border-brder rounded-card px-6 py-12 sm:p-14 overflow-hidden text-center"
+          >
+            <div
+              class="absolute -top-20 -right-20 w-72 h-72 bg-pred/10 blur-[80px] rounded-full pointer-events-none"
+            ></div>
+            <h2 class="relative text-[28px] sm:text-[32px] font-semibold mb-4">
+              Protection Working Together
+            </h2>
+            <p class="relative text-[14px] text-stext max-w-xl mx-auto mb-12">
+              Security is strongest when controls work together. A single
+              mechanism can be bypassed, but an integrated architecture creates
+              a resilient environment.
+            </p>
+            <div
+              class="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12"
+            >
+              <div class="bg-main border border-brder rounded-xl p-6">
+                <span
+                  class="w-10 h-10 mx-auto mb-4 rounded-full bg-sred text-bred flex items-center justify-center"
+                  aria-hidden="true"
+                  >&#9776;</span
+                >
+                <p class="text-[15px] font-semibold uppercase mb-2">Layer</p>
+                <p class="text-[11px] text-mtext">
+                  Multiple controls protect the system at every stage.
+                </p>
+              </div>
+              <div class="bg-main border border-brder rounded-xl p-6">
+                <span
+                  class="w-10 h-10 mx-auto mb-4 rounded-full bg-sred text-bred flex items-center justify-center"
+                  aria-hidden="true"
+                  >&#9737;</span
+                >
+                <p class="text-[15px] font-semibold uppercase mb-2">Abstract</p>
+                <p class="text-[11px] text-mtext">
+                  Security policies are efficiently assigned to groups and
+                  roles.
+                </p>
+              </div>
+              <div class="bg-main border border-brder rounded-xl p-6">
+                <span
+                  class="w-10 h-10 mx-auto mb-4 rounded-full bg-sred text-bred flex items-center justify-center"
+                  aria-hidden="true"
+                  >&#8856;</span
+                >
+                <p class="text-[15px] font-semibold uppercase mb-2">Hide</p>
+                <p class="text-[11px] text-mtext">
+                  Unauthorized subjects cannot access sensitive information.
+                </p>
+              </div>
+              <div class="bg-main border border-brder rounded-xl p-6">
+                <span
+                  class="w-10 h-10 mx-auto mb-4 rounded-full bg-sred text-bred flex items-center justify-center"
+                  aria-hidden="true"
+                  >&#9919;</span
+                >
+                <p class="text-[15px] font-semibold uppercase mb-2">Encrypt</p>
+                <p class="text-[11px] text-mtext">
+                  Intercepted information remains unintelligible to attackers.
+                </p>
+              </div>
+            </div>
+            <p
+              class="relative inline-block border border-pred bg-sred/40 rounded-full px-6 py-2 text-[12px] font-semibold"
+            >
+              Security is strongest when controls work together.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+    <script src="assets/js/layout.js"></script>
+    <script>
+      (function () {
+        var LAYERS = [
+          "Perimeter Security",
+          "Network Security",
+          "Access Control",
+          "Authentication",
+          "Data Protection",
+        ];
+        var list = document.getElementById("layers");
+        var btn = document.getElementById("breach-btn");
+        var dataState = document.getElementById("data-state");
+        var failed = -1;
+
+        function render() {
+          list.innerHTML = LAYERS.map(function (name, i) {
+            var down = i === failed;
+            var width = 100 - i * 8;
+            return (
+              (i
+                ? '<li class="text-mtext text-[12px]" aria-hidden="true">&darr;</li>'
+                : "") +
+              '<li class="flex items-center justify-between rounded-lg border px-4 py-3 bg-main transition-colors ' +
+              (down ? "border-brder2 opacity-60" : "border-pred/70") +
+              '" style="width:' +
+              width +
+              '%">' +
+              '<span class="text-[12px] font-semibold">' +
+              name +
+              "</span>" +
+              '<span class="text-[9px] font-semibold uppercase tracking-wider ' +
+              (down ? "text-warn" : "text-success") +
+              '">' +
+              (down ? "Bypassed" : "Active &#10003;") +
+              "</span></li>"
+            );
+          }).join("");
+          dataState.textContent =
+            failed === -1 ? "Secured" : "Still secured — 4 layers remain";
+          btn.textContent =
+            failed === -1 ? "Simulate a layer failure" : "Restore all layers";
+        }
+        btn.addEventListener("click", function () {
+          failed =
+            failed === -1 ? Math.floor(Math.random() * LAYERS.length) : -1;
+          render();
+        });
+        render();
+
+        var cipher = document.getElementById("cipher");
+        var HEX = "0123456789ABCDEF";
+        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          setInterval(function () {
+            var s = "";
+            for (var i = 0; i < 14; i++)
+              s += HEX[Math.floor(Math.random() * 16)];
+            cipher.textContent =
+              s +
+              "..." +
+              HEX[Math.floor(Math.random() * 16)] +
+              HEX[Math.floor(Math.random() * 16)];
+          }, 1200);
+        }
+      })();
+    </script>
+  </body>
+</html>

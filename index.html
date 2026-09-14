@@ -1,0 +1,766 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CYS401 | Cybersecurity Fundamentals</title>
+    <meta
+      name="description"
+      content="CYS401 — an educational platform for cybersecurity fundamentals: threats, the CIA Triad, access control, and protection mechanisms."
+    />
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <meta name="theme-color" content="#09090B" />
+    <link rel="canonical" href="https://shoug-alomran.github.io/cys401/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CYS401" />
+    <meta property="og:title" content="CYS401 | Cybersecurity Fundamentals" />
+    <meta property="og:description" content="CYS401 — an educational platform for cybersecurity fundamentals: threats, the CIA Triad, access control, and protection mechanisms." />
+    <meta property="og:url" content="https://shoug-alomran.github.io/cys401/" />
+    <meta property="og:image" content="https://shoug-alomran.github.io/cys401/assets/img/og-banner.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="CYS401 — Learn to Defend What Matters. Cybersecurity fundamentals." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="CYS401 | Cybersecurity Fundamentals" />
+    <meta name="twitter:description" content="CYS401 — an educational platform for cybersecurity fundamentals: threats, the CIA Triad, access control, and protection mechanisms." />
+    <meta name="twitter:image" content="https://shoug-alomran.github.io/cys401/assets/img/og-banner.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body
+    class="bg-main text-ptext font-sans antialiased selection:bg-pred selection:text-white"
+  >
+    <div id="site-header"></div>
+
+    <main id="main" class="pt-[72px]">
+      <!-- Hero -->
+      <section class="py-20 lg:py-28 overflow-hidden relative">
+        <div
+          class="max-w-content mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-center"
+        >
+          <div class="flex flex-col items-start z-10">
+            <div
+              class="inline-flex items-center gap-2 bg-sred border border-rborder px-3 py-1.5 rounded-full mb-8"
+            >
+              <span
+                class="w-1.5 h-1.5 rounded-full bg-pred animate-pulse"
+              ></span>
+              <span
+                class="text-[12px] font-medium text-pred uppercase tracking-wide"
+                >CYS401 Cybersecurity Fundamentals</span
+              >
+            </div>
+            <h1
+              class="font-display text-[40px] sm:text-[56px] md:text-[46px] lg:text-[54px] xl:text-[62px] 2xl:text-[72px] font-semibold leading-[1.05] mb-6"
+            >
+              Learn to Defend <br />What
+              <span
+                class="text-transparent bg-clip-text bg-gradient-to-r from-ptext to-mtext"
+                >Matters.</span
+              >
+            </h1>
+            <p
+              class="text-[16px] text-stext leading-relaxed max-w-[480px] mb-10"
+            >
+              Understand how attackers think, why systems fail, and which
+              controls keep people, data, and networks safe &mdash; from the CIA
+              Triad to defense in depth.
+            </p>
+            <div
+              class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
+            >
+              <a
+                href="threats.html"
+                class="w-full sm:w-auto bg-pred hover:bg-bred text-white text-[15px] font-semibold px-8 py-3.5 rounded-btn transition-colors flex items-center justify-center gap-2"
+              >
+                Start Learning
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
+              </a>
+              <a
+                href="#modules"
+                class="w-full sm:w-auto text-center border border-brder2 hover:bg-elevated text-[15px] font-semibold px-8 py-3.5 rounded-btn transition-colors"
+                >Browse Modules</a
+              >
+            </div>
+          </div>
+
+          <div
+            class="relative h-[380px] sm:h-[450px] md:h-[420px] lg:h-[450px] 2xl:h-[520px] w-full bg-sec border border-brder rounded-card overflow-hidden"
+            aria-hidden="true"
+          >
+            <div class="absolute inset-0 bg-grid opacity-60"></div>
+            <div
+              class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-pred/10 rounded-full blur-[80px]"
+            ></div>
+            <svg class="absolute inset-0 w-full h-full">
+              <line
+                x1="50%"
+                y1="50%"
+                x2="20%"
+                y2="25%"
+                stroke="#27272A"
+                stroke-width="1.5"
+                stroke-dasharray="4 4"
+              />
+              <line
+                x1="50%"
+                y1="50%"
+                x2="80%"
+                y2="30%"
+                stroke="#27272A"
+                stroke-width="1.5"
+              />
+              <line
+                x1="50%"
+                y1="50%"
+                x2="25%"
+                y2="75%"
+                stroke="#27272A"
+                stroke-width="1.5"
+              />
+              <line
+                x1="50%"
+                y1="50%"
+                x2="75%"
+                y2="70%"
+                stroke="rgba(220,38,38,0.35)"
+                stroke-width="1.5"
+              />
+              <circle cx="50%" cy="50%" r="2.5" fill="#DC2626">
+                <animate
+                  attributeName="cx"
+                  values="50%;75%"
+                  dur="3s"
+                  repeatCount="indefinite"
+                />
+                <animate
+                  attributeName="cy"
+                  values="50%;70%"
+                  dur="3s"
+                  repeatCount="indefinite"
+                />
+                <animate
+                  attributeName="opacity"
+                  values="1;0"
+                  dur="3s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+              <circle cx="50%" cy="50%" r="2" fill="#71717A">
+                <animate
+                  attributeName="cx"
+                  values="50%;20%"
+                  dur="4s"
+                  repeatCount="indefinite"
+                />
+                <animate
+                  attributeName="cy"
+                  values="50%;25%"
+                  dur="4s"
+                  repeatCount="indefinite"
+                />
+                <animate
+                  attributeName="opacity"
+                  values="1;0"
+                  dur="4s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+            </svg>
+            <div
+              class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-sred border border-rborder rounded-full flex items-center justify-center glow-red"
+            >
+              <div
+                class="w-6 h-6 bg-pred rounded-full flex items-center justify-center"
+              >
+                <div class="w-2 h-2 bg-white rounded-full"></div>
+              </div>
+            </div>
+            <div
+              class="absolute top-[25%] left-[20%] -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-card border border-brder rounded-full flex items-center justify-center"
+            >
+              <div class="w-2 h-2 bg-stext rounded-full"></div>
+            </div>
+            <div
+              class="absolute top-[30%] left-[80%] -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-card border border-brder2 rounded-full flex items-center justify-center"
+            >
+              <div class="w-2.5 h-2.5 bg-ptext rounded-full"></div>
+            </div>
+            <div
+              class="absolute top-[75%] left-[25%] -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-card border border-brder rounded-full flex items-center justify-center"
+            >
+              <div class="w-2 h-2 bg-stext rounded-full"></div>
+            </div>
+            <div
+              class="absolute top-[70%] left-[75%] -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-sred border border-rborder rounded-full flex items-center justify-center glow-red-strong"
+            >
+              <div class="w-3 h-3 bg-pred rounded-full"></div>
+            </div>
+
+            <div
+              class="absolute top-5 left-5 bg-main/80 backdrop-blur border border-brder rounded-lg p-3"
+            >
+              <div class="flex items-center gap-2 mb-1.5">
+                <span class="w-1.5 h-1.5 bg-success rounded-full"></span
+                ><span
+                  class="text-[10px] font-semibold text-stext uppercase tracking-wider"
+                  >SYS_INTEGRITY</span
+                >
+              </div>
+              <div class="text-[14px] font-mono">NOMINAL</div>
+            </div>
+            <div
+              class="absolute bottom-5 right-5 bg-main/80 backdrop-blur border border-rborder rounded-lg p-3 min-w-[150px]"
+            >
+              <div class="flex items-center justify-between gap-3 mb-1.5">
+                <div class="flex items-center gap-2">
+                  <span
+                    class="w-1.5 h-1.5 bg-pred rounded-full animate-pulse"
+                  ></span
+                  ><span
+                    class="text-[10px] font-semibold text-pred uppercase tracking-wider"
+                    >ANOMALY</span
+                  >
+                </div>
+                <span class="text-[10px] text-stext font-mono">0.4s ago</span>
+              </div>
+              <div class="text-[12px] font-mono text-stext mb-1">
+                SRC: 192.168.4.112
+              </div>
+              <div class="text-[12px] font-mono">SIG: UNKNOWN_PAYLOAD</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stats -->
+      <section class="border-y border-brder bg-sec py-10">
+        <div
+          class="max-w-content mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8"
+        >
+          <div>
+            <p
+              class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2"
+            >
+              Course Modules
+            </p>
+            <p class="font-display text-[32px] font-semibold">4</p>
+          </div>
+          <div>
+            <p
+              class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2"
+            >
+              Core Principles
+            </p>
+            <p class="font-display text-[32px] font-semibold">
+              3
+              <span class="text-[16px] text-stext font-sans font-normal"
+                >CIA</span
+              >
+            </p>
+          </div>
+          <div>
+            <p
+              class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2"
+            >
+              Access Control Steps
+            </p>
+            <p class="font-display text-[32px] font-semibold">5</p>
+          </div>
+          <div>
+            <p
+              class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2"
+            >
+              Learning Status
+            </p>
+            <div class="flex items-center gap-3 mt-1">
+              <span
+                class="w-3 h-3 bg-success rounded-full shadow-[0_0_10px_#22C55E]"
+              ></span
+              ><span class="font-display text-[24px] font-semibold text-success"
+                >Open</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Protect / Detect / Respond -->
+      <section class="py-24">
+        <div class="max-w-content mx-auto px-6">
+          <div class="text-center mb-16 max-w-2xl mx-auto reveal">
+            <h2
+              class="font-display text-[32px] sm:text-[36px] font-semibold mb-4"
+            >
+              Core Operational Matrix
+            </h2>
+            <p class="text-[16px] text-stext">
+              A unified triad of capabilities that every resilient security
+              program is built on.
+            </p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div
+              class="reveal bg-card border border-brder rounded-card p-8 hover:bg-elevated hover:border-brder2 transition-all duration-300 group"
+            >
+              <div
+                class="w-12 h-12 rounded-xl bg-sec border border-brder flex items-center justify-center mb-6 group-hover:border-rborder group-hover:bg-sred transition-colors"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="text-stext group-hover:text-pred transition-colors"
+                  aria-hidden="true"
+                >
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+              </div>
+              <h3 class="text-[18px] font-semibold mb-3">Protect</h3>
+              <p class="text-[15px] text-stext leading-relaxed">
+                Prevent unauthorized access and reduce attack surfaces with
+                layered controls, strong authentication, and hardened systems.
+              </p>
+            </div>
+            <div
+              class="reveal bg-card border border-brder rounded-card p-8 hover:bg-elevated hover:border-brder2 transition-all duration-300 group"
+            >
+              <div
+                class="w-12 h-12 rounded-xl bg-sec border border-brder flex items-center justify-center mb-6 group-hover:border-rborder group-hover:bg-sred transition-colors"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  class="text-stext group-hover:text-pred transition-colors"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <circle cx="12" cy="12" r="6" />
+                  <circle cx="12" cy="12" r="2" />
+                </svg>
+              </div>
+              <h3 class="text-[18px] font-semibold mb-3">Detect</h3>
+              <p class="text-[15px] text-stext leading-relaxed">
+                Identify suspicious behavior early through auditing, monitoring,
+                and log review before an incident spreads.
+              </p>
+            </div>
+            <div
+              class="reveal bg-card border border-brder rounded-card p-8 hover:bg-elevated hover:border-brder2 transition-all duration-300 group"
+            >
+              <div
+                class="w-12 h-12 rounded-xl bg-sec border border-brder flex items-center justify-center mb-6 group-hover:border-rborder group-hover:bg-sred transition-colors"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linejoin="round"
+                  class="text-stext group-hover:text-pred transition-colors"
+                  aria-hidden="true"
+                >
+                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                </svg>
+              </div>
+              <h3 class="text-[18px] font-semibold mb-3">Respond</h3>
+              <p class="text-[15px] text-stext leading-relaxed">
+                Contain threats, restore affected systems from backups, and
+                preserve evidence so the organization can recover and learn.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Modules -->
+      <section id="modules" class="py-24 bg-sec border-y border-brder">
+        <div class="max-w-content mx-auto px-6">
+          <div
+            class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6 reveal"
+          >
+            <div>
+              <p
+                class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3"
+              >
+                Curriculum
+              </p>
+              <h2
+                class="font-display text-[32px] sm:text-[36px] font-semibold mb-2"
+              >
+                Course Modules
+              </h2>
+              <p class="text-[16px] text-stext">
+                Work through each module in order, or jump to what you need.
+              </p>
+            </div>
+            <a
+              href="about.html"
+              class="self-start md:self-auto bg-card border border-brder hover:bg-elevated px-4 py-2 rounded-btn text-[13px] font-medium transition-colors"
+              >About the course</a
+            >
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <a
+              href="threats.html"
+              class="reveal group bg-card border border-brder hover:border-rborder rounded-card p-8 transition-colors flex flex-col"
+            >
+              <span class="text-[12px] font-mono text-mtext mb-6"
+                >MODULE 01</span
+              >
+              <h3
+                class="font-display text-[22px] font-semibold mb-2 group-hover:text-bred transition-colors"
+              >
+                Threat Landscape
+              </h3>
+              <p class="text-[15px] text-stext leading-relaxed mb-6">
+                Vulnerabilities, threat agents, attack techniques, and social
+                engineering.
+              </p>
+              <span
+                class="mt-auto text-[13px] font-semibold text-pred flex items-center gap-2"
+                >Open module
+                <span
+                  aria-hidden="true"
+                  class="group-hover:translate-x-1 transition-transform"
+                  >&rarr;</span
+                ></span
+              >
+            </a>
+            <a
+              href="cia-triad.html"
+              class="reveal group bg-card border border-brder hover:border-rborder rounded-card p-8 transition-colors flex flex-col"
+            >
+              <span class="text-[12px] font-mono text-mtext mb-6"
+                >MODULE 02</span
+              >
+              <h3
+                class="font-display text-[22px] font-semibold mb-2 group-hover:text-bred transition-colors"
+              >
+                CIA Triad
+              </h3>
+              <p class="text-[15px] text-stext leading-relaxed mb-6">
+                Confidentiality, integrity, and availability &mdash; the
+                foundation of information security.
+              </p>
+              <span
+                class="mt-auto text-[13px] font-semibold text-pred flex items-center gap-2"
+                >Open module
+                <span
+                  aria-hidden="true"
+                  class="group-hover:translate-x-1 transition-transform"
+                  >&rarr;</span
+                ></span
+              >
+            </a>
+            <a
+              href="access-control.html"
+              class="reveal group bg-card border border-brder hover:border-rborder rounded-card p-8 transition-colors flex flex-col"
+            >
+              <span class="text-[12px] font-mono text-mtext mb-6"
+                >MODULE 03</span
+              >
+              <h3
+                class="font-display text-[22px] font-semibold mb-2 group-hover:text-bred transition-colors"
+              >
+                Access Control
+              </h3>
+              <p class="text-[15px] text-stext leading-relaxed mb-6">
+                Identification, authentication, authorization, auditing, and
+                accountability.
+              </p>
+              <span
+                class="mt-auto text-[13px] font-semibold text-pred flex items-center gap-2"
+                >Open module
+                <span
+                  aria-hidden="true"
+                  class="group-hover:translate-x-1 transition-transform"
+                  >&rarr;</span
+                ></span
+              >
+            </a>
+            <a
+              href="protection.html"
+              class="reveal group bg-card border border-brder hover:border-rborder rounded-card p-8 transition-colors flex flex-col"
+            >
+              <span class="text-[12px] font-mono text-mtext mb-6"
+                >MODULE 04</span
+              >
+              <h3
+                class="font-display text-[22px] font-semibold mb-2 group-hover:text-bred transition-colors"
+              >
+                Protection Mechanisms
+              </h3>
+              <p class="text-[15px] text-stext leading-relaxed mb-6">
+                Layering, abstraction, data hiding, and encryption working
+                together.
+              </p>
+              <span
+                class="mt-auto text-[13px] font-semibold text-pred flex items-center gap-2"
+                >Open module
+                <span
+                  aria-hidden="true"
+                  class="group-hover:translate-x-1 transition-transform"
+                  >&rarr;</span
+                ></span
+              >
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Telemetry demo -->
+      <section class="py-24 overflow-hidden">
+        <div class="max-w-content mx-auto px-6">
+          <div class="mb-12 reveal">
+            <h2
+              class="font-display text-[32px] sm:text-[36px] font-semibold mb-2"
+            >
+              Live Telemetry
+            </h2>
+            <p class="text-[16px] text-stext">
+              An illustrative monitoring dashboard &mdash; what detection looks
+              like in practice.
+            </p>
+          </div>
+          <div
+            class="reveal bg-sec border border-brder rounded-card p-2 shadow-2xl flex flex-col md:flex-row gap-2 md:h-[500px] 2xl:h-[560px]"
+          >
+            <div
+              class="w-full md:w-64 lg:w-80 bg-card rounded-xl border border-brder flex flex-col overflow-hidden shrink-0"
+            >
+              <div
+                class="p-4 border-b border-brder flex justify-between items-center bg-elevated/50"
+              >
+                <span class="text-[13px] font-semibold uppercase tracking-wider"
+                  >Active Streams</span
+                >
+                <span
+                  class="text-[12px] font-mono text-stext bg-main px-2 py-0.5 rounded border border-brder"
+                  >4 Nodes</span
+                >
+              </div>
+              <div class="flex-1 p-2 space-y-2 overflow-y-auto no-scrollbar">
+                <div
+                  class="p-3 bg-main border border-brder rounded-lg flex items-start gap-3"
+                >
+                  <div class="mt-1 w-2 h-2 rounded-full bg-success"></div>
+                  <div class="flex-1">
+                    <div class="flex justify-between mb-1">
+                      <span class="text-[13px] font-medium">Gateway_Alpha</span
+                      ><span class="text-[11px] font-mono text-stext">99%</span>
+                    </div>
+                    <div class="text-[12px] text-mtext">Load: 24.1 Mbps</div>
+                  </div>
+                </div>
+                <div
+                  class="p-3 bg-sred/50 border border-rborder rounded-lg flex items-start gap-3"
+                >
+                  <div
+                    class="mt-1 w-2 h-2 rounded-full bg-pred animate-pulse"
+                  ></div>
+                  <div class="flex-1">
+                    <div class="flex justify-between mb-1">
+                      <span class="text-[13px] font-medium text-pred"
+                        >DB_Cluster_02</span
+                      ><span class="text-[11px] font-mono text-pred">WARN</span>
+                    </div>
+                    <div class="text-[12px] text-stext">
+                      Multiple auth failures
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="p-3 bg-main border border-brder rounded-lg flex items-start gap-3"
+                >
+                  <div class="mt-1 w-2 h-2 rounded-full bg-success"></div>
+                  <div class="flex-1">
+                    <div class="flex justify-between mb-1">
+                      <span class="text-[13px] font-medium">Edge_Proxy_EU</span
+                      ><span class="text-[11px] font-mono text-stext">99%</span>
+                    </div>
+                    <div class="text-[12px] text-mtext">Load: 8.4 Mbps</div>
+                  </div>
+                </div>
+                <div
+                  class="p-3 bg-main border border-brder rounded-lg flex items-start gap-3"
+                >
+                  <div class="mt-1 w-2 h-2 rounded-full bg-warn"></div>
+                  <div class="flex-1">
+                    <div class="flex justify-between mb-1">
+                      <span class="text-[13px] font-medium">Auth_Service</span
+                      ><span class="text-[11px] font-mono text-warn">DGD</span>
+                    </div>
+                    <div class="text-[12px] text-mtext">
+                      Latency spike detected
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="flex-1 bg-card rounded-xl border border-brder flex flex-col overflow-hidden min-h-[360px]"
+            >
+              <div
+                class="h-14 border-b border-brder flex items-center justify-between px-6 bg-elevated/50"
+              >
+                <div class="flex gap-6 text-[13px] font-medium">
+                  <span class="border-b-2 border-pred py-[17px]"
+                    >Traffic Analysis</span
+                  >
+                  <span class="text-mtext py-[17px] hidden sm:inline"
+                    >Topology</span
+                  >
+                  <span class="text-mtext py-[17px] hidden sm:inline"
+                    >Event Log</span
+                  >
+                </div>
+                <div class="flex items-center gap-2">
+                  <span
+                    class="w-2 h-2 rounded-full bg-pred animate-pulse"
+                  ></span
+                  ><span class="text-[12px] font-mono text-stext">LIVE</span>
+                </div>
+              </div>
+              <div class="flex-1 relative p-6 flex flex-col bg-grid">
+                <div
+                  class="absolute left-6 top-6 bottom-16 flex flex-col justify-between text-[11px] font-mono text-mtext"
+                >
+                  <span>10k/s</span><span>7.5k/s</span><span>5k/s</span
+                  ><span>2.5k/s</span><span>0</span>
+                </div>
+                <div class="flex-1 ml-12 relative">
+                  <svg
+                    class="absolute inset-0 w-full h-full"
+                    preserveAspectRatio="none"
+                    viewBox="0 0 100 100"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M0,80 Q10,75 20,80 T40,70 T60,85 T80,75 T100,80 L100,100 L0,100 Z"
+                      fill="rgba(39,39,42,0.35)"
+                    />
+                    <path
+                      d="M0,80 Q10,75 20,80 T40,70 T60,85 T80,75 T100,80"
+                      fill="none"
+                      stroke="#71717A"
+                      stroke-width="0.5"
+                      vector-effect="non-scaling-stroke"
+                    />
+                    <path
+                      d="M65,80 L70,20 L75,80"
+                      fill="rgba(220,38,38,0.12)"
+                    />
+                    <path
+                      d="M65,80 L70,20 L75,80"
+                      fill="none"
+                      stroke="#DC2626"
+                      stroke-width="1.5"
+                      vector-effect="non-scaling-stroke"
+                    />
+                    <line
+                      x1="70"
+                      y1="0"
+                      x2="70"
+                      y2="100"
+                      stroke="#DC2626"
+                      stroke-width="0.5"
+                      stroke-dasharray="2 2"
+                    />
+                  </svg>
+                  <div
+                    class="absolute top-[8%] left-[45%] sm:left-[55%] bg-main border border-rborder p-2 rounded shadow-lg"
+                  >
+                    <div class="text-[10px] font-bold text-pred mb-1">
+                      ANOMALY DETECTED
+                    </div>
+                    <div class="text-[11px] font-mono">Vol: 9.8k/s</div>
+                    <div class="text-[11px] font-mono text-stext">
+                      Src: Multiple
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="h-6 mt-4 ml-12 flex justify-between text-[11px] font-mono text-mtext border-t border-brder pt-2"
+                >
+                  <span>-1h</span><span>-45m</span><span>-30m</span
+                  ><span>-15m</span><span>Now</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="py-24 relative overflow-hidden border-t border-brder">
+        <div
+          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-64 bg-pred/10 blur-[100px] rounded-full pointer-events-none"
+        ></div>
+        <div class="max-w-3xl mx-auto px-6 text-center relative reveal">
+          <h2
+            class="font-display text-[32px] sm:text-[36px] font-semibold mb-6"
+          >
+            Ready to understand security from the ground up?
+          </h2>
+          <p class="text-[16px] text-stext mb-10">
+            Start with the threat landscape, then build up to the controls that
+            stop real attacks.
+          </p>
+          <div
+            class="flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <a
+              href="threats.html"
+              class="w-full sm:w-auto bg-pred hover:bg-bred text-white text-[15px] font-semibold px-8 py-3.5 rounded-btn transition-colors"
+              >Start Module 01</a
+            >
+            <a
+              href="cia-triad.html"
+              class="w-full sm:w-auto border border-brder2 hover:bg-elevated text-[15px] font-semibold px-8 py-3.5 rounded-btn transition-colors"
+              >Explore the CIA Triad</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+    <script src="assets/js/layout.js"></script>
+  </body>
+</html>

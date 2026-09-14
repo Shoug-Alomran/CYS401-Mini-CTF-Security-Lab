@@ -1,0 +1,775 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CIA Triad | CYS401</title>
+    <meta
+      name="description"
+      content="Confidentiality, Integrity, and Availability: the foundational information-security model."
+    />
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <meta name="theme-color" content="#09090B" />
+    <link rel="canonical" href="https://shoug-alomran.github.io/cys401/cia-triad.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CYS401" />
+    <meta property="og:title" content="CIA Triad | CYS401" />
+    <meta property="og:description" content="Confidentiality, Integrity, and Availability: the foundational information-security model." />
+    <meta property="og:url" content="https://shoug-alomran.github.io/cys401/cia-triad.html" />
+    <meta property="og:image" content="https://shoug-alomran.github.io/cys401/assets/img/og-banner.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="CYS401 — Learn to Defend What Matters. Cybersecurity fundamentals." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="CIA Triad | CYS401" />
+    <meta name="twitter:description" content="Confidentiality, Integrity, and Availability: the foundational information-security model." />
+    <meta name="twitter:image" content="https://shoug-alomran.github.io/cys401/assets/img/og-banner.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body
+    class="bg-main text-ptext font-sans antialiased selection:bg-pred selection:text-white"
+  >
+    <div id="site-header"></div>
+
+    <main id="main" class="pt-[72px]">
+      <!-- Hero -->
+      <section class="py-20 lg:py-24 border-b border-brder">
+        <div
+          class="max-w-content mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-center"
+        >
+          <div>
+            <p
+              class="text-[12px] font-medium text-pred uppercase tracking-[0.2em] mb-5"
+            >
+              Core Security Principles
+            </p>
+            <h1
+              class="font-display text-[36px] sm:text-[48px] md:text-[42px] lg:text-[52px] 2xl:text-[60px] font-semibold leading-[1.1] mb-6"
+            >
+              Confidentiality.<br />Integrity.<br />Availability.
+            </h1>
+            <p class="text-[16px] text-stext leading-relaxed max-w-md">
+              The CIA Triad is a foundational information-security model used to
+              guide security policies and protect information and systems.
+            </p>
+          </div>
+          <div class="flex justify-center">
+            <svg
+              viewBox="0 0 320 260"
+              class="w-full max-w-[360px]"
+              role="img"
+              aria-label="Triangle linking Confidentiality, Integrity, and Availability around Security"
+            >
+              <defs>
+                <radialGradient id="tri-glow">
+                  <stop offset="0" stop-color="#DC2626" stop-opacity=".18" />
+                  <stop offset="1" stop-color="#DC2626" stop-opacity="0" />
+                </radialGradient>
+              </defs>
+              <circle cx="160" cy="150" r="110" fill="url(#tri-glow)" />
+              <polygon
+                points="160,40 50,215 270,215"
+                fill="none"
+                stroke="#3F3F46"
+                stroke-width="1.5"
+              />
+              <a href="#confidentiality">
+                <circle
+                  cx="160"
+                  cy="40"
+                  r="7"
+                  fill="#09090B"
+                  stroke="#EF4444"
+                  stroke-width="2"
+                />
+                <text
+                  x="160"
+                  y="20"
+                  text-anchor="middle"
+                  fill="#FAFAFA"
+                  font-size="10"
+                  font-weight="700"
+                  letter-spacing="1.5"
+                  font-family="Space Grotesk, sans-serif"
+                >
+                  CONFIDENTIALITY
+                </text>
+              </a>
+              <a href="#availability">
+                <circle
+                  cx="50"
+                  cy="215"
+                  r="7"
+                  fill="#09090B"
+                  stroke="#EF4444"
+                  stroke-width="2"
+                />
+                <text
+                  x="50"
+                  y="242"
+                  text-anchor="middle"
+                  fill="#FAFAFA"
+                  font-size="10"
+                  font-weight="700"
+                  letter-spacing="1.5"
+                  font-family="Space Grotesk, sans-serif"
+                >
+                  AVAILABILITY
+                </text>
+              </a>
+              <a href="#integrity">
+                <circle
+                  cx="270"
+                  cy="215"
+                  r="7"
+                  fill="#09090B"
+                  stroke="#EF4444"
+                  stroke-width="2"
+                />
+                <text
+                  x="270"
+                  y="242"
+                  text-anchor="middle"
+                  fill="#FAFAFA"
+                  font-size="10"
+                  font-weight="700"
+                  letter-spacing="1.5"
+                  font-family="Space Grotesk, sans-serif"
+                >
+                  INTEGRITY
+                </text>
+              </a>
+              <text
+                x="160"
+                y="160"
+                text-anchor="middle"
+                fill="#71717A"
+                font-size="9"
+                letter-spacing="3"
+                font-family="Inter, sans-serif"
+              >
+                SECURITY
+              </text>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- Confidentiality -->
+      <section id="confidentiality" class="py-24 border-b border-brder">
+        <div
+          class="max-w-content mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-start"
+        >
+          <div class="reveal">
+            <p
+              class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3"
+            >
+              01 &mdash; Confidentiality
+            </p>
+            <h2
+              class="font-display text-[30px] sm:text-[34px] font-semibold mb-5"
+            >
+              Keeping Secrets Secret
+            </h2>
+            <p class="text-[15px] text-stext leading-relaxed mb-6">
+              Confidentiality ensures that sensitive information is accessible
+              only to those authorized to have access. It protects the secrecy
+              of data, objects, and resources and aims to prevent or minimize
+              unauthorized access, ensuring privacy remains intact across all
+              organizational levels.
+            </p>
+            <ul class="flex flex-wrap gap-2 text-[11px] text-mtext">
+              <li class="px-3 py-1 rounded-full border border-brder">
+                Soft Tokens
+              </li>
+              <li class="px-3 py-1 rounded-full border border-brder">
+                Key Fobs
+              </li>
+              <li class="px-3 py-1 rounded-full border border-brder">
+                Air-gapped Systems
+              </li>
+              <li class="px-3 py-1 rounded-full border border-brder">
+                Disconnected Storage
+              </li>
+            </ul>
+          </div>
+          <div
+            class="reveal bg-card border border-brder rounded-card p-6 sm:p-8"
+          >
+            <h3 class="flex items-center gap-2 text-[15px] font-semibold mb-5">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#EF4444"
+                stroke-width="2"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 8v4M12 16h.01" /></svg
+              >Common Violations
+            </h3>
+            <ul
+              class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-3 text-[13px] text-stext mb-6"
+            >
+              <li class="flex items-center gap-3">
+                <span class="w-1.5 h-1.5 rounded-full bg-pred"></span>Stealing
+                password files
+              </li>
+              <li class="flex items-center gap-3">
+                <span class="w-1.5 h-1.5 rounded-full bg-pred"></span>Port
+                scanning
+              </li>
+              <li class="flex items-center gap-3">
+                <span class="w-1.5 h-1.5 rounded-full bg-pred"></span>Shoulder
+                surfing
+              </li>
+              <li class="flex items-center gap-3">
+                <span class="w-1.5 h-1.5 rounded-full bg-pred"></span
+                >Eavesdropping
+              </li>
+              <li class="flex items-center gap-3">
+                <span class="w-1.5 h-1.5 rounded-full bg-pred"></span>Sniffing
+              </li>
+              <li class="flex items-center gap-3">
+                <span class="w-1.5 h-1.5 rounded-full bg-pred"></span>Privilege
+                escalation
+              </li>
+              <li class="flex items-center gap-3">
+                <span class="w-1.5 h-1.5 rounded-full bg-pred"></span>Human
+                errors
+              </li>
+              <li class="flex items-center gap-3">
+                <span class="w-1.5 h-1.5 rounded-full bg-pred"></span
+                >Intentional harm
+              </li>
+            </ul>
+            <div class="border-t border-brder pt-6">
+              <p
+                class="text-[11px] font-medium text-mtext uppercase tracking-wider mb-4"
+              >
+                Security Measures &amp; Protection
+              </p>
+              <ul class="flex flex-wrap gap-2 text-[12px] font-medium">
+                <li
+                  class="px-3 py-1.5 rounded-lg border border-rborder bg-sred"
+                >
+                  Encryption
+                </li>
+                <li
+                  class="px-3 py-1.5 rounded-lg border border-rborder bg-sred"
+                >
+                  Access Control
+                </li>
+                <li
+                  class="px-3 py-1.5 rounded-lg border border-rborder bg-sred"
+                >
+                  User IDs &amp; Passwords
+                </li>
+                <li
+                  class="px-3 py-1.5 rounded-lg border border-rborder bg-sred"
+                >
+                  Two-Factor Authentication
+                </li>
+                <li
+                  class="px-3 py-1.5 rounded-lg border border-rborder bg-sred"
+                >
+                  Biometrics
+                </li>
+                <li
+                  class="px-3 py-1.5 rounded-lg border border-rborder bg-sred"
+                >
+                  Security Tokens
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Integrity -->
+      <section id="integrity" class="py-24 border-b border-brder bg-sec">
+        <div
+          class="max-w-content mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-center"
+        >
+          <div class="reveal order-2 md:order-1 space-y-4">
+            <div class="relative bg-card border border-brder rounded-card p-6">
+              <svg
+                class="absolute top-4 right-4"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="#DC2626"
+                aria-hidden="true"
+              >
+                <path d="M12 2 1 21h22z" />
+              </svg>
+              <div class="bg-main border border-brder rounded-xl p-4">
+                <div
+                  class="flex justify-between text-[10px] text-mtext uppercase tracking-wider mb-3"
+                >
+                  <span>Original Object</span
+                  ><span class="font-mono">v1.0.4</span>
+                </div>
+                <div class="h-2 bg-elevated rounded mb-2"></div>
+                <div class="h-2 w-2/3 bg-elevated rounded"></div>
+              </div>
+              <div class="w-px h-10 bg-brder2 mx-auto"></div>
+              <button
+                type="button"
+                id="integrity-check"
+                class="flex flex-col items-center mx-auto group"
+                aria-describedby="integrity-hint"
+              >
+                <span
+                  class="w-12 h-12 rounded-full border border-pred bg-sred flex items-center justify-center text-bred glow-red-strong group-hover:scale-105 transition-transform"
+                >
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <circle cx="6" cy="6" r="2" />
+                    <circle cx="6" cy="18" r="2" />
+                    <circle cx="18" cy="12" r="2" />
+                    <path d="M6 8v8M8 6.5l8 4.5M8 17.5l8-4.5" />
+                  </svg>
+                </span>
+                <span
+                  class="mt-2 text-[10px] font-semibold text-bred uppercase tracking-wider"
+                  >Integrity Check</span
+                >
+              </button>
+              <p
+                id="integrity-hint"
+                class="text-center text-[11px] text-mtext mt-1"
+              >
+                Click to simulate tampering
+              </p>
+              <div class="w-px h-10 bg-brder2 mx-auto"></div>
+              <div class="grid grid-cols-2 gap-3">
+                <div
+                  id="integrity-verified"
+                  class="border border-success/50 bg-success/5 rounded-xl p-4 transition-all"
+                >
+                  <div class="flex justify-between items-center mb-3">
+                    <span
+                      class="text-[10px] font-bold text-success uppercase tracking-wider"
+                      >Verified</span
+                    ><svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="#22C55E"
+                      aria-hidden="true"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <path
+                        d="m8 12 3 3 5-6"
+                        stroke="#09090B"
+                        stroke-width="2.5"
+                        fill="none"
+                      />
+                    </svg>
+                  </div>
+                  <div class="h-1.5 bg-elevated rounded mb-2"></div>
+                  <div class="h-1.5 w-3/4 bg-elevated rounded"></div>
+                </div>
+                <div
+                  id="integrity-modified"
+                  class="border border-brder bg-main rounded-xl p-4 opacity-50 transition-all"
+                >
+                  <div class="flex justify-between items-center mb-3">
+                    <span
+                      class="text-[10px] font-bold text-bred uppercase tracking-wider"
+                      >Modified</span
+                    >
+                  </div>
+                  <div class="h-1.5 bg-elevated rounded mb-2"></div>
+                  <div class="h-1.5 w-3/4 bg-elevated rounded"></div>
+                </div>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-4">
+              <div class="bg-card border border-brder rounded-xl p-4">
+                <p class="text-[10px] text-mtext uppercase tracking-wider mb-2">
+                  Technical Detail
+                </p>
+                <p class="font-mono text-[13px]">Hash Value = Checksum</p>
+              </div>
+              <div
+                class="bg-card border border-brder border-l-2 border-l-success rounded-xl p-4"
+              >
+                <p
+                  class="text-[10px] font-semibold text-success uppercase tracking-wider mb-2"
+                >
+                  Recovery Protocol
+                </p>
+                <p class="text-[12px] text-stext">
+                  Backups and redundancies can restore affected data to its
+                  correct state.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="reveal order-1 md:order-2">
+            <p
+              class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3"
+            >
+              02 &mdash; Integrity
+            </p>
+            <h2
+              class="font-display text-[30px] sm:text-[34px] font-semibold mb-5"
+            >
+              Trust the Data
+            </h2>
+            <p class="text-[15px] text-stext leading-relaxed mb-8">
+              Integrity provides assurance that information remains reliable and
+              accurate. It ensures that data has not been modified or corrupted
+              by unauthorized parties or accidental technical failures
+              throughout its entire lifecycle.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+              <div>
+                <h3
+                  class="text-[12px] font-semibold uppercase tracking-wider mb-4"
+                >
+                  Threats to Integrity
+                </h3>
+                <ul class="space-y-3 text-[13px] text-stext">
+                  <li class="flex items-center gap-3">
+                    <span class="text-bred">&#9679;</span>Viruses &amp; Malware
+                  </li>
+                  <li class="flex items-center gap-3">
+                    <span class="text-bred">&#9679;</span>Logic bombs
+                  </li>
+                  <li class="flex items-center gap-3">
+                    <span class="text-bred">&#9679;</span>Unauthorized access
+                  </li>
+                  <li class="flex items-center gap-3">
+                    <span class="text-bred">&#9679;</span>Coding errors
+                  </li>
+                  <li class="flex items-center gap-3">
+                    <span class="text-bred">&#9679;</span>System backdoors
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h3
+                  class="text-[12px] font-semibold uppercase tracking-wider mb-4"
+                >
+                  Methods of Protection
+                </h3>
+                <ul class="space-y-3 text-[13px] text-stext">
+                  <li class="flex items-center gap-3">
+                    <span class="text-success">&#10003;</span>File permissions
+                  </li>
+                  <li class="flex items-center gap-3">
+                    <span class="text-success">&#10003;</span>User access
+                    controls
+                  </li>
+                  <li class="flex items-center gap-3">
+                    <span class="text-success">&#10003;</span>Version control
+                  </li>
+                  <li class="flex items-center gap-3">
+                    <span class="text-success">&#10003;</span>Checksums /
+                    Hashing
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Availability -->
+      <section id="availability" class="py-24 border-b border-brder">
+        <div class="max-w-content mx-auto px-6">
+          <div class="text-center max-w-2xl mx-auto mb-14 reveal">
+            <p
+              class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3"
+            >
+              03 &mdash; Availability
+            </p>
+            <h2
+              class="font-display text-[30px] sm:text-[34px] font-semibold mb-5"
+            >
+              Available When It Matters
+            </h2>
+            <p class="text-[15px] text-stext leading-relaxed">
+              Authorized users should be able to access information and systems
+              whenever they are needed. Availability ensures uptime and provides
+              resilience against physical disasters and cyberattacks.
+            </p>
+          </div>
+          <div
+            class="reveal grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_auto_1fr] gap-6 lg:gap-8 items-center mb-12"
+          >
+            <ul class="space-y-3">
+              <li
+                class="flex items-center gap-4 bg-card border border-brder rounded-xl p-4"
+              >
+                <span
+                  class="w-8 h-8 rounded-lg bg-sred flex items-center justify-center text-bred text-[14px]"
+                  aria-hidden="true"
+                  >&#9109;</span
+                >
+                <div>
+                  <p class="text-[13px] font-semibold">Device Failure</p>
+                  <p class="text-[11px] text-mtext">Hardware malfunction</p>
+                </div>
+              </li>
+              <li
+                class="flex items-center gap-4 bg-card border border-brder rounded-xl p-4"
+              >
+                <span
+                  class="w-8 h-8 rounded-lg bg-sred flex items-center justify-center text-bred text-[14px]"
+                  aria-hidden="true"
+                  >&#9888;</span
+                >
+                <div>
+                  <p class="text-[13px] font-semibold">Software Error</p>
+                  <p class="text-[11px] text-mtext">
+                    Critical application crashes
+                  </p>
+                </div>
+              </li>
+              <li
+                class="flex items-center gap-4 bg-card border border-brder rounded-xl p-4"
+              >
+                <span
+                  class="w-8 h-8 rounded-lg bg-sred flex items-center justify-center text-bred text-[14px]"
+                  aria-hidden="true"
+                  >&#9889;</span
+                >
+                <div>
+                  <p class="text-[13px] font-semibold">Power Loss</p>
+                  <p class="text-[11px] text-mtext">
+                    Utility grid interruption
+                  </p>
+                </div>
+              </li>
+            </ul>
+            <div
+              class="relative w-48 h-48 mx-auto md:col-span-2 md:order-first lg:order-none lg:col-span-1 rounded-full border border-dashed border-brder2 flex items-center justify-center"
+              aria-hidden="true"
+            >
+              <div
+                class="absolute inset-4 rounded-full bg-pred/5 blur-xl"
+              ></div>
+              <div
+                class="relative w-32 h-32 rounded-2xl border-2 border-pred bg-main flex flex-col items-center justify-center glow-red"
+              >
+                <svg
+                  width="28"
+                  height="28"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#EF4444"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <ellipse cx="12" cy="5" rx="8" ry="3" />
+                  <path
+                    d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"
+                  />
+                </svg>
+                <span
+                  class="mt-3 text-[10px] font-bold uppercase tracking-wider"
+                  >Main Service</span
+                >
+                <span class="mt-2 flex gap-1"
+                  ><span class="w-1 h-1 rounded-full bg-success"></span
+                  ><span class="w-1 h-1 rounded-full bg-success"></span
+                  ><span class="w-1 h-1 rounded-full bg-success"></span
+                ></span>
+              </div>
+            </div>
+            <ul class="space-y-3">
+              <li
+                class="flex items-center gap-4 bg-card border border-brder rounded-xl p-4"
+              >
+                <span
+                  class="w-8 h-8 rounded-lg bg-sred flex items-center justify-center text-bred text-[14px]"
+                  aria-hidden="true"
+                  >&#8776;</span
+                >
+                <div>
+                  <p class="text-[13px] font-semibold">Flooding / Heat</p>
+                  <p class="text-[11px] text-mtext">Environmental hazards</p>
+                </div>
+              </li>
+              <li
+                class="flex items-center gap-4 bg-card border border-brder rounded-xl p-4"
+              >
+                <span
+                  class="w-8 h-8 rounded-lg bg-sred flex items-center justify-center text-bred text-[14px]"
+                  aria-hidden="true"
+                  >&#8767;</span
+                >
+                <div>
+                  <p class="text-[13px] font-semibold">DoS Attacks</p>
+                  <p class="text-[11px] text-mtext">Traffic exhaustion</p>
+                </div>
+              </li>
+              <li
+                class="flex items-center gap-4 bg-card border border-brder rounded-xl p-4"
+              >
+                <span
+                  class="w-8 h-8 rounded-lg bg-sred flex items-center justify-center text-bred text-[14px]"
+                  aria-hidden="true"
+                  >&#9737;</span
+                >
+                <div>
+                  <p class="text-[13px] font-semibold">Network Intrusions</p>
+                  <p class="text-[11px] text-mtext">Connectivity breaches</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div
+            class="reveal bg-card border border-brder rounded-card p-6 sm:p-8 grid grid-cols-1 md:grid-cols-[200px_1fr] lg:grid-cols-[240px_1fr] gap-6 items-center"
+          >
+            <div>
+              <h3 class="text-[15px] font-semibold mb-2">
+                Availability Protection
+              </h3>
+              <p class="text-[12px] text-stext">
+                Architectural safeguards to ensure continuous system operation
+                and data access.
+              </p>
+            </div>
+            <ul
+              class="grid grid-cols-2 md:grid-cols-3 gap-3 text-[12px] font-medium text-center"
+            >
+              <li class="bg-main border border-brder rounded-lg px-3 py-3">
+                Geographically Isolated Backups
+              </li>
+              <li class="bg-main border border-brder rounded-lg px-3 py-3">
+                Fireproof / Waterproof Storage
+              </li>
+              <li class="bg-main border border-brder rounded-lg px-3 py-3">
+                Firewalls
+              </li>
+              <li class="bg-main border border-brder rounded-lg px-3 py-3">
+                Proxy Servers
+              </li>
+              <li class="bg-main border border-brder rounded-lg px-3 py-3">
+                Web Application Firewalls
+              </li>
+              <li class="bg-main border border-brder rounded-lg px-3 py-3">
+                Redundant Power &amp; Hardware
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- One system -->
+      <section class="py-24">
+        <div class="max-w-content mx-auto px-6">
+          <div class="text-center max-w-2xl mx-auto mb-12 reveal">
+            <h2
+              class="font-display text-[30px] sm:text-[34px] font-semibold mb-4"
+            >
+              One System, Three Requirements
+            </h2>
+            <p class="text-[15px] text-stext">
+              Effective security requires balancing all three principles.
+              Over-prioritizing one at the expense of others can lead to a
+              dysfunctional or vulnerable system.
+            </p>
+          </div>
+          <div
+            class="reveal grid grid-cols-1 md:grid-cols-3 gap-4 items-center"
+          >
+            <div
+              class="bg-card border border-brder rounded-card p-8 text-center"
+            >
+              <p class="text-[11px] text-mtext uppercase tracking-wider mb-2">
+                Confidentiality
+              </p>
+              <p class="text-[16px] font-semibold">Who can access it?</p>
+            </div>
+            <div
+              class="bg-elevated border border-pred rounded-card p-10 text-center glow-red"
+            >
+              <span
+                class="w-10 h-10 mx-auto mb-3 rounded-full bg-pred flex items-center justify-center"
+                ><svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg
+              ></span>
+              <p class="text-[12px] font-bold uppercase tracking-wider">
+                Target
+              </p>
+              <p class="text-[13px] font-semibold uppercase">
+                Secure Information System
+              </p>
+            </div>
+            <div
+              class="bg-card border border-brder rounded-card p-8 text-center"
+            >
+              <p class="text-[11px] text-mtext uppercase tracking-wider mb-2">
+                Integrity &amp; Availability
+              </p>
+              <p class="text-[16px] font-semibold">
+                Can we trust it? Is it there?
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+    <script src="assets/js/layout.js"></script>
+    <script>
+      (function () {
+        var btn = document.getElementById("integrity-check");
+        var ok = document.getElementById("integrity-verified");
+        var bad = document.getElementById("integrity-modified");
+        var hint = document.getElementById("integrity-hint");
+        var tampered = false;
+        btn.addEventListener("click", function () {
+          tampered = !tampered;
+          ok.classList.toggle("opacity-50", tampered);
+          ok.classList.toggle("border-success/50", !tampered);
+          ok.classList.toggle("border-brder", tampered);
+          bad.classList.toggle("opacity-50", !tampered);
+          bad.classList.toggle("border-pred", tampered);
+          bad.classList.toggle("bg-sred/40", tampered);
+          hint.textContent = tampered
+            ? "Hash mismatch detected. Click to restore from backup"
+            : "Click to simulate tampering";
+        });
+      })();
+    </script>
+  </body>
+</html>

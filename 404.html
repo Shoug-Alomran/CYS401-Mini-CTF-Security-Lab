@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page Not Found | CYS401</title>
+    <script>
+      // GitHub Pages serves 404.html from any missing path, so relative links need a base.
+      // Project sites live under /<repo>/; user sites and custom domains live at /.
+      (function () {
+        var seg = location.pathname.split("/")[1];
+        var base =
+          /\.github\.io$/.test(location.hostname) &&
+          seg &&
+          seg.indexOf(".") === -1
+            ? "/" + seg + "/"
+            : "/";
+        document.write('<base href="' + base + '">');
+      })();
+    </script>
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <meta name="theme-color" content="#09090B" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body class="bg-main text-ptext font-sans antialiased">
+    <div id="site-header"></div>
+    <main id="main" class="pt-[72px] min-h-[70vh] flex items-center">
+      <div class="max-w-content mx-auto px-6 py-24 text-center">
+        <p class="font-mono text-[13px] text-bred mb-4">
+          ERROR 404 · RESOURCE_NOT_FOUND
+        </p>
+        <h1 class="font-display text-[40px] sm:text-[56px] 2xl:text-[64px] font-semibold mb-4">
+          Access Denied by Reality
+        </h1>
+        <p class="text-[16px] text-stext max-w-md mx-auto mb-10">
+          The page you requested does not exist or has moved.
+        </p>
+        <a
+          href="index.html"
+          class="inline-flex bg-pred hover:bg-bred text-white text-[15px] font-semibold px-8 py-3.5 rounded-btn transition-colors"
+          >Return Home</a
+        >
+      </div>
+    </main>
+    <div id="site-footer"></div>
+    <script src="assets/js/layout.js"></script>
+  </body>
+</html>
