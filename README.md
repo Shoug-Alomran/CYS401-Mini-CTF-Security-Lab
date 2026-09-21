@@ -10,6 +10,7 @@ An educational website covering cybersecurity fundamentals: the threat landscape
 | --- | --- |
 | `index.html` | Home |
 | `about.html` | About |
+| `project.html` | Semester project (topic, phases, grading, timeline) |
 | `threats.html` | Threat Landscape |
 | `cia-triad.html` | CIA Triad |
 | `access-control.html` | Access Control |

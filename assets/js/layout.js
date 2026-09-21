@@ -6,6 +6,7 @@
   var NAV = [
     { href: 'index.html', label: 'Home' },
     { href: 'about.html', label: 'About' },
+    { href: 'project.html', label: 'Project' },
     { href: 'threats.html', label: 'Threats' },
     { href: 'cia-triad.html', label: 'CIA Triad' },
     { href: 'access-control.html', label: 'Access Control' },
@@ -42,9 +43,9 @@
       '<div class="max-w-content mx-auto h-full px-6 flex items-center justify-between gap-6">' +
         '<a href="index.html" class="flex items-center gap-3 shrink-0" aria-label="CYS401 home">' + LOGO +
           '<span class="font-display font-semibold text-lg tracking-wide">CYS401</span></a>' +
-        '<nav class="hidden lg:flex items-center gap-8 text-[14px] font-medium h-full" aria-label="Primary">' + desktopLinks + '</nav>' +
+        '<nav class="hidden lg:flex items-center gap-5 xl:gap-8 text-[14px] font-medium h-full" aria-label="Primary">' + desktopLinks + '</nav>' +
         '<div class="flex items-center gap-3">' +
-          '<a href="threats.html" class="hidden sm:inline-flex bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">Get Started</a>' +
+          '<a href="project.html" class="hidden sm:inline-flex bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">View Project</a>' +
           '<button type="button" id="nav-toggle" class="lg:hidden w-10 h-10 rounded-btn border border-brder flex items-center justify-center text-ptext hover:bg-elevated" aria-controls="mobile-nav" aria-expanded="false" aria-label="Open menu">' +
             '<svg id="nav-icon-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>' +
             '<svg id="nav-icon-close" class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>' +
@@ -53,7 +54,7 @@
       '</div>' +
       '<nav id="mobile-nav" class="lg:hidden hidden border-b border-brder bg-main/95 backdrop-blur-md" aria-label="Mobile">' +
         '<div class="max-w-content mx-auto px-6 py-4 flex flex-col gap-1 text-[15px] font-medium">' + mobileLinks +
-          '<a href="threats.html" class="sm:hidden mt-2 text-center bg-pred hover:bg-bred text-white font-semibold px-5 py-3 rounded-btn">Get Started</a>' +
+          '<a href="project.html" class="sm:hidden mt-2 text-center bg-pred hover:bg-bred text-white font-semibold px-5 py-3 rounded-btn">View Project</a>' +
         '</div>' +
       '</nav>' +
     '</header>';
@@ -70,14 +71,14 @@
         '<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">' +
           '<div class="sm:col-span-2">' +
             '<a href="index.html" class="flex items-center gap-3 mb-4">' + LOGO + '<span class="font-display font-semibold">CYS401</span></a>' +
-            '<p class="text-[13px] text-mtext leading-relaxed max-w-xs">Foundational cybersecurity education. Protect your data, your network, and your people.</p>' +
+            '<p class="text-[13px] text-mtext leading-relaxed max-w-xs">A CYS401 Fundamentals of Cybersecurity group project at Prince Sultan University. Protect your data, your network, and your people.</p>' +
           '</div>' +
           footerCol('Course Modules', [['Threat Landscape', 'threats.html'], ['CIA Triad', 'cia-triad.html'], ['Access Control', 'access-control.html'], ['Protection Mechanisms', 'protection.html']]) +
-          footerCol('Platform', [['Home', 'index.html'], ['About', 'about.html'], ['Team', 'team.html'], ['Back to top', '#main']]) +
+          footerCol('Project', [['Home', 'index.html'], ['About', 'about.html'], ['Project', 'project.html'], ['Team', 'team.html'], ['Back to top', '#main']]) +
         '</div>' +
         '<div class="mt-12 pt-6 border-t border-brder flex flex-col sm:flex-row gap-4 justify-between text-[12px] text-mtext">' +
-          '<p>&copy; ' + new Date().getFullYear() + ' CYS401 Cybersecurity Fundamentals. Educational content purposes only.</p>' +
-          '<p>Built for learning &mdash; not a commercial product.</p>' +
+          '<p>&copy; ' + new Date().getFullYear() + ' CYS401 Semester Project Group. Educational content purposes only.</p>' +
+          '<p>Prince Sultan University &middot; Semester 261</p>' +
         '</div>' +
       '</div>' +
     '</footer>';

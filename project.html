@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project | CYS401</title>
+    <meta
+      name="description"
+      content="Our CYS401 Fundamentals of Cybersecurity semester project: scope, phases, deliverables, assessment, and timeline."
+    />
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <meta name="theme-color" content="#09090B" />
+    <link rel="canonical" href="https://shoug-alomran.github.io/cys401/project.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CYS401" />
+    <meta property="og:title" content="Project | CYS401" />
+    <meta property="og:description" content="Our CYS401 Fundamentals of Cybersecurity semester project: scope, phases, deliverables, assessment, and timeline." />
+    <meta property="og:url" content="https://shoug-alomran.github.io/cys401/project.html" />
+    <meta property="og:image" content="https://shoug-alomran.github.io/cys401/assets/img/og-banner.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="CYS401 — Learn to Defend What Matters. Cybersecurity fundamentals." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Project | CYS401" />
+    <meta name="twitter:description" content="Our CYS401 Fundamentals of Cybersecurity semester project: scope, phases, deliverables, assessment, and timeline." />
+    <meta name="twitter:image" content="https://shoug-alomran.github.io/cys401/assets/img/og-banner.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body
+    class="bg-main text-ptext font-sans antialiased selection:bg-pred selection:text-white"
+  >
+    <div id="site-header"></div>
+
+    <main id="main" class="pt-[72px]">
+      <!-- Hero -->
+      <section class="relative py-20 lg:py-24 border-b border-brder overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(220,38,38,0.10),transparent_55%)] pointer-events-none"></div>
+        <div class="relative max-w-content mx-auto px-6 grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-10 lg:gap-16 items-center">
+          <div>
+            <p class="text-[12px] font-medium text-pred uppercase tracking-[0.2em] mb-5">
+              CYS401 &middot; Semester Project
+            </p>
+            <h1 class="font-display text-[36px] sm:text-[48px] md:text-[42px] lg:text-[52px] 2xl:text-[60px] font-semibold leading-[1.1] mb-6">
+              Putting Cybersecurity Fundamentals Into Practice
+            </h1>
+            <p class="text-[16px] text-stext leading-relaxed max-w-xl mb-8">
+              Our group project for CYS401: Fundamentals of Cybersecurity at Prince Sultan University. We identify
+              the risks in a real area of an organization, build a working security tool with a demonstrable
+              interface, and document how it prevents, detects, and responds to threats.
+            </p>
+            <div class="inline-flex flex-wrap items-center gap-3 bg-card border border-brder rounded-xl px-4 py-3">
+              <span class="text-[11px] font-semibold uppercase tracking-wider text-mtext">Project topic</span>
+              <span id="topic-status" class="inline-flex items-center gap-2 text-[14px] font-semibold"></span>
+            </div>
+          </div>
+
+          <!-- Countdown -->
+          <div class="bg-card border border-brder rounded-card p-6 sm:p-8">
+            <div class="flex items-center justify-between mb-6">
+              <p class="text-[11px] font-semibold uppercase tracking-wider text-mtext">Submission Countdown</p>
+              <span class="flex items-center gap-2 text-[11px] font-mono text-stext"><span class="w-1.5 h-1.5 rounded-full bg-pred animate-pulse"></span>LIVE</span>
+            </div>
+            <p class="font-display text-[56px] sm:text-[64px] font-semibold leading-none mb-2"><span id="days-left">&ndash;</span><span class="text-[18px] text-stext font-sans font-normal ml-2" id="days-label">days left</span></p>
+            <p class="text-[13px] text-stext mb-6">Report &amp; presentation due on Moodle <strong class="text-ptext">Nov 4, 2026</strong></p>
+            <div class="h-2 bg-elevated rounded-full overflow-hidden mb-2" role="progressbar" aria-label="Time elapsed in the project window" aria-valuemin="0" aria-valuemax="100" id="time-bar">
+              <div id="time-fill" class="h-full bg-gradient-to-r from-dred to-pred rounded-full transition-all duration-700" style="width: 0%"></div>
+            </div>
+            <div class="flex justify-between text-[11px] font-mono text-mtext">
+              <span>Sep 13 &middot; Hand-out</span><span>Nov 4 &middot; Due</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Key facts -->
+      <section class="border-b border-brder bg-sec py-10">
+        <dl class="max-w-content mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div><dt class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2">Course Weight</dt><dd class="font-display text-[32px] font-semibold">15%</dd></div>
+          <div><dt class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2">Team Size</dt><dd class="font-display text-[32px] font-semibold">3&ndash;4 <span class="text-[16px] text-stext font-sans font-normal">students</span></dd></div>
+          <div><dt class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2">Report Length</dt><dd class="font-display text-[32px] font-semibold">13&ndash;15 <span class="text-[16px] text-stext font-sans font-normal">pages</span></dd></div>
+          <div><dt class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2">Presentation</dt><dd class="font-display text-[32px] font-semibold">10 <span class="text-[16px] text-stext font-sans font-normal">min + Q&amp;A</span></dd></div>
+        </dl>
+      </section>
+
+      <!-- Overview -->
+      <section class="py-24">
+        <div class="max-w-content mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-start">
+          <div class="reveal">
+            <p class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3">Overview</p>
+            <h2 class="font-display text-[28px] sm:text-[32px] font-semibold mb-5">What We&rsquo;re Building</h2>
+            <p id="topic-summary" class="text-[15px] text-stext leading-relaxed mb-6"></p>
+            <p class="text-[15px] text-stext leading-relaxed">
+              Whatever the topic, the project follows the same path: assess the threats and vulnerabilities in an
+              area of an organization, study how others have solved the problem, implement a working tool, and
+              close with recommendations that reduce the risk.
+            </p>
+          </div>
+          <div class="reveal bg-card border border-brder rounded-card p-6 sm:p-8">
+            <h3 class="flex items-center gap-2 text-[15px] font-semibold mb-5">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg>
+              Implementation Guidelines
+            </h3>
+            <ul class="space-y-4 text-[14px] text-stext">
+              <li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>A proper <strong class="text-ptext">user interface</strong> is implemented for the live demonstration.</span></li>
+              <li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Any <strong class="text-ptext">programming language</strong> may be used for the implementation.</span></li>
+              <li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Open-source code from <strong class="text-ptext">GitHub</strong> is allowed, with every source acknowledged and cited.</span></li>
+              <li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Each group has <strong class="text-ptext">3&ndash;4 members</strong>, as specified for the chosen topic.</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Phases -->
+      <section id="phases" class="py-24 bg-sec border-y border-brder">
+        <div class="max-w-content mx-auto px-6">
+          <div class="text-center max-w-2xl mx-auto mb-14 reveal">
+            <p class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3">Roadmap</p>
+            <h2 class="font-display text-[28px] sm:text-[32px] font-semibold mb-4">Five Phases, One Deliverable</h2>
+            <p class="text-[15px] text-stext">The report and presentation are built phase by phase. Status updates here as we progress.</p>
+          </div>
+          <ol id="phase-list" class="reveal relative space-y-4 lg:space-y-0 lg:grid lg:grid-cols-5 lg:gap-4"></ol>
+        </div>
+      </section>
+
+      <!-- Assessment -->
+      <section class="py-24">
+        <div class="max-w-content mx-auto px-6">
+          <div class="mb-12 max-w-2xl reveal">
+            <p class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3">Assessment</p>
+            <h2 class="font-display text-[28px] sm:text-[32px] font-semibold mb-4">How the Project Is Graded</h2>
+            <p class="text-[15px] text-stext">The project is worth 15% of the course, split evenly across three components. The report itself is marked out of 100 against five criteria.</p>
+          </div>
+
+          <div class="reveal grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
+            <div class="bg-card border border-brder rounded-card p-6">
+              <p class="font-display text-[40px] font-semibold text-bred leading-none mb-3">5<span class="text-[16px] text-stext font-sans font-normal"> marks</span></p>
+              <h3 class="text-[16px] font-semibold mb-1">Written Report</h3>
+              <p class="text-[13px] text-stext">13&ndash;15 page document covering all five phases.</p>
+            </div>
+            <div class="bg-card border border-brder rounded-card p-6">
+              <p class="font-display text-[40px] font-semibold text-bred leading-none mb-3">5<span class="text-[16px] text-stext font-sans font-normal"> marks</span></p>
+              <h3 class="text-[16px] font-semibold mb-1">Demonstration &amp; Presentation</h3>
+              <p class="text-[13px] text-stext">Live demo of the working interface in a 10-minute talk.</p>
+            </div>
+            <div class="bg-card border border-brder rounded-card p-6">
+              <p class="font-display text-[40px] font-semibold text-bred leading-none mb-3">5<span class="text-[16px] text-stext font-sans font-normal"> marks</span></p>
+              <h3 class="text-[16px] font-semibold mb-1">Individual Assessment</h3>
+              <p class="text-[13px] text-stext">Each member answers questions during the presentation.</p>
+            </div>
+          </div>
+
+          <div class="reveal bg-card border border-brder rounded-card overflow-hidden">
+            <div class="flex items-center justify-between px-6 py-4 border-b border-brder bg-elevated/40">
+              <h3 class="text-[13px] font-semibold uppercase tracking-wider">Report Rubric</h3>
+              <span class="text-[11px] font-mono text-mtext">100 marks total</span>
+            </div>
+            <ul id="rubric" class="divide-y divide-brder"></ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Learning outcomes -->
+      <section class="py-24 bg-sec border-y border-brder">
+        <div class="max-w-content mx-auto px-6">
+          <div class="mb-12 max-w-2xl reveal">
+            <p class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3">Learning Outcomes</p>
+            <h2 class="font-display text-[28px] sm:text-[32px] font-semibold mb-4">What the Project Demonstrates</h2>
+            <p class="text-[15px] text-stext">The project is assessed against the four course learning outcomes. Each links to the part of this site that covers it.</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <article class="reveal bg-card border border-brder hover:border-rborder rounded-card p-6 sm:p-8 transition-colors">
+              <p class="text-[11px] font-mono text-bred mb-3">CLO 1</p>
+              <h3 class="text-[17px] font-semibold mb-2">Understand the Fundamentals</h3>
+              <p class="text-[14px] text-stext leading-relaxed mb-5">Policies, cryptographic systems, networking and communication, biometric systems, and identity, authentication, and authorization management.</p>
+              <p class="flex flex-wrap gap-2 text-[12px]"><a href="access-control.html" class="px-3 py-1 rounded-full border border-brder2 hover:border-rborder hover:text-bred transition-colors">Access Control</a><a href="protection.html" class="px-3 py-1 rounded-full border border-brder2 hover:border-rborder hover:text-bred transition-colors">Encryption</a><a href="about.html" class="px-3 py-1 rounded-full border border-brder2 hover:border-rborder hover:text-bred transition-colors">Policies</a></p>
+            </article>
+            <article class="reveal bg-card border border-brder hover:border-rborder rounded-card p-6 sm:p-8 transition-colors">
+              <p class="text-[11px] font-mono text-bred mb-3">CLO 2</p>
+              <h3 class="text-[17px] font-semibold mb-2">Analyze Security Models</h3>
+              <p class="text-[14px] text-stext leading-relaxed mb-5">Analyze security models and their capabilities for specific security needs.</p>
+              <p class="flex flex-wrap gap-2 text-[12px]"><a href="cia-triad.html" class="px-3 py-1 rounded-full border border-brder2 hover:border-rborder hover:text-bred transition-colors">CIA Triad</a><a href="protection.html" class="px-3 py-1 rounded-full border border-brder2 hover:border-rborder hover:text-bred transition-colors">Defense in Depth</a></p>
+            </article>
+            <article class="reveal bg-card border border-brder hover:border-rborder rounded-card p-6 sm:p-8 transition-colors">
+              <p class="text-[11px] font-mono text-bred mb-3">CLO 3</p>
+              <h3 class="text-[17px] font-semibold mb-2">Apply Principles Responsibly</h3>
+              <p class="text-[14px] text-stext leading-relaxed mb-5">Describe the legal, ethical, and professional security principles and practices for the environmental, hardware, software, and human components of an information system.</p>
+              <p class="flex flex-wrap gap-2 text-[12px]"><a href="threats.html" class="px-3 py-1 rounded-full border border-brder2 hover:border-rborder hover:text-bred transition-colors">Human Attack Surface</a><a href="cia-triad.html#availability" class="px-3 py-1 rounded-full border border-brder2 hover:border-rborder hover:text-bred transition-colors">Environmental Threats</a></p>
+            </article>
+            <article class="reveal bg-card border border-brder hover:border-rborder rounded-card p-6 sm:p-8 transition-colors">
+              <p class="text-[11px] font-mono text-bred mb-3">CLO 4</p>
+              <h3 class="text-[17px] font-semibold mb-2">Use the Right Tools</h3>
+              <p class="text-[14px] text-stext leading-relaxed mb-5">Apply appropriate tools to prevent, detect, react to, and recover from attacks. This is the core of our implementation phase.</p>
+              <p class="flex flex-wrap gap-2 text-[12px]"><a href="threats.html" class="px-3 py-1 rounded-full border border-brder2 hover:border-rborder hover:text-bred transition-colors">Reduce the Risk</a><a href="index.html" class="px-3 py-1 rounded-full border border-brder2 hover:border-rborder hover:text-bred transition-colors">Protect &middot; Detect &middot; Respond</a></p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Deliverables -->
+      <section class="py-24">
+        <div class="max-w-content mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-start">
+          <div class="reveal">
+            <p class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3">Deliverables</p>
+            <h2 class="font-display text-[28px] sm:text-[32px] font-semibold mb-5">The Report</h2>
+            <p class="text-[15px] text-stext leading-relaxed mb-6">A formally structured document submitted on Moodle together with the presentation slides.</p>
+            <ol class="space-y-3 text-[14px]">
+              <li class="flex gap-4 bg-card border border-brder rounded-xl p-4"><span class="font-mono text-bred text-[12px] mt-0.5">01</span><span><strong>Cover page</strong><span class="block text-stext text-[13px]">University logo, course code and title, project title, member names and IDs, instructor name.</span></span></li>
+              <li class="flex gap-4 bg-card border border-brder rounded-xl p-4"><span class="font-mono text-bred text-[12px] mt-0.5">02</span><span><strong>Contents page</strong><span class="block text-stext text-[13px]">Titles, sub-titles, and page numbers.</span></span></li>
+              <li class="flex gap-4 bg-card border border-brder rounded-xl p-4"><span class="font-mono text-bred text-[12px] mt-0.5">03</span><span><strong>Introduction</strong><span class="block text-stext text-[13px]">An overview of the project.</span></span></li>
+              <li class="flex gap-4 bg-card border border-brder rounded-xl p-4"><span class="font-mono text-bred text-[12px] mt-0.5">04</span><span><strong>Body</strong><span class="block text-stext text-[13px]">Phases I&ndash;IV, comparative analysis, and user policies where applicable.</span></span></li>
+              <li class="flex gap-4 bg-card border border-brder rounded-xl p-4"><span class="font-mono text-bred text-[12px] mt-0.5">05</span><span><strong>Conclusion &amp; recommendations</strong><span class="block text-stext text-[13px]">A summary, plus application and recommendations to overcome the threats.</span></span></li>
+              <li class="flex gap-4 bg-card border border-brder rounded-xl p-4"><span class="font-mono text-bred text-[12px] mt-0.5">06</span><span><strong>References &amp; appendix</strong><span class="block text-stext text-[13px]">Every source cited; full source code in the appendix.</span></span></li>
+            </ol>
+          </div>
+          <div class="reveal space-y-5">
+            <div class="bg-card border border-brder rounded-card p-6 sm:p-8">
+              <h3 class="text-[15px] font-semibold mb-5">Formatting Standard</h3>
+              <dl class="grid grid-cols-2 gap-x-6 gap-y-5 text-[13px]">
+                <div><dt class="text-[10px] uppercase tracking-wider text-mtext mb-1">Length</dt><dd class="font-semibold">13&ndash;15 pages (strict)</dd></div>
+                <div><dt class="text-[10px] uppercase tracking-wider text-mtext mb-1">Font</dt><dd class="font-semibold">Times New Roman, 12 pt</dd></div>
+                <div><dt class="text-[10px] uppercase tracking-wider text-mtext mb-1">Spacing</dt><dd class="font-semibold">Single, justified</dd></div>
+                <div><dt class="text-[10px] uppercase tracking-wider text-mtext mb-1">Headings</dt><dd class="font-semibold">Capitalized, bold, left-aligned</dd></div>
+                <div><dt class="text-[10px] uppercase tracking-wider text-mtext mb-1">Page numbers</dt><dd class="font-semibold">On every page</dd></div>
+                <div><dt class="text-[10px] uppercase tracking-wider text-mtext mb-1">Final check</dt><dd class="font-semibold">Spell-checked &amp; proofread</dd></div>
+              </dl>
+            </div>
+            <div class="bg-card border border-brder border-l-2 border-l-pred rounded-card p-6 sm:p-8">
+              <h3 class="text-[15px] font-semibold mb-2">Academic Integrity</h3>
+              <p class="text-[13px] text-stext leading-relaxed mb-5">Every member signs the students&rsquo; declaration: the work is our own, all published and unpublished sources are acknowledged, and we keep a copy of the submission.</p>
+              <p class="text-[10px] uppercase tracking-wider text-mtext mb-3">Late submission penalty</p>
+              <ul class="grid grid-cols-3 gap-2 text-center text-[12px]">
+                <li class="bg-main border border-brder rounded-lg py-3"><span class="block font-display text-[20px] font-semibold text-warn">&minus;20%</span>1 day</li>
+                <li class="bg-main border border-brder rounded-lg py-3"><span class="block font-display text-[20px] font-semibold text-bred">&minus;50%</span>2 days</li>
+                <li class="bg-main border border-rborder bg-sred/40 rounded-lg py-3"><span class="block font-display text-[20px] font-semibold text-bred">0</span>3 days</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="py-24 relative overflow-hidden border-t border-brder">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-64 bg-pred/10 blur-[100px] rounded-full pointer-events-none"></div>
+        <div class="max-w-3xl mx-auto px-6 text-center relative reveal">
+          <h2 class="font-display text-[28px] sm:text-[36px] font-semibold mb-6">Meet the people building it</h2>
+          <p class="text-[16px] text-stext mb-10">Or review the course modules that the project builds on.</p>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="team.html" class="w-full sm:w-auto bg-pred hover:bg-bred text-white text-[15px] font-semibold px-8 py-3.5 rounded-btn transition-colors">Meet the Team</a>
+            <a href="index.html#modules" class="w-full sm:w-auto border border-brder2 hover:bg-elevated text-[15px] font-semibold px-8 py-3.5 rounded-btn transition-colors">Course Modules</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+    <script src="assets/js/layout.js"></script>
+    <script>
+      (function () {
+        // ─── Update this block as the project progresses ───────────────────────────
+        // topic:   null until chosen, then e.g. 'Cybersecurity Quiz Application'
+        // summary: one or two sentences describing the tool
+        // status:  'done' | 'active' | 'upcoming' for each phase
+        var PROJECT = {
+          topic: null,
+          summary: null,
+          dueDate: '2026-11-04T23:59:00+03:00',
+          handoutDate: '2026-09-13T00:00:00+03:00',
+          phases: [
+            { id: 'I', title: 'Introduction & Risk Assessment', desc: 'Introduce the topic in relation to security and assess the common risks, threats, attacks, and vulnerabilities in an identified area of an organization.', status: 'active' },
+            { id: 'II', title: 'Literature Review', desc: 'Existing, previous, and substitute methods of implementing the solution, plus real security incidents in the same area.', status: 'upcoming' },
+            { id: 'III', title: 'Implementation', desc: 'Hardware and software requirements, the working tool, and interface screenshots with descriptions. Source code goes in the appendix.', status: 'upcoming' },
+            { id: 'IV', title: 'Documentation', desc: 'Apply the course concepts in a properly formatted, fully referenced report ending with applications and recommendations.', status: 'upcoming' },
+            { id: 'V', title: 'Presentation & Demo', desc: 'A 10-minute PowerPoint presentation with a live demonstration, followed by questions and answers.', status: 'upcoming' }
+          ]
+        };
+        // ───────────────────────────────────────────────────────────────────────────
+
+        var topicEl = document.getElementById('topic-status');
+        var summaryEl = document.getElementById('topic-summary');
+        if (PROJECT.topic) {
+          topicEl.innerHTML = '<span class="w-2 h-2 rounded-full bg-success"></span>';
+          topicEl.appendChild(document.createTextNode(PROJECT.topic));
+        } else {
+          topicEl.innerHTML = '<span class="w-2 h-2 rounded-full bg-warn animate-pulse"></span><span class="text-warn">Selection in progress</span>';
+        }
+        summaryEl.textContent = PROJECT.summary ||
+          'Our group is choosing from the 28 topics offered in the course brief, which range from integrity checkers and malware scanners to awareness tools and a mini capture-the-flag platform. The chosen topic, its scope, and the tool we build will be published here.';
+
+        var STATUS = {
+          done: { label: 'Complete', chip: 'text-success border-success/40 bg-success/10', card: 'border-brder', num: 'border-success text-success' },
+          active: { label: 'In progress', chip: 'text-warn border-warn/40 bg-warn/10', card: 'border-rborder bg-sred/20', num: 'border-pred text-bred glow-red-strong' },
+          upcoming: { label: 'Upcoming', chip: 'text-mtext border-brder2', card: 'border-brder', num: 'border-brder2 text-mtext' }
+        };
+        document.getElementById('phase-list').innerHTML = PROJECT.phases.map(function (p) {
+          var s = STATUS[p.status] || STATUS.upcoming;
+          return '<li class="bg-card border ' + s.card + ' rounded-card p-6 flex flex-col">' +
+            '<div class="flex items-center justify-between mb-5">' +
+              '<span class="w-10 h-10 rounded-full border bg-main flex items-center justify-center font-mono text-[12px] ' + s.num + '">' + p.id + '</span>' +
+              '<span class="text-[9px] font-semibold uppercase tracking-wider border rounded px-2 py-1 ' + s.chip + '">' + s.label + '</span>' +
+            '</div>' +
+            '<p class="text-[10px] font-mono text-mtext uppercase tracking-wider mb-1">Phase ' + p.id + '</p>' +
+            '<h3 class="text-[15px] font-semibold mb-2">' + p.title + '</h3>' +
+            '<p class="text-[13px] text-stext leading-relaxed">' + p.desc + '</p></li>';
+        }).join('');
+
+        var RUBRIC = [
+          ['Depth of Knowledge', 'Ideas and concepts are detailed and well developed, supported with specific evidence, facts, and examples.'],
+          ['Presentation Skills', 'Clear explanation and a formal, confident presentation.'],
+          ['Analysis & Opinions', 'Good examples backed by sound arguments, justified according to the relevant rules.'],
+          ['Citations, Structure & Completeness', 'Readable, well-structured, covers every aspect of the discussion, with all references cited properly.'],
+          ['Conclusion & Recommendations', 'Covers all the main points discussed and ends with strong recommendations.']
+        ];
+        document.getElementById('rubric').innerHTML = RUBRIC.map(function (r, i) {
+          return '<li class="px-6 py-5 grid grid-cols-1 sm:grid-cols-[1fr_2fr_auto] gap-2 sm:gap-6 items-center">' +
+            '<p class="text-[14px] font-semibold"><span class="font-mono text-[11px] text-bred mr-2">0' + (i + 1) + '</span>' + r[0] + '</p>' +
+            '<p class="text-[13px] text-stext">' + r[1] + '</p>' +
+            '<p class="font-mono text-[13px] text-ptext sm:text-right">20</p></li>';
+        }).join('');
+
+        var due = new Date(PROJECT.dueDate), start = new Date(PROJECT.handoutDate), now = new Date();
+        // Whole calendar days between today and the due date (local time)
+        var dueDay = new Date(due.getFullYear(), due.getMonth(), due.getDate());
+        var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        var daysLeft = Math.round((dueDay - today) / 86400000);
+        var pct = Math.min(100, Math.max(0, ((now - start) / (due - start)) * 100));
+        document.getElementById('days-left').textContent = Math.max(0, daysLeft);
+        document.getElementById('days-label').textContent = daysLeft === 1 ? 'day left' : daysLeft <= 0 ? 'submitted' : 'days left';
+        document.getElementById('time-fill').style.width = pct.toFixed(1) + '%';
+        document.getElementById('time-bar').setAttribute('aria-valuenow', Math.round(pct));
+      })();
+    </script>
+  </body>
+</html>

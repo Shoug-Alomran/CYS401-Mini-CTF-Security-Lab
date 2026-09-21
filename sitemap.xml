@@ -11,6 +11,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://shoug-alomran.github.io/cys401/project.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://shoug-alomran.github.io/cys401/threats.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
