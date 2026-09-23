@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Security Awareness | CYS401 CTF Lab</title>
+    <meta name="description" content="Security Awareness challenges in the CYS401 CTF Lab: spot phishing, judge password strength, and recognise social engineering before you hand over the flag." />
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <meta name="theme-color" content="#09090B" />
+    <link rel="canonical" href="https://ctf-lab.shoug-tech.com/security-awareness.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CYS401 CTF Lab" />
+    <meta property="og:title" content="Security Awareness | CYS401 CTF Lab" />
+    <meta property="og:description" content="Security Awareness challenges in the CYS401 CTF Lab: spot phishing, judge password strength, and recognise social engineering before you hand over the flag." />
+    <meta property="og:url" content="https://ctf-lab.shoug-tech.com/security-awareness.html" />
+    <meta property="og:image" content="https://ctf-lab.shoug-tech.com/assets/img/og-banner.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="CYS401 CTF Lab — Mini Capture-the-Flag Security Lab Platform." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Security Awareness | CYS401 CTF Lab" />
+    <meta name="twitter:description" content="Security Awareness challenges in the CYS401 CTF Lab: spot phishing, judge password strength, and recognise social engineering before you hand over the flag." />
+    <meta name="twitter:image" content="https://ctf-lab.shoug-tech.com/assets/img/og-banner.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body
+    class="bg-main text-ptext font-sans antialiased selection:bg-pred selection:text-white"
+  >
+    <div id="site-header"></div>
+
+    <main id="main" class="pt-[72px]">
+      <!-- Hero -->
+      <section
+        class="relative py-20 lg:py-24 border-b border-brder overflow-hidden"
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-br from-main via-main to-sred/50 pointer-events-none"
+        ></div>
+        <div class="relative max-w-content mx-auto px-6">
+          <p
+            class="flex items-center gap-2 text-[12px] font-medium text-pred uppercase tracking-widest mb-5"
+          >
+            <span class="w-1.5 h-1.5 rounded-full bg-pred"></span>Challenge Track 03 &middot; Security Awareness
+          </p>
+          <h1
+            class="text-[36px] sm:text-[48px] md:text-[42px] lg:text-[52px] 2xl:text-[60px] font-bold leading-[1.1] tracking-tight max-w-3xl mb-6"
+          >
+            Spot the Trap Before You Click
+          </h1>
+          <p class="text-[16px] text-stext leading-relaxed max-w-xl">
+            Most breaches start with a person, not a machine. These challenges give you the emails, passwords, and phone calls an attacker would use, and ask you to catch what is wrong with them.
+          </p>
+        </div>
+      </section>
+
+      <!-- Track stats -->
+      <section class="border-b border-brder bg-sec py-10">
+        <div
+          class="max-w-content mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8"
+        >
+          <div>
+            <p
+              class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2"
+            >
+              Challenges
+            </p>
+            <p class="font-display text-[32px] font-semibold">3</p>
+          </div>
+          <div>
+            <p
+              class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2"
+            >
+              Points Available
+            </p>
+            <p class="font-display text-[32px] font-semibold">250</p>
+          </div>
+          <div>
+            <p
+              class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2"
+            >
+              Difficulty
+            </p>
+            <p class="font-display text-[20px] font-semibold">Easy &rarr; Medium</p>
+          </div>
+          <div>
+            <p
+              class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2"
+            >
+              Flag Format
+            </p>
+            <p class="font-display text-[20px] font-semibold font-mono">CYS401{...}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- What you practice -->
+      <section class="py-24">
+        <div class="max-w-content mx-auto px-6">
+          <div class="mb-10 reveal">
+            <h2 class="font-display text-[28px] sm:text-[32px] font-semibold mb-3">
+              What You&rsquo;ll Practice
+            </h2>
+            <p class="text-[15px] text-stext max-w-2xl">The human attack surface is the one no firewall covers. Recognising the pattern is the whole defence.</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <article
+              class="reveal relative overflow-hidden bg-card border border-brder hover:border-rborder rounded-card p-8 transition-colors"
+            >
+              <span
+                class="absolute -top-3 right-5 font-display text-[88px] font-bold text-white/[0.04] leading-none select-none"
+                aria-hidden="true"
+                >01</span
+              >
+              <div
+                class="w-11 h-11 rounded-lg bg-sred border border-rborder flex items-center justify-center mb-6"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"  aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+              </div>
+              <h3 class="text-[17px] font-semibold mb-2">Phishing Recognition</h3>
+              <p class="text-[14px] text-stext leading-relaxed">
+                Sender addresses, urgency, mismatched links, and the small details that separate a real message from a forged one.
+              </p>
+            </article>
+            <article
+              class="reveal relative overflow-hidden bg-card border border-brder hover:border-rborder rounded-card p-8 transition-colors"
+            >
+              <span
+                class="absolute -top-3 right-5 font-display text-[88px] font-bold text-white/[0.04] leading-none select-none"
+                aria-hidden="true"
+                >02</span
+              >
+              <div
+                class="w-11 h-11 rounded-lg bg-sred border border-rborder flex items-center justify-center mb-6"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"  aria-hidden="true"><path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/></svg>
+              </div>
+              <h3 class="text-[17px] font-semibold mb-2">Password Hygiene</h3>
+              <p class="text-[14px] text-stext leading-relaxed">
+                Why length beats complexity, what reuse costs, and how quickly a weak password falls to a wordlist.
+              </p>
+            </article>
+            <article
+              class="reveal relative overflow-hidden bg-card border border-brder hover:border-rborder rounded-card p-8 transition-colors"
+            >
+              <span
+                class="absolute -top-3 right-5 font-display text-[88px] font-bold text-white/[0.04] leading-none select-none"
+                aria-hidden="true"
+                >03</span
+              >
+              <div
+                class="w-11 h-11 rounded-lg bg-sred border border-rborder flex items-center justify-center mb-6"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"  aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a7 7 0 0 1 14 0v1"/></svg>
+              </div>
+              <h3 class="text-[17px] font-semibold mb-2">Social Engineering</h3>
+              <p class="text-[14px] text-stext leading-relaxed">
+                Pretexting, baiting, and tailgating &mdash; manipulation that never touches a technical control.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Challenges -->
+      <section id="challenges" class="py-24 bg-sec border-y border-brder">
+        <div class="max-w-content mx-auto px-6">
+          <div
+            class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6 reveal"
+          >
+            <div>
+              <p
+                class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3"
+              >
+                Challenges
+              </p>
+              <h2 class="font-display text-[28px] sm:text-[32px] font-semibold mb-2">
+                Capture the Flags
+              </h2>
+              <p class="text-[15px] text-stext max-w-2xl">
+                Read the scenario, solve the task, then submit the flag you
+                found. Hints are there if you need them &mdash; every correct
+                answer ends with an explanation.
+              </p>
+            </div>
+            <div
+              class="self-start md:self-auto bg-card border border-brder rounded-card px-5 py-4 text-center shrink-0"
+            >
+              <p
+                class="text-[11px] font-medium text-mtext uppercase tracking-widest mb-1"
+              >
+                Your Progress
+              </p>
+              <p class="font-display text-[24px] font-semibold">
+                <span id="solved-count">0</span>
+                <span class="text-stext">/ 3</span>
+              </p>
+              <p class="text-[12px] font-mono text-pred mt-1">
+                <span id="points-count">0</span> pts
+              </p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <article
+              class="challenge reveal bg-card border border-brder rounded-card p-6 sm:p-8 transition-colors"
+              data-id="AWR-01"
+              data-flag="Q1lTNDAxe2NoM2NrX3RoM19zM25kM3J9"
+            >
+              <div class="flex flex-wrap items-center gap-3 mb-4">
+                <span class="text-[12px] font-mono text-mtext">AWR-01</span>
+                <span
+                  class="text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border border-success/40 bg-success/10 text-success"
+                  >Easy</span
+                >
+                <span class="text-[12px] font-mono text-pred">50 pts</span>
+                <span
+                  class="challenge-status ml-auto text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border border-brder2 text-mtext"
+                  >Unsolved</span
+                >
+              </div>
+              <h3 class="font-display text-[20px] font-semibold mb-3">Urgent: Verify Your Account</h3>
+              <p class="text-[14px] text-stext leading-relaxed mb-5">
+                An email claiming to be from the university IT desk warns that your account closes in 24 hours. Four details in it give the sender away; naming them reveals the flag.
+              </p>
+
+              <details class="group mb-5">
+                <summary
+                  class="cursor-pointer list-none inline-flex items-center gap-2 text-[13px] font-medium text-stext hover:text-ptext transition-colors"
+                >
+                  <span
+                    class="w-6 h-6 rounded-md border border-brder2 flex items-center justify-center"
+                    ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  aria-hidden="true"><path d="M4 22V4M4 4h13l-2 4 2 4H4"/></svg></span
+                  >
+                  Show hint
+                </summary>
+                <p
+                  class="mt-3 text-[13px] text-stext leading-relaxed bg-sec border border-brder rounded-xl p-4"
+                >
+                  Compare the display name with the actual address, hover the link without clicking, and ask why a real IT desk would need your password at all.
+                </p>
+              </details>
+
+              <form class="flag-form flex flex-col sm:flex-row gap-3" novalidate>
+                <label class="sr-only" for="AWR-01-input"
+                  >Flag for AWR-01</label
+                >
+                <input
+                  id="AWR-01-input"
+                  type="text"
+                  inputmode="text"
+                  autocomplete="off"
+                  spellcheck="false"
+                  placeholder="CYS401{...}"
+                  class="flag-input flex-1 bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] font-mono text-ptext placeholder:text-mtext focus:border-pred focus:outline-none"
+                />
+                <button
+                  type="submit"
+                  class="bg-pred hover:bg-bred text-white text-[14px] font-semibold px-6 py-3 rounded-btn transition-colors"
+                >
+                  Submit Flag
+                </button>
+              </form>
+              <p
+                class="flag-feedback mt-3 text-[13px] leading-relaxed hidden"
+                role="status"
+                aria-live="polite"
+              ></p>
+              <div
+                class="challenge-explain mt-5 hidden bg-sred/30 border border-rborder rounded-xl p-5"
+              >
+                <h4
+                  class="text-[12px] font-semibold text-pred uppercase tracking-widest mb-2"
+                >
+                  What this challenge taught you
+                </h4>
+                <p class="text-[14px] text-stext leading-relaxed">
+                  Phishing relies on urgency to stop you checking. Slowing down long enough to inspect the sender and the link destination defeats most of it, and no legitimate service asks for your password by email.
+                </p>
+              </div>
+            </article>
+            <article
+              class="challenge reveal bg-card border border-brder rounded-card p-6 sm:p-8 transition-colors"
+              data-id="AWR-02"
+              data-flag="Q1lTNDAxe2wzbmd0aF9iMzR0c19jMG1wbDN4MXR5fQ=="
+            >
+              <div class="flex flex-wrap items-center gap-3 mb-4">
+                <span class="text-[12px] font-mono text-mtext">AWR-02</span>
+                <span
+                  class="text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border border-success/40 bg-success/10 text-success"
+                  >Easy</span
+                >
+                <span class="text-[12px] font-mono text-pred">75 pts</span>
+                <span
+                  class="challenge-status ml-auto text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border border-brder2 text-mtext"
+                  >Unsolved</span
+                >
+              </div>
+              <h3 class="font-display text-[20px] font-semibold mb-3">Password Audit</h3>
+              <p class="text-[14px] text-stext leading-relaxed mb-5">
+                You are handed a list of account passwords from a staff audit. One of them survives a wordlist attack that breaks the rest &mdash; identify it.
+              </p>
+
+              <details class="group mb-5">
+                <summary
+                  class="cursor-pointer list-none inline-flex items-center gap-2 text-[13px] font-medium text-stext hover:text-ptext transition-colors"
+                >
+                  <span
+                    class="w-6 h-6 rounded-md border border-brder2 flex items-center justify-center"
+                    ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  aria-hidden="true"><path d="M4 22V4M4 4h13l-2 4 2 4H4"/></svg></span
+                  >
+                  Show hint
+                </summary>
+                <p
+                  class="mt-3 text-[13px] text-stext leading-relaxed bg-sec border border-brder rounded-xl p-4"
+                >
+                  Substituting 3 for E and 4 for A is the first thing a cracking tool tries. Look instead at which password is simply much longer.
+                </p>
+              </details>
+
+              <form class="flag-form flex flex-col sm:flex-row gap-3" novalidate>
+                <label class="sr-only" for="AWR-02-input"
+                  >Flag for AWR-02</label
+                >
+                <input
+                  id="AWR-02-input"
+                  type="text"
+                  inputmode="text"
+                  autocomplete="off"
+                  spellcheck="false"
+                  placeholder="CYS401{...}"
+                  class="flag-input flex-1 bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] font-mono text-ptext placeholder:text-mtext focus:border-pred focus:outline-none"
+                />
+                <button
+                  type="submit"
+                  class="bg-pred hover:bg-bred text-white text-[14px] font-semibold px-6 py-3 rounded-btn transition-colors"
+                >
+                  Submit Flag
+                </button>
+              </form>
+              <p
+                class="flag-feedback mt-3 text-[13px] leading-relaxed hidden"
+                role="status"
+                aria-live="polite"
+              ></p>
+              <div
+                class="challenge-explain mt-5 hidden bg-sred/30 border border-rborder rounded-xl p-5"
+              >
+                <h4
+                  class="text-[12px] font-semibold text-pred uppercase tracking-widest mb-2"
+                >
+                  What this challenge taught you
+                </h4>
+                <p class="text-[14px] text-stext leading-relaxed">
+                  Cracking tools apply every common substitution in seconds, so complexity rules add little. Length is what multiplies the search space, which is why passphrases and a password manager beat clever spelling.
+                </p>
+              </div>
+            </article>
+            <article
+              class="challenge reveal bg-card border border-brder rounded-card p-6 sm:p-8 transition-colors"
+              data-id="AWR-03"
+              data-flag="Q1lTNDAxe3YzcjFmeV9iM2YwcjNfeTB1X3RydTV0fQ=="
+            >
+              <div class="flex flex-wrap items-center gap-3 mb-4">
+                <span class="text-[12px] font-mono text-mtext">AWR-03</span>
+                <span
+                  class="text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border border-warn/40 bg-warn/10 text-warn"
+                  >Medium</span
+                >
+                <span class="text-[12px] font-mono text-pred">125 pts</span>
+                <span
+                  class="challenge-status ml-auto text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border border-brder2 text-mtext"
+                  >Unsolved</span
+                >
+              </div>
+              <h3 class="font-display text-[20px] font-semibold mb-3">The Helpful Caller</h3>
+              <p class="text-[14px] text-stext leading-relaxed mb-5">
+                Read a transcript of a call from someone claiming to be a new IT contractor. They never ask for a password directly, but they leave with enough to reset one. Work out what they collected.
+              </p>
+
+              <details class="group mb-5">
+                <summary
+                  class="cursor-pointer list-none inline-flex items-center gap-2 text-[13px] font-medium text-stext hover:text-ptext transition-colors"
+                >
+                  <span
+                    class="w-6 h-6 rounded-md border border-brder2 flex items-center justify-center"
+                    ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  aria-hidden="true"><path d="M4 22V4M4 4h13l-2 4 2 4H4"/></svg></span
+                  >
+                  Show hint
+                </summary>
+                <p
+                  class="mt-3 text-[13px] text-stext leading-relaxed bg-sec border border-brder rounded-xl p-4"
+                >
+                  List every fact the caller learned, including the ones that sound harmless. Account recovery questions are built from exactly this kind of detail.
+                </p>
+              </details>
+
+              <form class="flag-form flex flex-col sm:flex-row gap-3" novalidate>
+                <label class="sr-only" for="AWR-03-input"
+                  >Flag for AWR-03</label
+                >
+                <input
+                  id="AWR-03-input"
+                  type="text"
+                  inputmode="text"
+                  autocomplete="off"
+                  spellcheck="false"
+                  placeholder="CYS401{...}"
+                  class="flag-input flex-1 bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] font-mono text-ptext placeholder:text-mtext focus:border-pred focus:outline-none"
+                />
+                <button
+                  type="submit"
+                  class="bg-pred hover:bg-bred text-white text-[14px] font-semibold px-6 py-3 rounded-btn transition-colors"
+                >
+                  Submit Flag
+                </button>
+              </form>
+              <p
+                class="flag-feedback mt-3 text-[13px] leading-relaxed hidden"
+                role="status"
+                aria-live="polite"
+              ></p>
+              <div
+                class="challenge-explain mt-5 hidden bg-sred/30 border border-rborder rounded-xl p-5"
+              >
+                <h4
+                  class="text-[12px] font-semibold text-pred uppercase tracking-widest mb-2"
+                >
+                  What this challenge taught you
+                </h4>
+                <p class="text-[14px] text-stext leading-relaxed">
+                  Pretexting collects small, individually harmless facts until they add up to an account reset. The defence is procedural: verify the caller through a known channel before answering anything.
+                </p>
+              </div>
+            </article>
+          </div>
+          <p class="mt-8 text-[12px] text-mtext leading-relaxed max-w-2xl">
+            Front-end demo: flags are validated in your browser and your
+            progress is stored on this device only. The graded platform
+            validates submissions on the server.
+          </p>
+        </div>
+      </section>
+
+      <!-- Takeaways -->
+      <section class="py-24">
+        <div class="max-w-content mx-auto px-6">
+          <div class="mb-10 reveal">
+            <h2 class="font-display text-[28px] sm:text-[32px] font-semibold mb-3">
+              What You Take Away
+            </h2>
+            <p class="text-[15px] text-stext max-w-2xl">Awareness is a habit rather than a tool, and it is the control that scales to every employee.</p>
+          </div>
+          <ul class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <li class="reveal bg-card border border-brder rounded-card p-6">
+              <h3 class="text-[15px] font-semibold mb-2">Verify through another channel</h3>
+              <p class="text-[14px] text-stext leading-relaxed">If a request is unexpected, confirm it using contact details you already had, never the ones in the message.</p>
+            </li>
+            <li class="reveal bg-card border border-brder rounded-card p-6">
+              <h3 class="text-[15px] font-semibold mb-2">Urgency is the warning sign</h3>
+              <p class="text-[14px] text-stext leading-relaxed">Pressure to act immediately is the most reliable indicator of a social engineering attempt.</p>
+            </li>
+            <li class="reveal bg-card border border-brder rounded-card p-6">
+              <h3 class="text-[15px] font-semibold mb-2">Use a manager and MFA</h3>
+              <p class="text-[14px] text-stext leading-relaxed">Unique long passwords plus a second factor mean one stolen credential does not open everything.</p>
+            </li>
+            <li class="reveal bg-card border border-brder rounded-card p-6">
+              <h3 class="text-[15px] font-semibold mb-2">Report, do not just delete</h3>
+              <p class="text-[14px] text-stext leading-relaxed">Reporting a phishing attempt protects colleagues who received the same message.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="py-24 relative overflow-hidden border-t border-brder">
+        <div
+          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-64 bg-pred/10 blur-[100px] rounded-full pointer-events-none"
+        ></div>
+        <div class="max-w-3xl mx-auto px-6 text-center relative reveal">
+          <h2 class="font-display text-[32px] sm:text-[36px] font-semibold mb-6">
+            Caught it. Ready for the last track?
+          </h2>
+          <p class="text-[16px] text-stext mb-10">
+            Keep going, or check how many flags you have captured so far.
+          </p>
+          <div
+            class="flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <a
+              href="ethics.html"
+              class="w-full sm:w-auto bg-pred hover:bg-bred text-white text-[15px] font-semibold px-8 py-3.5 rounded-btn transition-colors"
+              >Next: Cybersecurity Ethics</a
+            >
+            <a
+              href="index.html#scoreboard"
+              class="w-full sm:w-auto border border-brder2 hover:bg-elevated text-[15px] font-semibold px-8 py-3.5 rounded-btn transition-colors"
+              >View Progress</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+    <script src="assets/js/layout.js"></script>
+    <script src="assets/js/challenges.js"></script>
+  </body>
+</html>

@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Security | CYS401 CTF Lab</title>
+    <meta name="description" content="Web Security challenges in the CYS401 CTF Lab: find hidden data, bypass broken authentication, and exploit injection flaws to capture the flag." />
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <meta name="theme-color" content="#09090B" />
+    <link rel="canonical" href="https://ctf-lab.shoug-tech.com/web-security.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CYS401 CTF Lab" />
+    <meta property="og:title" content="Web Security | CYS401 CTF Lab" />
+    <meta property="og:description" content="Web Security challenges in the CYS401 CTF Lab: find hidden data, bypass broken authentication, and exploit injection flaws to capture the flag." />
+    <meta property="og:url" content="https://ctf-lab.shoug-tech.com/web-security.html" />
+    <meta property="og:image" content="https://ctf-lab.shoug-tech.com/assets/img/og-banner.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="CYS401 CTF Lab — Mini Capture-the-Flag Security Lab Platform." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Web Security | CYS401 CTF Lab" />
+    <meta name="twitter:description" content="Web Security challenges in the CYS401 CTF Lab: find hidden data, bypass broken authentication, and exploit injection flaws to capture the flag." />
+    <meta name="twitter:image" content="https://ctf-lab.shoug-tech.com/assets/img/og-banner.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body
+    class="bg-main text-ptext font-sans antialiased selection:bg-pred selection:text-white"
+  >
+    <div id="site-header"></div>
+
+    <main id="main" class="pt-[72px]">
+      <!-- Hero -->
+      <section
+        class="relative py-20 lg:py-24 border-b border-brder overflow-hidden"
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-br from-main via-main to-sred/50 pointer-events-none"
+        ></div>
+        <div class="relative max-w-content mx-auto px-6">
+          <p
+            class="flex items-center gap-2 text-[12px] font-medium text-pred uppercase tracking-widest mb-5"
+          >
+            <span class="w-1.5 h-1.5 rounded-full bg-pred"></span>Challenge Track 01 &middot; Web Security
+          </p>
+          <h1
+            class="text-[36px] sm:text-[48px] md:text-[42px] lg:text-[52px] 2xl:text-[60px] font-bold leading-[1.1] tracking-tight max-w-3xl mb-6"
+          >
+            Break the Web App, Then Learn Why It Broke
+          </h1>
+          <p class="text-[16px] text-stext leading-relaxed max-w-xl">
+            These challenges put you in front of a deliberately vulnerable web application. Read the page, poke at the inputs, and find the flag the developers left exposed.
+          </p>
+        </div>
+      </section>
+
+      <!-- Track stats -->
+      <section class="border-b border-brder bg-sec py-10">
+        <div
+          class="max-w-content mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8"
+        >
+          <div>
+            <p
+              class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2"
+            >
+              Challenges
+            </p>
+            <p class="font-display text-[32px] font-semibold">4</p>
+          </div>
+          <div>
+            <p
+              class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2"
+            >
+              Points Available
+            </p>
+            <p class="font-display text-[32px] font-semibold">350</p>
+          </div>
+          <div>
+            <p
+              class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2"
+            >
+              Difficulty
+            </p>
+            <p class="font-display text-[20px] font-semibold">Easy &rarr; Hard</p>
+          </div>
+          <div>
+            <p
+              class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2"
+            >
+              Flag Format
+            </p>
+            <p class="font-display text-[20px] font-semibold font-mono">CYS401{...}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- What you practice -->
+      <section class="py-24">
+        <div class="max-w-content mx-auto px-6">
+          <div class="mb-10 reveal">
+            <h2 class="font-display text-[28px] sm:text-[32px] font-semibold mb-3">
+              What You&rsquo;ll Practice
+            </h2>
+            <p class="text-[15px] text-stext max-w-2xl">Web challenges cover the flaws that show up most often in real applications &mdash; the kind listed in the OWASP Top 10.</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <article
+              class="reveal relative overflow-hidden bg-card border border-brder hover:border-rborder rounded-card p-8 transition-colors"
+            >
+              <span
+                class="absolute -top-3 right-5 font-display text-[88px] font-bold text-white/[0.04] leading-none select-none"
+                aria-hidden="true"
+                >01</span
+              >
+              <div
+                class="w-11 h-11 rounded-lg bg-sred border border-rborder flex items-center justify-center mb-6"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"  aria-hidden="true"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg>
+              </div>
+              <h3 class="text-[17px] font-semibold mb-2">Injection Flaws</h3>
+              <p class="text-[14px] text-stext leading-relaxed">
+                Untrusted input handed straight to a database or command, letting an attacker change what the query does.
+              </p>
+            </article>
+            <article
+              class="reveal relative overflow-hidden bg-card border border-brder hover:border-rborder rounded-card p-8 transition-colors"
+            >
+              <span
+                class="absolute -top-3 right-5 font-display text-[88px] font-bold text-white/[0.04] leading-none select-none"
+                aria-hidden="true"
+                >02</span
+              >
+              <div
+                class="w-11 h-11 rounded-lg bg-sred border border-rborder flex items-center justify-center mb-6"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"  aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+              </div>
+              <h3 class="text-[17px] font-semibold mb-2">Broken Authentication</h3>
+              <p class="text-[14px] text-stext leading-relaxed">
+                Login and session handling that can be bypassed by editing a cookie, a token, or a request parameter.
+              </p>
+            </article>
+            <article
+              class="reveal relative overflow-hidden bg-card border border-brder hover:border-rborder rounded-card p-8 transition-colors"
+            >
+              <span
+                class="absolute -top-3 right-5 font-display text-[88px] font-bold text-white/[0.04] leading-none select-none"
+                aria-hidden="true"
+                >03</span
+              >
+              <div
+                class="w-11 h-11 rounded-lg bg-sred border border-rborder flex items-center justify-center mb-6"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"  aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+              </div>
+              <h3 class="text-[17px] font-semibold mb-2">Exposed Data</h3>
+              <p class="text-[14px] text-stext leading-relaxed">
+                Secrets left in page source, comments, backup files, or an API that returns more than it should.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Challenges -->
+      <section id="challenges" class="py-24 bg-sec border-y border-brder">
+        <div class="max-w-content mx-auto px-6">
+          <div
+            class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6 reveal"
+          >
+            <div>
+              <p
+                class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3"
+              >
+                Challenges
+              </p>
+              <h2 class="font-display text-[28px] sm:text-[32px] font-semibold mb-2">
+                Capture the Flags
+              </h2>
+              <p class="text-[15px] text-stext max-w-2xl">
+                Read the scenario, solve the task, then submit the flag you
+                found. Hints are there if you need them &mdash; every correct
+                answer ends with an explanation.
+              </p>
+            </div>
+            <div
+              class="self-start md:self-auto bg-card border border-brder rounded-card px-5 py-4 text-center shrink-0"
+            >
+              <p
+                class="text-[11px] font-medium text-mtext uppercase tracking-widest mb-1"
+              >
+                Your Progress
+              </p>
+              <p class="font-display text-[24px] font-semibold">
+                <span id="solved-count">0</span>
+                <span class="text-stext">/ 4</span>
+              </p>
+              <p class="text-[12px] font-mono text-pred mt-1">
+                <span id="points-count">0</span> pts
+              </p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <article
+              class="challenge reveal bg-card border border-brder rounded-card p-6 sm:p-8 transition-colors"
+              data-id="WEB-01"
+              data-flag="Q1lTNDAxe3ZpZXdfc291cmNlX2ZpcnN0fQ=="
+            >
+              <div class="flex flex-wrap items-center gap-3 mb-4">
+                <span class="text-[12px] font-mono text-mtext">WEB-01</span>
+                <span
+                  class="text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border border-success/40 bg-success/10 text-success"
+                  >Easy</span
+                >
+                <span class="text-[12px] font-mono text-pred">50 pts</span>
+                <span
+                  class="challenge-status ml-auto text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border border-brder2 text-mtext"
+                  >Unsolved</span
+                >
+              </div>
+              <h3 class="font-display text-[20px] font-semibold mb-3">Hidden in Plain Sight</h3>
+              <p class="text-[14px] text-stext leading-relaxed mb-5">
+                The login page for a small company portal looks ordinary. A developer left a note to themselves somewhere the browser does not display, and it contains the flag.
+              </p>
+
+              <details class="group mb-5">
+                <summary
+                  class="cursor-pointer list-none inline-flex items-center gap-2 text-[13px] font-medium text-stext hover:text-ptext transition-colors"
+                >
+                  <span
+                    class="w-6 h-6 rounded-md border border-brder2 flex items-center justify-center"
+                    ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  aria-hidden="true"><path d="M4 22V4M4 4h13l-2 4 2 4H4"/></svg></span
+                  >
+                  Show hint
+                </summary>
+                <p
+                  class="mt-3 text-[13px] text-stext leading-relaxed bg-sec border border-brder rounded-xl p-4"
+                >
+                  Nothing here needs an exploit. View the page source, then check the files a site exposes by habit &mdash; <span class="font-mono">robots.txt</span> and old backups.
+                </p>
+              </details>
+
+              <form class="flag-form flex flex-col sm:flex-row gap-3" novalidate>
+                <label class="sr-only" for="WEB-01-input"
+                  >Flag for WEB-01</label
+                >
+                <input
+                  id="WEB-01-input"
+                  type="text"
+                  inputmode="text"
+                  autocomplete="off"
+                  spellcheck="false"
+                  placeholder="CYS401{...}"
+                  class="flag-input flex-1 bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] font-mono text-ptext placeholder:text-mtext focus:border-pred focus:outline-none"
+                />
+                <button
+                  type="submit"
+                  class="bg-pred hover:bg-bred text-white text-[14px] font-semibold px-6 py-3 rounded-btn transition-colors"
+                >
+                  Submit Flag
+                </button>
+              </form>
+              <p
+                class="flag-feedback mt-3 text-[13px] leading-relaxed hidden"
+                role="status"
+                aria-live="polite"
+              ></p>
+              <div
+                class="challenge-explain mt-5 hidden bg-sred/30 border border-rborder rounded-xl p-5"
+              >
+                <h4
+                  class="text-[12px] font-semibold text-pred uppercase tracking-widest mb-2"
+                >
+                  What this challenge taught you
+                </h4>
+                <p class="text-[14px] text-stext leading-relaxed">
+                  Anything sent to the browser is readable by the user, including HTML comments, JavaScript, and files left in the web root. Secrets belong on the server, never in client-side code.
+                </p>
+              </div>
+            </article>
+            <article
+              class="challenge reveal bg-card border border-brder rounded-card p-6 sm:p-8 transition-colors"
+              data-id="WEB-02"
+              data-flag="Q1lTNDAxe2Nvb2tpZXNfYXJlX25vdF9pZGVudGl0eX0="
+            >
+              <div class="flex flex-wrap items-center gap-3 mb-4">
+                <span class="text-[12px] font-mono text-mtext">WEB-02</span>
+                <span
+                  class="text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border border-success/40 bg-success/10 text-success"
+                  >Easy</span
+                >
+                <span class="text-[12px] font-mono text-pred">75 pts</span>
+                <span
+                  class="challenge-status ml-auto text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border border-brder2 text-mtext"
+                  >Unsolved</span
+                >
+              </div>
+              <h3 class="font-display text-[20px] font-semibold mb-3">Guest Access</h3>
+              <p class="text-[14px] text-stext leading-relaxed mb-5">
+                You log in with a guest account and reach a limited dashboard. The application decides what you may see from a value it stores in your browser.
+              </p>
+
+              <details class="group mb-5">
+                <summary
+                  class="cursor-pointer list-none inline-flex items-center gap-2 text-[13px] font-medium text-stext hover:text-ptext transition-colors"
+                >
+                  <span
+                    class="w-6 h-6 rounded-md border border-brder2 flex items-center justify-center"
+                    ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  aria-hidden="true"><path d="M4 22V4M4 4h13l-2 4 2 4H4"/></svg></span
+                  >
+                  Show hint
+                </summary>
+                <p
+                  class="mt-3 text-[13px] text-stext leading-relaxed bg-sec border border-brder rounded-xl p-4"
+                >
+                  Open your browser&rsquo;s storage inspector and look at the cookies for the site. One of them describes who the application thinks you are.
+                </p>
+              </details>
+
+              <form class="flag-form flex flex-col sm:flex-row gap-3" novalidate>
+                <label class="sr-only" for="WEB-02-input"
+                  >Flag for WEB-02</label
+                >
+                <input
+                  id="WEB-02-input"
+                  type="text"
+                  inputmode="text"
+                  autocomplete="off"
+                  spellcheck="false"
+                  placeholder="CYS401{...}"
+                  class="flag-input flex-1 bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] font-mono text-ptext placeholder:text-mtext focus:border-pred focus:outline-none"
+                />
+                <button
+                  type="submit"
+                  class="bg-pred hover:bg-bred text-white text-[14px] font-semibold px-6 py-3 rounded-btn transition-colors"
+                >
+                  Submit Flag
+                </button>
+              </form>
+              <p
+                class="flag-feedback mt-3 text-[13px] leading-relaxed hidden"
+                role="status"
+                aria-live="polite"
+              ></p>
+              <div
+                class="challenge-explain mt-5 hidden bg-sred/30 border border-rborder rounded-xl p-5"
+              >
+                <h4
+                  class="text-[12px] font-semibold text-pred uppercase tracking-widest mb-2"
+                >
+                  What this challenge taught you
+                </h4>
+                <p class="text-[14px] text-stext leading-relaxed">
+                  Authorization decided from client-side values is no authorization at all, because the client controls them. Roles and permissions have to be checked on the server against the session.
+                </p>
+              </div>
+            </article>
+            <article
+              class="challenge reveal bg-card border border-brder rounded-card p-6 sm:p-8 transition-colors"
+              data-id="WEB-03"
+              data-flag="Q1lTNDAxe3NxbF8xbmozY3QxMG59"
+            >
+              <div class="flex flex-wrap items-center gap-3 mb-4">
+                <span class="text-[12px] font-mono text-mtext">WEB-03</span>
+                <span
+                  class="text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border border-warn/40 bg-warn/10 text-warn"
+                  >Medium</span
+                >
+                <span class="text-[12px] font-mono text-pred">100 pts</span>
+                <span
+                  class="challenge-status ml-auto text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border border-brder2 text-mtext"
+                  >Unsolved</span
+                >
+              </div>
+              <h3 class="font-display text-[20px] font-semibold mb-3">The Quotation Mark</h3>
+              <p class="text-[14px] text-stext leading-relaxed mb-5">
+                The staff login form builds its database query by pasting your username straight into a string. Get in without knowing a password.
+              </p>
+
+              <details class="group mb-5">
+                <summary
+                  class="cursor-pointer list-none inline-flex items-center gap-2 text-[13px] font-medium text-stext hover:text-ptext transition-colors"
+                >
+                  <span
+                    class="w-6 h-6 rounded-md border border-brder2 flex items-center justify-center"
+                    ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  aria-hidden="true"><path d="M4 22V4M4 4h13l-2 4 2 4H4"/></svg></span
+                  >
+                  Show hint
+                </summary>
+                <p
+                  class="mt-3 text-[13px] text-stext leading-relaxed bg-sec border border-brder rounded-xl p-4"
+                >
+                  Think about what a single quote does to a query that was not expecting one, and what happens when the condition after it is always true.
+                </p>
+              </details>
+
+              <form class="flag-form flex flex-col sm:flex-row gap-3" novalidate>
+                <label class="sr-only" for="WEB-03-input"
+                  >Flag for WEB-03</label
+                >
+                <input
+                  id="WEB-03-input"
+                  type="text"
+                  inputmode="text"
+                  autocomplete="off"
+                  spellcheck="false"
+                  placeholder="CYS401{...}"
+                  class="flag-input flex-1 bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] font-mono text-ptext placeholder:text-mtext focus:border-pred focus:outline-none"
+                />
+                <button
+                  type="submit"
+                  class="bg-pred hover:bg-bred text-white text-[14px] font-semibold px-6 py-3 rounded-btn transition-colors"
+                >
+                  Submit Flag
+                </button>
+              </form>
+              <p
+                class="flag-feedback mt-3 text-[13px] leading-relaxed hidden"
+                role="status"
+                aria-live="polite"
+              ></p>
+              <div
+                class="challenge-explain mt-5 hidden bg-sred/30 border border-rborder rounded-xl p-5"
+              >
+                <h4
+                  class="text-[12px] font-semibold text-pred uppercase tracking-widest mb-2"
+                >
+                  What this challenge taught you
+                </h4>
+                <p class="text-[14px] text-stext leading-relaxed">
+                  SQL injection happens when input becomes part of the query rather than data within it. Parameterized queries, or prepared statements, keep the two separate and shut the whole class of attack down.
+                </p>
+              </div>
+            </article>
+            <article
+              class="challenge reveal bg-card border border-brder rounded-card p-6 sm:p-8 transition-colors"
+              data-id="WEB-04"
+              data-flag="Q1lTNDAxezFkMHJfYnIwazNuXzRjY2Vzc30="
+            >
+              <div class="flex flex-wrap items-center gap-3 mb-4">
+                <span class="text-[12px] font-mono text-mtext">WEB-04</span>
+                <span
+                  class="text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border border-rborder bg-sred text-pred"
+                  >Hard</span
+                >
+                <span class="text-[12px] font-mono text-pred">125 pts</span>
+                <span
+                  class="challenge-status ml-auto text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border border-brder2 text-mtext"
+                  >Unsolved</span
+                >
+              </div>
+              <h3 class="font-display text-[20px] font-semibold mb-3">Leaky Endpoint</h3>
+              <p class="text-[14px] text-stext leading-relaxed mb-5">
+                The portal loads your profile from an API call that names your account number. Another user&rsquo;s record holds the flag.
+              </p>
+
+              <details class="group mb-5">
+                <summary
+                  class="cursor-pointer list-none inline-flex items-center gap-2 text-[13px] font-medium text-stext hover:text-ptext transition-colors"
+                >
+                  <span
+                    class="w-6 h-6 rounded-md border border-brder2 flex items-center justify-center"
+                    ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  aria-hidden="true"><path d="M4 22V4M4 4h13l-2 4 2 4H4"/></svg></span
+                  >
+                  Show hint
+                </summary>
+                <p
+                  class="mt-3 text-[13px] text-stext leading-relaxed bg-sec border border-brder rounded-xl p-4"
+                >
+                  Watch the network requests the page makes while it loads your profile, then ask what stops you requesting a different identifier.
+                </p>
+              </details>
+
+              <form class="flag-form flex flex-col sm:flex-row gap-3" novalidate>
+                <label class="sr-only" for="WEB-04-input"
+                  >Flag for WEB-04</label
+                >
+                <input
+                  id="WEB-04-input"
+                  type="text"
+                  inputmode="text"
+                  autocomplete="off"
+                  spellcheck="false"
+                  placeholder="CYS401{...}"
+                  class="flag-input flex-1 bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] font-mono text-ptext placeholder:text-mtext focus:border-pred focus:outline-none"
+                />
+                <button
+                  type="submit"
+                  class="bg-pred hover:bg-bred text-white text-[14px] font-semibold px-6 py-3 rounded-btn transition-colors"
+                >
+                  Submit Flag
+                </button>
+              </form>
+              <p
+                class="flag-feedback mt-3 text-[13px] leading-relaxed hidden"
+                role="status"
+                aria-live="polite"
+              ></p>
+              <div
+                class="challenge-explain mt-5 hidden bg-sred/30 border border-rborder rounded-xl p-5"
+              >
+                <h4
+                  class="text-[12px] font-semibold text-pred uppercase tracking-widest mb-2"
+                >
+                  What this challenge taught you
+                </h4>
+                <p class="text-[14px] text-stext leading-relaxed">
+                  This is an insecure direct object reference: the server trusts the identifier the client sends without checking that this user may read that record. Every request needs an ownership check, not just a valid session.
+                </p>
+              </div>
+            </article>
+          </div>
+          <p class="mt-8 text-[12px] text-mtext leading-relaxed max-w-2xl">
+            Front-end demo: flags are validated in your browser and your
+            progress is stored on this device only. The graded platform
+            validates submissions on the server.
+          </p>
+        </div>
+      </section>
+
+      <!-- Takeaways -->
+      <section class="py-24">
+        <div class="max-w-content mx-auto px-6">
+          <div class="mb-10 reveal">
+            <h2 class="font-display text-[28px] sm:text-[32px] font-semibold mb-3">
+              What You Take Away
+            </h2>
+            <p class="text-[15px] text-stext max-w-2xl">The point of the web track is not the exploit itself but the defensive habit behind it.</p>
+          </div>
+          <ul class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <li class="reveal bg-card border border-brder rounded-card p-6">
+              <h3 class="text-[15px] font-semibold mb-2">Validate on the server</h3>
+              <p class="text-[14px] text-stext leading-relaxed">Client-side checks are for convenience. Anything that protects data has to be enforced where the user cannot edit it.</p>
+            </li>
+            <li class="reveal bg-card border border-brder rounded-card p-6">
+              <h3 class="text-[15px] font-semibold mb-2">Parameterize every query</h3>
+              <p class="text-[14px] text-stext leading-relaxed">Prepared statements remove the ambiguity between code and data that injection depends on.</p>
+            </li>
+            <li class="reveal bg-card border border-brder rounded-card p-6">
+              <h3 class="text-[15px] font-semibold mb-2">Check authorization per request</h3>
+              <p class="text-[14px] text-stext leading-relaxed">A valid session says who you are, not what you may open. Verify ownership on every object you return.</p>
+            </li>
+            <li class="reveal bg-card border border-brder rounded-card p-6">
+              <h3 class="text-[15px] font-semibold mb-2">Ship nothing you would not publish</h3>
+              <p class="text-[14px] text-stext leading-relaxed">Comments, debug routes, and backup files in the web root are readable by anyone who looks.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="py-24 relative overflow-hidden border-t border-brder">
+        <div
+          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-64 bg-pred/10 blur-[100px] rounded-full pointer-events-none"
+        ></div>
+        <div class="max-w-3xl mx-auto px-6 text-center relative reveal">
+          <h2 class="font-display text-[32px] sm:text-[36px] font-semibold mb-6">
+            Flags captured. Ready for the next track?
+          </h2>
+          <p class="text-[16px] text-stext mb-10">
+            Keep going, or check how many flags you have captured so far.
+          </p>
+          <div
+            class="flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <a
+              href="cryptography.html"
+              class="w-full sm:w-auto bg-pred hover:bg-bred text-white text-[15px] font-semibold px-8 py-3.5 rounded-btn transition-colors"
+              >Next: Cryptography</a
+            >
+            <a
+              href="index.html#scoreboard"
+              class="w-full sm:w-auto border border-brder2 hover:bg-elevated text-[15px] font-semibold px-8 py-3.5 rounded-btn transition-colors"
+              >View Progress</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+    <script src="assets/js/layout.js"></script>
+    <script src="assets/js/challenges.js"></script>
+  </body>
+</html>

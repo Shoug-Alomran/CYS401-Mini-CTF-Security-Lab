@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://shoug-alomran.github.io/cys401/</loc>
+    <loc>https://ctf-lab.shoug-tech.com/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://shoug-alomran.github.io/cys401/about.html</loc>
+    <loc>https://ctf-lab.shoug-tech.com/about.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://shoug-alomran.github.io/cys401/project.html</loc>
+    <loc>https://ctf-lab.shoug-tech.com/project.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://shoug-alomran.github.io/cys401/threats.html</loc>
+    <loc>https://ctf-lab.shoug-tech.com/web-security.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://shoug-alomran.github.io/cys401/cia-triad.html</loc>
+    <loc>https://ctf-lab.shoug-tech.com/ethics.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://shoug-alomran.github.io/cys401/access-control.html</loc>
+    <loc>https://ctf-lab.shoug-tech.com/security-awareness.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://shoug-alomran.github.io/cys401/protection.html</loc>
+    <loc>https://ctf-lab.shoug-tech.com/cryptography.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://shoug-alomran.github.io/cys401/team.html</loc>
+    <loc>https://ctf-lab.shoug-tech.com/team.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

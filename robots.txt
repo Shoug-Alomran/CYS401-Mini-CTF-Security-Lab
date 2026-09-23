@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /404.html
 
-Sitemap: https://shoug-alomran.github.io/cys401/sitemap.xml
+Sitemap: https://ctf-lab.shoug-tech.com/sitemap.xml
