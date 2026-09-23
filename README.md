@@ -17,10 +17,12 @@ The website for our CYS401 semester project: the **Mini Capture-the-Flag (CTF) S
 | `ethics.html` | Challenge track 04 — Cybersecurity Ethics |
 | `team.html` | Team |
 | `404.html` | Not found page |
+| `ctf-plan.pdf` | Project plan — scope, challenge ideas, flag system, report phases (linked from the Project page) |
 
 ## Structure
 
 - `assets/js/layout.js` holds the **shared header and footer** for every page. To add or rename a nav link, edit the `NAV` array there. The active link is highlighted automatically.
+- `assets/js/guide.js` adds the **Contents panel and the guided walkthrough** to the dock at the bottom right of every page. The contents list is generated from each section's `<h2>`; tour steps live in the `TOURS` object, and steps whose target is missing are skipped.
 - `assets/js/challenges.js` runs the **challenge behaviour** on the four category pages: flag validation, hints, points, and progress. Each challenge card carries its expected flag base64-encoded in `data-flag`, and solved challenges are stored in `localStorage` — a front-end demo, so the graded platform validates on the server instead.
 - `assets/js/tailwind-config.js` holds the shared Tailwind theme (colors, fonts).
 - `assets/css/styles.css` holds the small amount of custom CSS.
