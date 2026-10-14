@@ -19,6 +19,7 @@ The website for our CYS401 semester project: the **Mini Capture-the-Flag (CTF) S
 | `scoreboard.html` | Public scoreboard (all players ranked by points) |
 | `auth.html` | Log in / sign up |
 | `dashboard.html` | Signed-in user's progress: points, completion %, solves with timestamps |
+| `account.html` | Account settings: change username (with availability check), email, password; delete account |
 | `admin.html` | Admin only: load challenges and flag hashes, manage roles, submission log |
 | `team.html` | Team |
 | `404.html` | Not found page |
@@ -75,7 +76,7 @@ Roles: everyone signs up as `user`. An `admin` can load challenges and flags, ch
 
 ## Testing
 
-`tests/rules.test.mjs` runs 24 security tests against the Firestore emulator (needs Node and Java):
+`tests/rules.test.mjs` runs 32 security tests against the Firestore emulator (needs Node and Java):
 
 ```sh
 cd tests
@@ -83,7 +84,7 @@ npm install
 npm test
 ```
 
-They cover sign-up and roles, hidden flags, correct, wrong, and forged submissions, the 5-second throttle, double-scoring, direct score edits, privacy of solves and attempts, admin-only actions, and hint logging.
+They cover sign-up and roles, renaming and account deletion, hidden flags, correct, wrong, and forged submissions, the 5-second throttle, double-scoring, direct score edits, privacy of solves and attempts, admin-only actions, and hint logging.
 
 To click through the site against the emulators instead of the real project, start `npx firebase emulators:start --only auth,firestore --project demo-cys401 --config ../firebase.json` from `tests/`, serve the site on `localhost`, and run `localStorage.setItem('cys401-emulator', '1')` in the browser console.
 

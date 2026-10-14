@@ -5,7 +5,9 @@ rules_version = '2';
 // These rules are the platform's server side. The browser can only write what the
 // rules allow, so they enforce:
 //   - accounts: a user can create only their own profile, always with role "user";
-//     roles change only through an admin.
+//     roles change only through an admin. Users can rename themselves (the
+//     username index, profile, and scoreboard row change together) and delete
+//     their own account.
 //   - flag validation: a solve is accepted only when SHA-256(submitted flag) matches
 //     the hash in flagHashes/{challengeId}, which no client can read.
 //   - scoring: a user's score can rise only by the points of a challenge they have
@@ -51,14 +53,18 @@ service cloud.firestore {
     }
 
     // ── Usernames: one doc per lower-cased name, so names stay unique ─────────
+    // A name can only be claimed for the profile being created or renamed in the
+    // same batch, so nobody can reserve names they are not using.
     match /usernames/{name} {
       allow read: if true;
       allow create: if signedIn()
         && request.resource.data.keys().hasOnly(['uid'])
         && request.resource.data.uid == request.auth.uid
         && validUsername(name)
-        && name == name.lower();
-      allow update, delete: if false;
+        && name == name.lower()
+        && getAfter(/databases/$(database)/documents/users/$(request.auth.uid)).data.username.lower() == name;
+      allow delete: if signedIn() && resource.data.uid == request.auth.uid;
+      allow update: if false;
     }
 
     // ── Profiles ──────────────────────────────────────────────────────────────
@@ -73,7 +79,7 @@ service cloud.firestore {
         && request.resource.data.lastAttemptAt == null
         && getAfter(/databases/$(database)/documents/usernames/$(request.resource.data.username.lower())).data.uid == uid;
 
-      // Owner: only the throttle timestamp, and at most once every 5 seconds.
+      // Owner: the throttle timestamp (at most once every 5 seconds), or a rename.
       // Admin: only the role.
       allow update: if (
           isSelf(uid)
@@ -82,12 +88,25 @@ service cloud.firestore {
           && (resource.data.lastAttemptAt == null
               || request.time > resource.data.lastAttemptAt + duration.value(5, 's'))
         ) || (
+          // Rename: claim the new name, release the old one (unless only the case
+          // changed), and update the scoreboard row, all in one batch.
+          isSelf(uid)
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['username'])
+          && validUsername(request.resource.data.username)
+          && getAfter(/databases/$(database)/documents/usernames/$(request.resource.data.username.lower())).data.uid == uid
+          && (request.resource.data.username.lower() == resource.data.username.lower()
+              || !existsAfter(/databases/$(database)/documents/usernames/$(resource.data.username.lower())))
+          && getAfter(/databases/$(database)/documents/scores/$(uid)).data.username == request.resource.data.username
+        ) || (
           isAdmin()
           && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['role'])
           && request.resource.data.role in ['user', 'admin']
         );
 
-      allow delete: if false;
+      // Account deletion: the username and scoreboard row go in the same batch.
+      allow delete: if isSelf(uid)
+        && !existsAfter(/databases/$(database)/documents/usernames/$(resource.data.username.lower()))
+        && !existsAfter(/databases/$(database)/documents/scores/$(uid));
     }
 
     // ── Public scoreboard ─────────────────────────────────────────────────────
@@ -113,7 +132,13 @@ service cloud.firestore {
         && request.resource.data.solved == resource.data.solved + 1
         && request.resource.data.lastSolveAt == request.time;
 
-      allow delete: if false;
+      // Rename: the scoreboard name follows the profile, in the same batch.
+      allow update: if isSelf(uid)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['username'])
+        && request.resource.data.username == getAfter(/databases/$(database)/documents/users/$(uid)).data.username;
+
+      allow delete: if isSelf(uid)
+        && !existsAfter(/databases/$(database)/documents/users/$(uid));
     }
 
     // ── Solves: id is {uid}_{challengeId}, so each challenge scores once ─────

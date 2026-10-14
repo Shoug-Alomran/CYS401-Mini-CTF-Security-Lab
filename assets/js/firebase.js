@@ -14,6 +14,11 @@ import {
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
   updateProfile,
+  updatePassword,
+  verifyBeforeUpdateEmail,
+  sendEmailVerification,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
   signOut
 } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
 import {
@@ -26,6 +31,7 @@ import {
   getDocFromServer,
   getDocsFromServer,
   setDoc,
+  deleteDoc,
   collection,
   query,
   where,
@@ -118,7 +124,9 @@ const AUTH_ERRORS = {
   'auth/user-not-found': 'Incorrect email or password.',
   'auth/too-many-requests': 'Too many attempts. This account is temporarily locked — try again later or reset your password.',
   'auth/network-request-failed': 'Network error. Check your connection and try again.',
-  'auth/operation-not-allowed': 'Email/password sign-in is not enabled for this project yet.'
+  'auth/operation-not-allowed': 'Email/password sign-in is not enabled for this project yet.',
+  'auth/requires-recent-login': 'For security, log out and log in again, then retry.',
+  'auth/missing-password': 'Enter your current password.'
 };
 
 export function friendlyError(err) {
@@ -205,6 +213,86 @@ function profileBatch(uid, username, nameRef) {
     lastSolveAt: null
   });
   return batch;
+}
+
+// ── Profile management ───────────────────────────────────────────────────────
+// Returns { ok, message } for a proposed username (case changes to your own name count as available).
+export async function checkUsername(name) {
+  requireConfigured();
+  if (!USERNAME_RE.test(name)) {
+    return { ok: false, message: '3–20 characters: letters, numbers, and underscores.' };
+  }
+  const current = state.profile && state.profile.username;
+  if (current === name) return { ok: false, message: 'That is already your username.' };
+  const snap = await getDoc(doc(db, 'usernames', name.toLowerCase()));
+  if (snap.exists() && (!state.user || snap.data().uid !== state.user.uid)) {
+    return { ok: false, message: 'That username is taken.' };
+  }
+  return { ok: true, message: 'Available.' };
+}
+
+// Claims the new name, releases the old one, and renames the scoreboard row in one batch.
+export async function changeUsername(name) {
+  const check = await checkUsername(name);
+  if (!check.ok) throw new Error(check.message);
+  const user = state.user;
+  const old = state.profile.username;
+  const batch = writeBatch(db);
+  if (old.toLowerCase() !== name.toLowerCase()) {
+    batch.set(doc(db, 'usernames', name.toLowerCase()), { uid: user.uid });
+    batch.delete(doc(db, 'usernames', old.toLowerCase()));
+  }
+  batch.update(doc(db, 'users', user.uid), { username: name });
+  batch.update(doc(db, 'scores', user.uid), { username: name });
+  try {
+    await batch.commit();
+  } catch (e) {
+    throw new Error(e.code === 'permission-denied' ? 'That username is taken.' : friendlyError(e));
+  }
+  await updateProfile(user, { displayName: name }).catch(() => {});
+  state = { ...state, profile: { ...state.profile, username: name } };
+  emit();
+}
+
+// Sensitive changes need the current password (Firebase requires a recent login).
+async function reauthenticate(currentPassword) {
+  const user = state.user;
+  if (!user) throw new Error('Log in first.');
+  if (!currentPassword) throw new Error(AUTH_ERRORS['auth/missing-password']);
+  await reauthenticateWithCredential(user, EmailAuthProvider.credential(user.email, currentPassword));
+  return user;
+}
+
+export async function changePassword(currentPassword, newPassword) {
+  if (newPassword.length < 8) throw new Error(AUTH_ERRORS['auth/weak-password']);
+  const user = await reauthenticate(currentPassword);
+  await updatePassword(user, newPassword);
+}
+
+// Sends a confirmation link to the new address; the email changes when it is clicked.
+export async function changeEmail(currentPassword, newEmail) {
+  const user = await reauthenticate(currentPassword);
+  if (newEmail.toLowerCase() === (user.email || '').toLowerCase()) throw new Error('That is already your email.');
+  await verifyBeforeUpdateEmail(user, newEmail);
+}
+
+export async function sendVerification() {
+  if (!state.user) throw new Error('Log in first.');
+  await sendEmailVerification(state.user);
+}
+
+// Removes the profile, username, and scoreboard row, then the login itself.
+// Solves and the attempt log stay, as the platform's audit trail.
+export async function deleteAccount(currentPassword) {
+  const user = await reauthenticate(currentPassword);
+  if (state.profile) {
+    const batch = writeBatch(db);
+    batch.delete(doc(db, 'usernames', state.profile.username.toLowerCase()));
+    batch.delete(doc(db, 'users', user.uid));
+    batch.delete(doc(db, 'scores', user.uid));
+    await batch.commit();
+  }
+  await user.delete();
 }
 
 export async function logIn(email, password) {
@@ -402,28 +490,68 @@ function renderAuthSlot() {
   const slots = document.querySelectorAll('[data-auth-slot]');
   if (!slots.length) return;
   const btn = 'text-[14px] font-semibold px-4 py-2.5 rounded-btn transition-colors';
-  let html;
-  if (!state.ready) {
-    html = '';
-  } else if (state.user && state.profile) {
-    html =
-      (isAdmin() ? '<a href="admin.html" class="' + btn + ' text-stext hover:text-ptext">Admin</a>' : '') +
-      '<a href="dashboard.html" class="' + btn + ' border border-brder2 hover:bg-elevated inline-flex items-center gap-2">' +
-      '<span class="w-2 h-2 rounded-full bg-success"></span>' + escapeHtml(state.profile.username) + '</a>' +
-      '<button type="button" data-logout class="' + btn + ' text-stext hover:text-ptext">Log out</button>';
-  } else if (state.user) {
-    html =
-      '<a href="auth.html" class="' + btn + ' bg-pred hover:bg-bred text-white">Finish setup</a>' +
-      '<button type="button" data-logout class="' + btn + ' text-stext hover:text-ptext">Log out</button>';
-  } else {
-    html =
-      '<a href="auth.html" class="' + btn + ' text-stext hover:text-ptext">Log in</a>' +
-      '<a href="auth.html#signup" class="' + btn + ' bg-pred hover:bg-bred text-white">Sign up</a>';
-  }
+  const item = 'block px-4 py-2.5 text-[14px] text-stext hover:text-ptext hover:bg-elevated transition-colors';
+  const signedIn = state.user && state.profile;
+
   slots.forEach((slot) => {
+    const mobile = slot.dataset.authSlot === 'mobile';
+    let html = '';
+    if (!state.ready) {
+      html = '';
+    } else if (signedIn) {
+      const links = [['dashboard.html', 'My Dashboard'], ['account.html', 'Account settings']];
+      if (isAdmin()) links.push(['admin.html', 'Admin']);
+      if (mobile) {
+        html =
+          '<p class="w-full px-4 pt-2 text-[12px] uppercase tracking-wider text-mtext">Signed in as ' + escapeHtml(state.profile.username) + '</p>' +
+          links.map(([href, label]) => '<a href="' + href + '" class="' + btn + ' border border-brder2 hover:bg-elevated">' + label + '</a>').join('') +
+          '<button type="button" data-logout class="' + btn + ' text-stext hover:text-ptext">Log out</button>';
+      } else {
+        html =
+          '<div class="relative" data-menu>' +
+          '<button type="button" data-menu-toggle aria-haspopup="true" aria-expanded="false" class="' + btn + ' border border-brder2 hover:bg-elevated inline-flex items-center gap-2">' +
+          '<span class="w-2 h-2 rounded-full bg-success"></span>' + escapeHtml(state.profile.username) +
+          (isAdmin() ? '<span class="text-[10px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded border border-rborder text-bred">Admin</span>' : '') +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>' +
+          '<div data-menu-list class="hidden absolute right-0 mt-2 w-56 bg-card border border-brder rounded-xl shadow-2xl overflow-hidden py-1 z-50" role="menu">' +
+          '<p class="px-4 py-2 text-[12px] text-mtext truncate">' + escapeHtml(state.user.email || '') + '</p>' +
+          links.map(([href, label]) => '<a href="' + href + '" role="menuitem" class="' + item + '">' + label + '</a>').join('') +
+          '<div class="border-t border-brder my-1"></div>' +
+          '<button type="button" data-logout role="menuitem" class="' + item + ' w-full text-left">Log out</button>' +
+          '</div></div>';
+      }
+    } else if (state.user) {
+      html =
+        '<a href="auth.html" class="' + btn + ' bg-pred hover:bg-bred text-white">Finish setup</a>' +
+        '<button type="button" data-logout class="' + btn + ' text-stext hover:text-ptext">Log out</button>';
+    } else {
+      html =
+        '<a href="auth.html" class="' + btn + ' text-stext hover:text-ptext">Log in</a>' +
+        '<a href="auth.html#signup" class="' + btn + ' bg-pred hover:bg-bred text-white">Sign up</a>';
+    }
     slot.innerHTML = html;
-    const out = slot.querySelector('[data-logout]');
-    if (out) out.addEventListener('click', () => logOut().then(() => location.assign('index.html')));
+
+    slot.querySelectorAll('[data-logout]').forEach((out) =>
+      out.addEventListener('click', () => logOut().then(() => location.assign('index.html')))
+    );
+    const toggle = slot.querySelector('[data-menu-toggle]');
+    const list = slot.querySelector('[data-menu-list]');
+    if (toggle && list) {
+      const setOpen = (open) => {
+        list.classList.toggle('hidden', !open);
+        toggle.setAttribute('aria-expanded', String(open));
+      };
+      toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setOpen(list.classList.contains('hidden'));
+      });
+      document.addEventListener('click', (e) => {
+        if (!slot.contains(e.target)) setOpen(false);
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') setOpen(false);
+      });
+    }
   });
 }
 

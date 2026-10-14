@@ -61,6 +61,10 @@
           <div id="not-configured" class="hidden mb-8 bg-card border border-warn/40 rounded-card p-5 text-[14px] text-stext leading-relaxed"><strong class="text-warn">Accounts not connected yet.</strong> Add the Firebase project config to <span class="font-mono text-ptext">assets/js/firebase-config.js</span> to enable sign-up, flag submission, and the scoreboard.</div>
           <div id="gate" class="hidden bg-card border border-brder rounded-card p-8 text-center"><p id="gate-msg" class="text-[15px] text-stext mb-6"></p><a id="gate-link" href="auth.html" class="inline-block bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">Log in</a></div>
           <div id="dash" class="hidden">
+            <a id="d-admin" href="admin.html" class="hidden mb-8 flex items-center justify-between gap-4 bg-sred/40 border border-rborder rounded-card p-5 hover:bg-sred/60 transition-colors">
+              <span><span class="block text-[15px] font-semibold">Admin tools</span><span class="block text-[13px] text-stext">Load challenges and flags, manage roles, and review the submission log.</span></span>
+              <span class="text-bred font-semibold text-[14px] whitespace-nowrap">Open Admin &rarr;</span>
+            </a>
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
               <div class="bg-card border border-brder rounded-card p-6"><p class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2">Points</p><p class="font-display text-[34px] font-semibold leading-none"><span id="d-points">&ndash;</span><span class="text-[16px] text-stext font-sans font-normal ml-1">/ <span id="d-total"></span></span></p></div>
               <div class="bg-card border border-brder rounded-card p-6"><p class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2">Solved</p><p class="font-display text-[34px] font-semibold leading-none"><span id="d-solved">&ndash;</span><span class="text-[16px] text-stext font-sans font-normal ml-1">/ <span id="d-count"></span></span></p></div>
@@ -95,7 +99,7 @@
     <script src="assets/js/layout.js"></script>
     <script src="assets/js/guide.js"></script>
     <script type="module">
-      import { configured, onSession, mySolves, myHints, scoreboard, escapeHtml } from './assets/js/firebase.js';
+      import { configured, onSession, isAdmin, mySolves, myHints, scoreboard, escapeHtml } from './assets/js/firebase.js';
       import { CHALLENGES, CATEGORIES, TOTAL_POINTS } from './assets/js/challenge-data.js';
       const $ = (id) => document.getElementById(id);
 
@@ -114,6 +118,7 @@
         }
         $('gate').classList.add('hidden');
         $('hello-name').textContent = ', ' + s.profile.username;
+        $('d-admin').classList.toggle('hidden', !isAdmin());
 
         const [solves, hints, board] = await Promise.all([mySolves(), myHints(), scoreboard()]);
         const byId = Object.fromEntries(solves.map((x) => [x.challengeId, x]));

@@ -56,7 +56,7 @@
       '</div>' +
       '<nav id="mobile-nav" class="xl:hidden hidden border-b border-brder bg-main/95 backdrop-blur-md" aria-label="Mobile">' +
         '<div class="max-w-content mx-auto px-6 py-4 flex flex-col gap-1 text-[15px] font-medium">' + mobileLinks +
-          '<div data-auth-slot class="sm:hidden mt-2 flex flex-wrap items-center gap-2"></div>' +
+          '<div data-auth-slot="mobile" class="sm:hidden mt-2 flex flex-wrap items-center gap-2"></div>' +
         '</div>' +
       '</nav>' +
     '</header>';
@@ -76,7 +76,7 @@
             '<p class="text-[13px] text-mtext leading-relaxed max-w-xs">The Mini Capture-the-Flag (CTF) Security Lab Platform &mdash; a CYS401 group project at Prince Sultan University. Solve challenges, capture flags, and learn by doing.</p>' +
           '</div>' +
           footerCol('Challenge Categories', [['Web Security', 'web-security.html'], ['Cryptography', 'cryptography.html'], ['Security Awareness', 'security-awareness.html'], ['Cybersecurity Ethics', 'ethics.html']]) +
-          footerCol('CTF Lab', [['Home', 'index.html'], ['How It Works', 'index.html#how-it-works'], ['Scoreboard', 'scoreboard.html'], ['My Dashboard', 'dashboard.html'], ['About', 'about.html'], ['Project', 'project.html'], ['Report', 'report.html'], ['Team', 'team.html']]) +
+          footerCol('CTF Lab', [['Home', 'index.html'], ['How It Works', 'index.html#how-it-works'], ['Scoreboard', 'scoreboard.html'], ['My Dashboard', 'dashboard.html'], ['Account', 'account.html'], ['About', 'about.html'], ['Project', 'project.html'], ['Report', 'report.html'], ['Team', 'team.html']]) +
         '</div>' +
         '<div class="mt-12 pt-6 border-t border-brder flex flex-col sm:flex-row gap-4 justify-between text-[12px] text-mtext">' +
           '<p>&copy; ' + new Date().getFullYear() + ' CYS401 Semester Project Group. Educational content purposes only.</p>' +

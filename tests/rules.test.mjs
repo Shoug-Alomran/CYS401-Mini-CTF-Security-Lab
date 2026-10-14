@@ -258,3 +258,70 @@ test('T-H1 hint use is recorded once per challenge', async () => {
   await assertSucceeds(setDoc(doc(db, 'hints/alice_WEB-01'), { uid: 'alice', challengeId: 'WEB-01', at: serverTimestamp() }));
   await assertFails(setDoc(doc(db, 'hints/alice_WEB-01'), { uid: 'alice', challengeId: 'WEB-01', at: serverTimestamp() }));
 });
+
+// ── Profile management ──────────────────────────────────────────────────────
+function renameBatch(db, uid, oldName, newName, { releaseOld = true, scoreName = newName } = {}) {
+  const b = writeBatch(db);
+  if (oldName.toLowerCase() !== newName.toLowerCase()) {
+    b.set(doc(db, 'usernames', newName.toLowerCase()), { uid });
+    if (releaseOld) b.delete(doc(db, 'usernames', oldName.toLowerCase()));
+  }
+  b.update(doc(db, 'users', uid), { username: newName });
+  b.update(doc(db, 'scores', uid), { username: scoreName });
+  return b.commit();
+}
+
+test('T-M1 a user can rename; the old name is released and the scoreboard follows', async () => {
+  const db = await register('alice', 'alice');
+  await assertSucceeds(renameBatch(db, 'alice', 'alice', 'alice_2'));
+  assert.equal((await readAsAdmin('scores/alice')).username, 'alice_2');
+  assert.equal(await readAsAdmin('usernames/alice'), undefined);
+  // the released name can be taken by someone else
+  await assertSucceeds(signUpBatch(env.authenticatedContext('bob').firestore(), 'bob', 'alice'));
+});
+
+test('T-M2 a user can change only the capitalisation of their name', async () => {
+  const db = await register('alice', 'alice');
+  await assertSucceeds(renameBatch(db, 'alice', 'alice', 'Alice'));
+});
+
+test('T-M3 a user cannot rename to a taken name', async () => {
+  await register('bob', 'bob');
+  const db = await register('alice', 'alice');
+  await assertFails(renameBatch(db, 'alice', 'alice', 'BOB'));
+});
+
+test('T-M4 a rename must release the old name and update the scoreboard', async () => {
+  const db = await register('alice', 'alice');
+  await assertFails(renameBatch(db, 'alice', 'alice', 'alice_2', { releaseOld: false }));
+  await assertFails(renameBatch(db, 'alice', 'alice', 'alice_2', { scoreName: 'someone_else' }));
+});
+
+test('T-M5 names cannot be reserved without using them', async () => {
+  const db = await register('alice', 'alice');
+  await assertFails(setDoc(doc(db, 'usernames/squatted'), { uid: 'alice' }));
+});
+
+test('T-M6 a user cannot release someone else\'s name', async () => {
+  await register('alice', 'alice');
+  const bob = await register('bob', 'bob');
+  await assertFails(deleteDoc(doc(bob, 'usernames/alice')));
+});
+
+test('T-M7 a user can delete their own account records, not someone else\'s', async () => {
+  await register('bob', 'bob');
+  const db = await register('alice', 'alice');
+  const mine = writeBatch(db);
+  mine.delete(doc(db, 'usernames/alice'));
+  mine.delete(doc(db, 'users/alice'));
+  mine.delete(doc(db, 'scores/alice'));
+  await assertSucceeds(mine.commit());
+  const theirs = writeBatch(db);
+  theirs.delete(doc(db, 'scores/bob'));
+  await assertFails(theirs.commit());
+});
+
+test('T-M8 deleting a profile must also remove its name and scoreboard row', async () => {
+  const db = await register('alice', 'alice');
+  await assertFails(deleteDoc(doc(db, 'users/alice')));
+});
