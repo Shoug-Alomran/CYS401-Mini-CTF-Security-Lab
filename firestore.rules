@@ -1,0 +1,179 @@
+rules_version = '2';
+
+// Firestore security rules for the CYS401 CTF Lab.
+//
+// These rules are the platform's server side. The browser can only write what the
+// rules allow, so they enforce:
+//   - accounts: a user can create only their own profile, always with role "user";
+//     roles change only through an admin.
+//   - flag validation: a solve is accepted only when SHA-256(submitted flag) matches
+//     the hash in flagHashes/{challengeId}, which no client can read.
+//   - scoring: a user's score can rise only by the points of a challenge they have
+//     just solved, in the same atomic batch as the solve.
+//   - brute-force throttling: every submission must update users/{uid}.lastAttemptAt,
+//     and that field can only move forward by at least 5 seconds.
+//   - auditing: every attempt is logged, and the rules verify its "correct" field.
+//
+// Deploy: Firebase console → Firestore → Rules → paste and Publish,
+// or `firebase deploy --only firestore:rules`.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isSelf(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    function isAdmin() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    function flagMatches(challengeId, flag) {
+      return flag is string
+        && flag.size() <= 200
+        && hashing.sha256(flag).toHexString().lower()
+           == get(/databases/$(database)/documents/flagHashes/$(challengeId)).data.hash;
+    }
+
+    // This request also bumps the user's throttle timestamp (see users update rule).
+    function throttled() {
+      return getAfter(/databases/$(database)/documents/users/$(request.auth.uid)).data.lastAttemptAt == request.time;
+    }
+
+    function validUsername(name) {
+      return name is string && name.matches('^[A-Za-z0-9_]{3,20}$');
+    }
+
+    // ── Usernames: one doc per lower-cased name, so names stay unique ─────────
+    match /usernames/{name} {
+      allow read: if true;
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['uid'])
+        && request.resource.data.uid == request.auth.uid
+        && validUsername(name)
+        && name == name.lower();
+      allow update, delete: if false;
+    }
+
+    // ── Profiles ──────────────────────────────────────────────────────────────
+    match /users/{uid} {
+      allow read: if isSelf(uid) || isAdmin();
+
+      allow create: if isSelf(uid)
+        && request.resource.data.keys().hasOnly(['username', 'role', 'createdAt', 'lastAttemptAt'])
+        && validUsername(request.resource.data.username)
+        && request.resource.data.role == 'user'
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.lastAttemptAt == null
+        && getAfter(/databases/$(database)/documents/usernames/$(request.resource.data.username.lower())).data.uid == uid;
+
+      // Owner: only the throttle timestamp, and at most once every 5 seconds.
+      // Admin: only the role.
+      allow update: if (
+          isSelf(uid)
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['lastAttemptAt'])
+          && request.resource.data.lastAttemptAt == request.time
+          && (resource.data.lastAttemptAt == null
+              || request.time > resource.data.lastAttemptAt + duration.value(5, 's'))
+        ) || (
+          isAdmin()
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['role'])
+          && request.resource.data.role in ['user', 'admin']
+        );
+
+      allow delete: if false;
+    }
+
+    // ── Public scoreboard ─────────────────────────────────────────────────────
+    match /scores/{uid} {
+      allow read: if true;
+
+      allow create: if isSelf(uid)
+        && request.resource.data.keys().hasOnly(['username', 'points', 'solved', 'lastChallenge', 'lastSolveAt'])
+        && request.resource.data.username == getAfter(/databases/$(database)/documents/users/$(uid)).data.username
+        && request.resource.data.points == 0
+        && request.resource.data.solved == 0
+        && request.resource.data.lastChallenge == null
+        && request.resource.data.lastSolveAt == null;
+
+      // Only alongside a new, valid solve of lastChallenge in the same batch.
+      allow update: if isSelf(uid)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['points', 'solved', 'lastChallenge', 'lastSolveAt'])
+        && request.resource.data.lastChallenge is string
+        && !exists(/databases/$(database)/documents/solves/$(uid + '_' + request.resource.data.lastChallenge))
+        && existsAfter(/databases/$(database)/documents/solves/$(uid + '_' + request.resource.data.lastChallenge))
+        && request.resource.data.points == resource.data.points
+           + get(/databases/$(database)/documents/challenges/$(request.resource.data.lastChallenge)).data.points
+        && request.resource.data.solved == resource.data.solved + 1
+        && request.resource.data.lastSolveAt == request.time;
+
+      allow delete: if false;
+    }
+
+    // ── Solves: id is {uid}_{challengeId}, so each challenge scores once ─────
+    match /solves/{solveId} {
+      allow read: if signedIn() && (resource.data.uid == request.auth.uid || isAdmin());
+
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['uid', 'challengeId', 'flag', 'points', 'solvedAt'])
+        && request.resource.data.uid == request.auth.uid
+        && solveId == request.auth.uid + '_' + request.resource.data.challengeId
+        && request.resource.data.points
+           == get(/databases/$(database)/documents/challenges/$(request.resource.data.challengeId)).data.points
+        && request.resource.data.solvedAt == request.time
+        && flagMatches(request.resource.data.challengeId, request.resource.data.flag)
+        && getAfter(/databases/$(database)/documents/scores/$(request.auth.uid)).data.lastChallenge
+           == request.resource.data.challengeId
+        && throttled();
+
+      allow update, delete: if false;
+    }
+
+    // ── Attempt log (auditing): the rules check that "correct" is the truth ──
+    match /attempts/{attemptId} {
+      allow read: if signedIn() && (resource.data.uid == request.auth.uid || isAdmin());
+
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['uid', 'username', 'challengeId', 'flag', 'correct', 'at'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.username == get(/databases/$(database)/documents/users/$(request.auth.uid)).data.username
+        && exists(/databases/$(database)/documents/challenges/$(request.resource.data.challengeId))
+        && request.resource.data.at == request.time
+        && request.resource.data.correct == flagMatches(request.resource.data.challengeId, request.resource.data.flag)
+        && throttled();
+
+      allow update, delete: if false;
+    }
+
+    // ── Hint usage ────────────────────────────────────────────────────────────
+    match /hints/{hintId} {
+      allow read: if signedIn() && (resource.data.uid == request.auth.uid || isAdmin());
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['uid', 'challengeId', 'at'])
+        && request.resource.data.uid == request.auth.uid
+        && hintId == request.auth.uid + '_' + request.resource.data.challengeId
+        && request.resource.data.at == request.time;
+      allow update, delete: if false;
+    }
+
+    // ── Challenge catalogue: public metadata, admin-managed ──────────────────
+    match /challenges/{challengeId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // ── Flag hashes: never readable by any client ────────────────────────────
+    match /flagHashes/{challengeId} {
+      allow read: if false;
+      allow write: if isAdmin()
+        && request.resource.data.keys().hasOnly(['hash'])
+        && request.resource.data.hash.matches('^[0-9a-f]{64}$');
+    }
+  }
+}

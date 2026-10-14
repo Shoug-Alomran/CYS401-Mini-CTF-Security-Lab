@@ -214,7 +214,6 @@
             <article
               class="challenge reveal bg-card border border-brder rounded-card p-6 sm:p-8 transition-colors"
               data-id="ETH-01"
-              data-flag="Q1lTNDAxezR1dGgwcjF6NHQxMG5fMXNfM3Yzcnl0aDFuZ30="
             >
               <div class="flex flex-wrap items-center gap-3 mb-4">
                 <span class="text-[12px] font-mono text-mtext">ETH-01</span>
@@ -291,7 +290,6 @@
             <article
               class="challenge reveal bg-card border border-brder rounded-card p-6 sm:p-8 transition-colors"
               data-id="ETH-02"
-              data-flag="Q1lTNDAxe2Qxc2NsMHMzX3Izc3AwbnMxYmx5fQ=="
             >
               <div class="flex flex-wrap items-center gap-3 mb-4">
                 <span class="text-[12px] font-mono text-mtext">ETH-02</span>
@@ -367,9 +365,7 @@
             </article>
           </div>
           <p class="mt-8 text-[12px] text-mtext leading-relaxed max-w-2xl">
-            Front-end demo: flags are validated in your browser and your
-            progress is stored on this device only. The graded platform
-            validates submissions on the server.
+            Flags are checked on the server: the page never holds the answers, and your solves are saved to your account and counted on the <a href="scoreboard.html" class="text-stext hover:text-ptext underline">scoreboard</a>.
           </p>
         </div>
       </section>
@@ -420,12 +416,12 @@
             class="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <a
-              href="index.html#scoreboard"
+              href="dashboard.html"
               class="w-full sm:w-auto bg-pred hover:bg-bred text-white text-[15px] font-semibold px-8 py-3.5 rounded-btn transition-colors"
               >View Your Progress</a
             >
             <a
-              href="index.html#scoreboard"
+              href="dashboard.html"
               class="w-full sm:w-auto border border-brder2 hover:bg-elevated text-[15px] font-semibold px-8 py-3.5 rounded-btn transition-colors"
               >View Progress</a
             >
@@ -437,6 +433,6 @@
     <div id="site-footer"></div>
     <script src="assets/js/layout.js"></script>
     <script src="assets/js/guide.js"></script>
-    <script src="assets/js/challenges.js"></script>
+    <script type="module" src="assets/js/challenges.js"></script>
   </body>
 </html>

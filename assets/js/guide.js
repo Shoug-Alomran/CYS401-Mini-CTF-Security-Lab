@@ -14,17 +14,22 @@
     index: [
       ['#challenges', 'Four challenge tracks', 'Challenges are grouped into Web Security, Cryptography, Security Awareness, and Cybersecurity Ethics. Each card shows how many challenges the track holds and what they are worth.'],
       ['#how-it-works', 'How a challenge works', 'Open a challenge, solve the scenario to uncover a flag, then submit it. Correct flags score points and unlock an explanation.'],
-      ['#scoreboard', 'Progress and scoreboard', 'Solved challenges, points earned, and completion status are tracked as you work through the lab.']
+      ['#scoreboard', 'Progress and scoreboard', 'Once you log in, your solved challenges and points per track appear here, next to the live top five.']
     ],
     project: [
       ['#phases', 'Five phases', 'The report and presentation are built phase by phase. This list updates as the project progresses.'],
       ['#plan-download', 'The planning document', 'Our original scope note: what the platform needs to do, the challenge ideas, and how the report maps to it.']
     ],
+    report: [
+      ['#security-analysis', 'Security analysis', 'The assets the platform protects, and the threats, vulnerabilities, and attacks against them.'],
+      ['#literature-review', 'Literature review', 'How picoCTF, CTFd, and OverTheWire approach CTF learning, and what our lab does differently.'],
+      ['#proposed-platform', 'Requirements', 'The objectives and functional and non-functional requirements the platform is built against.']
+    ],
     challenge: [
       ['.challenge', 'A challenge', 'Each card holds the scenario, its difficulty, the points it is worth, and whether you have solved it.'],
       ['.challenge details', 'Hints', 'Stuck? Open the hint for a nudge that points at the technique without giving the flag away.'],
       ['.challenge .flag-form', 'Submit your flag', 'Flags look like CYS401{...}. Submit one to have it validated; a correct flag scores the points and reveals what the challenge was teaching.'],
-      ['#solved-count', 'Your progress', 'Solved challenges and points are counted here and kept on this device.']
+      ['#solved-count', 'Your progress', 'Solved challenges and points are saved to your account and counted on the scoreboard.']
     ]
   };
 

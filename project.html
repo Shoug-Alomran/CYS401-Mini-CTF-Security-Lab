@@ -100,6 +100,9 @@
             <p class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3">Overview</p>
             <h2 class="font-display text-[28px] sm:text-[32px] font-semibold mb-5">What We&rsquo;re Building</h2>
             <p id="topic-summary" class="text-[15px] text-stext leading-relaxed mb-6"></p>
+            <p class="text-[15px] text-stext leading-relaxed mb-4">
+              The finished report sections are published on the <a href="report.html" class="text-bred hover:underline">Report page</a>.
+            </p>
             <p class="text-[15px] text-stext leading-relaxed">
               This is topic 28 of the course brief. The project follows the course path: assess the threats and
               vulnerabilities the challenges are drawn from, study how existing CTF platforms solve the problem,
@@ -147,9 +150,9 @@
               <ul class="space-y-4 text-[14px] text-stext">
                 <li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>A user-friendly web interface to navigate challenges<a href="index.html#challenges" class="block text-[12px] font-mono text-mtext hover:text-bred transition-colors mt-1">Four category pages &rarr;</a></span></li>
                 <li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Multiple challenge categories &mdash; Web, Crypto, Awareness, Ethics<a href="index.html#challenges" class="block text-[12px] font-mono text-mtext hover:text-bred transition-colors mt-1">12 challenges, 4 tracks &rarr;</a></span></li>
-                <li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Flag validation and progress tracking<a href="web-security.html#challenges" class="block text-[12px] font-mono text-mtext hover:text-bred transition-colors mt-1">CYS401{...} validation &rarr;</a></span></li>
+                <li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Flag validation and progress tracking<a href="dashboard.html" class="block text-[12px] font-mono text-mtext hover:text-bred transition-colors mt-1">Server-side hash check &middot; per-account progress &rarr;</a></span></li>
                 <li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Hints or explanations to support learning<a href="web-security.html#challenges" class="block text-[12px] font-mono text-mtext hover:text-bred transition-colors mt-1">Hint + post-solve explanation &rarr;</a></span></li>
-                <li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>A simple scoreboard or completion status<a href="index.html#scoreboard" class="block text-[12px] font-mono text-mtext hover:text-bred transition-colors mt-1">Solved &middot; points &middot; status &rarr;</a></span></li>
+                <li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>A simple scoreboard or completion status<a href="scoreboard.html" class="block text-[12px] font-mono text-mtext hover:text-bred transition-colors mt-1">Live scoreboard &middot; completion % &rarr;</a></span></li>
               </ul>
             </div>
           </div>
@@ -313,8 +316,8 @@
           dueDate: '2026-11-04T23:59:00+03:00',
           handoutDate: '2026-09-13T00:00:00+03:00',
           phases: [
-            { id: 'I', title: 'Introduction & Risk Assessment', desc: 'Introduce capture-the-flag learning and assess the gap it addresses: the risks, attacks, and vulnerabilities students meet in theory but rarely handle hands-on.', status: 'active' },
-            { id: 'II', title: 'Literature Review', desc: 'Existing CTF platforms such as CTFd, picoCTF, and TryHackMe, how their challenge and scoring models differ, and the real incidents our challenge scenarios are drawn from.', status: 'upcoming' },
+            { id: 'I', title: 'Introduction & Risk Assessment', desc: 'Introduce capture-the-flag learning and assess the platform\'s assets, threats, vulnerabilities, and the attacks against them.', status: 'done' },
+            { id: 'II', title: 'Literature Review', desc: 'Existing CTF platforms &mdash; picoCTF, CTFd, and OverTheWire &mdash; how their challenge and scoring models differ, and the real security incidents behind our attack analysis.', status: 'active' },
             { id: 'III', title: 'Implementation', desc: 'The working platform: twelve challenges across four categories, flag submission and validation, hints, progress tracking, and the scoreboard. Source code goes in the appendix.', status: 'upcoming' },
             { id: 'IV', title: 'Documentation', desc: 'Apply the course concepts behind each challenge category in a properly formatted, fully referenced report ending with applications and recommendations.', status: 'upcoming' },
             { id: 'V', title: 'Presentation & Demo', desc: 'A 10-minute PowerPoint presentation with a live demonstration — solving a challenge, submitting a flag, and watching the scoreboard update. The 10 minutes includes the question and answer session.', status: 'upcoming' }

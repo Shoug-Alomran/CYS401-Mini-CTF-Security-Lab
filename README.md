@@ -11,10 +11,15 @@ The website for our CYS401 semester project: the **Mini Capture-the-Flag (CTF) S
 | `index.html` | Home |
 | `about.html` | About |
 | `project.html` | Semester project (scope, phases, grading, timeline) |
+| `report.html` | Completed report sections (introduction, security analysis, literature review, requirements, conclusion, references) |
 | `web-security.html` | Challenge track 01 — Web Security |
 | `cryptography.html` | Challenge track 02 — Cryptography |
 | `security-awareness.html` | Challenge track 03 — Security Awareness |
 | `ethics.html` | Challenge track 04 — Cybersecurity Ethics |
+| `scoreboard.html` | Public scoreboard (all players ranked by points) |
+| `auth.html` | Log in / sign up |
+| `dashboard.html` | Signed-in user's progress: points, completion %, solves with timestamps |
+| `admin.html` | Admin only: load challenges and flag hashes, manage roles, submission log |
 | `team.html` | Team |
 | `404.html` | Not found page |
 | `ctf-plan.pdf` | Project plan — scope, challenge ideas, flag system, report phases (linked from the Project page) |
@@ -23,7 +28,11 @@ The website for our CYS401 semester project: the **Mini Capture-the-Flag (CTF) S
 
 - `assets/js/layout.js` holds the **shared header and footer** for every page. To add or rename a nav link, edit the `NAV` array there. The active link is highlighted automatically.
 - `assets/js/guide.js` adds the **Contents panel and the guided walkthrough** to the dock at the bottom right of every page. The contents list is generated from each section's `<h2>`; tour steps live in the `TOURS` object, and steps whose target is missing are skipped.
-- `assets/js/challenges.js` runs the **challenge behaviour** on the four category pages: flag validation, hints, points, and progress. Each challenge card carries its expected flag base64-encoded in `data-flag`, and solved challenges are stored in `localStorage` — a front-end demo, so the graded platform validates on the server instead.
+- `assets/js/firebase.js` is the **Firebase client**: sign-up and login (Firebase Authentication), flag submission, progress, the scoreboard, admin actions, and the account buttons in the header. `layout.js` loads it on every page.
+- `assets/js/firebase-config.js` holds the Firebase project's web config.
+- `assets/js/challenge-data.js` is the **challenge catalogue** (id, track, title, difficulty, points). No flags.
+- `assets/js/challenges.js` runs the **challenge cards** on the four category pages: submit, hint logging, solved state, and the explanation shown after a correct flag.
+- `firestore.rules` is the **server side**: the Firestore security rules that validate flags, protect scores, throttle guessing, and enforce roles (see below).
 - `assets/js/tailwind-config.js` holds the shared Tailwind theme (colors, fonts).
 - `assets/css/styles.css` holds the small amount of custom CSS.
 
@@ -38,7 +47,45 @@ Each page includes `<div id="site-header"></div>`, `<div id="site-footer"></div>
 | Security Awareness | AWR-01 … AWR-03 | 250 |
 | Cybersecurity Ethics | ETH-01, ETH-02 | 300 |
 
-Flags use the format `CYS401{...}`. To edit a challenge, change its card in the category page: `data-flag` holds the base64-encoded flag, and the card carries the scenario, hint, and post-solve explanation.
+Flags use the format `CYS401{...}` and are case- and whitespace-insensitive. The pages never contain flags: each flag's SHA-256 hash is stored in Firestore (`flagHashes/{id}`), which no client can read.
+
+To edit a challenge, change its card in the category page (scenario, hint, explanation) and its entry in `assets/js/challenge-data.js` (title, points), then press **Save to Firestore** on the admin page. To change a flag, paste the new `ID flag` line on the admin page.
+
+## How flags are checked
+
+There is no custom server: Firestore security rules do the server-side work.
+
+1. A signed-in user submits a flag. The browser writes one atomic batch: the solve, the score increase, an attempt log entry, and a throttle timestamp.
+2. The rules hash the submitted flag with SHA-256 and compare it with `flagHashes/{id}`. On a mismatch the whole batch is rejected, so no points are added.
+3. The rules also require that the score rises by exactly the challenge's points, that each challenge scores once per user, and that submissions are at least 5 seconds apart (brute-force throttling).
+4. Every attempt, right or wrong, is logged in `attempts`, and the rules verify its `correct` field, so the admin log can't be faked.
+
+Roles: everyone signs up as `user`. An `admin` can load challenges and flags, change roles, and read the submission log.
+
+## Firebase setup (one time)
+
+1. Create a project at [console.firebase.google.com](https://console.firebase.google.com) (the free Spark plan is enough; Google Analytics is not needed).
+2. **Authentication → Get started → Sign-in method → Email/Password → Enable.**
+3. **Firestore Database → Create database** → production mode → a nearby location (e.g. `me-central2` Dammam, or `europe-west`).
+4. **Firestore → Rules:** replace everything with the contents of `firestore.rules` and **Publish**.
+5. **Project settings → General → Your apps → Web (`</>`)** → register an app → copy the `firebaseConfig` values into `assets/js/firebase-config.js`.
+6. **Authentication → Settings → Authorized domains:** add `ctf-lab.shoug-tech.com` (localhost is there by default).
+7. Sign up on the site, then in **Firestore → Data → users → (your uid)** change `role` from `user` to `admin`.
+8. Open `admin.html`, paste the flags (one `ID flag` per line; the team keeps them in the git-ignored `flags.private.txt`), and press **Save to Firestore**.
+
+## Testing
+
+`tests/rules.test.mjs` runs 24 security tests against the Firestore emulator (needs Node and Java):
+
+```sh
+cd tests
+npm install
+npm test
+```
+
+They cover sign-up and roles, hidden flags, correct, wrong, and forged submissions, the 5-second throttle, double-scoring, direct score edits, privacy of solves and attempts, admin-only actions, and hint logging.
+
+To click through the site against the emulators instead of the real project, start `npx firebase emulators:start --only auth,firestore --project demo-cys401 --config ../firebase.json` from `tests/`, serve the site on `localhost`, and run `localStorage.setItem('cys401-emulator', '1')` in the browser console.
 
 ## Run locally
 

@@ -296,9 +296,10 @@
             </p>
             <div class="flex items-center gap-3 mt-1">
               <span
+                id="lab-dot"
                 class="w-3 h-3 bg-warn rounded-full animate-pulse shadow-[0_0_10px_#F59E0B]"
               ></span
-              ><span class="font-display text-[24px] font-semibold text-warn"
+              ><span id="lab-status" class="font-display text-[24px] font-semibold text-warn"
                 >In Development</span
               >
             </div>
@@ -574,182 +575,29 @@
       <!-- Progress & scoreboard -->
       <section id="scoreboard" class="py-24 overflow-hidden">
         <div class="max-w-content mx-auto px-6">
-          <div class="mb-12 reveal">
-            <h2
-              class="font-display text-[32px] sm:text-[36px] font-semibold mb-2"
-            >
-              Progress &amp; Scoreboard
-            </h2>
-            <p class="text-[16px] text-stext">
-              Every flag you submit is tracked: solved challenges, points
-              earned, and where you stand. Sample data shown below.
-            </p>
-          </div>
-          <div
-            class="reveal bg-sec border border-brder rounded-card p-2 shadow-2xl flex flex-col md:flex-row gap-2 md:h-[500px] 2xl:h-[560px]"
-          >
-            <div
-              class="w-full md:w-64 lg:w-80 bg-card rounded-xl border border-brder flex flex-col overflow-hidden shrink-0"
-            >
-              <div
-                class="p-4 border-b border-brder flex justify-between items-center bg-elevated/50"
-              >
-                <span class="text-[13px] font-semibold uppercase tracking-wider"
-                  >Your Progress</span
-                >
-                <span
-                  class="text-[12px] font-mono text-stext bg-main px-2 py-0.5 rounded border border-brder"
-                  >4 / 12 solved</span
-                >
-              </div>
-              <div class="flex-1 p-2 space-y-2 overflow-y-auto no-scrollbar">
-                <div
-                  class="p-3 bg-main border border-brder rounded-lg flex items-start gap-3"
-                >
-                  <div class="mt-1 w-2 h-2 rounded-full bg-success"></div>
-                  <div class="flex-1">
-                    <div class="flex justify-between mb-1">
-                      <span class="text-[13px] font-medium">Web Security</span
-                      ><span class="text-[11px] font-mono text-success">2 / 4</span>
-                    </div>
-                    <div class="text-[12px] text-mtext">150 pts earned</div>
-                  </div>
-                </div>
-                <div
-                  class="p-3 bg-sred/50 border border-rborder rounded-lg flex items-start gap-3"
-                >
-                  <div
-                    class="mt-1 w-2 h-2 rounded-full bg-pred animate-pulse"
-                  ></div>
-                  <div class="flex-1">
-                    <div class="flex justify-between mb-1">
-                      <span class="text-[13px] font-medium text-pred"
-                        >Cryptography</span
-                      ><span class="text-[11px] font-mono text-pred">1 / 3</span>
-                    </div>
-                    <div class="text-[12px] text-stext">
-                      In progress &middot; hint used
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="p-3 bg-main border border-brder rounded-lg flex items-start gap-3"
-                >
-                  <div class="mt-1 w-2 h-2 rounded-full bg-success"></div>
-                  <div class="flex-1">
-                    <div class="flex justify-between mb-1">
-                      <span class="text-[13px] font-medium">Security Awareness</span
-                      ><span class="text-[11px] font-mono text-success">1 / 3</span>
-                    </div>
-                    <div class="text-[12px] text-mtext">75 pts earned</div>
-                  </div>
-                </div>
-                <div
-                  class="p-3 bg-main border border-brder rounded-lg flex items-start gap-3"
-                >
-                  <div class="mt-1 w-2 h-2 rounded-full bg-warn"></div>
-                  <div class="flex-1">
-                    <div class="flex justify-between mb-1">
-                      <span class="text-[13px] font-medium">Cybersecurity Ethics</span
-                      ><span class="text-[11px] font-mono text-warn">0 / 2</span>
-                    </div>
-                    <div class="text-[12px] text-mtext">
-                      Unsolved
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div class="mb-12 reveal flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <h2 class="font-display text-[32px] sm:text-[36px] font-semibold mb-2">Progress &amp; Scoreboard</h2>
+              <p class="text-[16px] text-stext">
+                Every flag the server accepts is saved to your account: solved challenges, points earned, and where you stand.
+              </p>
             </div>
-
-            <div
-              class="flex-1 bg-card rounded-xl border border-brder flex flex-col overflow-hidden min-h-[360px]"
-            >
-              <div
-                class="h-14 border-b border-brder flex items-center justify-between px-6 bg-elevated/50"
-              >
-                <div class="flex gap-6 text-[13px] font-medium">
-                  <span class="border-b-2 border-pred py-[17px]"
-                    >Points Earned</span
-                  >
-                  <span class="text-mtext py-[17px] hidden sm:inline"
-                    >Scoreboard</span
-                  >
-                  <span class="text-mtext py-[17px] hidden sm:inline"
-                    >Recent Flags</span
-                  >
-                </div>
-                <div class="flex items-center gap-2">
-                  <span
-                    class="w-2 h-2 rounded-full bg-pred animate-pulse"
-                  ></span
-                  ><span class="text-[12px] font-mono text-stext">SAMPLE</span>
-                </div>
+            <a href="scoreboard.html" class="text-[14px] font-semibold text-bred hover:underline">Full scoreboard &rarr;</a>
+          </div>
+          <div class="reveal grid grid-cols-1 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-4">
+            <div class="bg-card rounded-card border border-brder overflow-hidden">
+              <div class="p-4 border-b border-brder flex justify-between items-center bg-elevated/50">
+                <span class="text-[13px] font-semibold uppercase tracking-wider">Your Progress</span>
+                <span id="home-solved" class="text-[12px] font-mono text-bred"></span>
               </div>
-              <div class="flex-1 relative p-6 flex flex-col bg-grid">
-                <div
-                  class="absolute left-6 top-6 bottom-16 flex flex-col justify-between text-[11px] font-mono text-mtext"
-                >
-                  <span>1200</span><span>900</span><span>600</span
-                  ><span>300</span><span>0</span>
-                </div>
-                <div class="flex-1 ml-12 relative">
-                  <svg
-                    class="absolute inset-0 w-full h-full"
-                    preserveAspectRatio="none"
-                    viewBox="0 0 100 100"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M0,80 Q10,75 20,80 T40,70 T60,85 T80,75 T100,80 L100,100 L0,100 Z"
-                      fill="rgba(39,39,42,0.35)"
-                    />
-                    <path
-                      d="M0,80 Q10,75 20,80 T40,70 T60,85 T80,75 T100,80"
-                      fill="none"
-                      stroke="#71717A"
-                      stroke-width="0.5"
-                      vector-effect="non-scaling-stroke"
-                    />
-                    <path
-                      d="M65,80 L70,20 L75,80"
-                      fill="rgba(220,38,38,0.12)"
-                    />
-                    <path
-                      d="M65,80 L70,20 L75,80"
-                      fill="none"
-                      stroke="#DC2626"
-                      stroke-width="1.5"
-                      vector-effect="non-scaling-stroke"
-                    />
-                    <line
-                      x1="70"
-                      y1="0"
-                      x2="70"
-                      y2="100"
-                      stroke="#DC2626"
-                      stroke-width="0.5"
-                      stroke-dasharray="2 2"
-                    />
-                  </svg>
-                  <div
-                    class="absolute top-[8%] left-[45%] sm:left-[55%] bg-main border border-rborder p-2 rounded shadow-lg"
-                  >
-                    <div class="text-[10px] font-bold text-pred mb-1">
-                      FLAG ACCEPTED
-                    </div>
-                    <div class="text-[11px] font-mono">WEB-03 &middot; +150 pts</div>
-                    <div class="text-[11px] font-mono text-stext">
-                      Solved
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="h-6 mt-4 ml-12 flex justify-between text-[11px] font-mono text-mtext border-t border-brder pt-2"
-                >
-                  <span>Week 1</span><span>Week 2</span><span>Week 3</span
-                  ><span>Week 4</span><span>Now</span>
-                </div>
+              <div id="home-progress" class="p-5 space-y-5 text-[14px] text-stext">Loading&hellip;</div>
+            </div>
+            <div class="bg-card rounded-card border border-brder overflow-hidden">
+              <div class="p-4 border-b border-brder flex justify-between items-center bg-elevated/50">
+                <span class="text-[13px] font-semibold uppercase tracking-wider">Top Players</span>
+                <span class="flex items-center gap-2 text-[11px] font-mono text-stext"><span class="w-1.5 h-1.5 rounded-full bg-pred animate-pulse"></span>LIVE</span>
               </div>
+              <ol id="home-top" class="divide-y divide-brder text-[14px] text-stext"><li class="p-5">Loading&hellip;</li></ol>
             </div>
           </div>
         </div>
@@ -790,5 +638,47 @@
     <div id="site-footer"></div>
     <script src="assets/js/layout.js"></script>
     <script src="assets/js/guide.js"></script>
+    <script type="module">
+      import { configured, onSession, mySolves, scoreboard, escapeHtml } from './assets/js/firebase.js';
+      import { CHALLENGES, CATEGORIES } from './assets/js/challenge-data.js';
+      const $ = (id) => document.getElementById(id);
+
+      if (configured) {
+        $('lab-status').textContent = 'Live';
+        $('lab-status').className = 'font-display text-[24px] font-semibold text-success';
+        $('lab-dot').className = 'w-3 h-3 bg-success rounded-full animate-pulse shadow-[0_0_10px_#22C55E]';
+      }
+
+      onSession(async (s) => {
+        let uid = s.user ? s.user.uid : null;
+        // Your progress, per track
+        if (!configured || !s.user) {
+          $('home-solved').textContent = '';
+          $('home-progress').innerHTML = configured
+            ? '<p class="leading-relaxed"><a href="auth.html?next=index.html%23scoreboard" class="text-bred font-semibold hover:underline">Log in</a> or <a href="auth.html#signup" class="text-bred font-semibold hover:underline">sign up</a> to track the flags you capture in each track.</p>'
+            : '<p class="leading-relaxed">Progress tracking turns on once accounts are connected.</p>';
+        } else {
+          const solved = new Set((await mySolves().catch(() => [])).map((x) => x.challengeId));
+          $('home-solved').textContent = solved.size + ' / ' + CHALLENGES.length + ' solved';
+          $('home-progress').innerHTML = Object.entries(CATEGORIES).map(([key, cat]) => {
+            const list = CHALLENGES.filter((c) => c.category === key);
+            const done = list.filter((c) => solved.has(c.id));
+            const pts = done.reduce((n, c) => n + c.points, 0);
+            const pct = Math.round((done.length / list.length) * 100);
+            return '<a href="' + cat.page + '#challenges" class="block group"><div class="flex justify-between mb-2"><span class="text-ptext group-hover:text-bred transition-colors">' + cat.label + '</span><span class="font-mono text-[12px]">' + done.length + ' / ' + list.length + ' &middot; ' + pts + ' pts</span></div>' +
+              '<div class="h-1.5 bg-elevated rounded-full overflow-hidden"><div class="h-full ' + (pct === 100 ? 'bg-success' : 'bg-pred') + ' rounded-full" style="width:' + pct + '%"></div></div></a>';
+          }).join('');
+        }
+        // Top five
+        if (!configured) {
+          $('home-top').innerHTML = '<li class="p-5">The live scoreboard appears here once accounts are connected.</li>';
+          return;
+        }
+        const rows = (await scoreboard().catch(() => [])).slice(0, 5);
+        $('home-top').innerHTML = rows.length
+          ? rows.map((r) => '<li class="px-5 py-4 flex items-center gap-4' + (r.uid === uid ? ' bg-sred/40' : '') + '"><span class="font-display text-[18px] font-semibold w-8 ' + (r.rank <= 3 ? 'text-bred' : '') + '">#' + r.rank + '</span><span class="flex-1 text-ptext font-medium truncate">' + escapeHtml(r.username) + '</span><span class="font-mono text-[12px]">' + r.solved + ' solved</span><span class="font-mono text-ptext w-20 text-right">' + r.points + ' pts</span></li>').join('')
+          : '<li class="p-5">No players yet. <a href="auth.html#signup" class="text-bred hover:underline">Capture the first flag.</a></li>';
+      });
+    </script>
   </body>
 </html>
