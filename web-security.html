@@ -213,6 +213,152 @@
         </div>
       </section>
 
+      <!-- Lesson 1 -->
+      <section id="lesson-1" class="py-20 border-t border-brder">
+        <div class="max-w-content mx-auto px-6 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,360px)] gap-10 lg:gap-14">
+          <div class="reveal">
+            <p class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3">Lesson 1 &middot; WEB-01</p>
+            <h2 class="font-display text-[28px] sm:text-[32px] font-semibold mb-5">Exposed Data: Secrets the Browser Hands Over</h2>
+            <div class="space-y-4 text-[15px] text-stext leading-relaxed"><p>Everything a website sends to your browser can be read by you: the HTML, its comments, the JavaScript, and any file sitting in the public web folder. Developers sometimes leave notes, test passwords, API keys, or backup files there, assuming nobody will look.</p><p>This falls under <strong class="text-ptext">security misconfiguration</strong> in the OWASP Top 10: the application is not broken in its logic, it is simply deployed with things it should never have shipped.</p></div>
+            <h3 class="mt-10 text-[17px] font-semibold">How it works</h3>
+            <div class="mt-3 space-y-3 text-[15px] text-stext leading-relaxed"><p>Attackers start with the cheapest checks: view the page source, open the browser developer tools, and request files that sites expose by habit, such as <span class="font-mono text-ptext">robots.txt</span>, <span class="font-mono text-ptext">.git/</span>, or <span class="font-mono text-ptext">backup.zip</span>. A <span class="font-mono text-ptext">robots.txt</span> file asks search engines to skip paths, which also advertises exactly where the interesting files are.</p></div>
+            <pre class="mt-3 text-[13px] font-mono text-ptext whitespace-pre-wrap break-all bg-main border border-brder rounded-xl p-4">&lt;!-- TODO: remove before launch. Test account: admin / Winter2024! --&gt;
+
+# robots.txt
+User-agent: *
+Disallow: /old-backups/</pre>
+            
+            <h3 class="mt-10 text-[17px] font-semibold">How it is prevented</h3>
+            <ul class="mt-4 space-y-3 text-[15px] text-stext leading-relaxed"><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Keep secrets on the server or in a secrets manager, never in client-side code or comments.</span></li><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Strip comments and debug code in the build step, and never deploy backups or the <span class="font-mono text-ptext">.git</span> folder to the web root.</span></li><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Run secret scanning on the code repository so leaked keys are caught before they ship.</span></li></ul>
+          </div>
+          <aside class="reveal flex flex-col gap-5 lg:pt-10">
+            <div class="bg-card border border-brder rounded-card p-6">
+              <p class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2">Real-world case</p>
+              <h3 class="text-[16px] font-semibold mb-3">Uber, 2014</h3>
+              <p class="text-[14px] text-stext leading-relaxed">According to the US Federal Trade Commission, an Uber engineer posted code containing a company access key on the public site GitHub. The key was used to collect personal data on more than 100,000 drivers, one of the incidents behind Uber&rsquo;s 2018 settlement with the FTC.</p>
+              <p class="mt-3 text-[12px] text-mtext">Source: <a href="https://www.mintz.com/insights-center/viewpoints/2826/2018-04-23-failure-signal-uber-forced-accept-expanded-settlement" target="_blank" rel="noopener" class="underline hover:text-ptext">Mintz (2018), summary of the FTC settlement</a></p>
+            </div>
+            <details class="group bg-card border border-brder rounded-card p-6">
+              <summary class="cursor-pointer list-none">
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2">Quick check</p>
+                <p class="text-[14px] text-ptext leading-relaxed">Is a password inside an HTML comment safe because comments are not displayed on the page?</p>
+                <p class="mt-3 text-[13px] font-semibold text-bred group-open:hidden">Show answer</p>
+              </summary>
+              <p class="mt-3 text-[14px] text-stext leading-relaxed border-t border-brder pt-3">No. Comments are not rendered, but they are delivered to every visitor in the page source. Anything sent to the browser is public.</p>
+            </details>
+            <a href="web-security-challenges.html#WEB-01" class="self-start inline-flex items-center gap-2 bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">Try it: WEB-01 &rarr;</a>
+          </aside>
+        </div>
+      </section>
+      <!-- Lesson 2 -->
+      <section id="lesson-2" class="py-20 border-t border-brder bg-sec">
+        <div class="max-w-content mx-auto px-6 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,360px)] gap-10 lg:gap-14">
+          <div class="reveal">
+            <p class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3">Lesson 2 &middot; WEB-02</p>
+            <h2 class="font-display text-[28px] sm:text-[32px] font-semibold mb-5">Broken Access Control: Trusting the Client</h2>
+            <div class="space-y-4 text-[15px] text-stext leading-relaxed"><p>Authentication answers <em>who are you?</em>; authorization answers <em>what may you do?</em> Access control breaks when the application lets the user decide the second question, for example by reading their role from a cookie or a hidden form field the user can edit.</p><p>Broken access control is number one in the OWASP Top 10 (2021).</p></div>
+            <h3 class="mt-10 text-[17px] font-semibold">How it works</h3>
+            <div class="mt-3 space-y-3 text-[15px] text-stext leading-relaxed"><p>If a site stores <span class="font-mono text-ptext">role=guest</span> in a plain cookie and shows the admin panel when it reads <span class="font-mono text-ptext">role=admin</span>, anyone can open the browser&rsquo;s storage inspector and change the value. The server never checks.</p></div>
+            <pre class="mt-3 text-[13px] font-mono text-ptext whitespace-pre-wrap break-all bg-main border border-brder rounded-xl p-4">Cookie: session=7f3a...; role=guest
+
+// vulnerable server logic
+if (request.cookies.role === &quot;admin&quot;) showAdminPanel();</pre>
+            
+            <h3 class="mt-10 text-[17px] font-semibold">How it is prevented</h3>
+            <ul class="mt-4 space-y-3 text-[15px] text-stext leading-relaxed"><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Keep the role on the server, tied to the session, and look it up on every request.</span></li><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>If a token must travel with the client, sign it (for example a signed session token) so tampering is detected.</span></li><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Deny by default: check permission on the server for every action, not only by hiding buttons.</span></li></ul>
+          </div>
+          <aside class="reveal flex flex-col gap-5 lg:pt-10">
+            <div class="bg-card border border-brder rounded-card p-6">
+              <p class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2">Real-world case</p>
+              <h3 class="text-[16px] font-semibold mb-3">OWASP Top 10, 2021</h3>
+              <p class="text-[14px] text-stext leading-relaxed">OWASP moved broken access control to the top of its list in 2021, reporting that 94% of the applications it tested showed some form of the flaw.</p>
+              <p class="mt-3 text-[12px] text-mtext">Source: <a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/" target="_blank" rel="noopener" class="underline hover:text-ptext">OWASP Top 10 (2021), A01 Broken Access Control</a></p>
+            </div>
+            <details class="group bg-card border border-brder rounded-card p-6">
+              <summary class="cursor-pointer list-none">
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2">Quick check</p>
+                <p class="text-[14px] text-ptext leading-relaxed">A site hides its admin button from normal users. Is the admin page protected?</p>
+                <p class="mt-3 text-[13px] font-semibold text-bred group-open:hidden">Show answer</p>
+              </summary>
+              <p class="mt-3 text-[14px] text-stext leading-relaxed border-t border-brder pt-3">Not by that alone. Hiding a button is a convenience; the server must refuse the admin request from anyone who is not an admin.</p>
+            </details>
+            <a href="web-security-challenges.html#WEB-02" class="self-start inline-flex items-center gap-2 bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">Try it: WEB-02 &rarr;</a>
+          </aside>
+        </div>
+      </section>
+      <!-- Lesson 3 -->
+      <section id="lesson-3" class="py-20 border-t border-brder">
+        <div class="max-w-content mx-auto px-6 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,360px)] gap-10 lg:gap-14">
+          <div class="reveal">
+            <p class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3">Lesson 3 &middot; WEB-03</p>
+            <h2 class="font-display text-[28px] sm:text-[32px] font-semibold mb-5">SQL Injection: When Input Becomes Code</h2>
+            <div class="space-y-4 text-[15px] text-stext leading-relaxed"><p>Many applications build database queries from user input. If the input is pasted straight into the query text, the database cannot tell where the developer&rsquo;s code ends and the user&rsquo;s data begins, so a crafted input can change what the query does.</p></div>
+            <h3 class="mt-10 text-[17px] font-semibold">How it works</h3>
+            <div class="mt-3 space-y-3 text-[15px] text-stext leading-relaxed"><p>Below, the username is inserted between quotes. Input containing its own quote character closes the string early, and whatever follows is read as part of the SQL command, for example a condition that is always true, or a comment that removes the password check.</p></div>
+            <pre class="mt-3 text-[13px] font-mono text-ptext whitespace-pre-wrap break-all bg-main border border-brder rounded-xl p-4">-- vulnerable: input pasted into the query text
+query = &quot;SELECT * FROM users WHERE username = &#x27;&quot; + username + &quot;&#x27;&quot;
+
+-- safe: a parameterized query keeps input as data
+query = &quot;SELECT * FROM users WHERE username = ?&quot;
+db.execute(query, [username])</pre>
+            
+            <h3 class="mt-10 text-[17px] font-semibold">How it is prevented</h3>
+            <ul class="mt-4 space-y-3 text-[15px] text-stext leading-relaxed"><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Use parameterized queries (prepared statements) for every query that includes input.</span></li><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Give the application&rsquo;s database account only the permissions it needs (least privilege).</span></li><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Validate input as a second layer, and never show raw database errors to users.</span></li></ul>
+          </div>
+          <aside class="reveal flex flex-col gap-5 lg:pt-10">
+            <div class="bg-card border border-brder rounded-card p-6">
+              <p class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2">Real-world case</p>
+              <h3 class="text-[16px] font-semibold mb-3">TalkTalk, 2015</h3>
+              <p class="text-[14px] text-stext leading-relaxed">Attackers used SQL injection against vulnerable web pages to reach the personal data of 156,959 TalkTalk customers, including bank details for 15,656 of them. The UK Information Commissioner&rsquo;s Office fined the company a then-record &pound;400,000, calling the technique common and well understood.</p>
+              <p class="mt-3 text-[12px] text-mtext">Source: <a href="https://www.bbc.co.uk/news/business-37565367" target="_blank" rel="noopener" class="underline hover:text-ptext">BBC News (2016)</a></p>
+            </div>
+            <details class="group bg-card border border-brder rounded-card p-6">
+              <summary class="cursor-pointer list-none">
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2">Quick check</p>
+                <p class="text-[14px] text-ptext leading-relaxed">Does escaping quotes in the input fix SQL injection completely?</p>
+                <p class="mt-3 text-[13px] font-semibold text-bred group-open:hidden">Show answer</p>
+              </summary>
+              <p class="mt-3 text-[14px] text-stext leading-relaxed border-t border-brder pt-3">It helps but is error-prone; it is easy to miss a case. Parameterized queries are the reliable fix because the input is never parsed as SQL at all.</p>
+            </details>
+            <a href="web-security-challenges.html#WEB-03" class="self-start inline-flex items-center gap-2 bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">Try it: WEB-03 &rarr;</a>
+          </aside>
+        </div>
+      </section>
+      <!-- Lesson 4 -->
+      <section id="lesson-4" class="py-20 border-t border-brder bg-sec">
+        <div class="max-w-content mx-auto px-6 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,360px)] gap-10 lg:gap-14">
+          <div class="reveal">
+            <p class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3">Lesson 4 &middot; WEB-04</p>
+            <h2 class="font-display text-[28px] sm:text-[32px] font-semibold mb-5">Insecure Direct Object References (IDOR)</h2>
+            <div class="space-y-4 text-[15px] text-stext leading-relaxed"><p>An IDOR happens when an application fetches a record by an identifier the user supplies, such as an account number in a URL, without checking that this user is allowed to see that record. Being logged in is not the same as owning the data.</p></div>
+            <h3 class="mt-10 text-[17px] font-semibold">How it works</h3>
+            <div class="mt-3 space-y-3 text-[15px] text-stext leading-relaxed"><p>If your profile loads from an address ending in <span class="font-mono text-ptext">?id=1001</span>, an attacker simply tries 1000, 1002, and so on. When the server returns whatever it is asked for, every user&rsquo;s record is one number away.</p></div>
+            <pre class="mt-3 text-[13px] font-mono text-ptext whitespace-pre-wrap break-all bg-main border border-brder rounded-xl p-4">GET /api/profile?id=1001   → your profile
+GET /api/profile?id=1002   → someone else&#x27;s profile (should be 403 Forbidden)</pre>
+            
+            <h3 class="mt-10 text-[17px] font-semibold">How it is prevented</h3>
+            <ul class="mt-4 space-y-3 text-[15px] text-stext leading-relaxed"><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>On every request, check that the logged-in user owns or may access the requested record.</span></li><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Prefer looking up the record from the session (for example <span class="font-mono text-ptext">/api/my-profile</span>) instead of trusting an ID from the client.</span></li><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Random identifiers make guessing harder, but they are not a substitute for the ownership check.</span></li></ul>
+          </div>
+          <aside class="reveal flex flex-col gap-5 lg:pt-10">
+            <div class="bg-card border border-brder rounded-card p-6">
+              <p class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2">Real-world case</p>
+              <h3 class="text-[16px] font-semibold mb-3">First American Financial, 2019</h3>
+              <p class="text-[14px] text-stext leading-relaxed">Security journalist Brian Krebs reported that around 885 million mortgage and title documents, some containing bank account and social security numbers, could be viewed by anyone who changed a number in the document&rsquo;s web address.</p>
+              <p class="mt-3 text-[12px] text-mtext">Source: <a href="https://krebsonsecurity.com/2019/05/first-american-financial-corp-leaked-hundreds-of-millions-of-title-insurance-records/" target="_blank" rel="noopener" class="underline hover:text-ptext">KrebsOnSecurity (2019)</a></p>
+            </div>
+            <details class="group bg-card border border-brder rounded-card p-6">
+              <summary class="cursor-pointer list-none">
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2">Quick check</p>
+                <p class="text-[14px] text-ptext leading-relaxed">Record IDs are long random strings instead of 1, 2, 3. Is the IDOR fixed?</p>
+                <p class="mt-3 text-[13px] font-semibold text-bred group-open:hidden">Show answer</p>
+              </summary>
+              <p class="mt-3 text-[14px] text-stext leading-relaxed border-t border-brder pt-3">No. Random IDs only make guessing harder; an ID that leaks (in a link, a log, or an email) still opens the record. The server must check ownership.</p>
+            </details>
+            <a href="web-security-challenges.html#WEB-04" class="self-start inline-flex items-center gap-2 bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">Try it: WEB-04 &rarr;</a>
+          </aside>
+        </div>
+      </section>
+
       <!-- Takeaways -->
       <section class="py-24">
         <div class="max-w-content mx-auto px-6">
@@ -265,6 +411,14 @@
               </p>
             </li>
           </ul>
+        </div>
+      </section>
+
+      <!-- Sources -->
+      <section id="sources" class="py-16 border-t border-brder bg-sec">
+        <div class="max-w-content mx-auto px-6">
+          <h2 class="font-display text-[22px] font-semibold mb-6">Sources</h2>
+          <ol class="max-w-3xl space-y-3 text-[13px] text-stext leading-relaxed"><li class="pl-6 -indent-6">OWASP Foundation. (2021). <em>OWASP Top 10: 2021</em>. <a href="https://owasp.org/Top10/" target="_blank" rel="noopener" class="text-bred hover:underline break-all">https://owasp.org/Top10/</a></li><li class="pl-6 -indent-6">OWASP Foundation. (n.d.). <em>SQL injection prevention cheat sheet</em>. <a href="https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-bred hover:underline break-all">https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html</a></li><li class="pl-6 -indent-6">BBC News. (2016, October 5). <em>TalkTalk fined &pound;400,000 for theft of customer details</em>. <a href="https://www.bbc.co.uk/news/business-37565367" target="_blank" rel="noopener" class="text-bred hover:underline break-all">https://www.bbc.co.uk/news/business-37565367</a></li><li class="pl-6 -indent-6">Krebs, B. (2019, May 24). <em>First American Financial Corp. leaked hundreds of millions of title insurance records</em>. KrebsOnSecurity. <a href="https://krebsonsecurity.com/2019/05/first-american-financial-corp-leaked-hundreds-of-millions-of-title-insurance-records/" target="_blank" rel="noopener" class="text-bred hover:underline break-all">https://krebsonsecurity.com/2019/05/first-american-financial-corp-leaked-hundreds-of-millions-of-title-insurance-records/</a></li><li class="pl-6 -indent-6">Mintz. (2018, April 23). <em>Failure to signal: Uber forced to accept expanded settlement after concealing security breach from FTC</em>. <a href="https://www.mintz.com/insights-center/viewpoints/2826/2018-04-23-failure-signal-uber-forced-accept-expanded-settlement" target="_blank" rel="noopener" class="text-bred hover:underline break-all">https://www.mintz.com/insights-center/viewpoints/2826/2018-04-23-failure-signal-uber-forced-accept-expanded-settlement</a></li></ol>
         </div>
       </section>
 

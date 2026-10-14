@@ -213,6 +213,146 @@
         </div>
       </section>
 
+      <!-- Lesson 1 -->
+      <section id="lesson-1" class="py-20 border-t border-brder">
+        <div class="max-w-content mx-auto px-6 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,360px)] gap-10 lg:gap-14">
+          <div class="reveal">
+            <p class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3">Lesson 1 &middot; CRY-01</p>
+            <h2 class="font-display text-[28px] sm:text-[32px] font-semibold mb-5">Encoding Is Not Encryption</h2>
+            <div class="space-y-4 text-[15px] text-stext leading-relaxed"><p><strong class="text-ptext">Encoding</strong> changes how data is represented so it can travel safely, for example as plain text in an email or a URL. <strong class="text-ptext">Encryption</strong> hides data so only someone with the key can read it. Encoding has no key: anyone can reverse it.</p><p>Mistaking one for the other is a classic cryptographic failure, number two in the OWASP Top 10 (2021).</p></div>
+            <h3 class="mt-10 text-[17px] font-semibold">How it works</h3>
+            <div class="mt-3 space-y-3 text-[15px] text-stext leading-relaxed"><p>Base64 turns bytes into letters, digits, <span class="font-mono text-ptext">+</span> and <span class="font-mono text-ptext">/</span>. Output whose length is not a multiple of three bytes is padded with one or two <span class="font-mono text-ptext">=</span> signs, a tell-tale sign of Base64. Every browser console reverses it with <span class="font-mono text-ptext">atob()</span>.</p></div>
+            <pre class="mt-3 text-[13px] font-mono text-ptext whitespace-pre-wrap break-all bg-main border border-brder rounded-xl p-4">&quot;hello&quot;      → Base64 → aGVsbG8=
+&quot;aGVsbG8=&quot;   → atob() → hello      (no key needed)</pre>
+            
+            <h3 class="mt-10 text-[17px] font-semibold">How it is prevented</h3>
+            <ul class="mt-4 space-y-3 text-[15px] text-stext leading-relaxed"><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Use real encryption (for example AES-GCM) from a reviewed library for anything secret.</span></li><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Do not store secrets in configuration files at all: use a secrets manager or environment variables.</span></li><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Treat any value you can decode without a key as public.</span></li></ul>
+          </div>
+          <aside class="reveal flex flex-col gap-5 lg:pt-10">
+            <div class="bg-card border border-brder rounded-card p-6">
+              <p class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2">Real-world case</p>
+              <h3 class="text-[16px] font-semibold mb-3">OWASP Top 10, 2021</h3>
+              <p class="text-[14px] text-stext leading-relaxed">OWASP lists cryptographic failures, including weak or missing encryption of sensitive data, as the second most serious web application risk.</p>
+              <p class="mt-3 text-[12px] text-mtext">Source: <a href="https://owasp.org/Top10/A02_2021-Cryptographic_Failures/" target="_blank" rel="noopener" class="underline hover:text-ptext">OWASP Top 10 (2021), A02 Cryptographic Failures</a></p>
+            </div>
+            <details class="group bg-card border border-brder rounded-card p-6">
+              <summary class="cursor-pointer list-none">
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2">Quick check</p>
+                <p class="text-[14px] text-ptext leading-relaxed">A developer stores a password as its Base64 value and calls it "encrypted". Can an attacker who sees the value recover the password?</p>
+                <p class="mt-3 text-[13px] font-semibold text-bred group-open:hidden">Show answer</p>
+              </summary>
+              <p class="mt-3 text-[14px] text-stext leading-relaxed border-t border-brder pt-3">Yes, instantly. Base64 has no key; decoding it returns the original password.</p>
+            </details>
+            <a href="cryptography-challenges.html#CRY-01" class="self-start inline-flex items-center gap-2 bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">Try it: CRY-01 &rarr;</a>
+          </aside>
+        </div>
+      </section>
+      <!-- Lesson 2 -->
+      <section id="lesson-2" class="py-20 border-t border-brder bg-sec">
+        <div class="max-w-content mx-auto px-6 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,360px)] gap-10 lg:gap-14">
+          <div class="reveal">
+            <p class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3">Lesson 2 &middot; CRY-02</p>
+            <h2 class="font-display text-[28px] sm:text-[32px] font-semibold mb-5">Classical Ciphers and Brute Force</h2>
+            <div class="space-y-4 text-[15px] text-stext leading-relaxed"><p>A Caesar cipher shifts every letter a fixed number of places through the alphabet. The Roman historian Suetonius records Julius Caesar using a shift of three. It hides a message from a casual glance, but nothing more.</p></div>
+            <h3 class="mt-10 text-[17px] font-semibold">How it works</h3>
+            <div class="mt-3 space-y-3 text-[15px] text-stext leading-relaxed"><p>There are only 25 useful shifts, so an attacker can simply try them all, which is a <strong class="text-ptext">brute-force</strong> attack on a tiny key space. A second method is <strong class="text-ptext">frequency analysis</strong>: in English, E is the most common letter, so the most common letter in the ciphertext is probably E.</p></div>
+            <pre class="mt-3 text-[13px] font-mono text-ptext whitespace-pre-wrap break-all bg-main border border-brder rounded-xl p-4">Plaintext:  HELLO WORLD
+Shift 3:    KHOOR ZRUOG
+
+Word lengths and punctuation survive, which helps the attacker.</pre>
+            
+            <h3 class="mt-10 text-[17px] font-semibold">How it is prevented</h3>
+            <ul class="mt-4 space-y-3 text-[15px] text-stext leading-relaxed"><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Use modern algorithms whose key space is far too large to search (AES uses keys of 128 bits or more).</span></li><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Follow Kerckhoffs&rsquo;s principle: a system must stay secure even when everything except the key is public.</span></li></ul>
+          </div>
+          <aside class="reveal flex flex-col gap-5 lg:pt-10">
+            <div class="bg-card border border-brder rounded-card p-6">
+              <p class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2">Real-world case</p>
+              <h3 class="text-[16px] font-semibold mb-3">The Caesar cipher</h3>
+              <p class="text-[14px] text-stext leading-relaxed">The cipher is named after Julius Caesar, who, according to Suetonius, used it for private correspondence. Today it is used only for teaching and for light obfuscation such as ROT13.</p>
+              <p class="mt-3 text-[12px] text-mtext">Source: <a href="https://en.wikipedia.org/wiki/Caesar_cipher" target="_blank" rel="noopener" class="underline hover:text-ptext">Wikipedia: Caesar cipher</a></p>
+            </div>
+            <details class="group bg-card border border-brder rounded-card p-6">
+              <summary class="cursor-pointer list-none">
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2">Quick check</p>
+                <p class="text-[14px] text-ptext leading-relaxed">Why does a Caesar cipher fail even if the attacker does not know the shift?</p>
+                <p class="mt-3 text-[13px] font-semibold text-bred group-open:hidden">Show answer</p>
+              </summary>
+              <p class="mt-3 text-[14px] text-stext leading-relaxed border-t border-brder pt-3">The key space is only 25 shifts, so trying every one takes seconds; frequency analysis finds it even faster.</p>
+            </details>
+            <a href="cryptography-challenges.html#CRY-02" class="self-start inline-flex items-center gap-2 bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">Try it: CRY-02 &rarr;</a>
+          </aside>
+        </div>
+      </section>
+      <!-- Lesson 3 -->
+      <section id="lesson-3" class="py-20 border-t border-brder">
+        <div class="max-w-content mx-auto px-6 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,360px)] gap-10 lg:gap-14">
+          <div class="reveal">
+            <p class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3">Lesson 3 &middot; CRY-03</p>
+            <h2 class="font-display text-[28px] sm:text-[32px] font-semibold mb-5">Never Reuse a Key</h2>
+            <div class="space-y-4 text-[15px] text-stext leading-relaxed"><p>XOR-based encryption combines each byte of the message with a byte of the key. With a truly random key that is as long as the message and <strong class="text-ptext">used only once</strong> (a one-time pad), it is unbreakable. Reuse the key and it collapses.</p></div>
+            <h3 class="mt-10 text-[17px] font-semibold">How it works</h3>
+            <div class="mt-3 space-y-3 text-[15px] text-stext leading-relaxed"><p>If two messages are encrypted with the same key, XOR-ing the two ciphertexts cancels the key out, leaving the two plaintexts combined. Knowing or guessing part of one message (a <strong class="text-ptext">known plaintext</strong>, such as a standard greeting) then reveals the matching part of the other.</p></div>
+            <pre class="mt-3 text-[13px] font-mono text-ptext whitespace-pre-wrap break-all bg-main border border-brder rounded-xl p-4">C1 = P1 ⊕ K
+C2 = P2 ⊕ K
+C1 ⊕ C2 = P1 ⊕ P2        (the key K is gone)</pre>
+            
+            <h3 class="mt-10 text-[17px] font-semibold">How it is prevented</h3>
+            <ul class="mt-4 space-y-3 text-[15px] text-stext leading-relaxed"><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Never reuse a one-time key, and never reuse a nonce with modern ciphers such as AES-GCM.</span></li><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Use authenticated encryption from a reviewed library rather than building XOR schemes by hand.</span></li></ul>
+          </div>
+          <aside class="reveal flex flex-col gap-5 lg:pt-10">
+            <div class="bg-card border border-brder rounded-card p-6">
+              <p class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2">Real-world case</p>
+              <h3 class="text-[16px] font-semibold mb-3">Venona, 1940s</h3>
+              <p class="text-[14px] text-stext leading-relaxed">Under wartime pressure, the Soviet producer of one-time pads printed duplicate pages. US Army codebreakers noticed the reuse and, over decades, decrypted thousands of Soviet intelligence messages, which helped identify spies such as Klaus Fuchs. The project was declassified in 1995.</p>
+              <p class="mt-3 text-[12px] text-mtext">Source: <a href="https://en.wikipedia.org/wiki/Venona_project" target="_blank" rel="noopener" class="underline hover:text-ptext">Wikipedia: Venona project</a></p>
+            </div>
+            <details class="group bg-card border border-brder rounded-card p-6">
+              <summary class="cursor-pointer list-none">
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2">Quick check</p>
+                <p class="text-[14px] text-ptext leading-relaxed">Two ciphertexts were made with the same XOR key. What does C1 &oplus; C2 give you?</p>
+                <p class="mt-3 text-[13px] font-semibold text-bred group-open:hidden">Show answer</p>
+              </summary>
+              <p class="mt-3 text-[14px] text-stext leading-relaxed border-t border-brder pt-3">P1 &oplus; P2: the two plaintexts combined, with the key removed. Known text in one reveals the other.</p>
+            </details>
+            <a href="cryptography-challenges.html#CRY-03" class="self-start inline-flex items-center gap-2 bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">Try it: CRY-03 &rarr;</a>
+          </aside>
+        </div>
+      </section>
+      <!-- Lesson 4 -->
+      <section id="lesson-4" class="py-20 border-t border-brder bg-sec">
+        <div class="max-w-content mx-auto px-6 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,360px)] gap-10 lg:gap-14">
+          <div class="reveal">
+            <p class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3">Lesson 4</p>
+            <h2 class="font-display text-[28px] sm:text-[32px] font-semibold mb-5">Storing Passwords: Hash, Salt, and Slow Down</h2>
+            <div class="space-y-4 text-[15px] text-stext leading-relaxed"><p>Passwords should not be encrypted (which can be reversed) but <strong class="text-ptext">hashed</strong>: turned into a fixed-length fingerprint that cannot be turned back. To log in, the system hashes what you type and compares fingerprints.</p></div>
+            <h3 class="mt-10 text-[17px] font-semibold">How it works</h3>
+            <div class="mt-3 space-y-3 text-[15px] text-stext leading-relaxed"><p>Plain fast hashes are not enough. Without a <strong class="text-ptext">salt</strong> (a random value added to each password before hashing), identical passwords produce identical hashes, so one precomputed table cracks them all. Fast hashes also let attackers test billions of guesses per second, which is why password storage uses deliberately slow algorithms such as bcrypt, scrypt, or Argon2.</p></div>
+            <pre class="mt-3 text-[13px] font-mono text-ptext whitespace-pre-wrap break-all bg-main border border-brder rounded-xl p-4">SHA-1(&quot;password1&quot;)          → same hash for every user (crackable by lookup)
+bcrypt(&quot;password1&quot;, salt)   → different for every user, slow to guess</pre>
+            
+            <h3 class="mt-10 text-[17px] font-semibold">How it is prevented</h3>
+            <ul class="mt-4 space-y-3 text-[15px] text-stext leading-relaxed"><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Use a slow, salted password hash (Argon2, scrypt, or bcrypt), as OWASP recommends.</span></li><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Never store passwords in plain text or with reversible encryption.</span></li><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>This lab follows that advice: Firebase Authentication stores passwords with salted scrypt, and challenge flags are stored only as SHA-256 hashes.</span></li></ul>
+          </div>
+          <aside class="reveal flex flex-col gap-5 lg:pt-10">
+            <div class="bg-card border border-brder rounded-card p-6">
+              <p class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2">Real-world case</p>
+              <h3 class="text-[16px] font-semibold mb-3">LinkedIn, 2012</h3>
+              <p class="text-[14px] text-stext leading-relaxed">About 6.5 million LinkedIn password hashes were posted online. LinkedIn confirmed they had been hashed but not salted, and many were cracked within days of the leak.</p>
+              <p class="mt-3 text-[12px] text-mtext">Source: <a href="https://www.theregister.com/2012/06/07/linkedin_admits_data_breach/" target="_blank" rel="noopener" class="underline hover:text-ptext">The Register (2012)</a></p>
+            </div>
+            <details class="group bg-card border border-brder rounded-card p-6">
+              <summary class="cursor-pointer list-none">
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2">Quick check</p>
+                <p class="text-[14px] text-ptext leading-relaxed">Two users pick the same password. With proper salting, are their stored hashes the same?</p>
+                <p class="mt-3 text-[13px] font-semibold text-bred group-open:hidden">Show answer</p>
+              </summary>
+              <p class="mt-3 text-[14px] text-stext leading-relaxed border-t border-brder pt-3">No. Each password gets its own random salt, so the hashes differ and one cracked hash does not reveal the other.</p>
+            </details>
+            
+          </aside>
+        </div>
+      </section>
+
       <!-- Takeaways -->
       <section class="py-24">
         <div class="max-w-content mx-auto px-6">
@@ -266,6 +406,14 @@
               </p>
             </li>
           </ul>
+        </div>
+      </section>
+
+      <!-- Sources -->
+      <section id="sources" class="py-16 border-t border-brder bg-sec">
+        <div class="max-w-content mx-auto px-6">
+          <h2 class="font-display text-[22px] font-semibold mb-6">Sources</h2>
+          <ol class="max-w-3xl space-y-3 text-[13px] text-stext leading-relaxed"><li class="pl-6 -indent-6">OWASP Foundation. (2021). <em>A02:2021 Cryptographic failures</em>. <a href="https://owasp.org/Top10/A02_2021-Cryptographic_Failures/" target="_blank" rel="noopener" class="text-bred hover:underline break-all">https://owasp.org/Top10/A02_2021-Cryptographic_Failures/</a></li><li class="pl-6 -indent-6">OWASP Foundation. (n.d.). <em>Password storage cheat sheet</em>. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html" target="_blank" rel="noopener" class="text-bred hover:underline break-all">https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html</a></li><li class="pl-6 -indent-6">Wikipedia. (n.d.). <em>Caesar cipher</em>. <a href="https://en.wikipedia.org/wiki/Caesar_cipher" target="_blank" rel="noopener" class="text-bred hover:underline break-all">https://en.wikipedia.org/wiki/Caesar_cipher</a></li><li class="pl-6 -indent-6">Wikipedia. (n.d.). <em>Venona project</em>. <a href="https://en.wikipedia.org/wiki/Venona_project" target="_blank" rel="noopener" class="text-bred hover:underline break-all">https://en.wikipedia.org/wiki/Venona_project</a></li><li class="pl-6 -indent-6">The Register. (2012, June 7). <em>LinkedIn admits site hack, adds pinch of salt to passwords</em>. <a href="https://www.theregister.com/2012/06/07/linkedin_admits_data_breach/" target="_blank" rel="noopener" class="text-bred hover:underline break-all">https://www.theregister.com/2012/06/07/linkedin_admits_data_breach/</a></li></ol>
         </div>
       </section>
 
