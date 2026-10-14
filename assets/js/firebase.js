@@ -150,22 +150,7 @@ export async function signUp(username, email, password) {
   const uid = cred.user.uid;
   try {
     // One atomic batch: reserve the name, create the profile and the scoreboard row.
-    const batch = writeBatch(db);
-    batch.set(nameRef, { uid });
-    batch.set(doc(db, 'users', uid), {
-      username,
-      role: 'user',
-      createdAt: serverTimestamp(),
-      lastAttemptAt: null
-    });
-    batch.set(doc(db, 'scores', uid), {
-      username,
-      points: 0,
-      solved: 0,
-      lastChallenge: null,
-      lastSolveAt: null
-    });
-    await batch.commit();
+    await profileBatch(uid, username, nameRef).commit();
     await updateProfile(cred.user, { displayName: username });
   } catch (e) {
     // Most likely the name was claimed between the check and the write.
@@ -179,6 +164,47 @@ export async function signUp(username, email, password) {
   state = { ready: true, user: cred.user, profile: snap.data() };
   emit();
   return cred.user;
+}
+
+// For a login that has no profile yet (e.g. a user added in the Firebase console):
+// reserve a username and create the profile and scoreboard row.
+export async function completeProfile(username) {
+  requireConfigured();
+  const user = state.user;
+  if (!user) throw new Error('Log in first.');
+  if (!USERNAME_RE.test(username)) {
+    throw new Error('Usernames are 3–20 characters: letters, numbers, and underscores.');
+  }
+  const nameRef = doc(db, 'usernames', username.toLowerCase());
+  if ((await getDoc(nameRef)).exists()) throw new Error('That username is taken.');
+  try {
+    await profileBatch(user.uid, username, nameRef).commit();
+  } catch (e) {
+    throw new Error(e.code === 'permission-denied' ? 'That username is taken.' : friendlyError(e));
+  }
+  await updateProfile(user, { displayName: username }).catch(() => {});
+  const snap = await getDoc(doc(db, 'users', user.uid));
+  state = { ready: true, user, profile: snap.data() };
+  emit();
+}
+
+function profileBatch(uid, username, nameRef) {
+  const batch = writeBatch(db);
+  batch.set(nameRef, { uid });
+  batch.set(doc(db, 'users', uid), {
+    username,
+    role: 'user',
+    createdAt: serverTimestamp(),
+    lastAttemptAt: null
+  });
+  batch.set(doc(db, 'scores', uid), {
+    username,
+    points: 0,
+    solved: 0,
+    lastChallenge: null,
+    lastSolveAt: null
+  });
+  return batch;
 }
 
 export async function logIn(email, password) {
@@ -384,6 +410,10 @@ function renderAuthSlot() {
       (isAdmin() ? '<a href="admin.html" class="' + btn + ' text-stext hover:text-ptext">Admin</a>' : '') +
       '<a href="dashboard.html" class="' + btn + ' border border-brder2 hover:bg-elevated inline-flex items-center gap-2">' +
       '<span class="w-2 h-2 rounded-full bg-success"></span>' + escapeHtml(state.profile.username) + '</a>' +
+      '<button type="button" data-logout class="' + btn + ' text-stext hover:text-ptext">Log out</button>';
+  } else if (state.user) {
+    html =
+      '<a href="auth.html" class="' + btn + ' bg-pred hover:bg-bred text-white">Finish setup</a>' +
       '<button type="button" data-logout class="' + btn + ' text-stext hover:text-ptext">Log out</button>';
   } else {
     html =

@@ -105,7 +105,9 @@
         if (!s.user || !s.profile) {
           $('dash').classList.add('hidden');
           $('gate').classList.remove('hidden');
-          $('gate-msg').textContent = configured ? 'Log in to see your progress.' : 'Your dashboard appears here once accounts are connected.';
+          $('gate-msg').textContent = !configured ? 'Your dashboard appears here once accounts are connected.'
+            : s.user ? 'Choose a username to finish setting up your account.' : 'Log in to see your progress.';
+          $('gate-link').textContent = s.user ? 'Finish setup' : 'Log in';
           $('gate-link').href = 'auth.html?next=dashboard.html';
           $('gate-link').classList.toggle('hidden', !configured);
           return;

@@ -64,6 +64,19 @@
             </div>
           </div>
 
+          <div id="finish-card" class="hidden bg-card border border-brder rounded-card p-6 sm:p-8">
+            <p class="text-[15px] text-stext leading-relaxed mb-6">You are logged in as <strong id="finish-email" class="text-ptext"></strong>, but this account has no lab profile yet. Choose the username shown on the scoreboard.</p>
+            <form id="finish-form" class="space-y-5" novalidate>
+              <div>
+                <label for="finish-username" class="block text-[13px] font-medium text-stext mb-2">Username</label>
+                <input id="finish-username" type="text" autocomplete="username" required maxlength="20" class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none" placeholder="shown on the scoreboard" />
+                <p class="mt-2 text-[12px] text-mtext">3&ndash;20 characters: letters, numbers, and underscores.</p>
+              </div>
+              <button type="submit" class="w-full bg-pred hover:bg-bred disabled:opacity-50 text-white text-[15px] font-semibold px-6 py-3 rounded-btn transition-colors">Save username</button>
+            </form>
+            <p id="finish-msg" role="status" aria-live="polite" class="mt-5 text-[13px] leading-relaxed text-pred"></p>
+          </div>
+
           <div id="auth-card" class="bg-card border border-brder rounded-card p-6 sm:p-8">
             <div class="flex gap-2 p-1 bg-main border border-brder rounded-btn mb-6" role="tablist" aria-label="Account">
               <button type="button" id="tab-login" role="tab" class="flex-1 text-[14px] font-semibold px-4 py-2.5 rounded-btn transition-colors">Log in</button>
@@ -118,7 +131,7 @@
     <script src="assets/js/layout.js"></script>
     <script src="assets/js/guide.js"></script>
     <script type="module">
-      import { configured, onSession, signUp, logIn, resetPassword, friendlyError } from './assets/js/firebase.js';
+      import { configured, onSession, signUp, logIn, completeProfile, resetPassword, friendlyError } from './assets/js/firebase.js';
 
       const $ = (id) => document.getElementById(id);
       const msg = $('auth-msg');
@@ -150,11 +163,34 @@
 
       if (!configured) $('not-configured').classList.remove('hidden');
 
+      // After a login, go on to the target page, unless the account still needs a username.
+      let justLoggedIn = false;
       onSession((s) => {
+        if (justLoggedIn && s.user && s.profile) return location.assign(target);
         const inside = Boolean(s.user && s.profile);
+        const unfinished = Boolean(s.user && !s.profile);
         $('signed-in').classList.toggle('hidden', !inside);
-        $('auth-card').classList.toggle('hidden', inside);
+        $('finish-card').classList.toggle('hidden', !unfinished);
+        $('auth-card').classList.toggle('hidden', Boolean(s.user));
         if (inside) $('signed-in-name').textContent = s.profile.username;
+        if (unfinished) {
+          $('auth-title').textContent = 'Finish setting up';
+          $('finish-email').textContent = s.user.email || 'this account';
+        }
+      });
+
+      $('finish-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const button = e.target.querySelector('button[type=submit]');
+        button.disabled = true;
+        try {
+          await completeProfile($('finish-username').value.trim());
+          location.assign(target);
+        } catch (err) {
+          $('finish-msg').textContent = err.message;
+        } finally {
+          button.disabled = false;
+        }
       });
 
       async function busy(form, fn) {
@@ -169,8 +205,8 @@
         const password = $('login-password').value;
         if (!email || !password) return say('Enter your email and password.');
         busy(e.target, async () => {
+          justLoggedIn = true;
           await logIn(email, password);
-          location.assign(target);
         });
       });
 
