@@ -26,8 +26,8 @@ jobs:
           set -euo pipefail
           status=0
           for page in *.html; do
-            # href="x.html" / href="x.html#anchor" and src="assets/..." references
-            for ref in $(grep -oE '(href|src)="[^"#:]+(\.html|\.js|\.css|\.svg|\.png|\.ico|\.pdf|\.webmanifest)(#[^"]*)?"' "$page" | sed -E 's/^(href|src)="//; s/"$//; s/#.*$//' | sort -u); do
+            # href="x.html" / "x.html#anchor" / "x.html?query" and src="assets/..." references
+            for ref in $(grep -oE '(href|src)="[^"#:?]+(\.html|\.js|\.css|\.svg|\.png|\.ico|\.pdf|\.webmanifest)([?#][^"]*)?"' "$page" | sed -E 's/^(href|src)="//; s/"$//; s/[?#].*$//' | sort -u); do
               if [ ! -f "$ref" ]; then
                 echo "::error file=$page::Broken reference: $ref"
                 status=1
