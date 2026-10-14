@@ -18,16 +18,34 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="CYS401 CTF Lab" />
     <meta property="og:title" content="Admin | CYS401" />
-    <meta property="og:description" content="Administration for the CYS401 CTF Lab: challenge catalogue, flag hashes, user roles, and the submission log." />
-    <meta property="og:url" content="https://ctf-lab.shoug-tech.com/admin.html" />
-    <meta property="og:image" content="https://ctf-lab.shoug-tech.com/assets/img/og-banner.png" />
+    <meta
+      property="og:description"
+      content="Administration for the CYS401 CTF Lab: challenge catalogue, flag hashes, user roles, and the submission log."
+    />
+    <meta
+      property="og:url"
+      content="https://ctf-lab.shoug-tech.com/admin.html"
+    />
+    <meta
+      property="og:image"
+      content="https://ctf-lab.shoug-tech.com/assets/img/og-banner.png"
+    />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="CYS401 CTF Lab — Mini Capture-the-Flag Security Lab Platform." />
+    <meta
+      property="og:image:alt"
+      content="CYS401 CTF Lab — Mini Capture-the-Flag Security Lab Platform."
+    />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Admin | CYS401" />
-    <meta name="twitter:description" content="Administration for the CYS401 CTF Lab: challenge catalogue, flag hashes, user roles, and the submission log." />
-    <meta name="twitter:image" content="https://ctf-lab.shoug-tech.com/assets/img/og-banner.png" />
+    <meta
+      name="twitter:description"
+      content="Administration for the CYS401 CTF Lab: challenge catalogue, flag hashes, user roles, and the submission log."
+    />
+    <meta
+      name="twitter:image"
+      content="https://ctf-lab.shoug-tech.com/assets/img/og-banner.png"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -42,54 +60,161 @@
     class="bg-main text-ptext font-sans antialiased selection:bg-pred selection:text-white"
   >
     <div id="site-header"></div>
-  <body
-    class="bg-main text-ptext font-sans antialiased selection:bg-pred selection:text-white"
-  >
-    <div id="site-header"></div>
 
     <main id="main" class="pt-[72px]">
-      <section class="relative py-16 lg:py-20 border-b border-brder overflow-hidden">
-        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(220,38,38,0.10),transparent_55%)] pointer-events-none"></div>
+      <section
+        class="relative py-16 lg:py-20 border-b border-brder overflow-hidden"
+      >
+        <div
+          class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(220,38,38,0.10),transparent_55%)] pointer-events-none"
+        ></div>
         <div class="relative max-w-content mx-auto px-6">
-          <p class="text-[12px] font-medium text-pred uppercase tracking-[0.2em] mb-5">Administration</p>
-          <h1 class="font-display text-[34px] sm:text-[44px] lg:text-[48px] font-semibold leading-[1.1] mb-5">Lab Administration</h1>
-          <p class="text-[16px] text-stext leading-relaxed max-w-2xl">Admins load the challenge catalogue and flag hashes, manage roles, and review the submission log. Every action here is also checked by the Firestore security rules.</p>
+          <p
+            class="text-[12px] font-medium text-pred uppercase tracking-[0.2em] mb-5"
+          >
+            Administration
+          </p>
+          <h1
+            class="font-display text-[34px] sm:text-[44px] lg:text-[48px] font-semibold leading-[1.1] mb-5"
+          >
+            Lab Administration
+          </h1>
+          <p class="text-[16px] text-stext leading-relaxed max-w-2xl">
+            Admins load the challenge catalogue and flag hashes, manage roles,
+            and review the submission log. Every action here is also checked by
+            the Firestore security rules.
+          </p>
         </div>
       </section>
       <section class="py-16">
         <div class="max-w-content mx-auto px-6">
-          <div id="not-configured" class="hidden mb-8 bg-card border border-warn/40 rounded-card p-5 text-[14px] text-stext leading-relaxed"><strong class="text-warn">Accounts not connected yet.</strong> Add the Firebase project config to <span class="font-mono text-ptext">assets/js/firebase-config.js</span> to enable sign-up, flag submission, and the scoreboard.</div>
-          <div id="gate" class="hidden bg-card border border-brder rounded-card p-8 text-center"><p id="gate-msg" class="text-[15px] text-stext mb-6"></p><a id="gate-link" href="auth.html" class="inline-block bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">Log in</a></div>
+          <div
+            id="not-configured"
+            class="hidden mb-8 bg-card border border-warn/40 rounded-card p-5 text-[14px] text-stext leading-relaxed"
+          >
+            <strong class="text-warn">Accounts not connected yet.</strong> Add
+            the Firebase project config to
+            <span class="font-mono text-ptext"
+              >assets/js/firebase-config.js</span
+            >
+            to enable sign-up, flag submission, and the scoreboard.
+          </div>
+          <div
+            id="gate"
+            class="hidden bg-card border border-brder rounded-card p-8 text-center"
+          >
+            <p id="gate-msg" class="text-[15px] text-stext mb-6"></p>
+            <a
+              id="gate-link"
+              href="auth.html"
+              class="inline-block bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors"
+              >Log in</a
+            >
+          </div>
           <div id="admin" class="hidden space-y-12">
             <div class="bg-card border border-brder rounded-card p-6 sm:p-8">
-              <h2 class="font-display text-[20px] font-semibold mb-2">Challenges and flags</h2>
-              <p class="text-[14px] text-stext leading-relaxed mb-5">Paste one <span class="font-mono text-ptext">ID flag</span> pair per line, for example <span class="font-mono text-ptext">WEB-01 CYS401{...}</span>. Your browser hashes each flag with SHA-256 and stores only the hash. Leave the box empty to update the catalogue (titles, points) without touching flags.</p>
+              <h2 class="font-display text-[20px] font-semibold mb-2">
+                Challenges and flags
+              </h2>
+              <p class="text-[14px] text-stext leading-relaxed mb-5">
+                Paste one <span class="font-mono text-ptext">ID flag</span> pair
+                per line, for example
+                <span class="font-mono text-ptext">WEB-01 CYS401{...}</span>.
+                Your browser hashes each flag with SHA-256 and stores only the
+                hash. Leave the box empty to update the catalogue (titles,
+                points) without touching flags.
+              </p>
               <p id="seed-status" class="text-[13px] text-mtext mb-4"></p>
               <label for="seed-flags" class="sr-only">Flags</label>
-              <textarea id="seed-flags" rows="6" spellcheck="false" class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[13px] font-mono text-ptext placeholder:text-mtext focus:border-pred focus:outline-none" placeholder="WEB-01 CYS401{...}"></textarea>
+              <textarea
+                id="seed-flags"
+                rows="6"
+                spellcheck="false"
+                class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[13px] font-mono text-ptext placeholder:text-mtext focus:border-pred focus:outline-none"
+                placeholder="WEB-01 CYS401{...}"
+              ></textarea>
               <div class="mt-4 flex flex-wrap items-center gap-4">
-                <button type="button" id="seed-btn" class="bg-pred hover:bg-bred disabled:opacity-50 text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">Save to Firestore</button>
-                <p id="seed-msg" role="status" aria-live="polite" class="text-[13px]"></p>
+                <button
+                  type="button"
+                  id="seed-btn"
+                  class="bg-pred hover:bg-bred disabled:opacity-50 text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors"
+                >
+                  Save to Firestore
+                </button>
+                <p
+                  id="seed-msg"
+                  role="status"
+                  aria-live="polite"
+                  class="text-[13px]"
+                ></p>
               </div>
             </div>
 
             <div>
               <h2 class="font-display text-[20px] font-semibold mb-4">Users</h2>
-              <div class="overflow-x-auto rounded-card border border-brder bg-card">
+              <div
+                class="overflow-x-auto rounded-card border border-brder bg-card"
+              >
                 <table class="w-full min-w-[560px] text-left text-[14px]">
-                  <thead class="bg-elevated text-[11px] uppercase tracking-wider text-mtext"><tr><th scope="col" class="px-5 py-3 font-semibold">Username</th><th scope="col" class="px-5 py-3 font-semibold">Role</th><th scope="col" class="px-5 py-3 font-semibold">Joined</th><th scope="col" class="px-5 py-3 font-semibold"><span class="sr-only">Actions</span></th></tr></thead>
-                  <tbody id="u-rows" class="divide-y divide-brder text-stext"></tbody>
+                  <thead
+                    class="bg-elevated text-[11px] uppercase tracking-wider text-mtext"
+                  >
+                    <tr>
+                      <th scope="col" class="px-5 py-3 font-semibold">
+                        Username
+                      </th>
+                      <th scope="col" class="px-5 py-3 font-semibold">Role</th>
+                      <th scope="col" class="px-5 py-3 font-semibold">
+                        Joined
+                      </th>
+                      <th scope="col" class="px-5 py-3 font-semibold">
+                        <span class="sr-only">Actions</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    id="u-rows"
+                    class="divide-y divide-brder text-stext"
+                  ></tbody>
                 </table>
               </div>
             </div>
 
             <div>
-              <h2 class="font-display text-[20px] font-semibold mb-2">Submission log</h2>
-              <p class="text-[14px] text-stext mb-4">The latest 100 flag submissions. The rules verify the result of each one, so a player cannot log a fake correct answer.</p>
-              <div class="overflow-x-auto rounded-card border border-brder bg-card">
+              <h2 class="font-display text-[20px] font-semibold mb-2">
+                Submission log
+              </h2>
+              <p class="text-[14px] text-stext mb-4">
+                The latest 100 flag submissions. The rules verify the result of
+                each one, so a player cannot log a fake correct answer.
+              </p>
+              <div
+                class="overflow-x-auto rounded-card border border-brder bg-card"
+              >
                 <table class="w-full min-w-[640px] text-left text-[14px]">
-                  <thead class="bg-elevated text-[11px] uppercase tracking-wider text-mtext"><tr><th scope="col" class="px-5 py-3 font-semibold">Time</th><th scope="col" class="px-5 py-3 font-semibold">Player</th><th scope="col" class="px-5 py-3 font-semibold">Challenge</th><th scope="col" class="px-5 py-3 font-semibold">Result</th><th scope="col" class="px-5 py-3 font-semibold">Submitted</th></tr></thead>
-                  <tbody id="a-rows" class="divide-y divide-brder text-stext"></tbody>
+                  <thead
+                    class="bg-elevated text-[11px] uppercase tracking-wider text-mtext"
+                  >
+                    <tr>
+                      <th scope="col" class="px-5 py-3 font-semibold">Time</th>
+                      <th scope="col" class="px-5 py-3 font-semibold">
+                        Player
+                      </th>
+                      <th scope="col" class="px-5 py-3 font-semibold">
+                        Challenge
+                      </th>
+                      <th scope="col" class="px-5 py-3 font-semibold">
+                        Result
+                      </th>
+                      <th scope="col" class="px-5 py-3 font-semibold">
+                        Submitted
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    id="a-rows"
+                    class="divide-y divide-brder text-stext"
+                  ></tbody>
                 </table>
               </div>
             </div>
@@ -102,89 +227,168 @@
     <script src="assets/js/layout.js"></script>
     <script src="assets/js/guide.js"></script>
     <script type="module">
-      import { configured, onSession, isAdmin, adminData, seedChallenges, setRole, escapeHtml } from './assets/js/firebase.js';
-      import { CHALLENGES } from './assets/js/challenge-data.js';
+      import {
+        configured,
+        onSession,
+        isAdmin,
+        adminData,
+        seedChallenges,
+        setRole,
+        escapeHtml,
+      } from "./assets/js/firebase.js";
+      import { CHALLENGES } from "./assets/js/challenge-data.js";
       const $ = (id) => document.getElementById(id);
       let me = null;
 
-      if (!configured) $('not-configured').classList.remove('hidden');
+      if (!configured) $("not-configured").classList.remove("hidden");
 
       async function load() {
         const data = await adminData();
-        const missing = CHALLENGES.filter((c) => !data.seeded.includes(c.id)).map((c) => c.id);
-        $('seed-status').textContent = missing.length
-          ? missing.length + ' of ' + CHALLENGES.length + ' challenges are not in Firestore yet: ' + missing.join(', ') + '.'
-          : 'All ' + CHALLENGES.length + ' challenges are in Firestore.';
+        const missing = CHALLENGES.filter(
+          (c) => !data.seeded.includes(c.id),
+        ).map((c) => c.id);
+        $("seed-status").textContent = missing.length
+          ? missing.length +
+            " of " +
+            CHALLENGES.length +
+            " challenges are not in Firestore yet: " +
+            missing.join(", ") +
+            "."
+          : "All " + CHALLENGES.length + " challenges are in Firestore.";
 
-        $('u-rows').innerHTML = data.users
+        $("u-rows").innerHTML = data.users
           .sort((a, b) => a.username.localeCompare(b.username))
           .map((u) => {
             const self = u.uid === me;
-            const next = u.role === 'admin' ? 'user' : 'admin';
-            return '<tr><td class="px-5 py-4 text-ptext">' + escapeHtml(u.username) + '</td>' +
-              '<td class="px-5 py-4"><span class="text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border ' + (u.role === 'admin' ? 'border-rborder text-bred' : 'border-brder2 text-mtext') + '">' + escapeHtml(u.role) + '</span></td>' +
-              '<td class="px-5 py-4 whitespace-nowrap">' + (u.createdAt ? u.createdAt.toDate().toLocaleDateString() : '') + '</td>' +
-              '<td class="px-5 py-4 text-right">' + (self ? '<span class="text-[12px] text-mtext">You</span>' : '<button type="button" data-uid="' + u.uid + '" data-role="' + next + '" class="text-[12px] font-semibold border border-brder2 hover:bg-elevated px-3 py-1.5 rounded-btn transition-colors">Make ' + next + '</button>') + '</td></tr>';
-          }).join('');
+            const next = u.role === "admin" ? "user" : "admin";
+            return (
+              '<tr><td class="px-5 py-4 text-ptext">' +
+              escapeHtml(u.username) +
+              "</td>" +
+              '<td class="px-5 py-4"><span class="text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border ' +
+              (u.role === "admin"
+                ? "border-rborder text-bred"
+                : "border-brder2 text-mtext") +
+              '">' +
+              escapeHtml(u.role) +
+              "</span></td>" +
+              '<td class="px-5 py-4 whitespace-nowrap">' +
+              (u.createdAt ? u.createdAt.toDate().toLocaleDateString() : "") +
+              "</td>" +
+              '<td class="px-5 py-4 text-right">' +
+              (self
+                ? '<span class="text-[12px] text-mtext">You</span>'
+                : '<button type="button" data-uid="' +
+                  u.uid +
+                  '" data-role="' +
+                  next +
+                  '" class="text-[12px] font-semibold border border-brder2 hover:bg-elevated px-3 py-1.5 rounded-btn transition-colors">Make ' +
+                  next +
+                  "</button>") +
+              "</td></tr>"
+            );
+          })
+          .join("");
 
-        $('a-rows').innerHTML = data.attempts.length
-          ? data.attempts.map((a) => '<tr><td class="px-5 py-3 whitespace-nowrap">' + (a.at ? a.at.toLocaleString() : '') + '</td>' +
-              '<td class="px-5 py-3 text-ptext">' + escapeHtml(a.username) + '</td>' +
-              '<td class="px-5 py-3 font-mono">' + escapeHtml(a.challengeId) + '</td>' +
-              '<td class="px-5 py-3">' + (a.correct ? '<span class="text-success">Correct</span>' : '<span class="text-pred">Incorrect</span>') + '</td>' +
-              '<td class="px-5 py-3 font-mono text-[12px] text-mtext break-all">' + escapeHtml(a.flag) + '</td></tr>').join('')
+        $("a-rows").innerHTML = data.attempts.length
+          ? data.attempts
+              .map(
+                (a) =>
+                  '<tr><td class="px-5 py-3 whitespace-nowrap">' +
+                  (a.at ? a.at.toLocaleString() : "") +
+                  "</td>" +
+                  '<td class="px-5 py-3 text-ptext">' +
+                  escapeHtml(a.username) +
+                  "</td>" +
+                  '<td class="px-5 py-3 font-mono">' +
+                  escapeHtml(a.challengeId) +
+                  "</td>" +
+                  '<td class="px-5 py-3">' +
+                  (a.correct
+                    ? '<span class="text-success">Correct</span>'
+                    : '<span class="text-pred">Incorrect</span>') +
+                  "</td>" +
+                  '<td class="px-5 py-3 font-mono text-[12px] text-mtext break-all">' +
+                  escapeHtml(a.flag) +
+                  "</td></tr>",
+              )
+              .join("")
           : '<tr><td colspan="5" class="px-5 py-8 text-center">No submissions yet.</td></tr>';
       }
 
-      $('u-rows').addEventListener('click', async (e) => {
-        const b = e.target.closest('button[data-uid]');
+      $("u-rows").addEventListener("click", async (e) => {
+        const b = e.target.closest("button[data-uid]");
         if (!b) return;
         b.disabled = true;
-        try { await setRole(b.dataset.uid, b.dataset.role); await load(); } catch (err) { b.disabled = false; alert('Could not change the role.'); }
-      });
-
-      $('seed-btn').addEventListener('click', async () => {
-        const msg = $('seed-msg');
-        const flags = {};
-        const bad = [];
-        $('seed-flags').value.split('\n').map((l) => l.trim()).filter(Boolean).forEach((line) => {
-          const m = line.match(/^([A-Z]{3}-\d{2})\s+(CYS401\{.*\})$/i);
-          if (m && CHALLENGES.some((c) => c.id === m[1].toUpperCase())) flags[m[1].toUpperCase()] = m[2];
-          else bad.push(line);
-        });
-        if (bad.length) {
-          msg.className = 'text-[13px] text-pred';
-          msg.textContent = 'Could not read: ' + bad.slice(0, 3).join(' | ');
-          return;
-        }
-        $('seed-btn').disabled = true;
         try {
-          await seedChallenges(flags);
-          $('seed-flags').value = '';
-          msg.className = 'text-[13px] text-success';
-          msg.textContent = 'Saved the catalogue' + (Object.keys(flags).length ? ' and ' + Object.keys(flags).length + ' flag hashes.' : '.');
+          await setRole(b.dataset.uid, b.dataset.role);
           await load();
         } catch (err) {
-          msg.className = 'text-[13px] text-pred';
-          msg.textContent = 'Save failed: ' + err.message;
+          b.disabled = false;
+          alert("Could not change the role.");
+        }
+      });
+
+      $("seed-btn").addEventListener("click", async () => {
+        const msg = $("seed-msg");
+        const flags = {};
+        const bad = [];
+        $("seed-flags")
+          .value.split("\n")
+          .map((l) => l.trim())
+          .filter(Boolean)
+          .forEach((line) => {
+            const m = line.match(/^([A-Z]{3}-\d{2})\s+(CYS401\{.*\})$/i);
+            if (m && CHALLENGES.some((c) => c.id === m[1].toUpperCase()))
+              flags[m[1].toUpperCase()] = m[2];
+            else bad.push(line);
+          });
+        if (bad.length) {
+          msg.className = "text-[13px] text-pred";
+          msg.textContent = "Could not read: " + bad.slice(0, 3).join(" | ");
+          return;
+        }
+        $("seed-btn").disabled = true;
+        try {
+          await seedChallenges(flags);
+          $("seed-flags").value = "";
+          msg.className = "text-[13px] text-success";
+          msg.textContent =
+            "Saved the catalogue" +
+            (Object.keys(flags).length
+              ? " and " + Object.keys(flags).length + " flag hashes."
+              : ".");
+          await load();
+        } catch (err) {
+          msg.className = "text-[13px] text-pred";
+          msg.textContent = "Save failed: " + err.message;
         } finally {
-          $('seed-btn').disabled = false;
+          $("seed-btn").disabled = false;
         }
       });
 
       onSession((s) => {
         me = s.user ? s.user.uid : null;
         const allowed = Boolean(s.user && isAdmin());
-        $('admin').classList.toggle('hidden', !allowed);
-        $('gate').classList.toggle('hidden', allowed);
+        $("admin").classList.toggle("hidden", !allowed);
+        $("gate").classList.toggle("hidden", allowed);
         if (!allowed) {
-          $('gate-msg').textContent = !configured ? 'Administration is available once accounts are connected.'
-            : s.user ? 'This page is for administrators only.' : 'Log in with an administrator account.';
-          $('gate-link').href = 'auth.html?next=admin.html';
-          $('gate-link').classList.toggle('hidden', !configured || Boolean(s.user));
+          $("gate-msg").textContent = !configured
+            ? "Administration is available once accounts are connected."
+            : s.user
+              ? "This page is for administrators only."
+              : "Log in with an administrator account.";
+          $("gate-link").href = "auth.html?next=admin.html";
+          $("gate-link").classList.toggle(
+            "hidden",
+            !configured || Boolean(s.user),
+          );
           return;
         }
-        load().catch((e) => { $('seed-status').textContent = 'Could not load admin data: ' + e.message; });
+        load().catch((e) => {
+          $("seed-status").textContent =
+            "Could not load admin data: " + e.message;
+        });
       });
     </script>
   </body>

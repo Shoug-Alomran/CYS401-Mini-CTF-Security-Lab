@@ -18,16 +18,34 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="CYS401 CTF Lab" />
     <meta property="og:title" content="Log in | CYS401" />
-    <meta property="og:description" content="Log in or create an account for the CYS401 CTF Lab to save your captured flags and appear on the scoreboard." />
-    <meta property="og:url" content="https://ctf-lab.shoug-tech.com/auth.html" />
-    <meta property="og:image" content="https://ctf-lab.shoug-tech.com/assets/img/og-banner.png" />
+    <meta
+      property="og:description"
+      content="Log in or create an account for the CYS401 CTF Lab to save your captured flags and appear on the scoreboard."
+    />
+    <meta
+      property="og:url"
+      content="https://ctf-lab.shoug-tech.com/auth.html"
+    />
+    <meta
+      property="og:image"
+      content="https://ctf-lab.shoug-tech.com/assets/img/og-banner.png"
+    />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="CYS401 CTF Lab — Mini Capture-the-Flag Security Lab Platform." />
+    <meta
+      property="og:image:alt"
+      content="CYS401 CTF Lab — Mini Capture-the-Flag Security Lab Platform."
+    />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Log in | CYS401" />
-    <meta name="twitter:description" content="Log in or create an account for the CYS401 CTF Lab to save your captured flags and appear on the scoreboard." />
-    <meta name="twitter:image" content="https://ctf-lab.shoug-tech.com/assets/img/og-banner.png" />
+    <meta
+      name="twitter:description"
+      content="Log in or create an account for the CYS401 CTF Lab to save your captured flags and appear on the scoreboard."
+    />
+    <meta
+      name="twitter:image"
+      content="https://ctf-lab.shoug-tech.com/assets/img/og-banner.png"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -42,87 +60,269 @@
     class="bg-main text-ptext font-sans antialiased selection:bg-pred selection:text-white"
   >
     <div id="site-header"></div>
-  <body
-    class="bg-main text-ptext font-sans antialiased selection:bg-pred selection:text-white"
-  >
-    <div id="site-header"></div>
 
     <main id="main" class="pt-[72px]">
       <section class="relative py-16 lg:py-24 overflow-hidden">
-        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(220,38,38,0.12),transparent_55%)] pointer-events-none"></div>
+        <div
+          class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(220,38,38,0.12),transparent_55%)] pointer-events-none"
+        ></div>
         <div class="relative max-w-md mx-auto px-6">
-          <p class="text-[12px] font-medium text-pred uppercase tracking-[0.2em] mb-4 text-center">CTF Lab Account</p>
-          <h1 id="auth-title" class="font-display text-[32px] sm:text-[38px] font-semibold leading-tight mb-3 text-center">Log in to the lab</h1>
-          <p class="text-[15px] text-stext leading-relaxed mb-8 text-center">Your account saves the flags you capture and puts you on the scoreboard.</p>
-          <div id="not-configured" class="hidden mb-8 bg-card border border-warn/40 rounded-card p-5 text-[14px] text-stext leading-relaxed"><strong class="text-warn">Accounts not connected yet.</strong> Add the Firebase project config to <span class="font-mono text-ptext">assets/js/firebase-config.js</span> to enable sign-up, flag submission, and the scoreboard.</div>
+          <p
+            class="text-[12px] font-medium text-pred uppercase tracking-[0.2em] mb-4 text-center"
+          >
+            CTF Lab Account
+          </p>
+          <h1
+            id="auth-title"
+            class="font-display text-[32px] sm:text-[38px] font-semibold leading-tight mb-3 text-center"
+          >
+            Log in to the lab
+          </h1>
+          <p class="text-[15px] text-stext leading-relaxed mb-8 text-center">
+            Your account saves the flags you capture and puts you on the
+            scoreboard.
+          </p>
+          <div
+            id="not-configured"
+            class="hidden mb-8 bg-card border border-warn/40 rounded-card p-5 text-[14px] text-stext leading-relaxed"
+          >
+            <strong class="text-warn">Accounts not connected yet.</strong> Add
+            the Firebase project config to
+            <span class="font-mono text-ptext"
+              >assets/js/firebase-config.js</span
+            >
+            to enable sign-up, flag submission, and the scoreboard.
+          </div>
 
-          <div id="signed-in" class="hidden bg-card border border-brder rounded-card p-6 sm:p-8 text-center">
-            <p class="text-[15px] text-stext mb-6">You are logged in as <strong id="signed-in-name" class="text-ptext"></strong>.</p>
+          <div
+            id="signed-in"
+            class="hidden bg-card border border-brder rounded-card p-6 sm:p-8 text-center"
+          >
+            <p class="text-[15px] text-stext mb-6">
+              You are logged in as
+              <strong id="signed-in-name" class="text-ptext"></strong>.
+            </p>
             <div class="flex flex-wrap justify-center gap-3">
-              <a href="dashboard.html" class="bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">My Dashboard</a>
-              <a href="index.html#challenges" class="border border-brder2 hover:bg-elevated text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">Challenges</a>
+              <a
+                href="dashboard.html"
+                class="bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors"
+                >My Dashboard</a
+              >
+              <a
+                href="index.html#challenges"
+                class="border border-brder2 hover:bg-elevated text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors"
+                >Challenges</a
+              >
             </div>
           </div>
 
-          <div id="finish-card" class="hidden bg-card border border-brder rounded-card p-6 sm:p-8">
-            <p class="text-[15px] text-stext leading-relaxed mb-6">You are logged in as <strong id="finish-email" class="text-ptext"></strong>, but this account has no lab profile yet. Choose the username shown on the scoreboard.</p>
+          <div
+            id="finish-card"
+            class="hidden bg-card border border-brder rounded-card p-6 sm:p-8"
+          >
+            <p class="text-[15px] text-stext leading-relaxed mb-6">
+              You are logged in as
+              <strong id="finish-email" class="text-ptext"></strong>, but this
+              account has no lab profile yet. Choose the username shown on the
+              scoreboard.
+            </p>
             <form id="finish-form" class="space-y-5" novalidate>
               <div>
-                <label for="finish-username" class="block text-[13px] font-medium text-stext mb-2">Username</label>
-                <input id="finish-username" type="text" autocomplete="username" required maxlength="20" class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none" placeholder="shown on the scoreboard" />
-                <p class="mt-2 text-[12px] text-mtext">3&ndash;20 characters: letters, numbers, and underscores.</p>
+                <label
+                  for="finish-username"
+                  class="block text-[13px] font-medium text-stext mb-2"
+                  >Username</label
+                >
+                <input
+                  id="finish-username"
+                  type="text"
+                  autocomplete="username"
+                  required
+                  maxlength="20"
+                  class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none"
+                  placeholder="shown on the scoreboard"
+                />
+                <p class="mt-2 text-[12px] text-mtext">
+                  3&ndash;20 characters: letters, numbers, and underscores.
+                </p>
               </div>
-              <button type="submit" class="w-full bg-pred hover:bg-bred disabled:opacity-50 text-white text-[15px] font-semibold px-6 py-3 rounded-btn transition-colors">Save username</button>
+              <button
+                type="submit"
+                class="w-full bg-pred hover:bg-bred disabled:opacity-50 text-white text-[15px] font-semibold px-6 py-3 rounded-btn transition-colors"
+              >
+                Save username
+              </button>
             </form>
-            <p id="finish-msg" role="status" aria-live="polite" class="mt-5 text-[13px] leading-relaxed text-pred"></p>
+            <p
+              id="finish-msg"
+              role="status"
+              aria-live="polite"
+              class="mt-5 text-[13px] leading-relaxed text-pred"
+            ></p>
           </div>
 
-          <div id="auth-card" class="bg-card border border-brder rounded-card p-6 sm:p-8">
-            <div class="flex gap-2 p-1 bg-main border border-brder rounded-btn mb-6" role="tablist" aria-label="Account">
-              <button type="button" id="tab-login" role="tab" class="flex-1 text-[14px] font-semibold px-4 py-2.5 rounded-btn transition-colors">Log in</button>
-              <button type="button" id="tab-signup" role="tab" class="flex-1 text-[14px] font-semibold px-4 py-2.5 rounded-btn transition-colors">Sign up</button>
+          <div
+            id="auth-card"
+            class="bg-card border border-brder rounded-card p-6 sm:p-8"
+          >
+            <div
+              class="flex gap-2 p-1 bg-main border border-brder rounded-btn mb-6"
+              role="tablist"
+              aria-label="Account"
+            >
+              <button
+                type="button"
+                id="tab-login"
+                role="tab"
+                class="flex-1 text-[14px] font-semibold px-4 py-2.5 rounded-btn transition-colors"
+              >
+                Log in
+              </button>
+              <button
+                type="button"
+                id="tab-signup"
+                role="tab"
+                class="flex-1 text-[14px] font-semibold px-4 py-2.5 rounded-btn transition-colors"
+              >
+                Sign up
+              </button>
             </div>
 
             <form id="login-form" class="space-y-5" novalidate>
               <div>
-                <label for="login-email" class="block text-[13px] font-medium text-stext mb-2">Email</label>
-                <input id="login-email" type="email" autocomplete="email" required class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none" placeholder="you@example.com" />
+                <label
+                  for="login-email"
+                  class="block text-[13px] font-medium text-stext mb-2"
+                  >Email</label
+                >
+                <input
+                  id="login-email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                  class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none"
+                  placeholder="you@example.com"
+                />
               </div>
               <div>
                 <div class="flex items-center justify-between mb-2">
-                  <label for="login-password" class="text-[13px] font-medium text-stext">Password</label>
-                  <button type="button" id="forgot" class="text-[12px] text-mtext hover:text-bred transition-colors">Forgot password?</button>
+                  <label
+                    for="login-password"
+                    class="text-[13px] font-medium text-stext"
+                    >Password</label
+                  >
+                  <button
+                    type="button"
+                    id="forgot"
+                    class="text-[12px] text-mtext hover:text-bred transition-colors"
+                  >
+                    Forgot password?
+                  </button>
                 </div>
-                <input id="login-password" type="password" autocomplete="current-password" required class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none" />
+                <input
+                  id="login-password"
+                  type="password"
+                  autocomplete="current-password"
+                  required
+                  class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none"
+                />
               </div>
-              <button type="submit" class="w-full bg-pred hover:bg-bred disabled:opacity-50 text-white text-[15px] font-semibold px-6 py-3 rounded-btn transition-colors">Log in</button>
+              <button
+                type="submit"
+                class="w-full bg-pred hover:bg-bred disabled:opacity-50 text-white text-[15px] font-semibold px-6 py-3 rounded-btn transition-colors"
+              >
+                Log in
+              </button>
             </form>
 
             <form id="signup-form" class="space-y-5 hidden" novalidate>
               <div>
-                <label for="signup-username" class="block text-[13px] font-medium text-stext mb-2">Username</label>
-                <input id="signup-username" type="text" autocomplete="username" required maxlength="20" class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none" placeholder="shown on the scoreboard" />
-                <p class="mt-2 text-[12px] text-mtext">3&ndash;20 characters: letters, numbers, and underscores.</p>
+                <label
+                  for="signup-username"
+                  class="block text-[13px] font-medium text-stext mb-2"
+                  >Username</label
+                >
+                <input
+                  id="signup-username"
+                  type="text"
+                  autocomplete="username"
+                  required
+                  maxlength="20"
+                  class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none"
+                  placeholder="shown on the scoreboard"
+                />
+                <p class="mt-2 text-[12px] text-mtext">
+                  3&ndash;20 characters: letters, numbers, and underscores.
+                </p>
               </div>
               <div>
-                <label for="signup-email" class="block text-[13px] font-medium text-stext mb-2">Email</label>
-                <input id="signup-email" type="email" autocomplete="email" required class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none" placeholder="you@example.com" />
+                <label
+                  for="signup-email"
+                  class="block text-[13px] font-medium text-stext mb-2"
+                  >Email</label
+                >
+                <input
+                  id="signup-email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                  class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none"
+                  placeholder="you@example.com"
+                />
               </div>
               <div>
-                <label for="signup-password" class="block text-[13px] font-medium text-stext mb-2">Password</label>
-                <input id="signup-password" type="password" autocomplete="new-password" required minlength="8" class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none" />
-                <p class="mt-2 text-[12px] text-mtext">At least 8 characters. A long passphrase beats a short complex one.</p>
+                <label
+                  for="signup-password"
+                  class="block text-[13px] font-medium text-stext mb-2"
+                  >Password</label
+                >
+                <input
+                  id="signup-password"
+                  type="password"
+                  autocomplete="new-password"
+                  required
+                  minlength="8"
+                  class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none"
+                />
+                <p class="mt-2 text-[12px] text-mtext">
+                  At least 8 characters. A long passphrase beats a short complex
+                  one.
+                </p>
               </div>
               <div>
-                <label for="signup-confirm" class="block text-[13px] font-medium text-stext mb-2">Confirm password</label>
-                <input id="signup-confirm" type="password" autocomplete="new-password" required class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none" />
+                <label
+                  for="signup-confirm"
+                  class="block text-[13px] font-medium text-stext mb-2"
+                  >Confirm password</label
+                >
+                <input
+                  id="signup-confirm"
+                  type="password"
+                  autocomplete="new-password"
+                  required
+                  class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none"
+                />
               </div>
-              <button type="submit" class="w-full bg-pred hover:bg-bred disabled:opacity-50 text-white text-[15px] font-semibold px-6 py-3 rounded-btn transition-colors">Create account</button>
+              <button
+                type="submit"
+                class="w-full bg-pred hover:bg-bred disabled:opacity-50 text-white text-[15px] font-semibold px-6 py-3 rounded-btn transition-colors"
+              >
+                Create account
+              </button>
             </form>
 
-            <p id="auth-msg" role="status" aria-live="polite" class="mt-5 text-[13px] leading-relaxed"></p>
+            <p
+              id="auth-msg"
+              role="status"
+              aria-live="polite"
+              class="mt-5 text-[13px] leading-relaxed"
+            ></p>
           </div>
-          <p class="mt-6 text-[12px] text-mtext leading-relaxed text-center">Passwords are handled by Firebase Authentication, which stores them salted and hashed and locks out repeated failed logins. The lab never sees or stores your password.</p>
+          <p class="mt-6 text-[12px] text-mtext leading-relaxed text-center">
+            Passwords are handled by Firebase Authentication, which stores them
+            salted and hashed and locks out repeated failed logins. The lab
+            never sees or stores your password.
+          </p>
         </div>
       </section>
     </main>
@@ -131,37 +331,73 @@
     <script src="assets/js/layout.js"></script>
     <script src="assets/js/guide.js"></script>
     <script type="module">
-      import { configured, onSession, signUp, logIn, completeProfile, resetPassword, friendlyError } from './assets/js/firebase.js';
+      import {
+        configured,
+        onSession,
+        signUp,
+        logIn,
+        completeProfile,
+        resetPassword,
+        friendlyError,
+      } from "./assets/js/firebase.js";
 
       const $ = (id) => document.getElementById(id);
-      const msg = $('auth-msg');
+      const msg = $("auth-msg");
       const say = (text, ok) => {
         msg.textContent = text;
-        msg.className = 'mt-5 text-[13px] leading-relaxed ' + (ok ? 'text-success' : 'text-pred');
+        msg.className =
+          "mt-5 text-[13px] leading-relaxed " +
+          (ok ? "text-success" : "text-pred");
       };
 
       // Only follow same-site page links, so ?next= cannot redirect off-site.
-      const next = new URLSearchParams(location.search).get('next') || '';
-      const target = /^[a-z0-9-]+\.html(#[a-z0-9-]+)?$/.test(next) ? next : 'dashboard.html';
+      const next = new URLSearchParams(location.search).get("next") || "";
+      const target = /^[a-z0-9-]+\.html(#[a-z0-9-]+)?$/.test(next)
+        ? next
+        : "dashboard.html";
 
-      const ACTIVE = 'bg-elevated text-ptext';
-      const IDLE = 'text-stext hover:text-ptext';
+      const ACTIVE = "bg-elevated text-ptext";
+      const IDLE = "text-stext hover:text-ptext";
       function show(mode) {
-        const signup = mode === 'signup';
-        $('login-form').classList.toggle('hidden', signup);
-        $('signup-form').classList.toggle('hidden', !signup);
-        $('tab-login').className = $('tab-login').className.replace(/ ?(bg-elevated text-ptext|text-stext hover:text-ptext)/g, '') + ' ' + (signup ? IDLE : ACTIVE);
-        $('tab-signup').className = $('tab-signup').className.replace(/ ?(bg-elevated text-ptext|text-stext hover:text-ptext)/g, '') + ' ' + (signup ? ACTIVE : IDLE);
-        $('tab-login').setAttribute('aria-selected', String(!signup));
-        $('tab-signup').setAttribute('aria-selected', String(signup));
-        $('auth-title').textContent = signup ? 'Create your account' : 'Log in to the lab';
-        msg.textContent = '';
+        const signup = mode === "signup";
+        $("login-form").classList.toggle("hidden", signup);
+        $("signup-form").classList.toggle("hidden", !signup);
+        $("tab-login").className =
+          $("tab-login").className.replace(
+            / ?(bg-elevated text-ptext|text-stext hover:text-ptext)/g,
+            "",
+          ) +
+          " " +
+          (signup ? IDLE : ACTIVE);
+        $("tab-signup").className =
+          $("tab-signup").className.replace(
+            / ?(bg-elevated text-ptext|text-stext hover:text-ptext)/g,
+            "",
+          ) +
+          " " +
+          (signup ? ACTIVE : IDLE);
+        $("tab-login").setAttribute("aria-selected", String(!signup));
+        $("tab-signup").setAttribute("aria-selected", String(signup));
+        $("auth-title").textContent = signup
+          ? "Create your account"
+          : "Log in to the lab";
+        msg.textContent = "";
       }
-      $('tab-login').addEventListener('click', () => { history.replaceState(null, '', location.pathname + location.search); show('login'); });
-      $('tab-signup').addEventListener('click', () => { history.replaceState(null, '', location.pathname + location.search + '#signup'); show('signup'); });
-      show(location.hash === '#signup' ? 'signup' : 'login');
+      $("tab-login").addEventListener("click", () => {
+        history.replaceState(null, "", location.pathname + location.search);
+        show("login");
+      });
+      $("tab-signup").addEventListener("click", () => {
+        history.replaceState(
+          null,
+          "",
+          location.pathname + location.search + "#signup",
+        );
+        show("signup");
+      });
+      show(location.hash === "#signup" ? "signup" : "login");
 
-      if (!configured) $('not-configured').classList.remove('hidden');
+      if (!configured) $("not-configured").classList.remove("hidden");
 
       // After a login, go on to the target page, unless the account still needs a username.
       let justLoggedIn = false;
@@ -169,66 +405,80 @@
         if (justLoggedIn && s.user && s.profile) return location.assign(target);
         const inside = Boolean(s.user && s.profile);
         const unfinished = Boolean(s.user && !s.profile);
-        $('signed-in').classList.toggle('hidden', !inside);
-        $('finish-card').classList.toggle('hidden', !unfinished);
-        $('auth-card').classList.toggle('hidden', Boolean(s.user));
-        if (inside) $('signed-in-name').textContent = s.profile.username;
+        $("signed-in").classList.toggle("hidden", !inside);
+        $("finish-card").classList.toggle("hidden", !unfinished);
+        $("auth-card").classList.toggle("hidden", Boolean(s.user));
+        if (inside) $("signed-in-name").textContent = s.profile.username;
         if (unfinished) {
-          $('auth-title').textContent = 'Finish setting up';
-          $('finish-email').textContent = s.user.email || 'this account';
+          $("auth-title").textContent = "Finish setting up";
+          $("finish-email").textContent = s.user.email || "this account";
         }
       });
 
-      $('finish-form').addEventListener('submit', async (e) => {
+      $("finish-form").addEventListener("submit", async (e) => {
         e.preventDefault();
-        const button = e.target.querySelector('button[type=submit]');
+        const button = e.target.querySelector("button[type=submit]");
         button.disabled = true;
         try {
-          await completeProfile($('finish-username').value.trim());
+          await completeProfile($("finish-username").value.trim());
           location.assign(target);
         } catch (err) {
-          $('finish-msg').textContent = err.message;
+          $("finish-msg").textContent = err.message;
         } finally {
           button.disabled = false;
         }
       });
 
       async function busy(form, fn) {
-        const button = form.querySelector('button[type=submit]');
+        const button = form.querySelector("button[type=submit]");
         button.disabled = true;
-        try { await fn(); } catch (e) { say(friendlyError(e)); } finally { button.disabled = false; }
+        try {
+          await fn();
+        } catch (e) {
+          say(friendlyError(e));
+        } finally {
+          button.disabled = false;
+        }
       }
 
-      $('login-form').addEventListener('submit', (e) => {
+      $("login-form").addEventListener("submit", (e) => {
         e.preventDefault();
-        const email = $('login-email').value.trim();
-        const password = $('login-password').value;
-        if (!email || !password) return say('Enter your email and password.');
+        const email = $("login-email").value.trim();
+        const password = $("login-password").value;
+        if (!email || !password) return say("Enter your email and password.");
         busy(e.target, async () => {
           justLoggedIn = true;
           await logIn(email, password);
         });
       });
 
-      $('signup-form').addEventListener('submit', (e) => {
+      $("signup-form").addEventListener("submit", (e) => {
         e.preventDefault();
-        const username = $('signup-username').value.trim();
-        const email = $('signup-email').value.trim();
-        const password = $('signup-password').value;
-        if (!username || !email || !password) return say('Fill in every field.');
-        if (password !== $('signup-confirm').value) return say('The passwords do not match.');
+        const username = $("signup-username").value.trim();
+        const email = $("signup-email").value.trim();
+        const password = $("signup-password").value;
+        if (!username || !email || !password)
+          return say("Fill in every field.");
+        if (password !== $("signup-confirm").value)
+          return say("The passwords do not match.");
         busy(e.target, async () => {
           await signUp(username, email, password);
           location.assign(target);
         });
       });
 
-      $('forgot').addEventListener('click', async () => {
-        const email = $('login-email').value.trim();
-        if (!email) return say('Enter your email above, then choose "Forgot password?" again.');
+      $("forgot").addEventListener("click", async () => {
+        const email = $("login-email").value.trim();
+        if (!email)
+          return say(
+            'Enter your email above, then choose "Forgot password?" again.',
+          );
         try {
           await resetPassword(email);
-          say('If an account exists for that email, a reset link is on its way.', true);
+          say(
+            "If an account exists for that email, a reset link is on its way.",
+            true,
+          );
         } catch (e) {
           say(friendlyError(e));
         }

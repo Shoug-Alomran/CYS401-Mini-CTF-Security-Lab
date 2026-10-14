@@ -18,16 +18,34 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="CYS401 CTF Lab" />
     <meta property="og:title" content="Account | CYS401" />
-    <meta property="og:description" content="Manage your CTF Lab account: username, email, password, and account deletion." />
-    <meta property="og:url" content="https://ctf-lab.shoug-tech.com/account.html" />
-    <meta property="og:image" content="https://ctf-lab.shoug-tech.com/assets/img/og-banner.png" />
+    <meta
+      property="og:description"
+      content="Manage your CTF Lab account: username, email, password, and account deletion."
+    />
+    <meta
+      property="og:url"
+      content="https://ctf-lab.shoug-tech.com/account.html"
+    />
+    <meta
+      property="og:image"
+      content="https://ctf-lab.shoug-tech.com/assets/img/og-banner.png"
+    />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="CYS401 CTF Lab — Mini Capture-the-Flag Security Lab Platform." />
+    <meta
+      property="og:image:alt"
+      content="CYS401 CTF Lab — Mini Capture-the-Flag Security Lab Platform."
+    />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Account | CYS401" />
-    <meta name="twitter:description" content="Manage your CTF Lab account: username, email, password, and account deletion." />
-    <meta name="twitter:image" content="https://ctf-lab.shoug-tech.com/assets/img/og-banner.png" />
+    <meta
+      name="twitter:description"
+      content="Manage your CTF Lab account: username, email, password, and account deletion."
+    />
+    <meta
+      name="twitter:image"
+      content="https://ctf-lab.shoug-tech.com/assets/img/og-banner.png"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -42,83 +60,337 @@
     class="bg-main text-ptext font-sans antialiased selection:bg-pred selection:text-white"
   >
     <div id="site-header"></div>
-  <body
-    class="bg-main text-ptext font-sans antialiased selection:bg-pred selection:text-white"
-  >
-    <div id="site-header"></div>
 
     <main id="main" class="pt-[72px]">
-      <section class="relative py-16 lg:py-20 border-b border-brder overflow-hidden">
-        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(220,38,38,0.10),transparent_55%)] pointer-events-none"></div>
+      <section
+        class="relative py-16 lg:py-20 border-b border-brder overflow-hidden"
+      >
+        <div
+          class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(220,38,38,0.10),transparent_55%)] pointer-events-none"
+        ></div>
         <div class="relative max-w-content mx-auto px-6">
-          <p class="text-[12px] font-medium text-pred uppercase tracking-[0.2em] mb-5">Account</p>
-          <h1 class="font-display text-[34px] sm:text-[44px] lg:text-[48px] font-semibold leading-[1.1] mb-5">Account Settings</h1>
-          <p class="text-[16px] text-stext leading-relaxed max-w-2xl">Manage your username, email, and password. Changes to your email or password need your current password.</p>
+          <p
+            class="text-[12px] font-medium text-pred uppercase tracking-[0.2em] mb-5"
+          >
+            Account
+          </p>
+          <h1
+            class="font-display text-[34px] sm:text-[44px] lg:text-[48px] font-semibold leading-[1.1] mb-5"
+          >
+            Account Settings
+          </h1>
+          <p class="text-[16px] text-stext leading-relaxed max-w-2xl">
+            Manage your username, email, and password. Changes to your email or
+            password need your current password.
+          </p>
         </div>
       </section>
       <section class="py-16">
         <div class="max-w-3xl mx-auto px-6">
-          <div id="not-configured" class="hidden mb-8 bg-card border border-warn/40 rounded-card p-5 text-[14px] text-stext leading-relaxed"><strong class="text-warn">Accounts not connected yet.</strong> Add the Firebase project config to <span class="font-mono text-ptext">assets/js/firebase-config.js</span> to enable sign-up, flag submission, and the scoreboard.</div>
-          <div id="gate" class="hidden bg-card border border-brder rounded-card p-6 sm:p-8 text-center"><p id="gate-msg" class="text-[15px] text-stext mb-6"></p><a id="gate-link" href="auth.html?next=account.html" class="inline-block bg-pred hover:bg-bred disabled:opacity-50 text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">Log in</a></div>
+          <div
+            id="not-configured"
+            class="hidden mb-8 bg-card border border-warn/40 rounded-card p-5 text-[14px] text-stext leading-relaxed"
+          >
+            <strong class="text-warn">Accounts not connected yet.</strong> Add
+            the Firebase project config to
+            <span class="font-mono text-ptext"
+              >assets/js/firebase-config.js</span
+            >
+            to enable sign-up, flag submission, and the scoreboard.
+          </div>
+          <div
+            id="gate"
+            class="hidden bg-card border border-brder rounded-card p-6 sm:p-8 text-center"
+          >
+            <p id="gate-msg" class="text-[15px] text-stext mb-6"></p>
+            <a
+              id="gate-link"
+              href="auth.html?next=account.html"
+              class="inline-block bg-pred hover:bg-bred disabled:opacity-50 text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors"
+              >Log in</a
+            >
+          </div>
 
           <div id="account" class="hidden space-y-6">
-            <section class="bg-card border border-brder rounded-card p-6 sm:p-8">
+            <section
+              class="bg-card border border-brder rounded-card p-6 sm:p-8"
+            >
               <dl class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-[14px]">
-                <div><dt class="text-[11px] font-semibold uppercase tracking-wider text-mtext mb-1">Username</dt><dd id="a-username" class="text-ptext font-medium"></dd></div>
-                <div><dt class="text-[11px] font-semibold uppercase tracking-wider text-mtext mb-1">Email</dt><dd class="flex flex-wrap items-center gap-2"><span id="a-email" class="text-ptext font-medium break-all"></span><span id="a-verified" class="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border"></span></dd></div>
-                <div><dt class="text-[11px] font-semibold uppercase tracking-wider text-mtext mb-1">Role</dt><dd id="a-role" class="text-ptext font-medium"></dd></div>
-                <div><dt class="text-[11px] font-semibold uppercase tracking-wider text-mtext mb-1">Member since</dt><dd id="a-joined" class="text-ptext font-medium"></dd></div>
+                <div>
+                  <dt
+                    class="text-[11px] font-semibold uppercase tracking-wider text-mtext mb-1"
+                  >
+                    Username
+                  </dt>
+                  <dd id="a-username" class="text-ptext font-medium"></dd>
+                </div>
+                <div>
+                  <dt
+                    class="text-[11px] font-semibold uppercase tracking-wider text-mtext mb-1"
+                  >
+                    Email
+                  </dt>
+                  <dd class="flex flex-wrap items-center gap-2">
+                    <span
+                      id="a-email"
+                      class="text-ptext font-medium break-all"
+                    ></span
+                    ><span
+                      id="a-verified"
+                      class="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border"
+                    ></span>
+                  </dd>
+                </div>
+                <div>
+                  <dt
+                    class="text-[11px] font-semibold uppercase tracking-wider text-mtext mb-1"
+                  >
+                    Role
+                  </dt>
+                  <dd id="a-role" class="text-ptext font-medium"></dd>
+                </div>
+                <div>
+                  <dt
+                    class="text-[11px] font-semibold uppercase tracking-wider text-mtext mb-1"
+                  >
+                    Member since
+                  </dt>
+                  <dd id="a-joined" class="text-ptext font-medium"></dd>
+                </div>
               </dl>
               <div class="mt-6 flex flex-wrap gap-3">
-                <a href="dashboard.html" class="border border-brder2 hover:bg-elevated text-[14px] font-semibold px-4 py-2 rounded-btn transition-colors">My Dashboard</a>
-                <a id="a-admin" href="admin.html" class="hidden border border-rborder text-bred hover:bg-sred text-[14px] font-semibold px-4 py-2 rounded-btn transition-colors">Open Admin</a>
-                <button type="button" id="verify-btn" class="hidden border border-brder2 hover:bg-elevated text-[14px] font-semibold px-4 py-2 rounded-btn transition-colors">Send verification email</button>
+                <a
+                  href="dashboard.html"
+                  class="border border-brder2 hover:bg-elevated text-[14px] font-semibold px-4 py-2 rounded-btn transition-colors"
+                  >My Dashboard</a
+                >
+                <a
+                  id="a-admin"
+                  href="admin.html"
+                  class="hidden border border-rborder text-bred hover:bg-sred text-[14px] font-semibold px-4 py-2 rounded-btn transition-colors"
+                  >Open Admin</a
+                >
+                <button
+                  type="button"
+                  id="verify-btn"
+                  class="hidden border border-brder2 hover:bg-elevated text-[14px] font-semibold px-4 py-2 rounded-btn transition-colors"
+                >
+                  Send verification email
+                </button>
               </div>
-              <p id="verify-msg" role="status" aria-live="polite" class="mt-4 text-[13px] leading-relaxed"></p>
+              <p
+                id="verify-msg"
+                role="status"
+                aria-live="polite"
+                class="mt-4 text-[13px] leading-relaxed"
+              ></p>
             </section>
 
-            <section class="bg-card border border-brder rounded-card p-6 sm:p-8">
-              <h2 class="font-display text-[20px] font-semibold mb-1">Username</h2>
-              <p class="text-[14px] text-stext leading-relaxed mb-6">Shown on the scoreboard. Checked for availability as you type.</p>
+            <section
+              class="bg-card border border-brder rounded-card p-6 sm:p-8"
+            >
+              <h2 class="font-display text-[20px] font-semibold mb-1">
+                Username
+              </h2>
+              <p class="text-[14px] text-stext leading-relaxed mb-6">
+                Shown on the scoreboard. Checked for availability as you type.
+              </p>
               <form id="name-form" novalidate>
-                <label for="name-input" class="block text-[13px] font-medium text-stext mb-2">New username</label>
+                <label
+                  for="name-input"
+                  class="block text-[13px] font-medium text-stext mb-2"
+                  >New username</label
+                >
                 <div class="flex flex-col sm:flex-row gap-3">
-                  <input id="name-input" type="text" autocomplete="username" maxlength="20" spellcheck="false" class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none sm:flex-1" />
-                  <button type="submit" id="name-btn" class="bg-pred hover:bg-bred disabled:opacity-50 text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors" disabled>Save username</button>
+                  <input
+                    id="name-input"
+                    type="text"
+                    autocomplete="username"
+                    maxlength="20"
+                    spellcheck="false"
+                    class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none sm:flex-1"
+                  />
+                  <button
+                    type="submit"
+                    id="name-btn"
+                    class="bg-pred hover:bg-bred disabled:opacity-50 text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors"
+                    disabled
+                  >
+                    Save username
+                  </button>
                 </div>
-                <p id="name-check" class="mt-2 text-[12px] text-mtext">3&ndash;20 characters: letters, numbers, and underscores.</p>
-              </form><p id="name-msg" role="status" aria-live="polite" class="mt-4 text-[13px] leading-relaxed"></p>
+                <p id="name-check" class="mt-2 text-[12px] text-mtext">
+                  3&ndash;20 characters: letters, numbers, and underscores.
+                </p>
+              </form>
+              <p
+                id="name-msg"
+                role="status"
+                aria-live="polite"
+                class="mt-4 text-[13px] leading-relaxed"
+              ></p>
             </section>
 
-            <section class="bg-card border border-brder rounded-card p-6 sm:p-8">
+            <section
+              class="bg-card border border-brder rounded-card p-6 sm:p-8"
+            >
               <h2 class="font-display text-[20px] font-semibold mb-1">Email</h2>
-              <p class="text-[14px] text-stext leading-relaxed mb-6">We send a confirmation link to the new address. Your email changes once you click it.</p>
+              <p class="text-[14px] text-stext leading-relaxed mb-6">
+                We send a confirmation link to the new address. Your email
+                changes once you click it.
+              </p>
               <form id="email-form" class="space-y-4" novalidate>
-                <div><label for="email-new" class="block text-[13px] font-medium text-stext mb-2">New email</label><input id="email-new" type="email" autocomplete="email" class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none" /></div>
-                <div><label for="email-pass" class="block text-[13px] font-medium text-stext mb-2">Current password</label><input id="email-pass" type="password" autocomplete="current-password" class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none" /></div>
-                <button type="submit" class="bg-pred hover:bg-bred disabled:opacity-50 text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">Send confirmation link</button>
-              </form><p id="email-msg" role="status" aria-live="polite" class="mt-4 text-[13px] leading-relaxed"></p>
+                <div>
+                  <label
+                    for="email-new"
+                    class="block text-[13px] font-medium text-stext mb-2"
+                    >New email</label
+                  ><input
+                    id="email-new"
+                    type="email"
+                    autocomplete="email"
+                    class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label
+                    for="email-pass"
+                    class="block text-[13px] font-medium text-stext mb-2"
+                    >Current password</label
+                  ><input
+                    id="email-pass"
+                    type="password"
+                    autocomplete="current-password"
+                    class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  class="bg-pred hover:bg-bred disabled:opacity-50 text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors"
+                >
+                  Send confirmation link
+                </button>
+              </form>
+              <p
+                id="email-msg"
+                role="status"
+                aria-live="polite"
+                class="mt-4 text-[13px] leading-relaxed"
+              ></p>
             </section>
 
-            <section class="bg-card border border-brder rounded-card p-6 sm:p-8">
-              <h2 class="font-display text-[20px] font-semibold mb-1">Password</h2>
-              <p class="text-[14px] text-stext leading-relaxed mb-6">At least 8 characters. A long passphrase beats a short complex one.</p>
+            <section
+              class="bg-card border border-brder rounded-card p-6 sm:p-8"
+            >
+              <h2 class="font-display text-[20px] font-semibold mb-1">
+                Password
+              </h2>
+              <p class="text-[14px] text-stext leading-relaxed mb-6">
+                At least 8 characters. A long passphrase beats a short complex
+                one.
+              </p>
               <form id="pass-form" class="space-y-4" novalidate>
-                <div><label for="pass-current" class="block text-[13px] font-medium text-stext mb-2">Current password</label><input id="pass-current" type="password" autocomplete="current-password" class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none" /></div>
-                <div><label for="pass-new" class="block text-[13px] font-medium text-stext mb-2">New password</label><input id="pass-new" type="password" autocomplete="new-password" class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none" /></div>
-                <div><label for="pass-confirm" class="block text-[13px] font-medium text-stext mb-2">Confirm new password</label><input id="pass-confirm" type="password" autocomplete="new-password" class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none" /></div>
-                <button type="submit" class="bg-pred hover:bg-bred disabled:opacity-50 text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">Change password</button>
-              </form><p id="pass-msg" role="status" aria-live="polite" class="mt-4 text-[13px] leading-relaxed"></p>
+                <div>
+                  <label
+                    for="pass-current"
+                    class="block text-[13px] font-medium text-stext mb-2"
+                    >Current password</label
+                  ><input
+                    id="pass-current"
+                    type="password"
+                    autocomplete="current-password"
+                    class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label
+                    for="pass-new"
+                    class="block text-[13px] font-medium text-stext mb-2"
+                    >New password</label
+                  ><input
+                    id="pass-new"
+                    type="password"
+                    autocomplete="new-password"
+                    class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label
+                    for="pass-confirm"
+                    class="block text-[13px] font-medium text-stext mb-2"
+                    >Confirm new password</label
+                  ><input
+                    id="pass-confirm"
+                    type="password"
+                    autocomplete="new-password"
+                    class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  class="bg-pred hover:bg-bred disabled:opacity-50 text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors"
+                >
+                  Change password
+                </button>
+              </form>
+              <p
+                id="pass-msg"
+                role="status"
+                aria-live="polite"
+                class="mt-4 text-[13px] leading-relaxed"
+              ></p>
             </section>
 
-            <section class="bg-card border border-brder rounded-card p-6 sm:p-8 border-rborder">
-              <h2 class="font-display text-[20px] font-semibold mb-1">Delete account</h2>
-              <p class="text-[14px] text-stext leading-relaxed mb-6">Removes your login, username, and scoreboard entry. Your submission history stays in the admin audit log. This cannot be undone.</p>
+            <section
+              class="bg-card border border-brder rounded-card p-6 sm:p-8 border-rborder"
+            >
+              <h2 class="font-display text-[20px] font-semibold mb-1">
+                Delete account
+              </h2>
+              <p class="text-[14px] text-stext leading-relaxed mb-6">
+                Removes your login, username, and scoreboard entry. Your
+                submission history stays in the admin audit log. This cannot be
+                undone.
+              </p>
               <form id="del-form" class="space-y-4" novalidate>
-                <div><label for="del-confirm" class="block text-[13px] font-medium text-stext mb-2">Type your username to confirm</label><input id="del-confirm" type="text" autocomplete="off" spellcheck="false" class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none" /></div>
-                <div><label for="del-pass" class="block text-[13px] font-medium text-stext mb-2">Current password</label><input id="del-pass" type="password" autocomplete="current-password" class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none" /></div>
-                <button type="submit" class="bg-transparent border border-pred text-bred hover:bg-pred hover:text-white disabled:opacity-50 text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">Delete my account</button>
-              </form><p id="del-msg" role="status" aria-live="polite" class="mt-4 text-[13px] leading-relaxed"></p>
+                <div>
+                  <label
+                    for="del-confirm"
+                    class="block text-[13px] font-medium text-stext mb-2"
+                    >Type your username to confirm</label
+                  ><input
+                    id="del-confirm"
+                    type="text"
+                    autocomplete="off"
+                    spellcheck="false"
+                    class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label
+                    for="del-pass"
+                    class="block text-[13px] font-medium text-stext mb-2"
+                    >Current password</label
+                  ><input
+                    id="del-pass"
+                    type="password"
+                    autocomplete="current-password"
+                    class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  class="bg-transparent border border-pred text-bred hover:bg-pred hover:text-white disabled:opacity-50 text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors"
+                >
+                  Delete my account
+                </button>
+              </form>
+              <p
+                id="del-msg"
+                role="status"
+                aria-live="polite"
+                class="mt-4 text-[13px] leading-relaxed"
+              ></p>
             </section>
           </div>
         </div>
@@ -129,130 +401,191 @@
     <script src="assets/js/layout.js"></script>
     <script src="assets/js/guide.js"></script>
     <script type="module">
-      import { configured, onSession, isAdmin, checkUsername, changeUsername, changeEmail, changePassword, sendVerification, deleteAccount, friendlyError } from './assets/js/firebase.js';
+      import {
+        configured,
+        onSession,
+        isAdmin,
+        checkUsername,
+        changeUsername,
+        changeEmail,
+        changePassword,
+        sendVerification,
+        deleteAccount,
+        friendlyError,
+      } from "./assets/js/firebase.js";
       const $ = (id) => document.getElementById(id);
       const say = (id, text, ok) => {
         $(id).textContent = text;
-        $(id).className = 'mt-4 text-[13px] leading-relaxed ' + (ok ? 'text-success' : 'text-pred');
+        $(id).className =
+          "mt-4 text-[13px] leading-relaxed " +
+          (ok ? "text-success" : "text-pred");
       };
       async function busy(form, fn) {
-        const b = form.querySelector('button[type=submit]');
+        const b = form.querySelector("button[type=submit]");
         b.disabled = true;
-        try { await fn(); } finally { b.disabled = false; }
+        try {
+          await fn();
+        } finally {
+          b.disabled = false;
+        }
       }
 
-      if (!configured) $('not-configured').classList.remove('hidden');
+      if (!configured) $("not-configured").classList.remove("hidden");
 
       let session = null;
       onSession((s) => {
         session = s;
         const inside = Boolean(s.user && s.profile);
-        $('account').classList.toggle('hidden', !inside);
-        $('gate').classList.toggle('hidden', inside);
+        $("account").classList.toggle("hidden", !inside);
+        $("gate").classList.toggle("hidden", inside);
         if (!inside) {
-          $('gate-msg').textContent = !configured ? 'Account settings are available once accounts are connected.'
-            : s.user ? 'Choose a username to finish setting up your account.' : 'Log in to manage your account.';
-          $('gate-link').textContent = s.user ? 'Finish setup' : 'Log in';
-          $('gate-link').classList.toggle('hidden', !configured);
+          $("gate-msg").textContent = !configured
+            ? "Account settings are available once accounts are connected."
+            : s.user
+              ? "Choose a username to finish setting up your account."
+              : "Log in to manage your account.";
+          $("gate-link").textContent = s.user ? "Finish setup" : "Log in";
+          $("gate-link").classList.toggle("hidden", !configured);
           return;
         }
-        $('a-username').textContent = s.profile.username;
-        $('a-email').textContent = s.user.email || '';
+        $("a-username").textContent = s.profile.username;
+        $("a-email").textContent = s.user.email || "";
         const verified = s.user.emailVerified;
-        $('a-verified').textContent = verified ? 'Verified' : 'Not verified';
-        $('a-verified').className = 'text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border ' + (verified ? 'border-success/40 text-success' : 'border-warn/40 text-warn');
-        $('verify-btn').classList.toggle('hidden', verified);
-        $('a-role').textContent = s.profile.role === 'admin' ? 'Administrator' : 'Player';
-        $('a-admin').classList.toggle('hidden', !isAdmin());
-        $('a-joined').textContent = s.profile.createdAt && s.profile.createdAt.toDate ? s.profile.createdAt.toDate().toLocaleDateString() : '';
-        if (!$('name-input').value) $('name-input').placeholder = s.profile.username;
+        $("a-verified").textContent = verified ? "Verified" : "Not verified";
+        $("a-verified").className =
+          "text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border " +
+          (verified
+            ? "border-success/40 text-success"
+            : "border-warn/40 text-warn");
+        $("verify-btn").classList.toggle("hidden", verified);
+        $("a-role").textContent =
+          s.profile.role === "admin" ? "Administrator" : "Player";
+        $("a-admin").classList.toggle("hidden", !isAdmin());
+        $("a-joined").textContent =
+          s.profile.createdAt && s.profile.createdAt.toDate
+            ? s.profile.createdAt.toDate().toLocaleDateString()
+            : "";
+        if (!$("name-input").value)
+          $("name-input").placeholder = s.profile.username;
       });
 
-      $('verify-btn').addEventListener('click', async () => {
-        $('verify-btn').disabled = true;
-        try { await sendVerification(); say('verify-msg', 'Verification email sent to ' + session.user.email + '. Check your inbox (and spam).', true); }
-        catch (e) { say('verify-msg', friendlyError(e)); }
-        finally { $('verify-btn').disabled = false; }
+      $("verify-btn").addEventListener("click", async () => {
+        $("verify-btn").disabled = true;
+        try {
+          await sendVerification();
+          say(
+            "verify-msg",
+            "Verification email sent to " +
+              session.user.email +
+              ". Check your inbox (and spam).",
+            true,
+          );
+        } catch (e) {
+          say("verify-msg", friendlyError(e));
+        } finally {
+          $("verify-btn").disabled = false;
+        }
       });
 
       // Username: debounced availability check while typing
       let timer = null;
-      let lastChecked = '';
-      $('name-input').addEventListener('input', () => {
-        const name = $('name-input').value.trim();
-        $('name-btn').disabled = true;
-        $('name-msg').textContent = '';
+      let lastChecked = "";
+      $("name-input").addEventListener("input", () => {
+        const name = $("name-input").value.trim();
+        $("name-btn").disabled = true;
+        $("name-msg").textContent = "";
         clearTimeout(timer);
         if (!name) {
-          $('name-check').textContent = '3–20 characters: letters, numbers, and underscores.';
-          $('name-check').className = 'mt-2 text-[12px] text-mtext';
+          $("name-check").textContent =
+            "3–20 characters: letters, numbers, and underscores.";
+          $("name-check").className = "mt-2 text-[12px] text-mtext";
           return;
         }
-        $('name-check').textContent = 'Checking…';
-        $('name-check').className = 'mt-2 text-[12px] text-mtext';
+        $("name-check").textContent = "Checking…";
+        $("name-check").className = "mt-2 text-[12px] text-mtext";
         timer = setTimeout(async () => {
           try {
             const r = await checkUsername(name);
-            if ($('name-input').value.trim() !== name) return;
-            lastChecked = r.ok ? name : '';
-            $('name-check').textContent = r.ok ? '✓ ' + name + ' is available.' : r.message;
-            $('name-check').className = 'mt-2 text-[12px] ' + (r.ok ? 'text-success' : 'text-pred');
-            $('name-btn').disabled = !r.ok;
+            if ($("name-input").value.trim() !== name) return;
+            lastChecked = r.ok ? name : "";
+            $("name-check").textContent = r.ok
+              ? "✓ " + name + " is available."
+              : r.message;
+            $("name-check").className =
+              "mt-2 text-[12px] " + (r.ok ? "text-success" : "text-pred");
+            $("name-btn").disabled = !r.ok;
           } catch (e) {
-            $('name-check').textContent = friendlyError(e);
-            $('name-check').className = 'mt-2 text-[12px] text-pred';
+            $("name-check").textContent = friendlyError(e);
+            $("name-check").className = "mt-2 text-[12px] text-pred";
           }
         }, 400);
       });
-      $('name-form').addEventListener('submit', (e) => {
+      $("name-form").addEventListener("submit", (e) => {
         e.preventDefault();
-        const name = $('name-input').value.trim();
+        const name = $("name-input").value.trim();
         if (name !== lastChecked) return;
         busy(e.target, async () => {
           try {
             await changeUsername(name);
-            $('name-input').value = '';
-            $('name-check').textContent = '3–20 characters: letters, numbers, and underscores.';
-            $('name-check').className = 'mt-2 text-[12px] text-mtext';
-            say('name-msg', 'Username changed to ' + name + '.', true);
-          } catch (err) { say('name-msg', err.message); }
-          $('name-btn').disabled = true;
+            $("name-input").value = "";
+            $("name-check").textContent =
+              "3–20 characters: letters, numbers, and underscores.";
+            $("name-check").className = "mt-2 text-[12px] text-mtext";
+            say("name-msg", "Username changed to " + name + ".", true);
+          } catch (err) {
+            say("name-msg", err.message);
+          }
+          $("name-btn").disabled = true;
         });
       });
 
-      $('email-form').addEventListener('submit', (e) => {
+      $("email-form").addEventListener("submit", (e) => {
         e.preventDefault();
-        const email = $('email-new').value.trim();
-        if (!email) return say('email-msg', 'Enter the new email address.');
+        const email = $("email-new").value.trim();
+        if (!email) return say("email-msg", "Enter the new email address.");
         busy(e.target, async () => {
           try {
-            await changeEmail($('email-pass').value, email);
-            $('email-form').reset();
-            say('email-msg', 'Confirmation link sent to ' + email + '. Your email changes after you click it, and you will need to log in again.', true);
-          } catch (err) { say('email-msg', friendlyError(err)); }
+            await changeEmail($("email-pass").value, email);
+            $("email-form").reset();
+            say(
+              "email-msg",
+              "Confirmation link sent to " +
+                email +
+                ". Your email changes after you click it, and you will need to log in again.",
+              true,
+            );
+          } catch (err) {
+            say("email-msg", friendlyError(err));
+          }
         });
       });
 
-      $('pass-form').addEventListener('submit', (e) => {
+      $("pass-form").addEventListener("submit", (e) => {
         e.preventDefault();
-        if ($('pass-new').value !== $('pass-confirm').value) return say('pass-msg', 'The new passwords do not match.');
+        if ($("pass-new").value !== $("pass-confirm").value)
+          return say("pass-msg", "The new passwords do not match.");
         busy(e.target, async () => {
           try {
-            await changePassword($('pass-current').value, $('pass-new').value);
-            $('pass-form').reset();
-            say('pass-msg', 'Password changed.', true);
-          } catch (err) { say('pass-msg', friendlyError(err)); }
+            await changePassword($("pass-current").value, $("pass-new").value);
+            $("pass-form").reset();
+            say("pass-msg", "Password changed.", true);
+          } catch (err) {
+            say("pass-msg", friendlyError(err));
+          }
         });
       });
 
-      $('del-form').addEventListener('submit', (e) => {
+      $("del-form").addEventListener("submit", (e) => {
         e.preventDefault();
-        if ($('del-confirm').value.trim() !== session.profile.username) return say('del-msg', 'Type your username exactly to confirm.');
+        if ($("del-confirm").value.trim() !== session.profile.username)
+          return say("del-msg", "Type your username exactly to confirm.");
         busy(e.target, async () => {
           try {
-            await deleteAccount($('del-pass').value);
-            location.assign('index.html');
-          } catch (err) { say('del-msg', friendlyError(err)); }
+            await deleteAccount($("del-pass").value);
+            location.assign("index.html");
+          } catch (err) {
+            say("del-msg", friendlyError(err));
+          }
         });
       });
     </script>

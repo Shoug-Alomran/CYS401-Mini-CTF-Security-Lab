@@ -14,20 +14,41 @@
     <link rel="manifest" href="site.webmanifest" />
     <meta name="robots" content="noindex" />
     <meta name="theme-color" content="#09090B" />
-    <link rel="canonical" href="https://ctf-lab.shoug-tech.com/dashboard.html" />
+    <link
+      rel="canonical"
+      href="https://ctf-lab.shoug-tech.com/dashboard.html"
+    />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="CYS401 CTF Lab" />
     <meta property="og:title" content="Dashboard | CYS401" />
-    <meta property="og:description" content="Your CTF Lab progress: points, solved challenges, completion by track, and scoreboard rank." />
-    <meta property="og:url" content="https://ctf-lab.shoug-tech.com/dashboard.html" />
-    <meta property="og:image" content="https://ctf-lab.shoug-tech.com/assets/img/og-banner.png" />
+    <meta
+      property="og:description"
+      content="Your CTF Lab progress: points, solved challenges, completion by track, and scoreboard rank."
+    />
+    <meta
+      property="og:url"
+      content="https://ctf-lab.shoug-tech.com/dashboard.html"
+    />
+    <meta
+      property="og:image"
+      content="https://ctf-lab.shoug-tech.com/assets/img/og-banner.png"
+    />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="CYS401 CTF Lab — Mini Capture-the-Flag Security Lab Platform." />
+    <meta
+      property="og:image:alt"
+      content="CYS401 CTF Lab — Mini Capture-the-Flag Security Lab Platform."
+    />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Dashboard | CYS401" />
-    <meta name="twitter:description" content="Your CTF Lab progress: points, solved challenges, completion by track, and scoreboard rank." />
-    <meta name="twitter:image" content="https://ctf-lab.shoug-tech.com/assets/img/og-banner.png" />
+    <meta
+      name="twitter:description"
+      content="Your CTF Lab progress: points, solved challenges, completion by track, and scoreboard rank."
+    />
+    <meta
+      name="twitter:image"
+      content="https://ctf-lab.shoug-tech.com/assets/img/og-banner.png"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -42,52 +63,181 @@
     class="bg-main text-ptext font-sans antialiased selection:bg-pred selection:text-white"
   >
     <div id="site-header"></div>
-  <body
-    class="bg-main text-ptext font-sans antialiased selection:bg-pred selection:text-white"
-  >
-    <div id="site-header"></div>
 
     <main id="main" class="pt-[72px]">
-      <section class="relative py-16 lg:py-20 border-b border-brder overflow-hidden">
-        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(220,38,38,0.10),transparent_55%)] pointer-events-none"></div>
+      <section
+        class="relative py-16 lg:py-20 border-b border-brder overflow-hidden"
+      >
+        <div
+          class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(220,38,38,0.10),transparent_55%)] pointer-events-none"
+        ></div>
         <div class="relative max-w-content mx-auto px-6">
-          <p class="text-[12px] font-medium text-pred uppercase tracking-[0.2em] mb-5">My Dashboard</p>
-          <h1 class="font-display text-[34px] sm:text-[44px] lg:text-[48px] font-semibold leading-[1.1] mb-5">Welcome back<span id="hello-name"></span></h1>
-          <p class="text-[16px] text-stext leading-relaxed max-w-2xl">Your progress across the four tracks: points earned, challenges solved, and when you solved them.</p>
+          <p
+            class="text-[12px] font-medium text-pred uppercase tracking-[0.2em] mb-5"
+          >
+            My Dashboard
+          </p>
+          <h1
+            class="font-display text-[34px] sm:text-[44px] lg:text-[48px] font-semibold leading-[1.1] mb-5"
+          >
+            Welcome back<span id="hello-name"></span>
+          </h1>
+          <p class="text-[16px] text-stext leading-relaxed max-w-2xl">
+            Your progress across the four tracks: points earned, challenges
+            solved, and when you solved them.
+          </p>
         </div>
       </section>
       <section class="py-16">
         <div class="max-w-content mx-auto px-6">
-          <div id="not-configured" class="hidden mb-8 bg-card border border-warn/40 rounded-card p-5 text-[14px] text-stext leading-relaxed"><strong class="text-warn">Accounts not connected yet.</strong> Add the Firebase project config to <span class="font-mono text-ptext">assets/js/firebase-config.js</span> to enable sign-up, flag submission, and the scoreboard.</div>
-          <div id="gate" class="hidden bg-card border border-brder rounded-card p-8 text-center"><p id="gate-msg" class="text-[15px] text-stext mb-6"></p><a id="gate-link" href="auth.html" class="inline-block bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">Log in</a></div>
+          <div
+            id="not-configured"
+            class="hidden mb-8 bg-card border border-warn/40 rounded-card p-5 text-[14px] text-stext leading-relaxed"
+          >
+            <strong class="text-warn">Accounts not connected yet.</strong> Add
+            the Firebase project config to
+            <span class="font-mono text-ptext"
+              >assets/js/firebase-config.js</span
+            >
+            to enable sign-up, flag submission, and the scoreboard.
+          </div>
+          <div
+            id="gate"
+            class="hidden bg-card border border-brder rounded-card p-8 text-center"
+          >
+            <p id="gate-msg" class="text-[15px] text-stext mb-6"></p>
+            <a
+              id="gate-link"
+              href="auth.html"
+              class="inline-block bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors"
+              >Log in</a
+            >
+          </div>
           <div id="dash" class="hidden">
-            <a id="d-admin" href="admin.html" class="hidden mb-8 flex items-center justify-between gap-4 bg-sred/40 border border-rborder rounded-card p-5 hover:bg-sred/60 transition-colors">
-              <span><span class="block text-[15px] font-semibold">Admin tools</span><span class="block text-[13px] text-stext">Load challenges and flags, manage roles, and review the submission log.</span></span>
-              <span class="text-bred font-semibold text-[14px] whitespace-nowrap">Open Admin &rarr;</span>
+            <a
+              id="d-admin"
+              href="admin.html"
+              class="hidden mb-8 flex items-center justify-between gap-4 bg-sred/40 border border-rborder rounded-card p-5 hover:bg-sred/60 transition-colors"
+            >
+              <span
+                ><span class="block text-[15px] font-semibold">Admin tools</span
+                ><span class="block text-[13px] text-stext"
+                  >Load challenges and flags, manage roles, and review the
+                  submission log.</span
+                ></span
+              >
+              <span
+                class="text-bred font-semibold text-[14px] whitespace-nowrap"
+                >Open Admin &rarr;</span
+              >
             </a>
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-              <div class="bg-card border border-brder rounded-card p-6"><p class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2">Points</p><p class="font-display text-[34px] font-semibold leading-none"><span id="d-points">&ndash;</span><span class="text-[16px] text-stext font-sans font-normal ml-1">/ <span id="d-total"></span></span></p></div>
-              <div class="bg-card border border-brder rounded-card p-6"><p class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2">Solved</p><p class="font-display text-[34px] font-semibold leading-none"><span id="d-solved">&ndash;</span><span class="text-[16px] text-stext font-sans font-normal ml-1">/ <span id="d-count"></span></span></p></div>
-              <div class="bg-card border border-brder rounded-card p-6"><p class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2">Rank</p><p class="font-display text-[34px] font-semibold leading-none"><span id="d-rank">&ndash;</span><span class="text-[16px] text-stext font-sans font-normal ml-1">of <span id="d-players"></span></span></p></div>
-              <div class="bg-card border border-brder rounded-card p-6"><p class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2">Hints Used</p><p class="font-display text-[34px] font-semibold leading-none"><span id="d-hints">&ndash;</span></p></div>
+              <div class="bg-card border border-brder rounded-card p-6">
+                <p
+                  class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2"
+                >
+                  Points
+                </p>
+                <p class="font-display text-[34px] font-semibold leading-none">
+                  <span id="d-points">&ndash;</span
+                  ><span
+                    class="text-[16px] text-stext font-sans font-normal ml-1"
+                    >/ <span id="d-total"></span
+                  ></span>
+                </p>
+              </div>
+              <div class="bg-card border border-brder rounded-card p-6">
+                <p
+                  class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2"
+                >
+                  Solved
+                </p>
+                <p class="font-display text-[34px] font-semibold leading-none">
+                  <span id="d-solved">&ndash;</span
+                  ><span
+                    class="text-[16px] text-stext font-sans font-normal ml-1"
+                    >/ <span id="d-count"></span
+                  ></span>
+                </p>
+              </div>
+              <div class="bg-card border border-brder rounded-card p-6">
+                <p
+                  class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2"
+                >
+                  Rank
+                </p>
+                <p class="font-display text-[34px] font-semibold leading-none">
+                  <span id="d-rank">&ndash;</span
+                  ><span
+                    class="text-[16px] text-stext font-sans font-normal ml-1"
+                    >of <span id="d-players"></span
+                  ></span>
+                </p>
+              </div>
+              <div class="bg-card border border-brder rounded-card p-6">
+                <p
+                  class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2"
+                >
+                  Hints Used
+                </p>
+                <p class="font-display text-[34px] font-semibold leading-none">
+                  <span id="d-hints">&ndash;</span>
+                </p>
+              </div>
             </div>
 
-            <div class="bg-card border border-brder rounded-card p-6 sm:p-8 mb-8">
+            <div
+              class="bg-card border border-brder rounded-card p-6 sm:p-8 mb-8"
+            >
               <div class="flex items-center justify-between mb-3">
-                <h2 class="font-display text-[20px] font-semibold">Completion</h2>
+                <h2 class="font-display text-[20px] font-semibold">
+                  Completion
+                </h2>
                 <span id="d-pct" class="font-mono text-[14px] text-bred"></span>
               </div>
-              <div class="h-2.5 bg-elevated rounded-full overflow-hidden mb-8" role="progressbar" aria-label="Overall completion" aria-valuemin="0" aria-valuemax="100" id="d-bar">
-                <div id="d-fill" class="h-full bg-gradient-to-r from-dred to-pred rounded-full transition-all duration-700" style="width:0%"></div>
+              <div
+                class="h-2.5 bg-elevated rounded-full overflow-hidden mb-8"
+                role="progressbar"
+                aria-label="Overall completion"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                id="d-bar"
+              >
+                <div
+                  id="d-fill"
+                  class="h-full bg-gradient-to-r from-dred to-pred rounded-full transition-all duration-700"
+                  style="width: 0%"
+                ></div>
               </div>
-              <div id="d-cats" class="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-6"></div>
+              <div
+                id="d-cats"
+                class="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-6"
+              ></div>
             </div>
 
-            <h2 class="font-display text-[20px] font-semibold mb-4">Solved challenges</h2>
-            <div class="overflow-x-auto rounded-card border border-brder bg-card">
+            <h2 class="font-display text-[20px] font-semibold mb-4">
+              Solved challenges
+            </h2>
+            <div
+              class="overflow-x-auto rounded-card border border-brder bg-card"
+            >
               <table class="w-full min-w-[560px] text-left text-[14px]">
-                <thead class="bg-elevated text-[11px] uppercase tracking-wider text-mtext"><tr><th scope="col" class="px-5 py-3 font-semibold">Challenge</th><th scope="col" class="px-5 py-3 font-semibold">Track</th><th scope="col" class="px-5 py-3 font-semibold">Points</th><th scope="col" class="px-5 py-3 font-semibold">Solved</th></tr></thead>
-                <tbody id="d-rows" class="divide-y divide-brder text-stext"></tbody>
+                <thead
+                  class="bg-elevated text-[11px] uppercase tracking-wider text-mtext"
+                >
+                  <tr>
+                    <th scope="col" class="px-5 py-3 font-semibold">
+                      Challenge
+                    </th>
+                    <th scope="col" class="px-5 py-3 font-semibold">Track</th>
+                    <th scope="col" class="px-5 py-3 font-semibold">Points</th>
+                    <th scope="col" class="px-5 py-3 font-semibold">Solved</th>
+                  </tr>
+                </thead>
+                <tbody
+                  id="d-rows"
+                  class="divide-y divide-brder text-stext"
+                ></tbody>
               </table>
             </div>
           </div>
@@ -99,67 +249,123 @@
     <script src="assets/js/layout.js"></script>
     <script src="assets/js/guide.js"></script>
     <script type="module">
-      import { configured, onSession, isAdmin, mySolves, myHints, scoreboard, escapeHtml } from './assets/js/firebase.js';
-      import { CHALLENGES, CATEGORIES, TOTAL_POINTS } from './assets/js/challenge-data.js';
+      import {
+        configured,
+        onSession,
+        isAdmin,
+        mySolves,
+        myHints,
+        scoreboard,
+        escapeHtml,
+      } from "./assets/js/firebase.js";
+      import {
+        CHALLENGES,
+        CATEGORIES,
+        TOTAL_POINTS,
+      } from "./assets/js/challenge-data.js";
       const $ = (id) => document.getElementById(id);
 
-      if (!configured) $('not-configured').classList.remove('hidden');
+      if (!configured) $("not-configured").classList.remove("hidden");
 
       onSession(async (s) => {
         if (!s.user || !s.profile) {
-          $('dash').classList.add('hidden');
-          $('gate').classList.remove('hidden');
-          $('gate-msg').textContent = !configured ? 'Your dashboard appears here once accounts are connected.'
-            : s.user ? 'Choose a username to finish setting up your account.' : 'Log in to see your progress.';
-          $('gate-link').textContent = s.user ? 'Finish setup' : 'Log in';
-          $('gate-link').href = 'auth.html?next=dashboard.html';
-          $('gate-link').classList.toggle('hidden', !configured);
+          $("dash").classList.add("hidden");
+          $("gate").classList.remove("hidden");
+          $("gate-msg").textContent = !configured
+            ? "Your dashboard appears here once accounts are connected."
+            : s.user
+              ? "Choose a username to finish setting up your account."
+              : "Log in to see your progress.";
+          $("gate-link").textContent = s.user ? "Finish setup" : "Log in";
+          $("gate-link").href = "auth.html?next=dashboard.html";
+          $("gate-link").classList.toggle("hidden", !configured);
           return;
         }
-        $('gate').classList.add('hidden');
-        $('hello-name').textContent = ', ' + s.profile.username;
-        $('d-admin').classList.toggle('hidden', !isAdmin());
+        $("gate").classList.add("hidden");
+        $("hello-name").textContent = ", " + s.profile.username;
+        $("d-admin").classList.toggle("hidden", !isAdmin());
 
-        const [solves, hints, board] = await Promise.all([mySolves(), myHints(), scoreboard()]);
+        const [solves, hints, board] = await Promise.all([
+          mySolves(),
+          myHints(),
+          scoreboard(),
+        ]);
         const byId = Object.fromEntries(solves.map((x) => [x.challengeId, x]));
         const points = solves.reduce((n, x) => n + x.points, 0);
         const pct = Math.round((solves.length / CHALLENGES.length) * 100);
         const me = board.find((r) => r.uid === s.user.uid);
 
-        $('d-points').textContent = points;
-        $('d-total').textContent = TOTAL_POINTS;
-        $('d-solved').textContent = solves.length;
-        $('d-count').textContent = CHALLENGES.length;
-        $('d-rank').textContent = me ? '#' + me.rank : '\u2013';
-        $('d-players').textContent = board.length;
-        $('d-hints').textContent = hints.length;
-        $('d-pct').textContent = pct + '%';
-        $('d-fill').style.width = pct + '%';
-        $('d-bar').setAttribute('aria-valuenow', pct);
+        $("d-points").textContent = points;
+        $("d-total").textContent = TOTAL_POINTS;
+        $("d-solved").textContent = solves.length;
+        $("d-count").textContent = CHALLENGES.length;
+        $("d-rank").textContent = me ? "#" + me.rank : "\u2013";
+        $("d-players").textContent = board.length;
+        $("d-hints").textContent = hints.length;
+        $("d-pct").textContent = pct + "%";
+        $("d-fill").style.width = pct + "%";
+        $("d-bar").setAttribute("aria-valuenow", pct);
 
-        $('d-cats').innerHTML = Object.entries(CATEGORIES).map(([key, cat]) => {
-          const list = CHALLENGES.filter((c) => c.category === key);
-          const done = list.filter((c) => byId[c.id]);
-          const p = Math.round((done.length / list.length) * 100);
-          const earned = done.reduce((n, c) => n + c.points, 0);
-          return '<a href="' + cat.page + '#challenges" class="block group">' +
-            '<div class="flex justify-between text-[14px] mb-2"><span class="font-medium group-hover:text-bred transition-colors">' + cat.label + '</span>' +
-            '<span class="font-mono text-stext">' + done.length + ' / ' + list.length + ' &middot; ' + earned + ' pts</span></div>' +
-            '<div class="h-1.5 bg-elevated rounded-full overflow-hidden"><div class="h-full ' + (p === 100 ? 'bg-success' : 'bg-pred') + ' rounded-full" style="width:' + p + '%"></div></div></a>';
-        }).join('');
+        $("d-cats").innerHTML = Object.entries(CATEGORIES)
+          .map(([key, cat]) => {
+            const list = CHALLENGES.filter((c) => c.category === key);
+            const done = list.filter((c) => byId[c.id]);
+            const p = Math.round((done.length / list.length) * 100);
+            const earned = done.reduce((n, c) => n + c.points, 0);
+            return (
+              '<a href="' +
+              cat.page +
+              '#challenges" class="block group">' +
+              '<div class="flex justify-between text-[14px] mb-2"><span class="font-medium group-hover:text-bred transition-colors">' +
+              cat.label +
+              "</span>" +
+              '<span class="font-mono text-stext">' +
+              done.length +
+              " / " +
+              list.length +
+              " &middot; " +
+              earned +
+              " pts</span></div>" +
+              '<div class="h-1.5 bg-elevated rounded-full overflow-hidden"><div class="h-full ' +
+              (p === 100 ? "bg-success" : "bg-pred") +
+              ' rounded-full" style="width:' +
+              p +
+              '%"></div></div></a>'
+            );
+          })
+          .join("");
 
-        const rows = solves.slice().sort((a, b) => (b.solvedAt || 0) - (a.solvedAt || 0));
-        $('d-rows').innerHTML = rows.length
-          ? rows.map((x) => {
-              const c = CHALLENGES.find((c) => c.id === x.challengeId) || { title: x.challengeId, category: '' };
-              const cat = CATEGORIES[c.category];
-              return '<tr><td class="px-5 py-4"><span class="font-mono text-[12px] text-mtext mr-2">' + escapeHtml(x.challengeId) + '</span><span class="text-ptext">' + escapeHtml(c.title) + '</span></td>' +
-                '<td class="px-5 py-4">' + (cat ? cat.label : '') + '</td>' +
-                '<td class="px-5 py-4 font-mono text-bred">' + x.points + '</td>' +
-                '<td class="px-5 py-4 whitespace-nowrap">' + (x.solvedAt ? x.solvedAt.toLocaleString() : '') + '</td></tr>';
-            }).join('')
+        const rows = solves
+          .slice()
+          .sort((a, b) => (b.solvedAt || 0) - (a.solvedAt || 0));
+        $("d-rows").innerHTML = rows.length
+          ? rows
+              .map((x) => {
+                const c = CHALLENGES.find((c) => c.id === x.challengeId) || {
+                  title: x.challengeId,
+                  category: "",
+                };
+                const cat = CATEGORIES[c.category];
+                return (
+                  '<tr><td class="px-5 py-4"><span class="font-mono text-[12px] text-mtext mr-2">' +
+                  escapeHtml(x.challengeId) +
+                  '</span><span class="text-ptext">' +
+                  escapeHtml(c.title) +
+                  "</span></td>" +
+                  '<td class="px-5 py-4">' +
+                  (cat ? cat.label : "") +
+                  "</td>" +
+                  '<td class="px-5 py-4 font-mono text-bred">' +
+                  x.points +
+                  "</td>" +
+                  '<td class="px-5 py-4 whitespace-nowrap">' +
+                  (x.solvedAt ? x.solvedAt.toLocaleString() : "") +
+                  "</td></tr>"
+                );
+              })
+              .join("")
           : '<tr><td colspan="4" class="px-5 py-8 text-center">No flags yet. <a href="index.html#challenges" class="text-bred hover:underline">Pick a challenge</a> to get started.</td></tr>';
-        $('dash').classList.remove('hidden');
+        $("dash").classList.remove("hidden");
       });
     </script>
   </body>

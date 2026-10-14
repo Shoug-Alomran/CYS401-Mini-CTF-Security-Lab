@@ -2,15 +2,15 @@
 //   cd tests && npm install && npm test
 // Each test performs the same writes the site does (see assets/js/firebase.js)
 // and checks that the rules accept legitimate actions and reject attacks.
-import { test, before, beforeEach, after } from 'node:test';
-import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
-import { createHash } from 'node:crypto';
+import { test, before, beforeEach, after } from "node:test";
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import {
   initializeTestEnvironment,
   assertSucceeds,
-  assertFails
-} from '@firebase/rules-unit-testing';
+  assertFails,
+} from "@firebase/rules-unit-testing";
 import {
   doc,
   getDoc,
@@ -21,20 +21,28 @@ import {
   collection,
   writeBatch,
   serverTimestamp,
-  increment
-} from 'firebase/firestore';
+  increment,
+} from "firebase/firestore";
 
-const FLAG = 'CYS401{view_source_first}';
-const sha = (s) => createHash('sha256').update(s.trim().replace(/\s+/g, '').toLowerCase()).digest('hex');
-const norm = (s) => s.trim().replace(/\s+/g, '').toLowerCase();
+const FLAG = "CYS401{view_source_first}";
+const sha = (s) =>
+  createHash("sha256")
+    .update(s.trim().replace(/\s+/g, "").toLowerCase())
+    .digest("hex");
+const norm = (s) => s.trim().replace(/\s+/g, "").toLowerCase();
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 let env;
 
 before(async () => {
   env = await initializeTestEnvironment({
-    projectId: 'demo-cys401',
-    firestore: { rules: readFileSync(new URL('../firestore.rules', import.meta.url), 'utf8') }
+    projectId: "demo-cys401",
+    firestore: {
+      rules: readFileSync(
+        new URL("../firestore.rules", import.meta.url),
+        "utf8",
+      ),
+    },
   });
 });
 
@@ -42,10 +50,22 @@ beforeEach(async () => {
   await env.clearFirestore();
   await env.withSecurityRulesDisabled(async (ctx) => {
     const db = ctx.firestore();
-    await setDoc(doc(db, 'challenges/WEB-01'), { category: 'web', title: 'Hidden in Plain Sight', difficulty: 'Easy', points: 50 });
-    await setDoc(doc(db, 'challenges/WEB-02'), { category: 'web', title: 'Guest Access', difficulty: 'Easy', points: 75 });
-    await setDoc(doc(db, 'flagHashes/WEB-01'), { hash: sha(FLAG) });
-    await setDoc(doc(db, 'flagHashes/WEB-02'), { hash: sha('CYS401{cookies_are_not_identity}') });
+    await setDoc(doc(db, "challenges/WEB-01"), {
+      category: "web",
+      title: "Hidden in Plain Sight",
+      difficulty: "Easy",
+      points: 50,
+    });
+    await setDoc(doc(db, "challenges/WEB-02"), {
+      category: "web",
+      title: "Guest Access",
+      difficulty: "Easy",
+      points: 75,
+    });
+    await setDoc(doc(db, "flagHashes/WEB-01"), { hash: sha(FLAG) });
+    await setDoc(doc(db, "flagHashes/WEB-02"), {
+      hash: sha("CYS401{cookies_are_not_identity}"),
+    });
   });
 });
 
@@ -54,11 +74,22 @@ after(async () => {
 });
 
 // ── helpers that mirror firebase.js ─────────────────────────────────────────
-function signUpBatch(db, uid, username, role = 'user') {
+function signUpBatch(db, uid, username, role = "user") {
   const b = writeBatch(db);
-  b.set(doc(db, 'usernames', username.toLowerCase()), { uid });
-  b.set(doc(db, 'users', uid), { username, role, createdAt: serverTimestamp(), lastAttemptAt: null });
-  b.set(doc(db, 'scores', uid), { username, points: 0, solved: 0, lastChallenge: null, lastSolveAt: null });
+  b.set(doc(db, "usernames", username.toLowerCase()), { uid });
+  b.set(doc(db, "users", uid), {
+    username,
+    role,
+    createdAt: serverTimestamp(),
+    lastAttemptAt: null,
+  });
+  b.set(doc(db, "scores", uid), {
+    username,
+    points: 0,
+    solved: 0,
+    lastChallenge: null,
+    lastSolveAt: null,
+  });
   return b.commit();
 }
 
@@ -69,17 +100,42 @@ async function register(uid, username) {
 
 function solveBatch(db, uid, username, challengeId, flag, points) {
   const b = writeBatch(db);
-  b.update(doc(db, 'users', uid), { lastAttemptAt: serverTimestamp() });
-  b.set(doc(collection(db, 'attempts')), { uid, username, challengeId, flag: norm(flag), correct: true, at: serverTimestamp() });
-  b.set(doc(db, 'solves', uid + '_' + challengeId), { uid, challengeId, flag: norm(flag), points, solvedAt: serverTimestamp() });
-  b.update(doc(db, 'scores', uid), { points: increment(points), solved: increment(1), lastChallenge: challengeId, lastSolveAt: serverTimestamp() });
+  b.update(doc(db, "users", uid), { lastAttemptAt: serverTimestamp() });
+  b.set(doc(collection(db, "attempts")), {
+    uid,
+    username,
+    challengeId,
+    flag: norm(flag),
+    correct: true,
+    at: serverTimestamp(),
+  });
+  b.set(doc(db, "solves", uid + "_" + challengeId), {
+    uid,
+    challengeId,
+    flag: norm(flag),
+    points,
+    solvedAt: serverTimestamp(),
+  });
+  b.update(doc(db, "scores", uid), {
+    points: increment(points),
+    solved: increment(1),
+    lastChallenge: challengeId,
+    lastSolveAt: serverTimestamp(),
+  });
   return b.commit();
 }
 
 function missBatch(db, uid, username, challengeId, flag, correct = false) {
   const b = writeBatch(db);
-  b.update(doc(db, 'users', uid), { lastAttemptAt: serverTimestamp() });
-  b.set(doc(collection(db, 'attempts')), { uid, username, challengeId, flag: norm(flag), correct, at: serverTimestamp() });
+  b.update(doc(db, "users", uid), { lastAttemptAt: serverTimestamp() });
+  b.set(doc(collection(db, "attempts")), {
+    uid,
+    username,
+    challengeId,
+    flag: norm(flag),
+    correct,
+    at: serverTimestamp(),
+  });
   return b.commit();
 }
 
@@ -92,135 +148,178 @@ async function readAsAdmin(path) {
 }
 
 // ── Accounts ────────────────────────────────────────────────────────────────
-test('T-A1 sign-up creates profile, username, and scoreboard row', async () => {
-  const db = env.authenticatedContext('alice').firestore();
-  await assertSucceeds(signUpBatch(db, 'alice', 'alice'));
-  assert.equal((await readAsAdmin('users/alice')).role, 'user');
+test("T-A1 sign-up creates profile, username, and scoreboard row", async () => {
+  const db = env.authenticatedContext("alice").firestore();
+  await assertSucceeds(signUpBatch(db, "alice", "alice"));
+  assert.equal((await readAsAdmin("users/alice")).role, "user");
 });
 
-test('T-A2 a user cannot sign up as admin', async () => {
-  const db = env.authenticatedContext('mallory').firestore();
-  await assertFails(signUpBatch(db, 'mallory', 'mallory', 'admin'));
+test("T-A2 a user cannot sign up as admin", async () => {
+  const db = env.authenticatedContext("mallory").firestore();
+  await assertFails(signUpBatch(db, "mallory", "mallory", "admin"));
 });
 
-test('T-A3 usernames are unique (case-insensitive)', async () => {
-  await register('alice', 'alice');
-  const db = env.authenticatedContext('bob').firestore();
-  await assertFails(signUpBatch(db, 'bob', 'ALICE'));
+test("T-A3 usernames are unique (case-insensitive)", async () => {
+  await register("alice", "alice");
+  const db = env.authenticatedContext("bob").firestore();
+  await assertFails(signUpBatch(db, "bob", "ALICE"));
 });
 
-test('T-A4 a user cannot promote themselves to admin', async () => {
-  const db = await register('alice', 'alice');
-  await assertFails(updateDoc(doc(db, 'users/alice'), { role: 'admin' }));
+test("T-A4 a user cannot promote themselves to admin", async () => {
+  const db = await register("alice", "alice");
+  await assertFails(updateDoc(doc(db, "users/alice"), { role: "admin" }));
 });
 
-test('T-A5 users cannot read other profiles', async () => {
-  await register('alice', 'alice');
-  const bob = await register('bob', 'bob');
-  await assertFails(getDoc(doc(bob, 'users/alice')));
+test("T-A5 users cannot read other profiles", async () => {
+  await register("alice", "alice");
+  const bob = await register("bob", "bob");
+  await assertFails(getDoc(doc(bob, "users/alice")));
 });
 
 // ── Flags ───────────────────────────────────────────────────────────────────
-test('T-F1 nobody can read flag hashes', async () => {
-  const db = await register('alice', 'alice');
-  await assertFails(getDoc(doc(db, 'flagHashes/WEB-01')));
-  await assertFails(getDoc(doc(env.unauthenticatedContext().firestore(), 'flagHashes/WEB-01')));
+test("T-F1 nobody can read flag hashes", async () => {
+  const db = await register("alice", "alice");
+  await assertFails(getDoc(doc(db, "flagHashes/WEB-01")));
+  await assertFails(
+    getDoc(doc(env.unauthenticatedContext().firestore(), "flagHashes/WEB-01")),
+  );
 });
 
-test('T-F2 a correct flag is accepted and scores the challenge points', async () => {
-  const db = await register('alice', 'alice');
-  await assertSucceeds(solveBatch(db, 'alice', 'alice', 'WEB-01', FLAG, 50));
-  const score = await readAsAdmin('scores/alice');
+test("T-F2 a correct flag is accepted and scores the challenge points", async () => {
+  const db = await register("alice", "alice");
+  await assertSucceeds(solveBatch(db, "alice", "alice", "WEB-01", FLAG, 50));
+  const score = await readAsAdmin("scores/alice");
   assert.equal(score.points, 50);
   assert.equal(score.solved, 1);
 });
 
-test('T-F3 flags are case- and whitespace-insensitive', async () => {
-  const db = await register('alice', 'alice');
-  await assertSucceeds(solveBatch(db, 'alice', 'alice', 'WEB-01', '  cys401{VIEW_source_first} ', 50));
+test("T-F3 flags are case- and whitespace-insensitive", async () => {
+  const db = await register("alice", "alice");
+  await assertSucceeds(
+    solveBatch(
+      db,
+      "alice",
+      "alice",
+      "WEB-01",
+      "  cys401{VIEW_source_first} ",
+      50,
+    ),
+  );
 });
 
-test('T-F4 a wrong flag cannot create a solve, but is logged as incorrect', async () => {
-  const db = await register('alice', 'alice');
-  await assertFails(solveBatch(db, 'alice', 'alice', 'WEB-01', 'CYS401{guess}', 50));
-  await assertSucceeds(missBatch(db, 'alice', 'alice', 'WEB-01', 'CYS401{guess}'));
+test("T-F4 a wrong flag cannot create a solve, but is logged as incorrect", async () => {
+  const db = await register("alice", "alice");
+  await assertFails(
+    solveBatch(db, "alice", "alice", "WEB-01", "CYS401{guess}", 50),
+  );
+  await assertSucceeds(
+    missBatch(db, "alice", "alice", "WEB-01", "CYS401{guess}"),
+  );
 });
 
-test('T-F5 a wrong flag cannot be logged as correct', async () => {
-  const db = await register('alice', 'alice');
-  await assertFails(missBatch(db, 'alice', 'alice', 'WEB-01', 'CYS401{guess}', true));
+test("T-F5 a wrong flag cannot be logged as correct", async () => {
+  const db = await register("alice", "alice");
+  await assertFails(
+    missBatch(db, "alice", "alice", "WEB-01", "CYS401{guess}", true),
+  );
 });
 
-test('T-F6 a correct flag cannot be logged as incorrect', async () => {
-  const db = await register('alice', 'alice');
-  await assertFails(missBatch(db, 'alice', 'alice', 'WEB-01', FLAG, false));
+test("T-F6 a correct flag cannot be logged as incorrect", async () => {
+  const db = await register("alice", "alice");
+  await assertFails(missBatch(db, "alice", "alice", "WEB-01", FLAG, false));
 });
 
-test('T-F7 one challenge\'s flag does not solve another', async () => {
-  const db = await register('alice', 'alice');
-  await assertFails(solveBatch(db, 'alice', 'alice', 'WEB-02', FLAG, 75));
+test("T-F7 one challenge's flag does not solve another", async () => {
+  const db = await register("alice", "alice");
+  await assertFails(solveBatch(db, "alice", "alice", "WEB-02", FLAG, 75));
 });
 
-test('T-F8 submissions faster than every 5 seconds are rejected', async () => {
-  const db = await register('alice', 'alice');
-  await assertSucceeds(missBatch(db, 'alice', 'alice', 'WEB-01', 'CYS401{one}'));
-  await assertFails(missBatch(db, 'alice', 'alice', 'WEB-01', 'CYS401{two}'));
-  await assertFails(solveBatch(db, 'alice', 'alice', 'WEB-01', FLAG, 50));
+test("T-F8 submissions faster than every 5 seconds are rejected", async () => {
+  const db = await register("alice", "alice");
+  await assertSucceeds(
+    missBatch(db, "alice", "alice", "WEB-01", "CYS401{one}"),
+  );
+  await assertFails(missBatch(db, "alice", "alice", "WEB-01", "CYS401{two}"));
+  await assertFails(solveBatch(db, "alice", "alice", "WEB-01", FLAG, 50));
   await sleep(5500);
-  await assertSucceeds(solveBatch(db, 'alice', 'alice', 'WEB-01', FLAG, 50));
+  await assertSucceeds(solveBatch(db, "alice", "alice", "WEB-01", FLAG, 50));
 });
 
-test('T-F9 a solved challenge cannot score twice', async () => {
-  const db = await register('alice', 'alice');
-  await assertSucceeds(solveBatch(db, 'alice', 'alice', 'WEB-01', FLAG, 50));
+test("T-F9 a solved challenge cannot score twice", async () => {
+  const db = await register("alice", "alice");
+  await assertSucceeds(solveBatch(db, "alice", "alice", "WEB-01", FLAG, 50));
   await sleep(5500);
-  await assertFails(solveBatch(db, 'alice', 'alice', 'WEB-01', FLAG, 50));
-  assert.equal((await readAsAdmin('scores/alice')).points, 50);
+  await assertFails(solveBatch(db, "alice", "alice", "WEB-01", FLAG, 50));
+  assert.equal((await readAsAdmin("scores/alice")).points, 50);
 });
 
-test('T-F10 logged-out visitors cannot submit flags', async () => {
+test("T-F10 logged-out visitors cannot submit flags", async () => {
   const db = env.unauthenticatedContext().firestore();
-  await assertFails(setDoc(doc(db, 'solves/x_WEB-01'), { uid: 'x', challengeId: 'WEB-01', flag: norm(FLAG), points: 50, solvedAt: serverTimestamp() }));
+  await assertFails(
+    setDoc(doc(db, "solves/x_WEB-01"), {
+      uid: "x",
+      challengeId: "WEB-01",
+      flag: norm(FLAG),
+      points: 50,
+      solvedAt: serverTimestamp(),
+    }),
+  );
 });
 
 // ── Scoreboard integrity ────────────────────────────────────────────────────
-test('T-S1 the scoreboard is publicly readable', async () => {
-  await register('alice', 'alice');
-  await assertSucceeds(getDocs(collection(env.unauthenticatedContext().firestore(), 'scores')));
+test("T-S1 the scoreboard is publicly readable", async () => {
+  await register("alice", "alice");
+  await assertSucceeds(
+    getDocs(collection(env.unauthenticatedContext().firestore(), "scores")),
+  );
 });
 
-test('T-S2 a user cannot raise their own score directly', async () => {
-  const db = await register('alice', 'alice');
-  await assertFails(updateDoc(doc(db, 'scores/alice'), { points: 9999 }));
-  await assertFails(updateDoc(doc(db, 'scores/alice'), { points: increment(50), solved: increment(1), lastChallenge: 'WEB-01', lastSolveAt: serverTimestamp() }));
+test("T-S2 a user cannot raise their own score directly", async () => {
+  const db = await register("alice", "alice");
+  await assertFails(updateDoc(doc(db, "scores/alice"), { points: 9999 }));
+  await assertFails(
+    updateDoc(doc(db, "scores/alice"), {
+      points: increment(50),
+      solved: increment(1),
+      lastChallenge: "WEB-01",
+      lastSolveAt: serverTimestamp(),
+    }),
+  );
 });
 
-test('T-S3 a solve cannot claim more points than the challenge is worth', async () => {
-  const db = await register('alice', 'alice');
-  await assertFails(solveBatch(db, 'alice', 'alice', 'WEB-01', FLAG, 500));
+test("T-S3 a solve cannot claim more points than the challenge is worth", async () => {
+  const db = await register("alice", "alice");
+  await assertFails(solveBatch(db, "alice", "alice", "WEB-01", FLAG, 500));
 });
 
-test('T-S4 a user cannot change another user\'s score', async () => {
-  await register('alice', 'alice');
-  const bob = await register('bob', 'bob');
-  await assertFails(updateDoc(doc(bob, 'scores/alice'), { points: 0 }));
+test("T-S4 a user cannot change another user's score", async () => {
+  await register("alice", "alice");
+  const bob = await register("bob", "bob");
+  await assertFails(updateDoc(doc(bob, "scores/alice"), { points: 0 }));
 });
 
 // ── Privacy and audit ───────────────────────────────────────────────────────
-test('T-P1 users can read their own solves and attempts, not others\'', async () => {
-  const alice = await register('alice', 'alice');
-  const bob = await register('bob', 'bob');
-  await assertSucceeds(solveBatch(alice, 'alice', 'alice', 'WEB-01', FLAG, 50));
-  await assertSucceeds(getDoc(doc(alice, 'solves/alice_WEB-01')));
-  await assertFails(getDoc(doc(bob, 'solves/alice_WEB-01')));
+test("T-P1 users can read their own solves and attempts, not others'", async () => {
+  const alice = await register("alice", "alice");
+  const bob = await register("bob", "bob");
+  await assertSucceeds(solveBatch(alice, "alice", "alice", "WEB-01", FLAG, 50));
+  await assertSucceeds(getDoc(doc(alice, "solves/alice_WEB-01")));
+  await assertFails(getDoc(doc(bob, "solves/alice_WEB-01")));
 });
 
-test('T-P2 attempts cannot be edited or deleted', async () => {
-  const db = await register('alice', 'alice');
-  const ref = doc(collection(db, 'attempts'));
+test("T-P2 attempts cannot be edited or deleted", async () => {
+  const db = await register("alice", "alice");
+  const ref = doc(collection(db, "attempts"));
   const b = writeBatch(db);
-  b.update(doc(db, 'users/alice'), { lastAttemptAt: serverTimestamp() });
-  b.set(ref, { uid: 'alice', username: 'alice', challengeId: 'WEB-01', flag: 'cys401{x}', correct: false, at: serverTimestamp() });
+  b.update(doc(db, "users/alice"), { lastAttemptAt: serverTimestamp() });
+  b.set(ref, {
+    uid: "alice",
+    username: "alice",
+    challengeId: "WEB-01",
+    flag: "cys401{x}",
+    correct: false,
+    at: serverTimestamp(),
+  });
   await assertSucceeds(b.commit());
   await assertFails(updateDoc(ref, { correct: true }));
   await assertFails(deleteDoc(ref));
@@ -229,99 +328,134 @@ test('T-P2 attempts cannot be edited or deleted', async () => {
 // ── Admin ───────────────────────────────────────────────────────────────────
 async function makeAdmin(uid) {
   await env.withSecurityRulesDisabled(async (ctx) => {
-    await updateDoc(doc(ctx.firestore(), 'users', uid), { role: 'admin' });
+    await updateDoc(doc(ctx.firestore(), "users", uid), { role: "admin" });
   });
 }
 
-test('T-R1 an admin can change roles, load challenges, and read the log', async () => {
-  const admin = await register('admin1', 'admin1');
-  await register('bob', 'bob');
-  await makeAdmin('admin1');
-  await assertSucceeds(updateDoc(doc(admin, 'users/bob'), { role: 'admin' }));
-  await assertSucceeds(setDoc(doc(admin, 'challenges/WEB-03'), { category: 'web', title: 'x', difficulty: 'Medium', points: 100 }));
-  await assertSucceeds(setDoc(doc(admin, 'flagHashes/WEB-03'), { hash: sha('CYS401{x}') }));
-  await assertSucceeds(getDocs(collection(admin, 'attempts')));
-  await assertSucceeds(getDocs(collection(admin, 'users')));
+test("T-R1 an admin can change roles, load challenges, and read the log", async () => {
+  const admin = await register("admin1", "admin1");
+  await register("bob", "bob");
+  await makeAdmin("admin1");
+  await assertSucceeds(updateDoc(doc(admin, "users/bob"), { role: "admin" }));
+  await assertSucceeds(
+    setDoc(doc(admin, "challenges/WEB-03"), {
+      category: "web",
+      title: "x",
+      difficulty: "Medium",
+      points: 100,
+    }),
+  );
+  await assertSucceeds(
+    setDoc(doc(admin, "flagHashes/WEB-03"), { hash: sha("CYS401{x}") }),
+  );
+  await assertSucceeds(getDocs(collection(admin, "attempts")));
+  await assertSucceeds(getDocs(collection(admin, "users")));
 });
 
-test('T-R2 a normal user cannot edit challenges, flags, or read all users', async () => {
-  const db = await register('bob', 'bob');
-  await assertFails(setDoc(doc(db, 'challenges/WEB-01'), { points: 1 }));
-  await assertFails(setDoc(doc(db, 'flagHashes/WEB-01'), { hash: sha('CYS401{mine}') }));
-  await assertFails(getDocs(collection(db, 'users')));
-  await assertFails(getDocs(collection(db, 'attempts')));
+test("T-R2 a normal user cannot edit challenges, flags, or read all users", async () => {
+  const db = await register("bob", "bob");
+  await assertFails(setDoc(doc(db, "challenges/WEB-01"), { points: 1 }));
+  await assertFails(
+    setDoc(doc(db, "flagHashes/WEB-01"), { hash: sha("CYS401{mine}") }),
+  );
+  await assertFails(getDocs(collection(db, "users")));
+  await assertFails(getDocs(collection(db, "attempts")));
 });
 
 // ── Hints ───────────────────────────────────────────────────────────────────
-test('T-H1 hint use is recorded once per challenge', async () => {
-  const db = await register('alice', 'alice');
-  await assertSucceeds(setDoc(doc(db, 'hints/alice_WEB-01'), { uid: 'alice', challengeId: 'WEB-01', at: serverTimestamp() }));
-  await assertFails(setDoc(doc(db, 'hints/alice_WEB-01'), { uid: 'alice', challengeId: 'WEB-01', at: serverTimestamp() }));
+test("T-H1 hint use is recorded once per challenge", async () => {
+  const db = await register("alice", "alice");
+  await assertSucceeds(
+    setDoc(doc(db, "hints/alice_WEB-01"), {
+      uid: "alice",
+      challengeId: "WEB-01",
+      at: serverTimestamp(),
+    }),
+  );
+  await assertFails(
+    setDoc(doc(db, "hints/alice_WEB-01"), {
+      uid: "alice",
+      challengeId: "WEB-01",
+      at: serverTimestamp(),
+    }),
+  );
 });
 
 // ── Profile management ──────────────────────────────────────────────────────
-function renameBatch(db, uid, oldName, newName, { releaseOld = true, scoreName = newName } = {}) {
+function renameBatch(
+  db,
+  uid,
+  oldName,
+  newName,
+  { releaseOld = true, scoreName = newName } = {},
+) {
   const b = writeBatch(db);
   if (oldName.toLowerCase() !== newName.toLowerCase()) {
-    b.set(doc(db, 'usernames', newName.toLowerCase()), { uid });
-    if (releaseOld) b.delete(doc(db, 'usernames', oldName.toLowerCase()));
+    b.set(doc(db, "usernames", newName.toLowerCase()), { uid });
+    if (releaseOld) b.delete(doc(db, "usernames", oldName.toLowerCase()));
   }
-  b.update(doc(db, 'users', uid), { username: newName });
-  b.update(doc(db, 'scores', uid), { username: scoreName });
+  b.update(doc(db, "users", uid), { username: newName });
+  b.update(doc(db, "scores", uid), { username: scoreName });
   return b.commit();
 }
 
-test('T-M1 a user can rename; the old name is released and the scoreboard follows', async () => {
-  const db = await register('alice', 'alice');
-  await assertSucceeds(renameBatch(db, 'alice', 'alice', 'alice_2'));
-  assert.equal((await readAsAdmin('scores/alice')).username, 'alice_2');
-  assert.equal(await readAsAdmin('usernames/alice'), undefined);
+test("T-M1 a user can rename; the old name is released and the scoreboard follows", async () => {
+  const db = await register("alice", "alice");
+  await assertSucceeds(renameBatch(db, "alice", "alice", "alice_2"));
+  assert.equal((await readAsAdmin("scores/alice")).username, "alice_2");
+  assert.equal(await readAsAdmin("usernames/alice"), undefined);
   // the released name can be taken by someone else
-  await assertSucceeds(signUpBatch(env.authenticatedContext('bob').firestore(), 'bob', 'alice'));
+  await assertSucceeds(
+    signUpBatch(env.authenticatedContext("bob").firestore(), "bob", "alice"),
+  );
 });
 
-test('T-M2 a user can change only the capitalisation of their name', async () => {
-  const db = await register('alice', 'alice');
-  await assertSucceeds(renameBatch(db, 'alice', 'alice', 'Alice'));
+test("T-M2 a user can change only the capitalisation of their name", async () => {
+  const db = await register("alice", "alice");
+  await assertSucceeds(renameBatch(db, "alice", "alice", "Alice"));
 });
 
-test('T-M3 a user cannot rename to a taken name', async () => {
-  await register('bob', 'bob');
-  const db = await register('alice', 'alice');
-  await assertFails(renameBatch(db, 'alice', 'alice', 'BOB'));
+test("T-M3 a user cannot rename to a taken name", async () => {
+  await register("bob", "bob");
+  const db = await register("alice", "alice");
+  await assertFails(renameBatch(db, "alice", "alice", "BOB"));
 });
 
-test('T-M4 a rename must release the old name and update the scoreboard', async () => {
-  const db = await register('alice', 'alice');
-  await assertFails(renameBatch(db, 'alice', 'alice', 'alice_2', { releaseOld: false }));
-  await assertFails(renameBatch(db, 'alice', 'alice', 'alice_2', { scoreName: 'someone_else' }));
+test("T-M4 a rename must release the old name and update the scoreboard", async () => {
+  const db = await register("alice", "alice");
+  await assertFails(
+    renameBatch(db, "alice", "alice", "alice_2", { releaseOld: false }),
+  );
+  await assertFails(
+    renameBatch(db, "alice", "alice", "alice_2", { scoreName: "someone_else" }),
+  );
 });
 
-test('T-M5 names cannot be reserved without using them', async () => {
-  const db = await register('alice', 'alice');
-  await assertFails(setDoc(doc(db, 'usernames/squatted'), { uid: 'alice' }));
+test("T-M5 names cannot be reserved without using them", async () => {
+  const db = await register("alice", "alice");
+  await assertFails(setDoc(doc(db, "usernames/squatted"), { uid: "alice" }));
 });
 
-test('T-M6 a user cannot release someone else\'s name', async () => {
-  await register('alice', 'alice');
-  const bob = await register('bob', 'bob');
-  await assertFails(deleteDoc(doc(bob, 'usernames/alice')));
+test("T-M6 a user cannot release someone else's name", async () => {
+  await register("alice", "alice");
+  const bob = await register("bob", "bob");
+  await assertFails(deleteDoc(doc(bob, "usernames/alice")));
 });
 
-test('T-M7 a user can delete their own account records, not someone else\'s', async () => {
-  await register('bob', 'bob');
-  const db = await register('alice', 'alice');
+test("T-M7 a user can delete their own account records, not someone else's", async () => {
+  await register("bob", "bob");
+  const db = await register("alice", "alice");
   const mine = writeBatch(db);
-  mine.delete(doc(db, 'usernames/alice'));
-  mine.delete(doc(db, 'users/alice'));
-  mine.delete(doc(db, 'scores/alice'));
+  mine.delete(doc(db, "usernames/alice"));
+  mine.delete(doc(db, "users/alice"));
+  mine.delete(doc(db, "scores/alice"));
   await assertSucceeds(mine.commit());
   const theirs = writeBatch(db);
-  theirs.delete(doc(db, 'scores/bob'));
+  theirs.delete(doc(db, "scores/bob"));
   await assertFails(theirs.commit());
 });
 
-test('T-M8 deleting a profile must also remove its name and scoreboard row', async () => {
-  const db = await register('alice', 'alice');
-  await assertFails(deleteDoc(doc(db, 'users/alice')));
+test("T-M8 deleting a profile must also remove its name and scoreboard row", async () => {
+  const db = await register("alice", "alice");
+  await assertFails(deleteDoc(doc(db, "users/alice")));
 });

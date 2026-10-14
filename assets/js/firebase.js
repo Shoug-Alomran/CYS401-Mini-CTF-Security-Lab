@@ -5,7 +5,7 @@
 // The browser never sees a flag or a flag hash. A submission is written to
 // Firestore, and firestore.rules hash it server-side and compare it with
 // flagHashes/{id}, accepting the solve only on a match.
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import {
   getAuth,
   connectAuthEmulator,
@@ -19,8 +19,8 @@ import {
   sendEmailVerification,
   reauthenticateWithCredential,
   EmailAuthProvider,
-  signOut
-} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
+  signOut,
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import {
   getFirestore,
   initializeFirestore,
@@ -39,30 +39,39 @@ import {
   limit,
   writeBatch,
   serverTimestamp,
-  increment
-} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
-import { firebaseConfig } from './firebase-config.js';
-import { CHALLENGES } from './challenge-data.js';
+  increment,
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import { firebaseConfig } from "./firebase-config.js";
+import { CHALLENGES } from "./challenge-data.js";
 
 // Local testing against the Firebase emulators (see README.md, "Testing"): only on
 // localhost, and only after running localStorage.setItem('cys401-emulator', '1').
 const emulate = (() => {
   try {
-    return location.hostname === 'localhost' && localStorage.getItem('cys401-emulator') === '1';
+    return (
+      location.hostname === "localhost" &&
+      localStorage.getItem("cys401-emulator") === "1"
+    );
   } catch (e) {
     return false;
   }
 })();
-const config = emulate ? { apiKey: 'demo-key', projectId: 'demo-cys401', authDomain: 'localhost' } : firebaseConfig;
+const config = emulate
+  ? { apiKey: "demo-key", projectId: "demo-cys401", authDomain: "localhost" }
+  : firebaseConfig;
 
 export const configured = Boolean(config.apiKey && config.projectId);
 
 const app = configured ? initializeApp(config) : null;
 export const auth = app ? getAuth(app) : null;
-export const db = !app ? null : emulate ? initializeFirestore(app, { experimentalForceLongPolling: true }) : getFirestore(app);
+export const db = !app
+  ? null
+  : emulate
+    ? initializeFirestore(app, { experimentalForceLongPolling: true })
+    : getFirestore(app);
 if (emulate) {
-  connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true });
-  connectFirestoreEmulator(db, '127.0.0.1', 8080);
+  connectAuthEmulator(auth, "http://127.0.0.1:9099", { disableWarnings: true });
+  connectFirestoreEmulator(db, "127.0.0.1", 8080);
 }
 
 // ── Session state ────────────────────────────────────────────────────────────
@@ -100,7 +109,7 @@ if (auth) {
     let profile = null;
     if (user) {
       try {
-        const snap = await getDoc(doc(db, 'users', user.uid));
+        const snap = await getDoc(doc(db, "users", user.uid));
         profile = snap.exists() ? snap.data() : null;
       } catch (e) {
         profile = null;
@@ -115,37 +124,53 @@ if (auth) {
 export const USERNAME_RE = /^[A-Za-z0-9_]{3,20}$/;
 
 const AUTH_ERRORS = {
-  'auth/email-already-in-use': 'An account with this email already exists. Log in instead.',
-  'auth/invalid-email': 'That email address is not valid.',
-  'auth/weak-password': 'Choose a password of at least 8 characters.',
-  'auth/password-does-not-meet-requirements': 'That password does not meet the password policy.',
-  'auth/invalid-credential': 'Incorrect email or password.',
-  'auth/wrong-password': 'Incorrect email or password.',
-  'auth/user-not-found': 'Incorrect email or password.',
-  'auth/too-many-requests': 'Too many attempts. This account is temporarily locked — try again later or reset your password.',
-  'auth/network-request-failed': 'Network error. Check your connection and try again.',
-  'auth/operation-not-allowed': 'Email/password sign-in is not enabled for this project yet.',
-  'auth/requires-recent-login': 'For security, log out and log in again, then retry.',
-  'auth/missing-password': 'Enter your current password.'
+  "auth/email-already-in-use":
+    "An account with this email already exists. Log in instead.",
+  "auth/invalid-email": "That email address is not valid.",
+  "auth/weak-password": "Choose a password of at least 8 characters.",
+  "auth/password-does-not-meet-requirements":
+    "That password does not meet the password policy.",
+  "auth/invalid-credential": "Incorrect email or password.",
+  "auth/wrong-password": "Incorrect email or password.",
+  "auth/user-not-found": "Incorrect email or password.",
+  "auth/too-many-requests":
+    "Too many attempts. This account is temporarily locked — try again later or reset your password.",
+  "auth/network-request-failed":
+    "Network error. Check your connection and try again.",
+  "auth/operation-not-allowed":
+    "Email/password sign-in is not enabled for this project yet.",
+  "auth/requires-recent-login":
+    "For security, log out and log in again, then retry.",
+  "auth/missing-password": "Enter your current password.",
 };
 
 export function friendlyError(err) {
-  return (err && AUTH_ERRORS[err.code]) || (err && err.message) || 'Something went wrong. Try again.';
+  return (
+    (err && AUTH_ERRORS[err.code]) ||
+    (err && err.message) ||
+    "Something went wrong. Try again."
+  );
 }
 
 function requireConfigured() {
-  if (!configured) throw new Error('Accounts are not connected yet: add the Firebase config in assets/js/firebase-config.js.');
+  if (!configured)
+    throw new Error(
+      "Accounts are not connected yet: add the Firebase config in assets/js/firebase-config.js.",
+    );
 }
 
 export async function signUp(username, email, password) {
   requireConfigured();
   if (!USERNAME_RE.test(username)) {
-    throw new Error('Usernames are 3–20 characters: letters, numbers, and underscores.');
+    throw new Error(
+      "Usernames are 3–20 characters: letters, numbers, and underscores.",
+    );
   }
-  if (password.length < 8) throw new Error(AUTH_ERRORS['auth/weak-password']);
+  if (password.length < 8) throw new Error(AUTH_ERRORS["auth/weak-password"]);
 
-  const nameRef = doc(db, 'usernames', username.toLowerCase());
-  if ((await getDoc(nameRef)).exists()) throw new Error('That username is taken.');
+  const nameRef = doc(db, "usernames", username.toLowerCase());
+  if ((await getDoc(nameRef)).exists())
+    throw new Error("That username is taken.");
 
   signingUp = true;
   let cred;
@@ -165,9 +190,13 @@ export async function signUp(username, email, password) {
     // Roll the auth account back so the email can be used again.
     await cred.user.delete().catch(() => {});
     signingUp = false;
-    throw new Error(e.code === 'permission-denied' ? 'That username is taken.' : friendlyError(e));
+    throw new Error(
+      e.code === "permission-denied"
+        ? "That username is taken."
+        : friendlyError(e),
+    );
   }
-  const snap = await getDoc(doc(db, 'users', uid));
+  const snap = await getDoc(doc(db, "users", uid));
   signingUp = false;
   state = { ready: true, user: cred.user, profile: snap.data() };
   emit();
@@ -179,19 +208,26 @@ export async function signUp(username, email, password) {
 export async function completeProfile(username) {
   requireConfigured();
   const user = state.user;
-  if (!user) throw new Error('Log in first.');
+  if (!user) throw new Error("Log in first.");
   if (!USERNAME_RE.test(username)) {
-    throw new Error('Usernames are 3–20 characters: letters, numbers, and underscores.');
+    throw new Error(
+      "Usernames are 3–20 characters: letters, numbers, and underscores.",
+    );
   }
-  const nameRef = doc(db, 'usernames', username.toLowerCase());
-  if ((await getDoc(nameRef)).exists()) throw new Error('That username is taken.');
+  const nameRef = doc(db, "usernames", username.toLowerCase());
+  if ((await getDoc(nameRef)).exists())
+    throw new Error("That username is taken.");
   try {
     await profileBatch(user.uid, username, nameRef).commit();
   } catch (e) {
-    throw new Error(e.code === 'permission-denied' ? 'That username is taken.' : friendlyError(e));
+    throw new Error(
+      e.code === "permission-denied"
+        ? "That username is taken."
+        : friendlyError(e),
+    );
   }
   await updateProfile(user, { displayName: username }).catch(() => {});
-  const snap = await getDoc(doc(db, 'users', user.uid));
+  const snap = await getDoc(doc(db, "users", user.uid));
   state = { ready: true, user, profile: snap.data() };
   emit();
 }
@@ -199,18 +235,18 @@ export async function completeProfile(username) {
 function profileBatch(uid, username, nameRef) {
   const batch = writeBatch(db);
   batch.set(nameRef, { uid });
-  batch.set(doc(db, 'users', uid), {
+  batch.set(doc(db, "users", uid), {
     username,
-    role: 'user',
+    role: "user",
     createdAt: serverTimestamp(),
-    lastAttemptAt: null
+    lastAttemptAt: null,
   });
-  batch.set(doc(db, 'scores', uid), {
+  batch.set(doc(db, "scores", uid), {
     username,
     points: 0,
     solved: 0,
     lastChallenge: null,
-    lastSolveAt: null
+    lastSolveAt: null,
   });
   return batch;
 }
@@ -220,15 +256,19 @@ function profileBatch(uid, username, nameRef) {
 export async function checkUsername(name) {
   requireConfigured();
   if (!USERNAME_RE.test(name)) {
-    return { ok: false, message: '3–20 characters: letters, numbers, and underscores.' };
+    return {
+      ok: false,
+      message: "3–20 characters: letters, numbers, and underscores.",
+    };
   }
   const current = state.profile && state.profile.username;
-  if (current === name) return { ok: false, message: 'That is already your username.' };
-  const snap = await getDoc(doc(db, 'usernames', name.toLowerCase()));
+  if (current === name)
+    return { ok: false, message: "That is already your username." };
+  const snap = await getDoc(doc(db, "usernames", name.toLowerCase()));
   if (snap.exists() && (!state.user || snap.data().uid !== state.user.uid)) {
-    return { ok: false, message: 'That username is taken.' };
+    return { ok: false, message: "That username is taken." };
   }
-  return { ok: true, message: 'Available.' };
+  return { ok: true, message: "Available." };
 }
 
 // Claims the new name, releases the old one, and renames the scoreboard row in one batch.
@@ -239,15 +279,19 @@ export async function changeUsername(name) {
   const old = state.profile.username;
   const batch = writeBatch(db);
   if (old.toLowerCase() !== name.toLowerCase()) {
-    batch.set(doc(db, 'usernames', name.toLowerCase()), { uid: user.uid });
-    batch.delete(doc(db, 'usernames', old.toLowerCase()));
+    batch.set(doc(db, "usernames", name.toLowerCase()), { uid: user.uid });
+    batch.delete(doc(db, "usernames", old.toLowerCase()));
   }
-  batch.update(doc(db, 'users', user.uid), { username: name });
-  batch.update(doc(db, 'scores', user.uid), { username: name });
+  batch.update(doc(db, "users", user.uid), { username: name });
+  batch.update(doc(db, "scores", user.uid), { username: name });
   try {
     await batch.commit();
   } catch (e) {
-    throw new Error(e.code === 'permission-denied' ? 'That username is taken.' : friendlyError(e));
+    throw new Error(
+      e.code === "permission-denied"
+        ? "That username is taken."
+        : friendlyError(e),
+    );
   }
   await updateProfile(user, { displayName: name }).catch(() => {});
   state = { ...state, profile: { ...state.profile, username: name } };
@@ -257,13 +301,19 @@ export async function changeUsername(name) {
 // Sensitive changes need the current password (Firebase requires a recent login).
 async function reauthenticate(currentPassword) {
   const user = state.user;
-  if (!user) throw new Error('Log in first.');
-  if (!currentPassword) throw new Error(AUTH_ERRORS['auth/missing-password']);
+  if (!user) throw new Error("Log in first.");
+  if (!currentPassword) throw new Error(AUTH_ERRORS["auth/missing-password"]);
   try {
-    await reauthenticateWithCredential(user, EmailAuthProvider.credential(user.email, currentPassword));
+    await reauthenticateWithCredential(
+      user,
+      EmailAuthProvider.credential(user.email, currentPassword),
+    );
   } catch (e) {
-    if (e.code === 'auth/invalid-credential' || e.code === 'auth/wrong-password') {
-      throw new Error('Your current password is incorrect.');
+    if (
+      e.code === "auth/invalid-credential" ||
+      e.code === "auth/wrong-password"
+    ) {
+      throw new Error("Your current password is incorrect.");
     }
     throw e;
   }
@@ -271,7 +321,8 @@ async function reauthenticate(currentPassword) {
 }
 
 export async function changePassword(currentPassword, newPassword) {
-  if (newPassword.length < 8) throw new Error(AUTH_ERRORS['auth/weak-password']);
+  if (newPassword.length < 8)
+    throw new Error(AUTH_ERRORS["auth/weak-password"]);
   const user = await reauthenticate(currentPassword);
   await updatePassword(user, newPassword);
 }
@@ -279,12 +330,13 @@ export async function changePassword(currentPassword, newPassword) {
 // Sends a confirmation link to the new address; the email changes when it is clicked.
 export async function changeEmail(currentPassword, newEmail) {
   const user = await reauthenticate(currentPassword);
-  if (newEmail.toLowerCase() === (user.email || '').toLowerCase()) throw new Error('That is already your email.');
+  if (newEmail.toLowerCase() === (user.email || "").toLowerCase())
+    throw new Error("That is already your email.");
   await verifyBeforeUpdateEmail(user, newEmail);
 }
 
 export async function sendVerification() {
-  if (!state.user) throw new Error('Log in first.');
+  if (!state.user) throw new Error("Log in first.");
   await sendEmailVerification(state.user);
 }
 
@@ -294,9 +346,9 @@ export async function deleteAccount(currentPassword) {
   const user = await reauthenticate(currentPassword);
   if (state.profile) {
     const batch = writeBatch(db);
-    batch.delete(doc(db, 'usernames', state.profile.username.toLowerCase()));
-    batch.delete(doc(db, 'users', user.uid));
-    batch.delete(doc(db, 'scores', user.uid));
+    batch.delete(doc(db, "usernames", state.profile.username.toLowerCase()));
+    batch.delete(doc(db, "users", user.uid));
+    batch.delete(doc(db, "scores", user.uid));
     await batch.commit();
   }
   await user.delete();
@@ -318,28 +370,28 @@ export async function logOut() {
 
 // ── Flags ────────────────────────────────────────────────────────────────────
 export function normalizeFlag(value) {
-  return (value || '').trim().replace(/\s+/g, '').toLowerCase();
+  return (value || "").trim().replace(/\s+/g, "").toLowerCase();
 }
 
 // Returns 'correct' | 'incorrect' | 'throttled' | 'solved'.
 export async function submitFlag(challengeId, rawFlag) {
   requireConfigured();
   const user = state.user;
-  if (!user || !state.profile) throw new Error('Log in to submit flags.');
+  if (!user || !state.profile) throw new Error("Log in to submit flags.");
   const challenge = CHALLENGES.find((c) => c.id === challengeId);
-  if (!challenge) throw new Error('Unknown challenge.');
+  if (!challenge) throw new Error("Unknown challenge.");
 
   const flag = normalizeFlag(rawFlag);
   const uid = user.uid;
-  const userRef = doc(db, 'users', uid);
-  const attemptRef = () => doc(collection(db, 'attempts'));
+  const userRef = doc(db, "users", uid);
+  const attemptRef = () => doc(collection(db, "attempts"));
   const attempt = (correct) => ({
     uid,
     username: state.profile.username,
     challengeId,
     flag,
     correct,
-    at: serverTimestamp()
+    at: serverTimestamp(),
   });
 
   // Try to record a solve. The rules reject this whole batch unless the flag's
@@ -347,24 +399,24 @@ export async function submitFlag(challengeId, rawFlag) {
   const solve = writeBatch(db);
   solve.update(userRef, { lastAttemptAt: serverTimestamp() });
   solve.set(attemptRef(), attempt(true));
-  solve.set(doc(db, 'solves', uid + '_' + challengeId), {
+  solve.set(doc(db, "solves", uid + "_" + challengeId), {
     uid,
     challengeId,
     flag,
     points: challenge.points,
-    solvedAt: serverTimestamp()
+    solvedAt: serverTimestamp(),
   });
-  solve.update(doc(db, 'scores', uid), {
+  solve.update(doc(db, "scores", uid), {
     points: increment(challenge.points),
     solved: increment(1),
     lastChallenge: challengeId,
-    lastSolveAt: serverTimestamp()
+    lastSolveAt: serverTimestamp(),
   });
   try {
     await solve.commit();
-    return 'correct';
+    return "correct";
   } catch (e) {
-    if (e.code !== 'permission-denied') throw e;
+    if (e.code !== "permission-denied") throw e;
   }
 
   // Not accepted. Log a failed attempt; the rules only allow correct:false when
@@ -375,11 +427,13 @@ export async function submitFlag(challengeId, rawFlag) {
   miss.set(attemptRef(), attempt(false));
   try {
     await miss.commit();
-    return 'incorrect';
+    return "incorrect";
   } catch (e) {
-    if (e.code !== 'permission-denied') throw e;
-    const solved = await getDocFromServer(doc(db, 'solves', uid + '_' + challengeId)).catch(() => null);
-    return solved && solved.exists() ? 'solved' : 'throttled';
+    if (e.code !== "permission-denied") throw e;
+    const solved = await getDocFromServer(
+      doc(db, "solves", uid + "_" + challengeId),
+    ).catch(() => null);
+    return solved && solved.exists() ? "solved" : "throttled";
   }
 }
 
@@ -387,10 +441,10 @@ export async function logHint(challengeId) {
   const user = state.user;
   if (!configured || !user) return;
   // Create-only in the rules, so a repeat open is simply rejected.
-  await setDoc(doc(db, 'hints', user.uid + '_' + challengeId), {
+  await setDoc(doc(db, "hints", user.uid + "_" + challengeId), {
     uid: user.uid,
     challengeId,
-    at: serverTimestamp()
+    at: serverTimestamp(),
   }).catch(() => {});
 }
 
@@ -399,23 +453,32 @@ export async function logHint(challengeId) {
 // writes the rules have not ruled on yet, and a rejected solve must never count.
 export async function mySolves() {
   if (!configured || !state.user) return [];
-  const snap = await getDocsFromServer(query(collection(db, 'solves'), where('uid', '==', state.user.uid)));
-  return snap.docs.filter((d) => !d.metadata.hasPendingWrites).map((d) => {
-    const data = d.data();
-    return { ...data, solvedAt: data.solvedAt ? data.solvedAt.toDate() : null };
-  });
+  const snap = await getDocsFromServer(
+    query(collection(db, "solves"), where("uid", "==", state.user.uid)),
+  );
+  return snap.docs
+    .filter((d) => !d.metadata.hasPendingWrites)
+    .map((d) => {
+      const data = d.data();
+      return {
+        ...data,
+        solvedAt: data.solvedAt ? data.solvedAt.toDate() : null,
+      };
+    });
 }
 
 export async function myHints() {
   if (!configured || !state.user) return [];
-  const snap = await getDocsFromServer(query(collection(db, 'hints'), where('uid', '==', state.user.uid)));
+  const snap = await getDocsFromServer(
+    query(collection(db, "hints"), where("uid", "==", state.user.uid)),
+  );
   return snap.docs.map((d) => d.data().challengeId);
 }
 
 // Ranked by points, then by who reached that score first.
 export async function scoreboard() {
   if (!configured) return [];
-  const snap = await getDocsFromServer(collection(db, 'scores'));
+  const snap = await getDocsFromServer(collection(db, "scores"));
   const rows = snap.docs.map((d) => {
     const data = d.data();
     return {
@@ -423,14 +486,15 @@ export async function scoreboard() {
       username: data.username,
       points: data.points || 0,
       solved: data.solved || 0,
-      lastSolveAt: data.lastSolveAt ? data.lastSolveAt.toDate() : null
+      lastSolveAt: data.lastSolveAt ? data.lastSolveAt.toDate() : null,
     };
   });
   rows.sort(
     (a, b) =>
       b.points - a.points ||
-      (a.lastSolveAt ? a.lastSolveAt.getTime() : Infinity) - (b.lastSolveAt ? b.lastSolveAt.getTime() : Infinity) ||
-      a.username.localeCompare(b.username)
+      (a.lastSolveAt ? a.lastSolveAt.getTime() : Infinity) -
+        (b.lastSolveAt ? b.lastSolveAt.getTime() : Infinity) ||
+      a.username.localeCompare(b.username),
   );
   rows.forEach((r, i) => {
     r.rank = i + 1;
@@ -440,27 +504,31 @@ export async function scoreboard() {
 
 // ── Admin ────────────────────────────────────────────────────────────────────
 export function isAdmin() {
-  return Boolean(state.profile && state.profile.role === 'admin');
+  return Boolean(state.profile && state.profile.role === "admin");
 }
 
 export async function sha256Hex(text) {
   const bytes = new TextEncoder().encode(text);
-  const digest = await crypto.subtle.digest('SHA-256', bytes);
-  return Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, '0')).join('');
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  return Array.from(new Uint8Array(digest), (b) =>
+    b.toString(16).padStart(2, "0"),
+  ).join("");
 }
 
 // Writes the catalogue and, for every "ID flag" pair given, the flag's hash.
 export async function seedChallenges(flagsById) {
   const batch = writeBatch(db);
   for (const c of CHALLENGES) {
-    batch.set(doc(db, 'challenges', c.id), {
+    batch.set(doc(db, "challenges", c.id), {
       category: c.category,
       title: c.title,
       difficulty: c.difficulty,
-      points: c.points
+      points: c.points,
     });
     if (flagsById[c.id]) {
-      batch.set(doc(db, 'flagHashes', c.id), { hash: await sha256Hex(normalizeFlag(flagsById[c.id])) });
+      batch.set(doc(db, "flagHashes", c.id), {
+        hash: await sha256Hex(normalizeFlag(flagsById[c.id])),
+      });
     }
   }
   await batch.commit();
@@ -468,9 +536,11 @@ export async function seedChallenges(flagsById) {
 
 export async function adminData() {
   const [users, attempts, challenges] = await Promise.all([
-    getDocs(collection(db, 'users')),
-    getDocs(query(collection(db, 'attempts'), orderBy('at', 'desc'), limit(100))),
-    getDocs(collection(db, 'challenges'))
+    getDocs(collection(db, "users")),
+    getDocs(
+      query(collection(db, "attempts"), orderBy("at", "desc"), limit(100)),
+    ),
+    getDocs(collection(db, "challenges")),
   ]);
   return {
     users: users.docs.map((d) => ({ uid: d.id, ...d.data() })),
@@ -478,89 +548,147 @@ export async function adminData() {
       const data = d.data();
       return { ...data, at: data.at ? data.at.toDate() : null };
     }),
-    seeded: challenges.docs.map((d) => d.id)
+    seeded: challenges.docs.map((d) => d.id),
   };
 }
 
 export async function setRole(uid, role) {
   const batch = writeBatch(db);
-  batch.update(doc(db, 'users', uid), { role });
+  batch.update(doc(db, "users", uid), { role });
   await batch.commit();
 }
 
 // ── Header account area ──────────────────────────────────────────────────────
 export function escapeHtml(s) {
-  return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  return String(s).replace(
+    /[&<>"']/g,
+    (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
+        c
+      ],
+  );
 }
 
 function renderAuthSlot() {
-  const slots = document.querySelectorAll('[data-auth-slot]');
+  const slots = document.querySelectorAll("[data-auth-slot]");
   if (!slots.length) return;
-  const btn = 'text-[14px] font-semibold px-4 py-2.5 rounded-btn transition-colors';
-  const item = 'block px-4 py-2.5 text-[14px] text-stext hover:text-ptext hover:bg-elevated transition-colors';
+  const btn =
+    "text-[14px] font-semibold px-4 py-2.5 rounded-btn transition-colors";
+  const item =
+    "block px-4 py-2.5 text-[14px] text-stext hover:text-ptext hover:bg-elevated transition-colors";
   const signedIn = state.user && state.profile;
 
   slots.forEach((slot) => {
-    const mobile = slot.dataset.authSlot === 'mobile';
-    let html = '';
+    const mobile = slot.dataset.authSlot === "mobile";
+    let html = "";
     if (!state.ready) {
-      html = '';
+      html = "";
     } else if (signedIn) {
-      const links = [['dashboard.html', 'My Dashboard'], ['account.html', 'Account settings']];
-      if (isAdmin()) links.push(['admin.html', 'Admin']);
+      const links = [
+        ["dashboard.html", "My Dashboard"],
+        ["account.html", "Account settings"],
+      ];
+      if (isAdmin()) links.push(["admin.html", "Admin"]);
       if (mobile) {
         html =
-          '<p class="w-full px-4 pt-2 text-[12px] uppercase tracking-wider text-mtext">Signed in as ' + escapeHtml(state.profile.username) + '</p>' +
-          links.map(([href, label]) => '<a href="' + href + '" class="' + btn + ' border border-brder2 hover:bg-elevated">' + label + '</a>').join('') +
-          '<button type="button" data-logout class="' + btn + ' text-stext hover:text-ptext">Log out</button>';
+          '<p class="w-full px-4 pt-2 text-[12px] uppercase tracking-wider text-mtext">Signed in as ' +
+          escapeHtml(state.profile.username) +
+          "</p>" +
+          links
+            .map(
+              ([href, label]) =>
+                '<a href="' +
+                href +
+                '" class="' +
+                btn +
+                ' border border-brder2 hover:bg-elevated">' +
+                label +
+                "</a>",
+            )
+            .join("") +
+          '<button type="button" data-logout class="' +
+          btn +
+          ' text-stext hover:text-ptext">Log out</button>';
       } else {
         html =
           '<div class="relative" data-menu>' +
-          '<button type="button" data-menu-toggle aria-haspopup="true" aria-expanded="false" class="' + btn + ' border border-brder2 hover:bg-elevated inline-flex items-center gap-2">' +
-          '<span class="w-2 h-2 rounded-full bg-success"></span>' + escapeHtml(state.profile.username) +
-          (isAdmin() ? '<span class="text-[10px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded border border-rborder text-bred">Admin</span>' : '') +
+          '<button type="button" data-menu-toggle aria-haspopup="true" aria-expanded="false" class="' +
+          btn +
+          ' border border-brder2 hover:bg-elevated inline-flex items-center gap-2">' +
+          '<span class="w-2 h-2 rounded-full bg-success"></span>' +
+          escapeHtml(state.profile.username) +
+          (isAdmin()
+            ? '<span class="text-[10px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded border border-rborder text-bred">Admin</span>'
+            : "") +
           '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>' +
           '<div data-menu-list class="hidden absolute right-0 mt-2 w-56 bg-card border border-brder rounded-xl shadow-2xl overflow-hidden py-1 z-50" role="menu">' +
-          '<p class="px-4 py-2 text-[12px] text-mtext truncate">' + escapeHtml(state.user.email || '') + '</p>' +
-          links.map(([href, label]) => '<a href="' + href + '" role="menuitem" class="' + item + '">' + label + '</a>').join('') +
+          '<p class="px-4 py-2 text-[12px] text-mtext truncate">' +
+          escapeHtml(state.user.email || "") +
+          "</p>" +
+          links
+            .map(
+              ([href, label]) =>
+                '<a href="' +
+                href +
+                '" role="menuitem" class="' +
+                item +
+                '">' +
+                label +
+                "</a>",
+            )
+            .join("") +
           '<div class="border-t border-brder my-1"></div>' +
-          '<button type="button" data-logout role="menuitem" class="' + item + ' w-full text-left">Log out</button>' +
-          '</div></div>';
+          '<button type="button" data-logout role="menuitem" class="' +
+          item +
+          ' w-full text-left">Log out</button>' +
+          "</div></div>";
       }
     } else if (state.user) {
       html =
-        '<a href="auth.html" class="' + btn + ' bg-pred hover:bg-bred text-white">Finish setup</a>' +
-        '<button type="button" data-logout class="' + btn + ' text-stext hover:text-ptext">Log out</button>';
+        '<a href="auth.html" class="' +
+        btn +
+        ' bg-pred hover:bg-bred text-white">Finish setup</a>' +
+        '<button type="button" data-logout class="' +
+        btn +
+        ' text-stext hover:text-ptext">Log out</button>';
     } else {
       html =
-        '<a href="auth.html" class="' + btn + ' text-stext hover:text-ptext">Log in</a>' +
-        '<a href="auth.html#signup" class="' + btn + ' bg-pred hover:bg-bred text-white">Sign up</a>';
+        '<a href="auth.html" class="' +
+        btn +
+        ' text-stext hover:text-ptext">Log in</a>' +
+        '<a href="auth.html#signup" class="' +
+        btn +
+        ' bg-pred hover:bg-bred text-white">Sign up</a>';
     }
     slot.innerHTML = html;
 
-    slot.querySelectorAll('[data-logout]').forEach((out) =>
-      out.addEventListener('click', () => logOut().then(() => location.assign('index.html')))
-    );
-    const toggle = slot.querySelector('[data-menu-toggle]');
-    const list = slot.querySelector('[data-menu-list]');
+    slot
+      .querySelectorAll("[data-logout]")
+      .forEach((out) =>
+        out.addEventListener("click", () =>
+          logOut().then(() => location.assign("index.html")),
+        ),
+      );
+    const toggle = slot.querySelector("[data-menu-toggle]");
+    const list = slot.querySelector("[data-menu-list]");
     if (toggle && list) {
       const setOpen = (open) => {
-        list.classList.toggle('hidden', !open);
-        toggle.setAttribute('aria-expanded', String(open));
+        list.classList.toggle("hidden", !open);
+        toggle.setAttribute("aria-expanded", String(open));
       };
-      toggle.addEventListener('click', (e) => {
+      toggle.addEventListener("click", (e) => {
         e.stopPropagation();
-        setOpen(list.classList.contains('hidden'));
+        setOpen(list.classList.contains("hidden"));
       });
-      document.addEventListener('click', (e) => {
+      document.addEventListener("click", (e) => {
         if (!slot.contains(e.target)) setOpen(false);
       });
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') setOpen(false);
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") setOpen(false);
       });
     }
   });
 }
 
-document.addEventListener('layout:ready', renderAuthSlot);
+document.addEventListener("layout:ready", renderAuthSlot);
 renderAuthSlot();
