@@ -67,6 +67,15 @@ There is no custom server: Firestore security rules do the server-side work.
 
 Roles: everyone signs up as `user`. An `admin` can load challenges and flags, change roles, and read the submission log.
 
+## Sessions and inactivity
+
+- After **30 minutes with no activity** in any tab, the site shows a 60-second warning, then logs the user out and returns them to the login page (`auth.html?reason=idle`). Activity in any tab keeps every tab signed in, and logging out signs out all tabs.
+- A session reopened after the limit (for example a browser left closed) is logged out on arrival.
+- **Keep me logged in on this device** at login and sign-up is unticked by default. Unticked, the session also ends when the browser closes, which suits shared and lab computers.
+- The timer runs in the browser, so it protects an unattended computer but does not revoke Firebase refresh tokens. Revoking them needs the Firebase Admin SDK (Cloud Functions).
+
+Change the limit with `IDLE_LIMIT_MS` in `assets/js/firebase.js`.
+
 ## Firebase setup (one time)
 
 1. Create a project at [console.firebase.google.com](https://console.firebase.google.com) (the free Spark plan is enough; Google Analytics is not needed).

@@ -19,6 +19,9 @@ import {
   sendEmailVerification,
   reauthenticateWithCredential,
   EmailAuthProvider,
+  setPersistence,
+  browserLocalPersistence,
+  browserSessionPersistence,
   signOut,
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import {
@@ -106,6 +109,11 @@ export function sessionReady() {
 if (auth) {
   onAuthStateChanged(auth, async (user) => {
     if (signingUp) return; // signUp() publishes the session once the profile exists
+    // A session restored after the inactivity limit (e.g. browser reopened later) ends now.
+    if (user && Date.now() - lastActive() >= IDLE_LIMIT_MS) {
+      idleLogout();
+      return;
+    }
     let profile = null;
     if (user) {
       try {
@@ -118,6 +126,99 @@ if (auth) {
     state = { ready: true, user, profile };
     emit();
   });
+}
+
+// ── Inactivity timeout ───────────────────────────────────────────────────────
+// Logs the user out after 30 minutes with no activity in any tab, after a
+// 60-second warning. Tabs share the last-activity time through localStorage, and
+// Firebase itself signs every tab out together. This protects an unattended
+// browser; it does not revoke tokens on Firebase's side.
+export const IDLE_LIMIT_MS = 30 * 60 * 1000;
+const IDLE_WARNING_MS = 60 * 1000;
+const ACTIVE_KEY = "cys401-last-active";
+let memActive = Date.now(); // fallback when localStorage is unavailable
+let lastWrite = 0;
+let loggingOut = false;
+
+function lastActive() {
+  try {
+    return Number(localStorage.getItem(ACTIVE_KEY)) || memActive;
+  } catch (e) {
+    return memActive;
+  }
+}
+
+function markActive(force) {
+  const now = Date.now();
+  if (!force && now - lastWrite < 15000) return; // write at most every 15 s
+  lastWrite = now;
+  memActive = now;
+  try {
+    localStorage.setItem(ACTIVE_KEY, String(now));
+  } catch (e) {
+    /* storage blocked: this tab still times out on its own */
+  }
+}
+
+async function idleLogout() {
+  if (loggingOut) return;
+  loggingOut = true;
+  hideIdleWarning();
+  await logOut().catch(() => {});
+  const here = location.pathname.split("/").pop() || "index.html";
+  location.assign(
+    "auth.html?reason=idle" + (here === "auth.html" ? "" : "&next=" + encodeURIComponent(here)),
+  );
+}
+
+let warningEl = null;
+function showIdleWarning(secondsLeft) {
+  if (!warningEl) {
+    warningEl = document.createElement("div");
+    warningEl.className = "fixed inset-0 z-[70] flex items-center justify-center bg-black/70 px-4";
+    warningEl.setAttribute("role", "alertdialog");
+    warningEl.setAttribute("aria-modal", "true");
+    warningEl.setAttribute("aria-labelledby", "idle-title");
+    warningEl.innerHTML =
+      '<div class="w-full max-w-sm bg-card border border-rborder rounded-card p-6 shadow-2xl">' +
+      '<h2 id="idle-title" class="font-display text-[20px] font-semibold mb-2">Still there?</h2>' +
+      '<p class="text-[14px] text-stext leading-relaxed mb-6">For your security you will be logged out in <strong data-idle-count class="text-ptext"></strong> seconds because of inactivity.</p>' +
+      '<div class="flex flex-wrap gap-3">' +
+      '<button type="button" data-idle-stay class="bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">Stay logged in</button>' +
+      '<button type="button" data-idle-out class="border border-brder2 hover:bg-elevated text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">Log out now</button>' +
+      "</div></div>";
+    warningEl.querySelector("[data-idle-stay]").addEventListener("click", () => {
+      markActive(true);
+      hideIdleWarning();
+    });
+    warningEl.querySelector("[data-idle-out]").addEventListener("click", idleLogout);
+    document.body.appendChild(warningEl);
+    warningEl.querySelector("[data-idle-stay]").focus();
+  }
+  warningEl.querySelector("[data-idle-count]").textContent = String(secondsLeft);
+}
+
+function hideIdleWarning() {
+  if (warningEl) {
+    warningEl.remove();
+    warningEl = null;
+  }
+}
+
+function checkIdle() {
+  if (!state.user || signingUp || loggingOut) return hideIdleWarning();
+  const idle = Date.now() - lastActive();
+  if (idle >= IDLE_LIMIT_MS) idleLogout();
+  else if (idle >= IDLE_LIMIT_MS - IDLE_WARNING_MS) showIdleWarning(Math.ceil((IDLE_LIMIT_MS - idle) / 1000));
+  else hideIdleWarning(); // another tab saw activity
+}
+
+if (auth && typeof document !== "undefined") {
+  ["pointerdown", "keydown", "scroll", "touchstart", "mousemove"].forEach((type) =>
+    // While the warning is up, only "Stay logged in" counts as activity.
+    document.addEventListener(type, () => warningEl || markActive(false), { passive: true, capture: true }),
+  );
+  setInterval(checkIdle, 1000);
 }
 
 // ── Accounts ─────────────────────────────────────────────────────────────────
@@ -159,7 +260,7 @@ function requireConfigured() {
     );
 }
 
-export async function signUp(username, email, password) {
+export async function signUp(username, email, password, remember = true) {
   requireConfigured();
   if (!USERNAME_RE.test(username)) {
     throw new Error(
@@ -175,6 +276,8 @@ export async function signUp(username, email, password) {
   signingUp = true;
   let cred;
   try {
+    await setPersistence(auth, remember ? browserLocalPersistence : browserSessionPersistence);
+    markActive(true);
     cred = await createUserWithEmailAndPassword(auth, email, password);
   } catch (e) {
     signingUp = false;
@@ -354,8 +457,11 @@ export async function deleteAccount(currentPassword) {
   await user.delete();
 }
 
-export async function logIn(email, password) {
+// remember = false keeps the session only until the browser is closed (shared computers).
+export async function logIn(email, password, remember = true) {
   requireConfigured();
+  await setPersistence(auth, remember ? browserLocalPersistence : browserSessionPersistence);
+  markActive(true);
   return (await signInWithEmailAndPassword(auth, email, password)).user;
 }
 

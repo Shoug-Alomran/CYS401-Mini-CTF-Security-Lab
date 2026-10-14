@@ -94,6 +94,12 @@
             to enable sign-up, flag submission, and the scoreboard.
           </div>
 
+          <div id="idle-notice" class="hidden mb-6 bg-card border border-warn/40 rounded-card p-4 text-[14px] text-stext leading-relaxed" role="status">
+
+            <strong class="text-warn">You were logged out</strong> after 30 minutes without activity, to keep your account safe. Log in again to continue.
+
+          </div>
+
           <div
             id="signed-in"
             class="hidden bg-card border border-brder rounded-card p-6 sm:p-8 text-center"
@@ -227,6 +233,10 @@
                   class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none"
                 />
               </div>
+              <label class="flex items-start gap-3 text-[13px] text-stext leading-relaxed">
+                <input id="login-remember" type="checkbox" class="mt-0.5 accent-[#DC2626]" />
+                <span>Keep me logged in on this device<span class="block text-[12px] text-mtext">Leave unticked on shared or lab computers: you will be logged out when the browser closes, or after 30 minutes without activity.</span></span>
+              </label>
               <button
                 type="submit"
                 class="w-full bg-pred hover:bg-bred disabled:opacity-50 text-white text-[15px] font-semibold px-6 py-3 rounded-btn transition-colors"
@@ -303,6 +313,10 @@
                   class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none"
                 />
               </div>
+              <label class="flex items-start gap-3 text-[13px] text-stext leading-relaxed">
+                <input id="signup-remember" type="checkbox" class="mt-0.5 accent-[#DC2626]" />
+                <span>Keep me logged in on this device<span class="block text-[12px] text-mtext">Leave unticked on shared or lab computers: you will be logged out when the browser closes, or after 30 minutes without activity.</span></span>
+              </label>
               <button
                 type="submit"
                 class="w-full bg-pred hover:bg-bred disabled:opacity-50 text-white text-[15px] font-semibold px-6 py-3 rounded-btn transition-colors"
@@ -355,6 +369,10 @@
       const target = /^[a-z0-9-]+\.html(#[a-z0-9-]+)?$/.test(next)
         ? next
         : "dashboard.html";
+
+      if (new URLSearchParams(location.search).get("reason") === "idle") {
+        $("idle-notice").classList.remove("hidden");
+      }
 
       const ACTIVE = "bg-elevated text-ptext";
       const IDLE = "text-stext hover:text-ptext";
@@ -448,7 +466,7 @@
         if (!email || !password) return say("Enter your email and password.");
         busy(e.target, async () => {
           justLoggedIn = true;
-          await logIn(email, password);
+          await logIn(email, password, $("login-remember").checked);
         });
       });
 
@@ -462,7 +480,7 @@
         if (password !== $("signup-confirm").value)
           return say("The passwords do not match.");
         busy(e.target, async () => {
-          await signUp(username, email, password);
+          await signUp(username, email, password, $("signup-remember").checked);
           location.assign(target);
         });
       });
