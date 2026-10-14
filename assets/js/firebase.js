@@ -259,7 +259,14 @@ async function reauthenticate(currentPassword) {
   const user = state.user;
   if (!user) throw new Error('Log in first.');
   if (!currentPassword) throw new Error(AUTH_ERRORS['auth/missing-password']);
-  await reauthenticateWithCredential(user, EmailAuthProvider.credential(user.email, currentPassword));
+  try {
+    await reauthenticateWithCredential(user, EmailAuthProvider.credential(user.email, currentPassword));
+  } catch (e) {
+    if (e.code === 'auth/invalid-credential' || e.code === 'auth/wrong-password') {
+      throw new Error('Your current password is incorrect.');
+    }
+    throw e;
+  }
   return user;
 }
 
