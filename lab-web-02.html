@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guest Access | CYS401 CTF Lab</title>
+    <meta name="description" content="WEB-02 practice lab for the CYS401 CTF Lab: A simulated dashboard decides what you may see from a value it stored in your own browser." />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <meta name="theme-color" content="#09090B" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body class="bg-main text-ptext font-sans antialiased selection:bg-pred selection:text-white">
+    <header class="border-b border-brder">
+      <div class="max-w-5xl mx-auto px-6 h-[64px] flex items-center justify-between gap-6">
+        <a href="web-security-challenges.html#WEB-02" class="flex items-center gap-2 text-[13px] text-stext hover:text-ptext transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+          Back to WEB-02
+        </a>
+        <span class="flex items-center gap-2 text-[12px] font-mono text-mtext"><span class="w-1.5 h-1.5 rounded-full bg-pred"></span>SIMULATED LAB</span>
+      </div>
+    </header>
+    <main class="max-w-5xl mx-auto px-6 py-12">
+      <p class="text-[12px] font-medium text-pred uppercase tracking-[0.2em] mb-3">WEB-02 &middot; Web Security</p>
+      <h1 class="font-display text-[30px] sm:text-[38px] font-semibold leading-tight mb-4">Guest Access</h1>
+      <p class="text-[15px] text-stext leading-relaxed max-w-2xl mb-10">A simulated dashboard decides what you may see from a value it stored in your own browser.</p>
+      <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_320px] gap-6 items-start">
+        <section class="bg-card border border-brder rounded-card p-6 sm:p-8">
+                <div class="flex items-center justify-between gap-3 mb-6">
+                  <div class="flex items-center gap-3">
+                    <span class="w-9 h-9 rounded-lg bg-elevated border border-brder flex items-center justify-center text-stext text-[15px] font-semibold">D</span>
+                    <div><p class="text-[14px] font-semibold">Portal Dashboard</p><p class="text-[12px] text-mtext">signed in as <span id="who-label" class="text-stext">guest</span></p></div>
+                  </div>
+                  <span id="role-pill" class="text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border border-brder2 text-mtext">role: guest</span>
+                </div>
+                <div class="rounded-xl border border-brder bg-main p-5 mb-5">
+                  <p class="text-[13px] font-semibold mb-2">Your stuff</p>
+                  <p class="text-[13px] text-stext leading-relaxed">Welcome back. Guests can see this page, but the admin panel below is locked.</p>
+                </div>
+                <div id="admin-panel" class="rounded-xl border border-brder bg-main p-5">
+                  <p class="text-[13px] font-semibold mb-2 flex items-center gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Admin panel</p>
+                  <p id="admin-locked" class="text-[13px] text-stext leading-relaxed">Locked. This area is for administrators only. The app decides what you may see from a value it stored in your browser when you signed in.</p>
+                  <div id="admin-unlocked" class="hidden"><p class="text-[13px] text-success leading-relaxed">Admin access granted. The team flag is below.</p></div>
+                </div>
+                <div class="mt-5 flex flex-wrap gap-2">
+                  <button type="button" id="refresh" class="bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">Reload dashboard</button>
+                  <button type="button" id="reset-role" class="border border-brder2 hover:bg-elevated text-[13px] font-semibold px-4 py-2 rounded-btn transition-colors">Sign out (reset)</button>
+                </div>
+                <div id="solved" class="hidden mt-6 bg-success/10 border border-success/40 rounded-card p-5">
+                  <p class="text-[11px] font-semibold uppercase tracking-wider text-success mb-2">Solved</p>
+                  <p class="text-[14px] text-stext leading-relaxed mb-3" id="solved-note"></p>
+                  <div class="bg-main border border-brder rounded-xl p-3 mb-3">
+                    <p class="text-[10px] font-semibold uppercase tracking-wider text-mtext mb-1">Your flag</p>
+                    <p class="font-mono text-[15px] text-ptext break-all" id="flag-value"></p>
+                  </div>
+                  <div class="flex flex-wrap gap-2">
+                    <button type="button" id="copy-flag" class="border border-brder2 hover:bg-elevated text-[13px] font-semibold px-4 py-2 rounded-btn transition-colors">Copy flag</button>
+                    <a id="submit-link" href="web-security-challenges.html" class="bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors inline-flex items-center">Submit it on the challenge page &rarr;</a>
+                  </div>
+                  <div class="explanation mt-5 pt-4 border-t border-success/20">
+                    <p class="text-[13px] font-semibold text-ptext mb-1">What this taught you</p>
+                    <p class="text-[13px] text-stext leading-relaxed" id="lesson"></p>
+                  </div>
+                </div></section>
+        <aside class="space-y-5">
+          <div class="bg-card border border-brder rounded-card p-6">
+            <p class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-3">How to solve</p>
+            <ol class="space-y-2.5 text-[13px] text-stext leading-relaxed list-decimal pl-4"><li>Open DevTools (F12) &rarr; <span class="text-ptext">Application</span> (Chrome) or <span class="text-ptext">Storage</span> (Firefox) &rarr; Local Storage for this page.</li><li>Find the key <span class="font-mono text-ptext">cys401-lab-web02-role</span> with value <span class="font-mono text-ptext">guest</span>.</li><li>Change its value to <span class="font-mono text-ptext">admin</span>, then click <span class="text-ptext">Reload dashboard</span>.</li><li>The admin panel opens and reveals the flag.</li></ol>
+          </div>
+          <div class="bg-card border border-brder rounded-card p-6">
+            <p class="text-[11px] font-semibold uppercase tracking-wider text-mtext mb-2">Lab details</p>
+            <dl class="text-[13px] divide-y divide-brder"><div class="flex justify-between gap-4 py-2.5"><dt class="text-mtext">Category</dt><dd class="text-ptext text-right font-medium">Web Security</dd></div><div class="flex justify-between gap-4 py-2.5"><dt class="text-mtext">Flaw</dt><dd class="text-ptext text-right font-medium">Broken access control</dd></div><div class="flex justify-between gap-4 py-2.5"><dt class="text-mtext">Difficulty</dt><dd class="text-ptext text-right font-medium">Easy</dd></div><div class="flex justify-between gap-4 py-2.5"><dt class="text-mtext">Tool</dt><dd class="text-ptext text-right font-medium">Storage inspector</dd></div></dl>
+          </div>
+          <div class="bg-sred/30 border border-rborder rounded-card p-5">
+            <p class="text-[13px] text-stext leading-relaxed">This is a self-contained simulation for learning. The &ldquo;server&rdquo;, &ldquo;database&rdquo;, and &ldquo;query&rdquo; are all mocked in this page&rsquo;s JavaScript. Nothing here connects to a real system.</p>
+          </div>
+        </aside>
+      </div>
+    </main>
+    <footer class="border-t border-brder mt-16">
+      <div class="max-w-5xl mx-auto px-6 py-8 text-[12px] text-mtext">CYS401 CTF Lab &middot; WEB-02 practice environment. Learn by exploring, then submit the flag on the challenge page.</div>
+    </footer>
+    <script>
+  // The app trusts a "role" it stored in the browser when you signed in (here, localStorage
+  // stands in for a cookie). Change it to admin and reload to reach the admin panel.
+  const KEY = "cys401-lab-web02-role";
+  function currentRole() {
+    try { return localStorage.getItem(KEY) || "guest"; } catch (e) { return "guest"; }
+  }
+  function signInAsGuest() {
+    try { if (!localStorage.getItem(KEY)) localStorage.setItem(KEY, "guest"); } catch (e) {}
+  }
+  function render() {
+    const role = currentRole();
+    document.getElementById("who-label").textContent = role;
+    const pill = document.getElementById("role-pill");
+    pill.textContent = "role: " + role;
+    const admin = role.toLowerCase() === "admin";
+    pill.className = "text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border " + (admin ? "border-success/40 bg-success/10 text-success" : "border-brder2 text-mtext");
+    document.getElementById("admin-locked").classList.toggle("hidden", admin);
+    document.getElementById("admin-unlocked").classList.toggle("hidden", !admin);
+    if (admin) solve();
+  }
+  signInAsGuest();
+  document.getElementById("refresh").addEventListener("click", render);
+  document.getElementById("reset-role").addEventListener("click", function () {
+    try { localStorage.setItem(KEY, "guest"); } catch (e) {}
+    document.getElementById("solved").classList.add("hidden");
+    render();
+  });
+  render();
+  const FLAG = "CYS401{c00k13s_d0nt_pr0v3_wh0_y0u_4r3}";
+  function solve() {
+    const box = document.getElementById("solved");
+    document.getElementById("flag-value").textContent = FLAG;
+    document.getElementById("solved-note").textContent = "You changed the role the app stored in your browser from guest to admin, and the admin panel opened.";
+    document.getElementById("lesson").textContent = "Authorization decided from client-side values is no authorization at all, because the client controls them. Roles and permissions must be checked on the server against the session.";
+    document.getElementById("submit-link").href = "web-security-challenges.html#WEB-02";
+    box.classList.remove("hidden");
+    box.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+  document.getElementById("copy-flag").addEventListener("click", function () {
+    navigator.clipboard.writeText(FLAG).then(() => {
+      this.textContent = "Copied";
+      setTimeout(() => (this.textContent = "Copy flag"), 1200);
+    }).catch(() => {});
+  });</script>
+  </body>
+</html>

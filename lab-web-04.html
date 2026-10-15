@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leaky Endpoint | CYS401 CTF Lab</title>
+    <meta name="description" content="WEB-04 practice lab for the CYS401 CTF Lab: A simulated profile viewer loads any account number it is given, without checking whose it is." />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <meta name="theme-color" content="#09090B" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body class="bg-main text-ptext font-sans antialiased selection:bg-pred selection:text-white">
+    <header class="border-b border-brder">
+      <div class="max-w-5xl mx-auto px-6 h-[64px] flex items-center justify-between gap-6">
+        <a href="web-security-challenges.html#WEB-04" class="flex items-center gap-2 text-[13px] text-stext hover:text-ptext transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+          Back to WEB-04
+        </a>
+        <span class="flex items-center gap-2 text-[12px] font-mono text-mtext"><span class="w-1.5 h-1.5 rounded-full bg-pred"></span>SIMULATED LAB</span>
+      </div>
+    </header>
+    <main class="max-w-5xl mx-auto px-6 py-12">
+      <p class="text-[12px] font-medium text-pred uppercase tracking-[0.2em] mb-3">WEB-04 &middot; Web Security</p>
+      <h1 class="font-display text-[30px] sm:text-[38px] font-semibold leading-tight mb-4">Leaky Endpoint</h1>
+      <p class="text-[15px] text-stext leading-relaxed max-w-2xl mb-10">A simulated profile viewer loads any account number it is given, without checking whose it is.</p>
+      <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_320px] gap-6 items-start">
+        <section class="bg-card border border-brder rounded-card p-6 sm:p-8">
+                <div class="flex items-center gap-3 mb-6">
+                  <span class="w-9 h-9 rounded-lg bg-elevated border border-brder flex items-center justify-center text-stext text-[15px] font-semibold">P</span>
+                  <div><p class="text-[14px] font-semibold">Profile Viewer</p><p class="text-[12px] text-mtext">loads a record by its account number</p></div>
+                </div>
+                <p class="text-[13px] text-stext leading-relaxed mb-6">The portal loads your profile from an API call that names your account number. <strong class="text-ptext">You are account 1001.</strong> Another user&rsquo;s record holds the flag.</p>
+                <div class="rounded-xl border border-brder bg-main p-3 mb-4 flex items-center gap-2 font-mono text-[13px]">
+                  <span class="text-mtext shrink-0">GET /api/profile?id=</span>
+                  <input id="idField" type="text" inputmode="numeric" autocomplete="off" value="1001" class="w-24 bg-elevated border border-brder2 rounded px-2 py-1.5 text-ptext focus:border-pred focus:outline-none" />
+                  <button type="button" id="load" class="bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors ml-auto shrink-0 !py-1.5 !px-3 !text-[13px]">Load</button>
+                </div>
+                <div id="result" class="rounded-xl border border-brder bg-main p-5 text-[13px]"></div>
+                <div id="solved" class="hidden mt-6 bg-success/10 border border-success/40 rounded-card p-5">
+                  <p class="text-[11px] font-semibold uppercase tracking-wider text-success mb-2">Solved</p>
+                  <p class="text-[14px] text-stext leading-relaxed mb-3" id="solved-note"></p>
+                  <div class="bg-main border border-brder rounded-xl p-3 mb-3">
+                    <p class="text-[10px] font-semibold uppercase tracking-wider text-mtext mb-1">Your flag</p>
+                    <p class="font-mono text-[15px] text-ptext break-all" id="flag-value"></p>
+                  </div>
+                  <div class="flex flex-wrap gap-2">
+                    <button type="button" id="copy-flag" class="border border-brder2 hover:bg-elevated text-[13px] font-semibold px-4 py-2 rounded-btn transition-colors">Copy flag</button>
+                    <a id="submit-link" href="web-security-challenges.html" class="bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors inline-flex items-center">Submit it on the challenge page &rarr;</a>
+                  </div>
+                  <div class="explanation mt-5 pt-4 border-t border-success/20">
+                    <p class="text-[13px] font-semibold text-ptext mb-1">What this taught you</p>
+                    <p class="text-[13px] text-stext leading-relaxed" id="lesson"></p>
+                  </div>
+                </div></section>
+        <aside class="space-y-5">
+          <div class="bg-card border border-brder rounded-card p-6">
+            <p class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-3">How to solve</p>
+            <ol class="space-y-2.5 text-[13px] text-stext leading-relaxed list-decimal pl-4"><li>The page loaded <span class="font-mono text-ptext">?id=1001</span>, your own account.</li><li>Change the number in the id box to a different account and press <span class="text-ptext">Load</span>.</li><li>Try nearby numbers &mdash; one account is an administrator.</li><li>That record&rsquo;s note holds the flag. Copy it and submit it on WEB-04.</li></ol>
+          </div>
+          <div class="bg-card border border-brder rounded-card p-6">
+            <p class="text-[11px] font-semibold uppercase tracking-wider text-mtext mb-2">Lab details</p>
+            <dl class="text-[13px] divide-y divide-brder"><div class="flex justify-between gap-4 py-2.5"><dt class="text-mtext">Category</dt><dd class="text-ptext text-right font-medium">Web Security</dd></div><div class="flex justify-between gap-4 py-2.5"><dt class="text-mtext">Flaw</dt><dd class="text-ptext text-right font-medium">IDOR</dd></div><div class="flex justify-between gap-4 py-2.5"><dt class="text-mtext">Difficulty</dt><dd class="text-ptext text-right font-medium">Hard</dd></div><div class="flex justify-between gap-4 py-2.5"><dt class="text-mtext">Fix</dt><dd class="text-ptext text-right font-medium">Ownership checks</dd></div></dl>
+          </div>
+          <div class="bg-sred/30 border border-rborder rounded-card p-5">
+            <p class="text-[13px] text-stext leading-relaxed">This is a self-contained simulation for learning. The &ldquo;server&rdquo;, &ldquo;database&rdquo;, and &ldquo;query&rdquo; are all mocked in this page&rsquo;s JavaScript. Nothing here connects to a real system.</p>
+          </div>
+        </aside>
+      </div>
+    </main>
+    <footer class="border-t border-brder mt-16">
+      <div class="max-w-5xl mx-auto px-6 py-8 text-[12px] text-mtext">CYS401 CTF Lab &middot; WEB-04 practice environment. Learn by exploring, then submit the flag on the challenge page.</div>
+    </footer>
+    <script>
+  // SIMULATION ONLY. getProfile() stands in for a server API that returns whatever id it
+  // is asked for, without checking that this user owns that record (an IDOR). You are 1001.
+  const DB = {
+    1000: { name: "Lab Administrator", role: "admin", note: "FLAG" },
+    1001: { name: "You (Sara)", role: "staff", note: "Your own profile. Nothing secret here." },
+    1002: { name: "Omar H.", role: "staff", note: "Finance team." },
+    1003: { name: "Reem A.", role: "staff", note: "Library services." }
+  };
+  const YOURS = 1001;
+  const field = document.getElementById("idField");
+  const result = document.getElementById("result");
+  function esc(s) { return String(s).replace(/</g, "&lt;"); }
+  function getProfile(id) { return DB[id] || null; }   // no ownership check: the bug
+  function load() {
+    const id = parseInt(field.value, 10);
+    const p = getProfile(id);
+    if (!p) {
+      result.innerHTML = '<p class="text-pred">404 \u2014 no account with id ' + esc(field.value) + '.</p>';
+      return;
+    }
+    const isYou = id === YOURS;
+    let noteHtml;
+    if (p.note === "FLAG") { noteHtml = '<span class="text-success">' + FLAG + '</span>'; }
+    else { noteHtml = esc(p.note); }
+    result.innerHTML =
+      '<div class="space-y-1.5 font-mono">' +
+      '<div><span class="text-mtext">id:</span> ' + id + (isYou ? ' <span class="text-[11px] not-italic text-mtext">(you)</span>' : '') + '</div>' +
+      '<div><span class="text-mtext">name:</span> ' + esc(p.name) + '</div>' +
+      '<div><span class="text-mtext">role:</span> ' + esc(p.role) + '</div>' +
+      '<div><span class="text-mtext">note:</span> ' + noteHtml + '</div>' +
+      '</div>';
+    if (p.note === "FLAG") solve();
+  }
+  document.getElementById("load").addEventListener("click", load);
+  field.addEventListener("keydown", function (e) { if (e.key === "Enter") load(); });
+  load();
+  const FLAG = "CYS401{ch3ck_0wn3rsh1p_3v3ry_t1m3}";
+  function solve() {
+    const box = document.getElementById("solved");
+    document.getElementById("flag-value").textContent = FLAG;
+    document.getElementById("solved-note").textContent = "You requested an account number that is not yours, and the server handed over the admin record containing the flag.";
+    document.getElementById("lesson").textContent = "This is an insecure direct object reference: the server trusts the id the client sends without checking that this user may read that record. Every request needs an ownership check, not just a valid session.";
+    document.getElementById("submit-link").href = "web-security-challenges.html#WEB-04";
+    box.classList.remove("hidden");
+    box.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+  document.getElementById("copy-flag").addEventListener("click", function () {
+    navigator.clipboard.writeText(FLAG).then(() => {
+      this.textContent = "Copied";
+      setTimeout(() => (this.textContent = "Copy flag"), 1200);
+    }).catch(() => {});
+  });</script>
+  </body>
+</html>

@@ -14,7 +14,11 @@ A player has to be able to get the flag from what the lab shows. For each challe
 
 Never put a plain flag or an answer in page source or in an HTML comment. Players can read both.
 
-## Lab types (all handled by `assets/js/labs.js`)
+## Web labs
+
+WEB-01 to WEB-04 are standalone pages (`lab-web-0N.html`) that *simulate* one vulnerability each entirely in client-side JavaScript — there is no real server, database, or query. The player solves the simulation, the page reveals a `CYS401{...}` flag, and they submit it in the WEB-0N card's flag box, which the server validates as usual. To change a web flag, edit the `FLAG` constant generated into the lab page (search the page for `const FLAG =`), update `flags.private.txt`, and re-load it on the Admin page.
+
+## Lab types (crypto / awareness / ethics, handled by `assets/js/labs.js`)
 
 ### Material: the thing to analyse
 
@@ -70,8 +74,10 @@ Paste the lock output into `data-lock='...'`. Keep the single quotes around it.
 
 | Card | Lab | Status |
 | --- | --- | --- |
-| WEB-01 | Areej's "Secret Cyber Clubhouse" (to be integrated) | Draft panel |
-| WEB-02 to WEB-04 | Lab pages not built yet | Draft panel |
+| WEB-01 | Simulated staff portal: secret in an HTML comment (`lab-web-01.html`) | Done |
+| WEB-02 | Simulated dashboard: role trusted from browser storage (`lab-web-02.html`) | Done |
+| WEB-03 | Simulated login: SQL-injection tautology (`lab-web-03.html`) | Done |
+| WEB-04 | Simulated profile viewer: IDOR by account id (`lab-web-04.html`) | Done |
 | CRY-01 | Config file with a Base64 "encrypted" password and a Base64 tool | Done |
 | CRY-02 | Caesar-shifted note and a Caesar tool | Done |
 | CRY-03 | Two ciphertexts XORed with a reused 4-byte key, with XOR/hex tools | Done |
