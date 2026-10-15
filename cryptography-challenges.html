@@ -219,20 +219,23 @@
                 class="challenge-lab mb-5 space-y-4 bg-sec border border-brder rounded-xl p-4"
               >
                 <p
-                  class="text-[11px] font-semibold uppercase tracking-wider text-warn"
+                  class="text-[11px] font-semibold uppercase tracking-wider text-mtext"
                 >
-                  Draft lab &middot; placeholder content
+                  Lab
                 </p>
-                <!-- TODO(Member 3): replace with the Base64 of the real CRY-01 flag (lab-builder.html → Encode). -->
-                <div
-                  data-lab-material
-                  data-label="config.ini &middot; api_secret"
-                >
+                <div data-lab-material data-label="portal/config.ini">
                   <pre
                     class="text-[12px] font-mono text-ptext whitespace-pre-wrap break-all bg-main border border-brder rounded-lg p-3"
                   >
-Q1lTNDAxe3JlcGxhY2VfbWV9</pre>
+[database]
+host     = db.internal.campus.local
+user     = svc_portal
+; password stored &quot;encrypted&quot; so nobody can read it
+password = Q1lTNDAxe2I0c2U2NF9oMWRlc19uMHRoMW5nfQ==</pre>
                 </div>
+                <p class="text-[13px] text-stext leading-relaxed">
+                  Recover the value the developer thought was encrypted.
+                </p>
                 <div data-lab-tools="base64"></div>
               </div>
 
@@ -339,17 +342,20 @@ Q1lTNDAxe3JlcGxhY2VfbWV9</pre>
                 class="challenge-lab mb-5 space-y-4 bg-sec border border-brder rounded-xl p-4"
               >
                 <p
-                  class="text-[11px] font-semibold uppercase tracking-wider text-warn"
+                  class="text-[11px] font-semibold uppercase tracking-wider text-mtext"
                 >
-                  Draft lab &middot; placeholder content
+                  Lab
                 </p>
-                <!-- TODO(Member 3): replace with your message containing the real flag, Caesar-shifted (lab-builder.html → Encode). -->
                 <div data-lab-material data-label="Intercepted note">
                   <pre
                     class="text-[12px] font-mono text-ptext whitespace-pre-wrap break-all bg-main border border-brder rounded-lg p-3"
                   >
-Gur synt vf PLF401{ercynpr_zr}</pre>
+Tlla tl hmaly aol shi. Aol mshn pz JFZ401{zo1ma_jpwolyz_mhss_mhza}. Ibyu aopz uval.</pre>
                 </div>
+                <p class="text-[13px] text-stext leading-relaxed">
+                  Each letter has been shifted by the same amount. Digits and
+                  punctuation were left alone.
+                </p>
                 <div data-lab-tools="caesar"></div>
               </div>
 
@@ -454,27 +460,28 @@ Gur synt vf PLF401{ercynpr_zr}</pre>
                 class="challenge-lab mb-5 space-y-4 bg-sec border border-brder rounded-xl p-4"
               >
                 <p
-                  class="text-[11px] font-semibold uppercase tracking-wider text-warn"
+                  class="text-[11px] font-semibold uppercase tracking-wider text-mtext"
                 >
-                  Draft lab &middot; placeholder content
+                  Lab
                 </p>
-                <!-- TODO(Member 3): replace both ciphertexts: two messages XORed with the same short key; message 2 contains the flag. -->
                 <div data-lab-material data-label="Ciphertext 1 (hex)">
                   <pre
                     class="text-[12px] font-mono text-ptext whitespace-pre-wrap break-all bg-main border border-brder rounded-lg p-3"
                   >
-26561c554b520d011f5b1c01055c0b5503131e401f5659401f13174805565701</pre>
+015107556c551601385c0701225b1055241405403851424038140c4822514255235a0b4624404c</pre>
                 </div>
-                <!-- TODO(Member 3): see above. -->
                 <div data-lab-material data-label="Ciphertext 2 (hex)">
                   <pre
                     class="text-[12px] font-mono text-ptext whitespace-pre-wrap break-all bg-main border border-brder rounded-lg p-3"
                   >
-286a2a155b0202530e4315400856264c0e4e590c461312440e435955035a0a011a4610441f</pre>
+1e510f48225007536c520d536c400a446c400740210e4262156756117d4f0d4f296b164821513d4c29550c52135b0c422949420c6114094429444248381413542551160f</pre>
                 </div>
-                <p class="text-[13px] text-stext">
-                  Known: message 1 begins with
-                  <span class="font-mono text-ptext">Meet at the</span>.
+                <p class="text-[13px] text-stext leading-relaxed">
+                  Both messages were XOR-encrypted with the same repeating key,
+                  which is only
+                  <strong class="text-ptext">4 bytes</strong> long. You know
+                  message 1 begins with
+                  <span class="font-mono text-ptext">Meet</span>.
                 </p>
                 <div data-lab-tools="xor,hex"></div>
               </div>

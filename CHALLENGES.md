@@ -66,21 +66,22 @@ node --input-type=module -e "import {codec} from './assets/js/labs.js'; console.
 
 Paste the lock output into `data-lock='...'`. Keep the single quotes around it.
 
-## Current placeholders
+## Status
 
-All placeholder locks open to `CYS401{replace_me}`, which is not a real flag. Their placeholder answers are:
+| Card | Lab | Status |
+| --- | --- | --- |
+| WEB-01 | Areej's "Secret Cyber Clubhouse" (to be integrated) | Draft panel |
+| WEB-02 to WEB-04 | Lab pages not built yet | Draft panel |
+| CRY-01 | Config file with a Base64 "encrypted" password and a Base64 tool | Done |
+| CRY-02 | Caesar-shifted note and a Caesar tool | Done |
+| CRY-03 | Two ciphertexts XORed with a reused 4-byte key, with XOR/hex tools | Done |
+| AWR-01 | Phishing email and a select-all quiz (4 correct) | Done |
+| AWR-02 | Audited password list and a single-choice quiz | Done |
+| AWR-03 | Vishing call transcript and a select-all quiz (4 correct) | Done |
+| ETH-01 | Engagement letter and a select-all quiz on six actions (3 permitted) | Done |
+| ETH-02 | Responsible-disclosure scenario and a single-choice quiz | Done |
 
-| Card             | Lab                                                      | Placeholder answer                   |
-| ---------------- | -------------------------------------------------------- | ------------------------------------ |
-| WEB-01 to WEB-04 | "Lab coming soon": lab pages not built yet               | n/a                                  |
-| CRY-01           | Base64 material and Base64 tool                          | decodes to the placeholder flag      |
-| CRY-02           | Caesar (ROT13) material and Caesar tool                  | decodes to the placeholder flag      |
-| CRY-03           | Two XOR ciphertexts (key `k3y!`) and XOR/hex tools       | message 2 holds the placeholder flag |
-| AWR-01           | Email and multi-select quiz                              | a, c, d, f                           |
-| AWR-02           | Password list and single-choice quiz                     | c                                    |
-| AWR-03           | Transcript (to be written) and multi-select quiz         | a, b, d                              |
-| ETH-01           | Engagement letter (to be finished) and multi-select quiz | a, c, e                              |
-| ETH-02           | Single-choice quiz                                       | b                                    |
+The real flags are in `flags.private.txt` and the correct quiz answers are in `answers.private.txt`. Both files are git-ignored: share them with the team privately, never in the repo. After changing any flag, paste the `flags.private.txt` lines on the Admin page and press **Save to Firestore**.
 
 ## Limits to mention in the report
 

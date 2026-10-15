@@ -218,61 +218,39 @@
                 class="challenge-lab mb-5 space-y-4 bg-sec border border-brder rounded-xl p-4"
               >
                 <p
-                  class="text-[11px] font-semibold uppercase tracking-wider text-warn"
+                  class="text-[11px] font-semibold uppercase tracking-wider text-mtext"
                 >
-                  Draft lab &middot; placeholder content
+                  Lab
                 </p>
-                <!-- TODO(Member 3): write the engagement letter. -->
-                <div
-                  data-lab-material
-                  data-label="Engagement letter (scope clause)"
-                >
+                <div data-lab-material data-label="Engagement letter (extract)">
                   <pre
                     class="text-[12px] font-mono text-ptext whitespace-pre-wrap break-all bg-main border border-brder rounded-lg p-3"
                   >
-Scope: the tester may assess www.example-university.edu and portal.example-university.edu between 22:00 and 06:00 on 1–3 November.
-[TODO: Member 3 writes the full letter]</pre>
+AUTHORIZATION FOR SECURITY TESTING
+
+Client:   Example University, IT Department
+Tester:   CYS401 Security Team
+
+Scope (in):   www.example-university.edu
+              portal.example-university.edu
+Scope (out):  all other hosts, including mail.example-university.edu
+              and any service hosted by third parties
+Methods:      web application testing only; no social engineering,
+              no denial-of-service, no physical access
+Window:       22:00-06:00, 1-3 November
+Contact:      security@example-university.edu (findings go here only)</pre>
                 </div>
-                <!-- TODO(Member 3): write the six actions. See CHALLENGES.md for the placeholder answers. Make a new lock in lab-builder.html and paste it into data-lock. -->
                 <form
                   data-lab-quiz
                   data-mode="multi"
-                  data-lock='{"s":"6PkYCfFgjUNbudCSjKgjkw==","iv":"YI+Cb3KzAJdfv/9u","c":"CMjUaTZ5wvO2EnsbPZDQncbm5ziGaHpCqrhnySsqgQE8aw=="}'
+                  data-lock='{"s":"S/cv5c/qLO43o27Ma27onw==","iv":"ISM1C29QFGebr2IM","c":"dfy/3C5zt9Qd3Ilct7uvwaIyfvHmAKUQM3xeIFSzNuhpzQBmxVar8ZMGHEgi"}'
                   class="space-y-3"
                 >
                   <p class="text-[13px] font-semibold text-ptext">
-                    Which actions does the letter permit? Select all that apply.
+                    The tester took these six actions. Which ones does the
+                    letter permit? Select all that apply.
                   </p>
                   <div class="space-y-2">
-                    <label
-                      class="flex items-start gap-3 text-[13px] text-stext leading-relaxed"
-                      ><input
-                        type="checkbox"
-                        name="ETH-01-q"
-                        value="a"
-                        class="mt-1 accent-[#DC2626]"
-                      /><span>Scanning www at 23:00 on 1 November</span></label
-                    >
-                    <label
-                      class="flex items-start gap-3 text-[13px] text-stext leading-relaxed"
-                      ><input
-                        type="checkbox"
-                        name="ETH-01-q"
-                        value="b"
-                        class="mt-1 accent-[#DC2626]"
-                      /><span>Scanning mail.example-university.edu</span></label
-                    >
-                    <label
-                      class="flex items-start gap-3 text-[13px] text-stext leading-relaxed"
-                      ><input
-                        type="checkbox"
-                        name="ETH-01-q"
-                        value="c"
-                        class="mt-1 accent-[#DC2626]"
-                      /><span
-                        >Testing the portal login at 02:00 on 2 November</span
-                      ></label
-                    >
                     <label
                       class="flex items-start gap-3 text-[13px] text-stext leading-relaxed"
                       ><input
@@ -281,7 +259,8 @@ Scope: the tester may assess www.example-university.edu and portal.example-unive
                         value="d"
                         class="mt-1 accent-[#DC2626]"
                       /><span
-                        >Scanning portal at 14:00 on 2 November</span
+                        >Testing the portal login form at 01:30 on 2
+                        November</span
                       ></label
                     >
                     <label
@@ -289,10 +268,11 @@ Scope: the tester may assess www.example-university.edu and portal.example-unive
                       ><input
                         type="checkbox"
                         name="ETH-01-q"
-                        value="e"
+                        value="g2"
                         class="mt-1 accent-[#DC2626]"
                       /><span
-                        >Reporting findings to the named contact only</span
+                        >Scanning mail.example-university.edu because it shares
+                        the same network</span
                       ></label
                     >
                     <label
@@ -300,10 +280,47 @@ Scope: the tester may assess www.example-university.edu and portal.example-unive
                       ><input
                         type="checkbox"
                         name="ETH-01-q"
-                        value="f"
+                        value="j"
                         class="mt-1 accent-[#DC2626]"
                       /><span
-                        >Testing a subdomain hosted by a third party</span
+                        >Testing www.example-university.edu at 23:00 on 1
+                        November</span
+                      ></label
+                    >
+                    <label
+                      class="flex items-start gap-3 text-[13px] text-stext leading-relaxed"
+                      ><input
+                        type="checkbox"
+                        name="ETH-01-q"
+                        value="k2"
+                        class="mt-1 accent-[#DC2626]"
+                      /><span
+                        >Calling the help desk to see if they would reset a
+                        password</span
+                      ></label
+                    >
+                    <label
+                      class="flex items-start gap-3 text-[13px] text-stext leading-relaxed"
+                      ><input
+                        type="checkbox"
+                        name="ETH-01-q"
+                        value="p"
+                        class="mt-1 accent-[#DC2626]"
+                      /><span
+                        >Emailing the findings to
+                        security@example-university.edu</span
+                      ></label
+                    >
+                    <label
+                      class="flex items-start gap-3 text-[13px] text-stext leading-relaxed"
+                      ><input
+                        type="checkbox"
+                        name="ETH-01-q"
+                        value="u"
+                        class="mt-1 accent-[#DC2626]"
+                      /><span
+                        >Testing www at 14:00 on 2 November because the night
+                        run was slow</span
                       ></label
                     >
                   </div>
@@ -420,19 +437,24 @@ Scope: the tester may assess www.example-university.edu and portal.example-unive
                 class="challenge-lab mb-5 space-y-4 bg-sec border border-brder rounded-xl p-4"
               >
                 <p
-                  class="text-[11px] font-semibold uppercase tracking-wider text-warn"
+                  class="text-[11px] font-semibold uppercase tracking-wider text-mtext"
                 >
-                  Draft lab &middot; placeholder content
+                  Lab
                 </p>
-                <!-- TODO(Member 3): write the scenario and choices. See CHALLENGES.md for the placeholder answers. Make a new lock in lab-builder.html and paste it into data-lock. -->
+                <p class="text-[13px] text-stext leading-relaxed">
+                  While solving another challenge, you notice that a live
+                  university web service shows other students&rsquo; names, ID
+                  numbers, and grades when you change a number in the address
+                  bar. You have not been asked to test this service.
+                </p>
                 <form
                   data-lab-quiz
                   data-mode="single"
-                  data-lock='{"s":"KrW+ibf5H5dnDVYWoU1IQw==","iv":"oDe1y7kau8UiamUF","c":"Wg0gxyKA8KzTBR3IepiyjQAn3eKBiwG4MeAluNgzuJZjhQ=="}'
+                  data-lock='{"s":"0QvbmJZTcuvc2phlwJG3mg==","iv":"gq4gXSW1ZkQ3PvMn","c":"y/poNlXLRYA90L19aoyWjt1Bz/NhHHQEW/dfyNcPUpo/ZaanzTZlmKBTTw=="}'
                   class="space-y-3"
                 >
                   <p class="text-[13px] font-semibold text-ptext">
-                    Which sequence is the responsible one?
+                    What is the responsible course of action?
                   </p>
                   <div class="space-y-2">
                     <label
@@ -440,11 +462,11 @@ Scope: the tester may assess www.example-university.edu and portal.example-unive
                       ><input
                         type="radio"
                         name="ETH-02-q"
-                        value="a"
+                        value="h2"
                         class="mt-1 accent-[#DC2626]"
                       /><span
-                        >Download the records as proof, then report the
-                        flaw</span
+                        >Download a few records as proof, then report the flaw
+                        so they believe you</span
                       ></label
                     >
                     <label
@@ -452,12 +474,12 @@ Scope: the tester may assess www.example-university.edu and portal.example-unive
                       ><input
                         type="radio"
                         name="ETH-02-q"
-                        value="b"
+                        value="v"
                         class="mt-1 accent-[#DC2626]"
                       /><span
-                        >Stop, write down only what you saw, report it privately
-                        to the service owner, and keep it confidential until
-                        fixed</span
+                        >Stop immediately, note what you saw without collecting
+                        any data, and report it privately to the
+                        university&rsquo;s IT security contact</span
                       ></label
                     >
                     <label
@@ -465,10 +487,11 @@ Scope: the tester may assess www.example-university.edu and portal.example-unive
                       ><input
                         type="radio"
                         name="ETH-02-q"
-                        value="c"
+                        value="m2"
                         class="mt-1 accent-[#DC2626]"
                       /><span
-                        >Post about it publicly so it gets fixed faster</span
+                        >Post about it in the class group so the university
+                        fixes it faster</span
                       ></label
                     >
                     <label
@@ -476,10 +499,11 @@ Scope: the tester may assess www.example-university.edu and portal.example-unive
                       ><input
                         type="radio"
                         name="ETH-02-q"
-                        value="d"
+                        value="x"
                         class="mt-1 accent-[#DC2626]"
                       /><span
-                        >Ignore it; it is not part of the challenge</span
+                        >Keep checking how many records are exposed so your
+                        report is complete</span
                       ></label
                     >
                   </div>

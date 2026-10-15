@@ -220,37 +220,41 @@
                 class="challenge-lab mb-5 space-y-4 bg-sec border border-brder rounded-xl p-4"
               >
                 <p
-                  class="text-[11px] font-semibold uppercase tracking-wider text-warn"
+                  class="text-[11px] font-semibold uppercase tracking-wider text-mtext"
                 >
-                  Draft lab &middot; placeholder content
+                  Lab
                 </p>
-                <!-- TODO(Member 3): write the phishing email (this is a placeholder). -->
                 <div data-lab-material data-label="Email">
                   <pre
                     class="text-[12px] font-mono text-ptext whitespace-pre-wrap break-all bg-main border border-brder rounded-lg p-3"
                   >
-From: &quot;PSU IT Service Desk&quot; &lt;it-support@psu-helpdesk.co&gt;
-Subject: URGENT: Your account will be closed in 24 hours
+From: &quot;PSU IT Service Desk&quot; &lt;it-support@psu-helpdesk-alerts.com&gt;
+To: you
+Subject: ACTION REQUIRED: Your account will be suspended in 24 hours
 
 Dear Student,
 
-We detected unusual activity on your account. To avoid permanent closure, verify your identity within 24 hours:
+Our system detected unusual sign-in activity on your university account.
+To prevent permanent suspension, you must verify your identity within
+24 hours using the secure link below:
 
-    https://psu-verify-login.co/secure
+    Verify my account  →  https://psu-edu-login.verify-account.co/secure
 
-You will need your username and current password.
+You will be asked for your username and current password.
+Accounts that are not verified will be closed without further notice.
 
-PSU IT Team</pre>
+Thank you,
+PSU IT Service Desk</pre>
                 </div>
-                <!-- TODO(Member 3): write the options. See CHALLENGES.md for the placeholder answers. Make a new lock in lab-builder.html and paste it into data-lock. -->
                 <form
                   data-lab-quiz
                   data-mode="multi"
-                  data-lock='{"s":"Nmbn0ZRLfJ+MJWo2J4Reaw==","iv":"KLdmQyw5Pxq1REuZ","c":"JtbdnKj4VpnwElhwwqcpddbH5ORvBm7gG963cIa6v/YzMg=="}'
+                  data-lock='{"s":"rBo8GrIcEv+GVx9CcThYOg==","iv":"eVAgRAdfUniCYSWX","c":"NEh9V0JQEzrr1DOZ9KymKW55IY7EDy1DTLiU+9zkjvpDE+PSKet1dIEJ"}'
                   class="space-y-3"
                 >
                   <p class="text-[13px] font-semibold text-ptext">
-                    Which details give the sender away? Select all that apply.
+                    Which details show this is a phishing email? Select all that
+                    apply.
                   </p>
                   <div class="space-y-2">
                     <label
@@ -258,18 +262,7 @@ PSU IT Team</pre>
                       ><input
                         type="checkbox"
                         name="AWR-01-q"
-                        value="a"
-                        class="mt-1 accent-[#DC2626]"
-                      /><span
-                        >The sender address is not a university domain</span
-                      ></label
-                    >
-                    <label
-                      class="flex items-start gap-3 text-[13px] text-stext leading-relaxed"
-                      ><input
-                        type="checkbox"
-                        name="AWR-01-q"
-                        value="b"
+                        value="c"
                         class="mt-1 accent-[#DC2626]"
                       /><span>It is addressed to a student</span></label
                     >
@@ -278,10 +271,10 @@ PSU IT Team</pre>
                       ><input
                         type="checkbox"
                         name="AWR-01-q"
-                        value="c"
+                        value="k"
                         class="mt-1 accent-[#DC2626]"
                       /><span
-                        >It creates urgency with a 24-hour deadline</span
+                        >The sender address is not on a university domain</span
                       ></label
                     >
                     <label
@@ -289,9 +282,11 @@ PSU IT Team</pre>
                       ><input
                         type="checkbox"
                         name="AWR-01-q"
-                        value="d"
+                        value="r"
                         class="mt-1 accent-[#DC2626]"
-                      /><span>The link goes to a look-alike domain</span></label
+                      /><span
+                        >It pressures you with a 24-hour deadline</span
+                      ></label
                     >
                     <label
                       class="flex items-start gap-3 text-[13px] text-stext leading-relaxed"
@@ -300,14 +295,26 @@ PSU IT Team</pre>
                         name="AWR-01-q"
                         value="e"
                         class="mt-1 accent-[#DC2626]"
-                      /><span>It mentions unusual activity</span></label
+                      /><span>It mentions unusual sign-in activity</span></label
                     >
                     <label
                       class="flex items-start gap-3 text-[13px] text-stext leading-relaxed"
                       ><input
                         type="checkbox"
                         name="AWR-01-q"
-                        value="f"
+                        value="m"
+                        class="mt-1 accent-[#DC2626]"
+                      /><span
+                        >The link goes to a look-alike domain, not the
+                        university&rsquo;s</span
+                      ></label
+                    >
+                    <label
+                      class="flex items-start gap-3 text-[13px] text-stext leading-relaxed"
+                      ><input
+                        type="checkbox"
+                        name="AWR-01-q"
+                        value="w"
                         class="mt-1 accent-[#DC2626]"
                       /><span>It asks for your current password</span></label
                     >
@@ -426,29 +433,33 @@ PSU IT Team</pre>
                 class="challenge-lab mb-5 space-y-4 bg-sec border border-brder rounded-xl p-4"
               >
                 <p
-                  class="text-[11px] font-semibold uppercase tracking-wider text-warn"
+                  class="text-[11px] font-semibold uppercase tracking-wider text-mtext"
                 >
-                  Draft lab &middot; placeholder content
+                  Lab
                 </p>
-                <!-- TODO(Member 3): write the password list. -->
-                <div data-lab-material data-label="Audited passwords">
+                <div
+                  data-lab-material
+                  data-label="Passwords from the staff audit"
+                >
                   <pre
                     class="text-[12px] font-mono text-ptext whitespace-pre-wrap break-all bg-main border border-brder rounded-lg p-3"
                   >
-1. Summer2026!
-2. P@ssw0rd123
-3. correct horse battery staple river
-4. Psu#2026</pre>
+1.  Summer2026!
+2.  P@ssw0rd123
+3.  Psu#2026
+4.  Qwerty!234
+5.  violet canyon harbor lamp seven
+6.  Adm1n$tr4tor</pre>
                 </div>
-                <!-- TODO(Member 3): write the options. See CHALLENGES.md for the placeholder answers. Make a new lock in lab-builder.html and paste it into data-lock. -->
                 <form
                   data-lab-quiz
                   data-mode="single"
-                  data-lock='{"s":"L1MeE3wWY3Rjwca6uhs6tQ==","iv":"VkLqFd0qdgfJMbFD","c":"da0bgTpKGg8AH4vD0OkKIYzxf5rCzSaX7AD0y0+iy7xHew=="}'
+                  data-lock='{"s":"8vc58eFqmNgrX32X2rrdZQ==","iv":"80GITIsfGvpGn2KK","c":"YP87DvODqUy/UoTwWipq/23Fu+I95A4dZwfEfpp4ZzquWv1rQkhObg/9uQ=="}'
                   class="space-y-3"
                 >
                   <p class="text-[13px] font-semibold text-ptext">
-                    Which password survives the wordlist attack?
+                    A wordlist attack with common substitutions cracked five of
+                    these. Which password survived?
                   </p>
                   <div class="space-y-2">
                     <label
@@ -465,7 +476,7 @@ PSU IT Team</pre>
                       ><input
                         type="radio"
                         name="AWR-02-q"
-                        value="b"
+                        value="f"
                         class="mt-1 accent-[#DC2626]"
                       /><span>P@ssw0rd123</span></label
                     >
@@ -474,18 +485,36 @@ PSU IT Team</pre>
                       ><input
                         type="radio"
                         name="AWR-02-q"
-                        value="c"
+                        value="j"
                         class="mt-1 accent-[#DC2626]"
-                      /><span>correct horse battery staple river</span></label
+                      /><span>Psu#2026</span></label
                     >
                     <label
                       class="flex items-start gap-3 text-[13px] text-stext leading-relaxed"
                       ><input
                         type="radio"
                         name="AWR-02-q"
-                        value="d"
+                        value="s"
                         class="mt-1 accent-[#DC2626]"
-                      /><span>Psu#2026</span></label
+                      /><span>Qwerty!234</span></label
+                    >
+                    <label
+                      class="flex items-start gap-3 text-[13px] text-stext leading-relaxed"
+                      ><input
+                        type="radio"
+                        name="AWR-02-q"
+                        value="q"
+                        class="mt-1 accent-[#DC2626]"
+                      /><span>violet canyon harbor lamp seven</span></label
+                    >
+                    <label
+                      class="flex items-start gap-3 text-[13px] text-stext leading-relaxed"
+                      ><input
+                        type="radio"
+                        name="AWR-02-q"
+                        value="y"
+                        class="mt-1 accent-[#DC2626]"
+                      /><span>Adm1n$tr4tor</span></label
                     >
                   </div>
                   <button
@@ -602,27 +631,41 @@ PSU IT Team</pre>
                 class="challenge-lab mb-5 space-y-4 bg-sec border border-brder rounded-xl p-4"
               >
                 <p
-                  class="text-[11px] font-semibold uppercase tracking-wider text-warn"
+                  class="text-[11px] font-semibold uppercase tracking-wider text-mtext"
                 >
-                  Draft lab &middot; placeholder content
+                  Lab
                 </p>
-                <!-- TODO(Member 3): write the call transcript. -->
                 <div data-lab-material data-label="Call transcript">
                   <pre
                     class="text-[12px] font-mono text-ptext whitespace-pre-wrap break-all bg-main border border-brder rounded-lg p-3"
                   >
-Caller: Hi, I am the new IT contractor setting up the email migration...
-[TODO: Member 3 writes the full transcript]</pre>
+Caller:  Hi, this is Omar from TechServe. We are the new contractor moving
+         the staff email to the new system this week. Is this Sara?
+Sara:    Yes, speaking.
+Caller:  Great. I just need to confirm a few details so your mailbox moves
+         across correctly. You are in the Finance office, reporting to...?
+Sara:    Dr. Al-Harbi.
+Caller:  Perfect. And for the security record, your date of birth?
+Sara:    14 March 1998.
+Caller:  Thanks. The new system shows a picture on the login page, a lot of
+         people use their pet. Did you have a first pet I can set it to?
+Sara:    Ha, yes, Luna, my cat.
+Caller:  Lovely. Last thing: which phone do you use for the verification
+         texts, the one ending in 47?
+Sara:    No, it ends in 82.
+Caller:  Got it. You are all set. Never share your password with anyone,
+         by the way, IT will never ask for it!</pre>
                 </div>
-                <!-- TODO(Member 3): write the options. See CHALLENGES.md for the placeholder answers. Make a new lock in lab-builder.html and paste it into data-lock. -->
                 <form
                   data-lab-quiz
                   data-mode="multi"
-                  data-lock='{"s":"g//oM5phmsajSis+j5VtAg==","iv":"mJ9w8DcLnJLuPYnI","c":"/j2oxEI4GtUxIhCz48lUAVwU+6NZr8MBJqGkpAUAGIkBQg=="}'
+                  data-lock='{"s":"EQFkstXTXjwZoO4+EYslqw==","iv":"B31l2utXG6Pc/kqc","c":"9WQzSLp/jUviKodaknutnXwOFq64ZiETcifxUoCzVN46kl7M34MPgE7GqG8="}'
                   class="space-y-3"
                 >
                   <p class="text-[13px] font-semibold text-ptext">
-                    What did the caller collect? Select all that apply.
+                    The caller never asked for a password. Which details did
+                    they collect that could help reset Sara&rsquo;s account or
+                    impersonate her? Select all that apply.
                   </p>
                   <div class="space-y-2">
                     <label
@@ -630,45 +673,56 @@ Caller: Hi, I am the new IT contractor setting up the email migration...
                       ><input
                         type="checkbox"
                         name="AWR-03-q"
-                        value="a"
-                        class="mt-1 accent-[#DC2626]"
-                      /><span>Your date of birth</span></label
-                    >
-                    <label
-                      class="flex items-start gap-3 text-[13px] text-stext leading-relaxed"
-                      ><input
-                        type="checkbox"
-                        name="AWR-03-q"
                         value="b"
                         class="mt-1 accent-[#DC2626]"
-                      /><span>Your manager's name</span></label
+                      /><span>Her manager&rsquo;s name</span></label
                     >
                     <label
                       class="flex items-start gap-3 text-[13px] text-stext leading-relaxed"
                       ><input
                         type="checkbox"
                         name="AWR-03-q"
-                        value="c"
+                        value="g"
                         class="mt-1 accent-[#DC2626]"
-                      /><span>The weather</span></label
+                      /><span>The name of the email system</span></label
                     >
                     <label
                       class="flex items-start gap-3 text-[13px] text-stext leading-relaxed"
                       ><input
                         type="checkbox"
                         name="AWR-03-q"
-                        value="d"
+                        value="h"
                         class="mt-1 accent-[#DC2626]"
-                      /><span>Your first pet's name</span></label
+                      /><span>Her date of birth</span></label
                     >
                     <label
                       class="flex items-start gap-3 text-[13px] text-stext leading-relaxed"
                       ><input
                         type="checkbox"
                         name="AWR-03-q"
-                        value="e"
+                        value="l"
                         class="mt-1 accent-[#DC2626]"
-                      /><span>The office printer model</span></label
+                      /><span>That she works in an office</span></label
+                    >
+                    <label
+                      class="flex items-start gap-3 text-[13px] text-stext leading-relaxed"
+                      ><input
+                        type="checkbox"
+                        name="AWR-03-q"
+                        value="n"
+                        class="mt-1 accent-[#DC2626]"
+                      /><span>Her first pet&rsquo;s name</span></label
+                    >
+                    <label
+                      class="flex items-start gap-3 text-[13px] text-stext leading-relaxed"
+                      ><input
+                        type="checkbox"
+                        name="AWR-03-q"
+                        value="t"
+                        class="mt-1 accent-[#DC2626]"
+                      /><span
+                        >The last digits of her verification phone</span
+                      ></label
                     >
                   </div>
                   <button
