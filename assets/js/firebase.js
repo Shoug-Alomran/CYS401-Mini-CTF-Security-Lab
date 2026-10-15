@@ -539,7 +539,16 @@ export async function submitFlag(challengeId, rawFlag) {
     const solved = await getDocFromServer(
       doc(db, "solves", uid + "_" + challengeId),
     ).catch(() => null);
-    return solved && solved.exists() ? "solved" : "throttled";
+    if (solved && solved.exists()) return "solved";
+    // Both the solve and the miss were denied, but the challenge isn't solved.
+    // If its flag hash was never loaded into Firestore, the rules can't evaluate
+    // either path and deny both — so tell the admin to load the flags, rather
+    // than blaming the throttle.
+    const seeded = await getDocFromServer(
+      doc(db, "challenges", challengeId),
+    ).catch(() => null);
+    if (!seeded || !seeded.exists()) return "unloaded";
+    return "throttled";
   }
 }
 

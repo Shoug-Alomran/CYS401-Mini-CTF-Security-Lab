@@ -186,6 +186,12 @@ cards.forEach((card) => {
           "Too many attempts. Wait a few seconds before submitting again.",
           "bad",
         );
+      } else if (result === "unloaded") {
+        feedback(
+          card,
+          "This challenge isn't set up on the server yet. An admin needs to load the flags on the admin page before it can be scored.",
+          "bad",
+        );
       } else {
         feedback(
           card,
