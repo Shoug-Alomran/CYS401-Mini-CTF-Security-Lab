@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Challenges | CYS401 CTF Lab</title>
+    <meta
+      name="description"
+      content="All twelve challenges in the CYS401 CTF Lab across Web Security, Cryptography, Security Awareness, and Cybersecurity Ethics, with difficulty, points, and your progress."
+    />
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <meta name="theme-color" content="#09090B" />
+    <link
+      rel="canonical"
+      href="https://ctf-lab.shoug-tech.com/challenges.html"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CYS401 CTF Lab" />
+    <meta property="og:title" content="All Challenges | CYS401" />
+    <meta
+      property="og:description"
+      content="All twelve CYS401 CTF Lab challenges, grouped by track."
+    />
+    <meta
+      property="og:url"
+      content="https://ctf-lab.shoug-tech.com/challenges.html"
+    />
+    <meta
+      property="og:image"
+      content="https://ctf-lab.shoug-tech.com/assets/img/og-banner.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="CYS401 CTF Lab — Mini Capture-the-Flag Security Lab Platform."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="All Challenges | CYS401" />
+    <meta
+      name="twitter:description"
+      content="All twelve CYS401 CTF Lab challenges, with difficulty, points, and your progress."
+    />
+    <meta
+      name="twitter:image"
+      content="https://ctf-lab.shoug-tech.com/assets/img/og-banner.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body
+    class="bg-main text-ptext font-sans antialiased selection:bg-pred selection:text-white"
+  >
+    <div id="site-header"></div>
+
+    <main id="main" class="pt-[72px]">
+    <div id="site-header"></div>
+
+    <main id="main" class="pt-[72px]">
+      <!-- Hero -->
+      <section class="relative py-16 lg:py-20 border-b border-brder overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(220,38,38,0.10),transparent_55%)] pointer-events-none"></div>
+        <div class="relative max-w-content mx-auto px-6">
+          <p class="text-[12px] font-medium text-pred uppercase tracking-[0.2em] mb-5">Challenges</p>
+          <h1 class="font-display text-[34px] sm:text-[44px] lg:text-[48px] font-semibold leading-[1.1] mb-5">Every Challenge in One Place</h1>
+          <p class="text-[16px] text-stext leading-relaxed max-w-2xl">Twelve guided challenges across four tracks. Pick any one, read its scenario, capture the flag, and submit it to score. New to a topic? Each track has a workshop that teaches the concepts first.</p>
+        </div>
+      </section>
+
+      <!-- Stats -->
+      <section class="border-b border-brder bg-sec py-8">
+        <div class="max-w-content mx-auto px-6 grid grid-cols-2 lg:grid-cols-4 gap-6">
+          <div><p class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2">Challenges</p><p class="font-display text-[30px] font-semibold">12</p></div>
+          <div><p class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2">Tracks</p><p class="font-display text-[30px] font-semibold">4</p></div>
+          <div><p class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2">Total Points</p><p class="font-display text-[30px] font-semibold">1,200</p></div>
+          <div><p class="text-[12px] font-medium text-mtext uppercase tracking-widest mb-2">Your Progress</p><p class="font-display text-[30px] font-semibold"><span id="you-solved">&ndash;</span><span class="text-[16px] text-stext font-sans font-normal ml-1">/ 12</span></p></div>
+        </div>
+      </section>
+
+      <!-- Overall progress bar (signed in) -->
+      <section class="py-10 border-b border-brder">
+        <div class="max-w-content mx-auto px-6">
+          <div id="progress-wrap" class="flex flex-wrap items-center justify-between gap-4 mb-3">
+            <p id="progress-label" class="text-[14px] text-stext">Log in to track the challenges you solve.</p>
+            <p id="progress-pct" class="font-mono text-[14px] text-bred"></p>
+          </div>
+          <div class="h-2.5 bg-elevated rounded-full overflow-hidden" role="progressbar" aria-label="Overall completion" aria-valuemin="0" aria-valuemax="100" id="progress-bar">
+            <div id="progress-fill" class="h-full bg-gradient-to-r from-dred to-pred rounded-full transition-all duration-700" style="width:0%"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tracks -->
+      <section class="py-14">
+        <div class="max-w-content mx-auto px-6 space-y-14" id="tracks"></div>
+      </section>
+
+      <!-- CTA -->
+      <section class="relative py-20 overflow-hidden border-t border-brder">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(220,38,38,0.12),transparent_60%)] pointer-events-none"></div>
+        <div class="relative max-w-content mx-auto px-6 text-center">
+          <h2 class="font-display text-[28px] sm:text-[34px] font-semibold mb-4">See where you stand</h2>
+          <p class="text-[15px] text-stext mb-8">Check your dashboard, or see how you rank against everyone else.</p>
+          <div class="flex flex-wrap items-center justify-center gap-4">
+            <a href="dashboard.html" class="bg-pred hover:bg-bred text-white text-[15px] font-semibold px-6 py-3 rounded-btn transition-colors">My Dashboard</a>
+            <a href="scoreboard.html" class="border border-brder2 hover:bg-elevated text-[15px] font-semibold px-6 py-3 rounded-btn transition-colors">Scoreboard</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+    <script src="assets/js/layout.js"></script>
+    <script src="assets/js/guide.js"></script>
+    <script type="module">
+      import { configured, onSession, mySolves, escapeHtml } from "./assets/js/firebase.js";
+      import { CHALLENGES, CATEGORIES, TOTAL_POINTS } from "./assets/js/challenge-data.js";
+      const $ = (id) => document.getElementById(id);
+
+      const DIFF = {
+        Easy: "border-success/40 bg-success/10 text-success",
+        Medium: "border-warn/40 bg-warn/10 text-warn",
+        Hard: "border-rborder bg-sred text-bred",
+      };
+
+      // Build the track sections once; solved marks are layered on afterwards.
+      function card(c, solved) {
+        const cat = CATEGORIES[c.category];
+        const done = Boolean(solved[c.id]);
+        return (
+          '<a href="' + cat.page + '#' + c.id + '" data-card="' + c.id + '" class="group block bg-card border ' + (done ? "border-success/40" : "border-brder hover:border-rborder") + ' rounded-card p-5 transition-colors">' +
+            '<div class="flex items-center gap-2 mb-3">' +
+              '<span class="text-[11px] font-mono text-mtext">' + c.id + '</span>' +
+              '<span class="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border ' + (DIFF[c.difficulty] || DIFF.Medium) + '">' + c.difficulty + '</span>' +
+              '<span data-status class="ml-auto text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border ' + (done ? "border-success/40 bg-success/10 text-success" : "border-brder2 text-mtext") + '">' + (done ? "Solved" : "Unsolved") + '</span>' +
+            '</div>' +
+            '<h3 class="font-display text-[17px] font-semibold mb-2 group-hover:text-bred transition-colors">' + escapeHtml(c.title) + '</h3>' +
+            '<div class="flex items-center gap-2 text-[12px] text-mtext"><span class="font-mono text-pred">' + c.points + ' pts</span><span>&middot;</span><span>Open &rarr;</span></div>' +
+          "</a>"
+        );
+      }
+
+      function render(solved) {
+        const html = Object.entries(CATEGORIES).map(([key, cat], i) => {
+          const list = CHALLENGES.filter((c) => c.category === key);
+          const done = list.filter((c) => solved[c.id]).length;
+          const pts = list.reduce((n, c) => n + c.points, 0);
+          const cards = list.map((c) => card(c, solved)).join("");
+          return (
+            '<div>' +
+              '<div class="flex flex-wrap items-end justify-between gap-3 mb-5">' +
+                '<div>' +
+                  '<p class="text-[12px] font-medium text-pred uppercase tracking-widest mb-1">Track 0' + (i + 1) + '</p>' +
+                  '<h2 class="font-display text-[24px] font-semibold">' + cat.label + '</h2>' +
+                '</div>' +
+                '<div class="flex items-center gap-4 text-[13px]">' +
+                  '<span data-track-count="' + key + '" class="font-mono text-stext">' + done + ' / ' + list.length + ' solved</span>' +
+                  '<span class="font-mono text-mtext">' + pts + ' pts</span>' +
+                  '<a href="' + cat.workshop + '" class="font-semibold text-bred hover:underline">Workshop &rarr;</a>' +
+                '</div>' +
+              '</div>' +
+              '<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">' + cards + '</div>' +
+            "</div>"
+          );
+        }).join("");
+        $("tracks").innerHTML = html;
+      }
+
+      // Initial render (unsolved), then overlay progress once the session is known.
+      render({});
+
+      onSession(async (s) => {
+        let solved = {};
+        if (configured && s.user) {
+          try {
+            (await mySolves()).forEach((x) => (solved[x.challengeId] = true));
+          } catch (e) { /* progress unavailable */ }
+        }
+        render(solved);
+        const count = Object.keys(solved).length;
+        const pts = CHALLENGES.filter((c) => solved[c.id]).reduce((n, c) => n + c.points, 0);
+        const pct = Math.round((count / CHALLENGES.length) * 100);
+        $("you-solved").textContent = count;
+        if (!configured) {
+          $("progress-label").textContent = "Progress tracking turns on once accounts are connected.";
+        } else if (!s.user) {
+          $("progress-label").innerHTML = '<a href="auth.html?next=challenges.html" class="text-bred font-semibold hover:underline">Log in</a> or <a href="auth.html#signup" class="text-bred font-semibold hover:underline">sign up</a> to track the challenges you solve.';
+          $("you-solved").textContent = "0";
+        } else {
+          $("progress-label").textContent = "You have solved " + count + " of " + CHALLENGES.length + " challenges for " + pts + " of " + TOTAL_POINTS + " points.";
+          $("progress-pct").textContent = pct + "%";
+          $("progress-fill").style.width = pct + "%";
+          $("progress-bar").setAttribute("aria-valuenow", pct);
+        }
+      });
+    </script>
+  </body>
+</html>

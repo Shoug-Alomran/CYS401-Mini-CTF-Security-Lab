@@ -39,9 +39,11 @@
     {
       label: "Challenges",
       note: "Capture flags and score points",
-      items: TRACKS.map(function (t) {
-        return { href: t.challenges, label: t.label };
-      }),
+      items: [{ href: "challenges.html", label: "All challenges" }].concat(
+        TRACKS.map(function (t) {
+          return { href: t.challenges, label: t.label };
+        }),
+      ),
     },
     { href: "scoreboard.html", label: "Scoreboard" },
     {
@@ -231,9 +233,13 @@
     "</div>" +
     footerCol(
       "Challenges",
-      TRACKS.map(function (t) {
-        return [t.label, t.challenges];
-      }).concat([["Scoreboard", "scoreboard.html"]]),
+      [["All challenges", "challenges.html"]]
+        .concat(
+          TRACKS.map(function (t) {
+            return [t.label, t.challenges];
+          }),
+        )
+        .concat([["Scoreboard", "scoreboard.html"]]),
     ) +
     footerCol(
       "Workshops",
