@@ -74,7 +74,7 @@ Paste the lock output into `data-lock='...'`. Keep the single quotes around it.
 
 | Card | Lab | Status |
 | --- | --- | --- |
-| WEB-01 | Simulated staff portal: secret in an HTML comment (`lab-web-01.html`) | Done |
+| WEB-01 | "Secret Cyber Clubhouse" (Areej's design, dark theme): invitation code in an HTML comment (`lab-web-01.html`) | Done |
 | WEB-02 | Simulated dashboard: role trusted from browser storage (`lab-web-02.html`) | Done |
 | WEB-03 | Simulated login: SQL-injection tautology (`lab-web-03.html`) | Done |
 | WEB-04 | Simulated profile viewer: IDOR by account id (`lab-web-04.html`) | Done |
