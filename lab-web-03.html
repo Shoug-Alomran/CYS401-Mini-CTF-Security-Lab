@@ -4,137 +4,338 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Quotation Mark | CYS401 CTF Lab</title>
-    <meta name="description" content="WEB-03 practice lab for the CYS401 CTF Lab: A simulated staff login builds its query by pasting your username straight into the text." />
+    <meta
+      name="description"
+      content="WEB-03 practice lab for the CYS401 CTF Lab: A simulated staff login builds its query by pasting your username straight into the text."
+    />
     <meta name="robots" content="noindex" />
     <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="favicon.ico" sizes="32x32" />
     <meta name="theme-color" content="#09090B" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="assets/js/tailwind-config.js"></script>
     <link rel="stylesheet" href="assets/css/styles.css" />
   </head>
-  <body class="bg-main text-ptext font-sans antialiased selection:bg-pred selection:text-white">
+  <body
+    class="bg-main text-ptext font-sans antialiased selection:bg-pred selection:text-white"
+  >
     <header class="border-b border-brder">
-      <div class="max-w-5xl mx-auto px-6 h-[64px] flex items-center justify-between gap-6">
-        <a href="web-security-challenges.html#WEB-03" class="flex items-center gap-2 text-[13px] text-stext hover:text-ptext transition-colors">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+      <div
+        class="max-w-5xl mx-auto px-6 h-[64px] flex items-center justify-between gap-6"
+      >
+        <a
+          href="web-security-challenges.html#WEB-03"
+          class="flex items-center gap-2 text-[13px] text-stext hover:text-ptext transition-colors"
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="m15 18-6-6 6-6" />
+          </svg>
           Back to WEB-03
         </a>
-        <span class="flex items-center gap-2 text-[12px] font-mono text-mtext"><span class="w-1.5 h-1.5 rounded-full bg-pred"></span>SIMULATED LAB</span>
+        <span class="flex items-center gap-2 text-[12px] font-mono text-mtext"
+          ><span class="w-1.5 h-1.5 rounded-full bg-pred"></span>SIMULATED
+          LAB</span
+        >
       </div>
     </header>
     <main class="max-w-5xl mx-auto px-6 py-12">
-      <p class="text-[12px] font-medium text-pred uppercase tracking-[0.2em] mb-3">WEB-03 &middot; Web Security</p>
-      <h1 class="font-display text-[30px] sm:text-[38px] font-semibold leading-tight mb-4">The Quotation Mark</h1>
-      <p class="text-[15px] text-stext leading-relaxed max-w-2xl mb-10">A simulated staff login builds its query by pasting your username straight into the text.</p>
-      <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_320px] gap-6 items-start">
+      <p
+        class="text-[12px] font-medium text-pred uppercase tracking-[0.2em] mb-3"
+      >
+        WEB-03 &middot; Web Security
+      </p>
+      <h1
+        class="font-display text-[30px] sm:text-[38px] font-semibold leading-tight mb-4"
+      >
+        The Quotation Mark
+      </h1>
+      <p class="text-[15px] text-stext leading-relaxed max-w-2xl mb-10">
+        A simulated staff login builds its query by pasting your username
+        straight into the text.
+      </p>
+      <div
+        class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_320px] gap-6 items-start"
+      >
         <section class="bg-card border border-brder rounded-card p-6 sm:p-8">
-                <div class="flex items-center gap-3 mb-6">
-                  <span class="w-9 h-9 rounded-lg bg-elevated border border-brder flex items-center justify-center text-stext text-[15px] font-semibold">S</span>
-                  <div><p class="text-[14px] font-semibold">Staff Login</p><p class="text-[12px] text-mtext">internal tools &middot; authorized staff only</p></div>
-                </div>
-                <p class="text-[13px] text-stext leading-relaxed mb-6">This login builds its database query by pasting your username straight into the text of the query. Get in <strong class="text-ptext">without knowing a password</strong>.</p>
-                <form id="loginForm" novalidate class="space-y-4">
-                  <div>
-                    <label for="user" class="block text-[12px] font-medium text-stext mb-2">Username</label>
-                    <input id="user" type="text" autocomplete="off" spellcheck="false" class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none font-mono" placeholder="username" />
-                  </div>
-                  <div>
-                    <label for="pass" class="block text-[12px] font-medium text-stext mb-2">Password</label>
-                    <input id="pass" type="password" autocomplete="off" class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none" placeholder="password" />
-                  </div>
-                  <button type="submit" class="bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors w-full">Log in</button>
-                  <p id="msg" role="status" aria-live="polite" class="text-[13px] leading-relaxed hidden"></p>
-                </form>
-                <div class="mt-6">
-                  <p class="text-[11px] font-semibold uppercase tracking-wider text-mtext mb-2">The query this form runs (simulated)</p>
-                  <pre id="query" class="text-[12px] font-mono text-stext whitespace-pre-wrap break-all bg-main border border-brder rounded-xl p-3">SELECT * FROM staff WHERE user = '' AND pass = ''</pre>
-                </div>
-                <div id="solved" class="hidden mt-6 bg-success/10 border border-success/40 rounded-card p-5">
-                  <p class="text-[11px] font-semibold uppercase tracking-wider text-success mb-2">Solved</p>
-                  <p class="text-[14px] text-stext leading-relaxed mb-3" id="solved-note"></p>
-                  <div class="bg-main border border-brder rounded-xl p-3 mb-3">
-                    <p class="text-[10px] font-semibold uppercase tracking-wider text-mtext mb-1">Your flag</p>
-                    <p class="font-mono text-[15px] text-ptext break-all" id="flag-value"></p>
-                  </div>
-                  <div class="flex flex-wrap gap-2">
-                    <button type="button" id="copy-flag" class="border border-brder2 hover:bg-elevated text-[13px] font-semibold px-4 py-2 rounded-btn transition-colors">Copy flag</button>
-                    <a id="submit-link" href="web-security-challenges.html" class="bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors inline-flex items-center">Submit it on the challenge page &rarr;</a>
-                  </div>
-                  <div class="explanation mt-5 pt-4 border-t border-success/20">
-                    <p class="text-[13px] font-semibold text-ptext mb-1">What this taught you</p>
-                    <p class="text-[13px] text-stext leading-relaxed" id="lesson"></p>
-                  </div>
-                </div></section>
+          <div class="flex items-center gap-3 mb-6">
+            <span
+              class="w-9 h-9 rounded-lg bg-elevated border border-brder flex items-center justify-center text-stext text-[15px] font-semibold"
+              >S</span
+            >
+            <div>
+              <p class="text-[14px] font-semibold">Staff Login</p>
+              <p class="text-[12px] text-mtext">
+                internal tools &middot; authorized staff only
+              </p>
+            </div>
+          </div>
+          <p class="text-[13px] text-stext leading-relaxed mb-6">
+            This login builds its database query by pasting your username
+            straight into the text of the query. Get in
+            <strong class="text-ptext">without knowing a password</strong>.
+          </p>
+          <form id="loginForm" novalidate class="space-y-4">
+            <div>
+              <label
+                for="user"
+                class="block text-[12px] font-medium text-stext mb-2"
+                >Username</label
+              >
+              <input
+                id="user"
+                type="text"
+                autocomplete="off"
+                spellcheck="false"
+                class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none font-mono"
+                placeholder="username"
+              />
+            </div>
+            <div>
+              <label
+                for="pass"
+                class="block text-[12px] font-medium text-stext mb-2"
+                >Password</label
+              >
+              <input
+                id="pass"
+                type="password"
+                autocomplete="off"
+                class="w-full bg-main border border-brder2 rounded-btn px-4 py-3 text-[14px] text-ptext placeholder:text-mtext focus:border-pred focus:outline-none"
+                placeholder="password"
+              />
+            </div>
+            <button
+              type="submit"
+              class="bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors w-full"
+            >
+              Log in
+            </button>
+            <p
+              id="msg"
+              role="status"
+              aria-live="polite"
+              class="text-[13px] leading-relaxed hidden"
+            ></p>
+          </form>
+          <div class="mt-6">
+            <p
+              class="text-[11px] font-semibold uppercase tracking-wider text-mtext mb-2"
+            >
+              The query this form runs (simulated)
+            </p>
+            <pre
+              id="query"
+              class="text-[12px] font-mono text-stext whitespace-pre-wrap break-all bg-main border border-brder rounded-xl p-3"
+            >
+SELECT * FROM staff WHERE user = '' AND pass = ''</pre>
+          </div>
+          <div
+            id="solved"
+            class="hidden mt-6 bg-success/10 border border-success/40 rounded-card p-5"
+          >
+            <p
+              class="text-[11px] font-semibold uppercase tracking-wider text-success mb-2"
+            >
+              Solved
+            </p>
+            <p
+              class="text-[14px] text-stext leading-relaxed mb-3"
+              id="solved-note"
+            ></p>
+            <div class="bg-main border border-brder rounded-xl p-3 mb-3">
+              <p
+                class="text-[10px] font-semibold uppercase tracking-wider text-mtext mb-1"
+              >
+                Your flag
+              </p>
+              <p
+                class="font-mono text-[15px] text-ptext break-all"
+                id="flag-value"
+              ></p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button
+                type="button"
+                id="copy-flag"
+                class="border border-brder2 hover:bg-elevated text-[13px] font-semibold px-4 py-2 rounded-btn transition-colors"
+              >
+                Copy flag
+              </button>
+              <a
+                id="submit-link"
+                href="web-security-challenges.html"
+                class="bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors inline-flex items-center"
+                >Submit it on the challenge page &rarr;</a
+              >
+            </div>
+            <div class="explanation mt-5 pt-4 border-t border-success/20">
+              <p class="text-[13px] font-semibold text-ptext mb-1">
+                What this taught you
+              </p>
+              <p class="text-[13px] text-stext leading-relaxed" id="lesson"></p>
+            </div>
+          </div>
+        </section>
         <aside class="space-y-5">
           <div class="bg-card border border-brder rounded-card p-6">
-            <p class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-3">How to solve</p>
-            <ol class="space-y-2.5 text-[13px] text-stext leading-relaxed list-decimal pl-4"><li>You don&rsquo;t know the password, so don&rsquo;t try to guess it.</li><li>In the <span class="text-ptext">Username</span> field, close the string with a quote and add a condition that is always true.</li><li>A classic payload is <span class="font-mono text-ptext">&#39; OR &#39;1&#39;=&#39;1&#39; --</span>. Put anything in the password field.</li><li>Watch the simulated query update, log in as admin, and grab the flag.</li></ol>
+            <p
+              class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-3"
+            >
+              How to solve
+            </p>
+            <ol
+              class="space-y-2.5 text-[13px] text-stext leading-relaxed list-decimal pl-4"
+            >
+              <li>
+                You don&rsquo;t know the password, so don&rsquo;t try to guess
+                it.
+              </li>
+              <li>
+                In the <span class="text-ptext">Username</span> field, close the
+                string with a quote and add a condition that is always true.
+              </li>
+              <li>
+                A classic payload is
+                <span class="font-mono text-ptext"
+                  >&#39; OR &#39;1&#39;=&#39;1&#39; --</span
+                >. Put anything in the password field.
+              </li>
+              <li>
+                Watch the simulated query update, log in as admin, and grab the
+                flag.
+              </li>
+            </ol>
           </div>
           <div class="bg-card border border-brder rounded-card p-6">
-            <p class="text-[11px] font-semibold uppercase tracking-wider text-mtext mb-2">Lab details</p>
-            <dl class="text-[13px] divide-y divide-brder"><div class="flex justify-between gap-4 py-2.5"><dt class="text-mtext">Category</dt><dd class="text-ptext text-right font-medium">Web Security</dd></div><div class="flex justify-between gap-4 py-2.5"><dt class="text-mtext">Flaw</dt><dd class="text-ptext text-right font-medium">SQL injection</dd></div><div class="flex justify-between gap-4 py-2.5"><dt class="text-mtext">Difficulty</dt><dd class="text-ptext text-right font-medium">Medium</dd></div><div class="flex justify-between gap-4 py-2.5"><dt class="text-mtext">Fix</dt><dd class="text-ptext text-right font-medium">Prepared statements</dd></div></dl>
+            <p
+              class="text-[11px] font-semibold uppercase tracking-wider text-mtext mb-2"
+            >
+              Lab details
+            </p>
+            <dl class="text-[13px] divide-y divide-brder">
+              <div class="flex justify-between gap-4 py-2.5">
+                <dt class="text-mtext">Category</dt>
+                <dd class="text-ptext text-right font-medium">Web Security</dd>
+              </div>
+              <div class="flex justify-between gap-4 py-2.5">
+                <dt class="text-mtext">Flaw</dt>
+                <dd class="text-ptext text-right font-medium">SQL injection</dd>
+              </div>
+              <div class="flex justify-between gap-4 py-2.5">
+                <dt class="text-mtext">Difficulty</dt>
+                <dd class="text-ptext text-right font-medium">Medium</dd>
+              </div>
+              <div class="flex justify-between gap-4 py-2.5">
+                <dt class="text-mtext">Fix</dt>
+                <dd class="text-ptext text-right font-medium">
+                  Prepared statements
+                </dd>
+              </div>
+            </dl>
           </div>
           <div class="bg-sred/30 border border-rborder rounded-card p-5">
-            <p class="text-[13px] text-stext leading-relaxed">This is a self-contained simulation for learning. The &ldquo;server&rdquo;, &ldquo;database&rdquo;, and &ldquo;query&rdquo; are all mocked in this page&rsquo;s JavaScript. Nothing here connects to a real system.</p>
+            <p class="text-[13px] text-stext leading-relaxed">
+              This is a self-contained simulation for learning. The
+              &ldquo;server&rdquo;, &ldquo;database&rdquo;, and
+              &ldquo;query&rdquo; are all mocked in this page&rsquo;s
+              JavaScript. Nothing here connects to a real system.
+            </p>
           </div>
         </aside>
       </div>
     </main>
     <footer class="border-t border-brder mt-16">
-      <div class="max-w-5xl mx-auto px-6 py-8 text-[12px] text-mtext">CYS401 CTF Lab &middot; WEB-03 practice environment. Learn by exploring, then submit the flag on the challenge page.</div>
+      <div class="max-w-5xl mx-auto px-6 py-8 text-[12px] text-mtext">
+        CYS401 CTF Lab &middot; WEB-03 practice environment. Learn by exploring,
+        then submit the flag on the challenge page.
+      </div>
     </footer>
     <script>
-  // SIMULATION ONLY. There is no database. This mimics how a vulnerable app that pastes
-  // input straight into its query text would behave, so you can see why it breaks and
-  // why parameterized queries fix it. The "staff" table is this tiny list:
-  const staff = [{ user: "admin", pass: "S3cr3t-and-unknown-to-you" }];
-  const form = document.getElementById("loginForm");
-  const msg = document.getElementById("msg");
-  const q = document.getElementById("query");
-  function esc(s) { return s.replace(/</g, "&lt;"); }
-  // A deliberately naive check that treats the pasted username as part of the query text.
-  function vulnerableLogin(user, pass) {
-    // The app would send: SELECT * FROM staff WHERE user = '<user>' AND pass = '<pass>'
-    // A classic tautology closes the username string and adds an always-true OR, then
-    // comments out the rest (-- ), so the password check never runs.
-    const tautology = /'\s*(or|\|\|)\s*('?\s*1\s*'?\s*=\s*'?\s*1|'[^']*'\s*=\s*'[^']*'|true)/i;
-    const comment = /(--|#|\/\*)/;
-    if (tautology.test(user) && comment.test(user)) return "admin";          // ' OR '1'='1' --
-    if (tautology.test(user) && /'\s*$/.test(user.trim())) return "admin";    // ' OR '1'='1
-    // Otherwise behave like a normal login.
-    const row = staff.find((r) => r.user === user && r.pass === pass);
-    return row ? row.user : null;
-  }
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    const user = document.getElementById("user").value;
-    const pass = document.getElementById("pass").value;
-    q.innerHTML = "SELECT * FROM staff WHERE user = '" + esc(user) + "' AND pass = '" + esc(pass) + "'";
-    const who = vulnerableLogin(user, pass);
-    if (who === "admin") { msg.classList.add("hidden"); solve(); return; }
-    msg.textContent = "Login failed. You don't know the password \u2014 so make the WHERE clause always true instead. Think about a single quote and a condition like 1=1.";
-    msg.className = "text-[13px] leading-relaxed text-pred";
-    msg.classList.remove("hidden");
-  });
-  const FLAG = "CYS401{p4r4m3t3r1z3_y0ur_qu3r13s}";
-  function solve() {
-    const box = document.getElementById("solved");
-    document.getElementById("flag-value").textContent = FLAG;
-    document.getElementById("solved-note").textContent = "You logged in as admin without the password by making the query's condition always true \u2014 classic SQL injection.";
-    document.getElementById("lesson").textContent = "SQL injection happens when input becomes part of the query instead of data within it. Parameterized queries (prepared statements) keep code and data separate and shut the whole class of attack down.";
-    document.getElementById("submit-link").href = "web-security-challenges.html#WEB-03";
-    box.classList.remove("hidden");
-    box.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  }
-  document.getElementById("copy-flag").addEventListener("click", function () {
-    navigator.clipboard.writeText(FLAG).then(() => {
-      this.textContent = "Copied";
-      setTimeout(() => (this.textContent = "Copy flag"), 1200);
-    }).catch(() => {});
-  });</script>
+      // SIMULATION ONLY. There is no database. This mimics how a vulnerable app that pastes
+      // input straight into its query text would behave, so you can see why it breaks and
+      // why parameterized queries fix it. The "staff" table is this tiny list:
+      const staff = [{ user: "admin", pass: "S3cr3t-and-unknown-to-you" }];
+      const form = document.getElementById("loginForm");
+      const msg = document.getElementById("msg");
+      const q = document.getElementById("query");
+      function esc(s) {
+        return s.replace(/</g, "&lt;");
+      }
+      // A deliberately naive check that treats the pasted username as part of the query text.
+      function vulnerableLogin(user, pass) {
+        // The app would send: SELECT * FROM staff WHERE user = '<user>' AND pass = '<pass>'
+        // A classic tautology closes the username string and adds an always-true OR, then
+        // comments out the rest (-- ), so the password check never runs.
+        const tautology =
+          /'\s*(or|\|\|)\s*('?\s*1\s*'?\s*=\s*'?\s*1|'[^']*'\s*=\s*'[^']*'|true)/i;
+        const comment = /(--|#|\/\*)/;
+        if (tautology.test(user) && comment.test(user)) return "admin"; // ' OR '1'='1' --
+        if (tautology.test(user) && /'\s*$/.test(user.trim())) return "admin"; // ' OR '1'='1
+        // Otherwise behave like a normal login.
+        const row = staff.find((r) => r.user === user && r.pass === pass);
+        return row ? row.user : null;
+      }
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const user = document.getElementById("user").value;
+        const pass = document.getElementById("pass").value;
+        q.innerHTML =
+          "SELECT * FROM staff WHERE user = '" +
+          esc(user) +
+          "' AND pass = '" +
+          esc(pass) +
+          "'";
+        const who = vulnerableLogin(user, pass);
+        if (who === "admin") {
+          msg.classList.add("hidden");
+          solve();
+          return;
+        }
+        msg.textContent =
+          "Login failed. You don't know the password \u2014 so make the WHERE clause always true instead. Think about a single quote and a condition like 1=1.";
+        msg.className = "text-[13px] leading-relaxed text-pred";
+        msg.classList.remove("hidden");
+      });
+      const FLAG = "CYS401{p4r4m3t3r1z3_y0ur_qu3r13s}";
+      function solve() {
+        const box = document.getElementById("solved");
+        document.getElementById("flag-value").textContent = FLAG;
+        document.getElementById("solved-note").textContent =
+          "You logged in as admin without the password by making the query's condition always true \u2014 classic SQL injection.";
+        document.getElementById("lesson").textContent =
+          "SQL injection happens when input becomes part of the query instead of data within it. Parameterized queries (prepared statements) keep code and data separate and shut the whole class of attack down.";
+        document.getElementById("submit-link").href =
+          "web-security-challenges.html#WEB-03";
+        box.classList.remove("hidden");
+        box.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+      document
+        .getElementById("copy-flag")
+        .addEventListener("click", function () {
+          navigator.clipboard
+            .writeText(FLAG)
+            .then(() => {
+              this.textContent = "Copied";
+              setTimeout(() => (this.textContent = "Copy flag"), 1200);
+            })
+            .catch(() => {});
+        });
+    </script>
   </body>
 </html>

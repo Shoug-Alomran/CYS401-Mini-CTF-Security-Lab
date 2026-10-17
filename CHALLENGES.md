@@ -16,7 +16,7 @@ Never put a plain flag or an answer in page source or in an HTML comment. Player
 
 ## Web labs
 
-WEB-01 to WEB-04 are standalone pages (`lab-web-0N.html`) that *simulate* one vulnerability each entirely in client-side JavaScript — there is no real server, database, or query. The player solves the simulation, the page reveals a `CYS401{...}` flag, and they submit it in the WEB-0N card's flag box, which the server validates as usual. To change a web flag, edit the `FLAG` constant generated into the lab page (search the page for `const FLAG =`), update `flags.private.txt`, and re-load it on the Admin page.
+WEB-01 to WEB-04 are standalone pages (`lab-web-0N.html`) that _simulate_ one vulnerability each entirely in client-side JavaScript — there is no real server, database, or query. The player solves the simulation, the page reveals a `CYS401{...}` flag, and they submit it in the WEB-0N card's flag box, which the server validates as usual. To change a web flag, edit the `FLAG` constant generated into the lab page (search the page for `const FLAG =`), update `flags.private.txt`, and re-load it on the Admin page.
 
 ## Lab types (crypto / awareness / ethics, handled by `assets/js/labs.js`)
 
@@ -72,20 +72,20 @@ Paste the lock output into `data-lock='...'`. Keep the single quotes around it.
 
 ## Status
 
-| Card | Lab | Status |
-| --- | --- | --- |
-| WEB-01 | "Secret Cyber Clubhouse" (Areej's design, dark theme): invitation code in an HTML comment (`lab-web-01.html`) | Done |
-| WEB-02 | Simulated dashboard: role trusted from browser storage (`lab-web-02.html`) | Done |
-| WEB-03 | Simulated login: SQL-injection tautology (`lab-web-03.html`) | Done |
-| WEB-04 | Simulated profile viewer: IDOR by account id (`lab-web-04.html`) | Done |
-| CRY-01 | Config file with a Base64 "encrypted" password and a Base64 tool | Done |
-| CRY-02 | Caesar-shifted note and a Caesar tool | Done |
-| CRY-03 | Two ciphertexts XORed with a reused 4-byte key, with XOR/hex tools | Done |
-| AWR-01 | Phishing email and a select-all quiz (4 correct) | Done |
-| AWR-02 | Audited password list and a single-choice quiz | Done |
-| AWR-03 | Vishing call transcript and a select-all quiz (4 correct) | Done |
-| ETH-01 | Engagement letter and a select-all quiz on six actions (3 permitted) | Done |
-| ETH-02 | Responsible-disclosure scenario and a single-choice quiz | Done |
+| Card   | Lab                                                                                                           | Status |
+| ------ | ------------------------------------------------------------------------------------------------------------- | ------ |
+| WEB-01 | "Secret Cyber Clubhouse" (Areej's design, dark theme): invitation code in an HTML comment (`lab-web-01.html`) | Done   |
+| WEB-02 | Simulated dashboard: role trusted from browser storage (`lab-web-02.html`)                                    | Done   |
+| WEB-03 | Simulated login: SQL-injection tautology (`lab-web-03.html`)                                                  | Done   |
+| WEB-04 | Simulated profile viewer: IDOR by account id (`lab-web-04.html`)                                              | Done   |
+| CRY-01 | Config file with a Base64 "encrypted" password and a Base64 tool                                              | Done   |
+| CRY-02 | Caesar-shifted note and a Caesar tool                                                                         | Done   |
+| CRY-03 | Two ciphertexts XORed with a reused 4-byte key, with XOR/hex tools                                            | Done   |
+| AWR-01 | Phishing email and a select-all quiz (4 correct)                                                              | Done   |
+| AWR-02 | Audited password list and a single-choice quiz                                                                | Done   |
+| AWR-03 | Vishing call transcript and a select-all quiz (4 correct)                                                     | Done   |
+| ETH-01 | Engagement letter and a select-all quiz on six actions (3 permitted)                                          | Done   |
+| ETH-02 | Responsible-disclosure scenario and a single-choice quiz                                                      | Done   |
 
 The real flags are in `flags.private.txt` and the correct quiz answers are in `answers.private.txt`. Both files are git-ignored: share them with the team privately, never in the repo. After changing any flag, paste the `flags.private.txt` lines on the Admin page and press **Save to Firestore**.
 

@@ -167,7 +167,8 @@ async function idleLogout() {
   await logOut().catch(() => {});
   const here = location.pathname.split("/").pop() || "index.html";
   location.assign(
-    "auth.html?reason=idle" + (here === "auth.html" ? "" : "&next=" + encodeURIComponent(here)),
+    "auth.html?reason=idle" +
+      (here === "auth.html" ? "" : "&next=" + encodeURIComponent(here)),
   );
 }
 
@@ -175,7 +176,8 @@ let warningEl = null;
 function showIdleWarning(secondsLeft) {
   if (!warningEl) {
     warningEl = document.createElement("div");
-    warningEl.className = "fixed inset-0 z-[70] flex items-center justify-center bg-black/70 px-4";
+    warningEl.className =
+      "fixed inset-0 z-[70] flex items-center justify-center bg-black/70 px-4";
     warningEl.setAttribute("role", "alertdialog");
     warningEl.setAttribute("aria-modal", "true");
     warningEl.setAttribute("aria-labelledby", "idle-title");
@@ -187,15 +189,20 @@ function showIdleWarning(secondsLeft) {
       '<button type="button" data-idle-stay class="bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">Stay logged in</button>' +
       '<button type="button" data-idle-out class="border border-brder2 hover:bg-elevated text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">Log out now</button>' +
       "</div></div>";
-    warningEl.querySelector("[data-idle-stay]").addEventListener("click", () => {
-      markActive(true);
-      hideIdleWarning();
-    });
-    warningEl.querySelector("[data-idle-out]").addEventListener("click", idleLogout);
+    warningEl
+      .querySelector("[data-idle-stay]")
+      .addEventListener("click", () => {
+        markActive(true);
+        hideIdleWarning();
+      });
+    warningEl
+      .querySelector("[data-idle-out]")
+      .addEventListener("click", idleLogout);
     document.body.appendChild(warningEl);
     warningEl.querySelector("[data-idle-stay]").focus();
   }
-  warningEl.querySelector("[data-idle-count]").textContent = String(secondsLeft);
+  warningEl.querySelector("[data-idle-count]").textContent =
+    String(secondsLeft);
 }
 
 function hideIdleWarning() {
@@ -209,14 +216,19 @@ function checkIdle() {
   if (!state.user || signingUp || loggingOut) return hideIdleWarning();
   const idle = Date.now() - lastActive();
   if (idle >= IDLE_LIMIT_MS) idleLogout();
-  else if (idle >= IDLE_LIMIT_MS - IDLE_WARNING_MS) showIdleWarning(Math.ceil((IDLE_LIMIT_MS - idle) / 1000));
+  else if (idle >= IDLE_LIMIT_MS - IDLE_WARNING_MS)
+    showIdleWarning(Math.ceil((IDLE_LIMIT_MS - idle) / 1000));
   else hideIdleWarning(); // another tab saw activity
 }
 
 if (auth && typeof document !== "undefined") {
-  ["pointerdown", "keydown", "scroll", "touchstart", "mousemove"].forEach((type) =>
-    // While the warning is up, only "Stay logged in" counts as activity.
-    document.addEventListener(type, () => warningEl || markActive(false), { passive: true, capture: true }),
+  ["pointerdown", "keydown", "scroll", "touchstart", "mousemove"].forEach(
+    (type) =>
+      // While the warning is up, only "Stay logged in" counts as activity.
+      document.addEventListener(type, () => warningEl || markActive(false), {
+        passive: true,
+        capture: true,
+      }),
   );
   setInterval(checkIdle, 1000);
 }
@@ -276,7 +288,10 @@ export async function signUp(username, email, password, remember = true) {
   signingUp = true;
   let cred;
   try {
-    await setPersistence(auth, remember ? browserLocalPersistence : browserSessionPersistence);
+    await setPersistence(
+      auth,
+      remember ? browserLocalPersistence : browserSessionPersistence,
+    );
     markActive(true);
     cred = await createUserWithEmailAndPassword(auth, email, password);
   } catch (e) {
@@ -460,7 +475,10 @@ export async function deleteAccount(currentPassword) {
 // remember = false keeps the session only until the browser is closed (shared computers).
 export async function logIn(email, password, remember = true) {
   requireConfigured();
-  await setPersistence(auth, remember ? browserLocalPersistence : browserSessionPersistence);
+  await setPersistence(
+    auth,
+    remember ? browserLocalPersistence : browserSessionPersistence,
+  );
   markActive(true);
   return (await signInWithEmailAndPassword(auth, email, password)).user;
 }

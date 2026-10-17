@@ -214,106 +214,393 @@
 
       <!-- Lesson 1 -->
       <section id="lesson-1" class="py-20 border-t border-brder">
-        <div class="max-w-content mx-auto px-6 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,360px)] gap-10 lg:gap-14">
+        <div
+          class="max-w-content mx-auto px-6 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,360px)] gap-10 lg:gap-14"
+        >
           <div class="reveal">
-            <p class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3">Lesson 1 &middot; AWR-01</p>
-            <h2 class="font-display text-[28px] sm:text-[32px] font-semibold mb-5">Spotting a Phishing Email</h2>
-            <div class="space-y-4 text-[15px] text-stext leading-relaxed"><p>Phishing is a message that pretends to come from someone you trust so that you click a link, open an attachment, send money, or hand over your password. It targets people, not software, so no firewall stops it.</p></div>
+            <p
+              class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3"
+            >
+              Lesson 1 &middot; AWR-01
+            </p>
+            <h2
+              class="font-display text-[28px] sm:text-[32px] font-semibold mb-5"
+            >
+              Spotting a Phishing Email
+            </h2>
+            <div class="space-y-4 text-[15px] text-stext leading-relaxed">
+              <p>
+                Phishing is a message that pretends to come from someone you
+                trust so that you click a link, open an attachment, send money,
+                or hand over your password. It targets people, not software, so
+                no firewall stops it.
+              </p>
+            </div>
             <h3 class="mt-10 text-[17px] font-semibold">How it works</h3>
-            <div class="mt-3 space-y-3 text-[15px] text-stext leading-relaxed"><p>Most phishing combines a few recognisable moves. Check the actual sender address, not just the display name. Hover over links before clicking to see the real destination. Be suspicious of urgency (&ldquo;within 24 hours&rdquo;) and of any request for your password, which a real IT desk never needs.</p></div>
-            <pre class="mt-3 text-[13px] font-mono text-ptext whitespace-pre-wrap break-all bg-main border border-brder rounded-xl p-4">From: &quot;University IT Desk&quot; &lt;support@univ-helpdesk.co&gt;      ← not the university domain
+            <div class="mt-3 space-y-3 text-[15px] text-stext leading-relaxed">
+              <p>
+                Most phishing combines a few recognisable moves. Check the
+                actual sender address, not just the display name. Hover over
+                links before clicking to see the real destination. Be suspicious
+                of urgency (&ldquo;within 24 hours&rdquo;) and of any request
+                for your password, which a real IT desk never needs.
+              </p>
+            </div>
+            <pre
+              class="mt-3 text-[13px] font-mono text-ptext whitespace-pre-wrap break-all bg-main border border-brder rounded-xl p-4"
+            >
+From: &quot;University IT Desk&quot; &lt;support@univ-helpdesk.co&gt;      ← not the university domain
 Subject: Your account closes in 24 hours                 ← urgency
 Link text: portal.university.edu
 Real link: http://portal-university.verify-login.co       ← look-alike domain</pre>
-            
+
             <h3 class="mt-10 text-[17px] font-semibold">How it is prevented</h3>
-            <ul class="mt-4 space-y-3 text-[15px] text-stext leading-relaxed"><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Verify unexpected requests through a channel you already trust, such as the official website or a known phone number.</span></li><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Report suspicious messages to IT instead of deleting them, so others are warned.</span></li><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Turn on multi-factor authentication, so a stolen password alone is not enough.</span></li></ul>
+            <ul class="mt-4 space-y-3 text-[15px] text-stext leading-relaxed">
+              <li class="flex gap-3">
+                <span class="text-success mt-0.5" aria-hidden="true"
+                  >&#10003;</span
+                ><span
+                  >Verify unexpected requests through a channel you already
+                  trust, such as the official website or a known phone
+                  number.</span
+                >
+              </li>
+              <li class="flex gap-3">
+                <span class="text-success mt-0.5" aria-hidden="true"
+                  >&#10003;</span
+                ><span
+                  >Report suspicious messages to IT instead of deleting them, so
+                  others are warned.</span
+                >
+              </li>
+              <li class="flex gap-3">
+                <span class="text-success mt-0.5" aria-hidden="true"
+                  >&#10003;</span
+                ><span
+                  >Turn on multi-factor authentication, so a stolen password
+                  alone is not enough.</span
+                >
+              </li>
+            </ul>
           </div>
           <aside class="reveal flex flex-col gap-5 lg:pt-10">
             <div class="bg-card border border-brder rounded-card p-6">
-              <p class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2">Real-world case</p>
-              <h3 class="text-[16px] font-semibold mb-3">&ldquo;Business email compromise&rdquo;, 2013&ndash;2015</h3>
-              <p class="text-[14px] text-stext leading-relaxed">A Lithuanian man posed as a real Asian hardware supplier and emailed fake invoices to two US technology companies, tricking them into wiring over US$100 million. He pleaded guilty to wire fraud in 2019.</p>
-              <p class="mt-3 text-[12px] text-mtext">Source: <a href="https://www.justice.gov/usao-sdny/pr/lithuanian-man-pleads-guilty-wire-fraud-theft-over-100-million-fraudulent-business" target="_blank" rel="noopener" class="underline hover:text-ptext">US Department of Justice (2019)</a></p>
+              <p
+                class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2"
+              >
+                Real-world case
+              </p>
+              <h3 class="text-[16px] font-semibold mb-3">
+                &ldquo;Business email compromise&rdquo;, 2013&ndash;2015
+              </h3>
+              <p class="text-[14px] text-stext leading-relaxed">
+                A Lithuanian man posed as a real Asian hardware supplier and
+                emailed fake invoices to two US technology companies, tricking
+                them into wiring over US$100 million. He pleaded guilty to wire
+                fraud in 2019.
+              </p>
+              <p class="mt-3 text-[12px] text-mtext">
+                Source:
+                <a
+                  href="https://www.justice.gov/usao-sdny/pr/lithuanian-man-pleads-guilty-wire-fraud-theft-over-100-million-fraudulent-business"
+                  target="_blank"
+                  rel="noopener"
+                  class="underline hover:text-ptext"
+                  >US Department of Justice (2019)</a
+                >
+              </p>
             </div>
             <details class="group bg-card border border-brder rounded-card p-6">
               <summary class="cursor-pointer list-none">
-                <p class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2">Quick check</p>
-                <p class="text-[14px] text-ptext leading-relaxed">An email shows the sender as "PSU IT Desk". Does that prove it came from PSU?</p>
-                <p class="mt-3 text-[13px] font-semibold text-bred group-open:hidden">Show answer</p>
+                <p
+                  class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2"
+                >
+                  Quick check
+                </p>
+                <p class="text-[14px] text-ptext leading-relaxed">
+                  An email shows the sender as "PSU IT Desk". Does that prove it
+                  came from PSU?
+                </p>
+                <p
+                  class="mt-3 text-[13px] font-semibold text-bred group-open:hidden"
+                >
+                  Show answer
+                </p>
               </summary>
-              <p class="mt-3 text-[14px] text-stext leading-relaxed border-t border-brder pt-3">No. The display name can be anything; check the actual address after it, and verify through a channel you trust.</p>
+              <p
+                class="mt-3 text-[14px] text-stext leading-relaxed border-t border-brder pt-3"
+              >
+                No. The display name can be anything; check the actual address
+                after it, and verify through a channel you trust.
+              </p>
             </details>
-            <a href="security-awareness-challenges.html#AWR-01" class="self-start inline-flex items-center gap-2 bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">Try it: AWR-01 &rarr;</a>
+            <a
+              href="security-awareness-challenges.html#AWR-01"
+              class="self-start inline-flex items-center gap-2 bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors"
+              >Try it: AWR-01 &rarr;</a
+            >
           </aside>
         </div>
       </section>
       <!-- Lesson 2 -->
       <section id="lesson-2" class="py-20 border-t border-brder bg-sec">
-        <div class="max-w-content mx-auto px-6 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,360px)] gap-10 lg:gap-14">
+        <div
+          class="max-w-content mx-auto px-6 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,360px)] gap-10 lg:gap-14"
+        >
           <div class="reveal">
-            <p class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3">Lesson 2 &middot; AWR-02</p>
-            <h2 class="font-display text-[28px] sm:text-[32px] font-semibold mb-5">Passwords That Survive an Attack</h2>
-            <div class="space-y-4 text-[15px] text-stext leading-relaxed"><p>Attackers rarely guess passwords one by one by hand. They run <strong class="text-ptext">wordlist attacks</strong>: millions of real passwords from earlier breaches, plus common variations, tried automatically.</p></div>
+            <p
+              class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3"
+            >
+              Lesson 2 &middot; AWR-02
+            </p>
+            <h2
+              class="font-display text-[28px] sm:text-[32px] font-semibold mb-5"
+            >
+              Passwords That Survive an Attack
+            </h2>
+            <div class="space-y-4 text-[15px] text-stext leading-relaxed">
+              <p>
+                Attackers rarely guess passwords one by one by hand. They run
+                <strong class="text-ptext">wordlist attacks</strong>: millions
+                of real passwords from earlier breaches, plus common variations,
+                tried automatically.
+              </p>
+            </div>
             <h3 class="mt-10 text-[17px] font-semibold">How it works</h3>
-            <div class="mt-3 space-y-3 text-[15px] text-stext leading-relaxed"><p>Swapping letters for look-alike symbols (<span class="font-mono text-ptext">P@ssw0rd</span>) or adding a year and an exclamation mark (<span class="font-mono text-ptext">Summer2026!</span>) are the first variations cracking tools try. What makes a password hard to crack is mostly <strong class="text-ptext">length</strong> and unpredictability: a passphrase of several random words beats a short &ldquo;complex&rdquo; password.</p></div>
-            <pre class="mt-3 text-[13px] font-mono text-ptext whitespace-pre-wrap break-all bg-main border border-brder rounded-xl p-4">P@ssw0rd123                          ← in every wordlist, with variations
+            <div class="mt-3 space-y-3 text-[15px] text-stext leading-relaxed">
+              <p>
+                Swapping letters for look-alike symbols (<span
+                  class="font-mono text-ptext"
+                  >P@ssw0rd</span
+                >) or adding a year and an exclamation mark (<span
+                  class="font-mono text-ptext"
+                  >Summer2026!</span
+                >) are the first variations cracking tools try. What makes a
+                password hard to crack is mostly
+                <strong class="text-ptext">length</strong> and unpredictability:
+                a passphrase of several random words beats a short
+                &ldquo;complex&rdquo; password.
+              </p>
+            </div>
+            <pre
+              class="mt-3 text-[13px] font-mono text-ptext whitespace-pre-wrap break-all bg-main border border-brder rounded-xl p-4"
+            >
+P@ssw0rd123                          ← in every wordlist, with variations
 correct horse battery staple river   ← long, random words: far harder to guess</pre>
-            
+
             <h3 class="mt-10 text-[17px] font-semibold">How it is prevented</h3>
-            <ul class="mt-4 space-y-3 text-[15px] text-stext leading-relaxed"><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Use long passphrases, and a password manager so every account gets a different one.</span></li><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Turn on multi-factor authentication wherever it is offered.</span></li><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>NIST guidance asks services to allow long passwords, check new passwords against lists of breached ones, and drop arbitrary composition rules.</span></li></ul>
+            <ul class="mt-4 space-y-3 text-[15px] text-stext leading-relaxed">
+              <li class="flex gap-3">
+                <span class="text-success mt-0.5" aria-hidden="true"
+                  >&#10003;</span
+                ><span
+                  >Use long passphrases, and a password manager so every account
+                  gets a different one.</span
+                >
+              </li>
+              <li class="flex gap-3">
+                <span class="text-success mt-0.5" aria-hidden="true"
+                  >&#10003;</span
+                ><span
+                  >Turn on multi-factor authentication wherever it is
+                  offered.</span
+                >
+              </li>
+              <li class="flex gap-3">
+                <span class="text-success mt-0.5" aria-hidden="true"
+                  >&#10003;</span
+                ><span
+                  >NIST guidance asks services to allow long passwords, check
+                  new passwords against lists of breached ones, and drop
+                  arbitrary composition rules.</span
+                >
+              </li>
+            </ul>
           </div>
           <aside class="reveal flex flex-col gap-5 lg:pt-10">
             <div class="bg-card border border-brder rounded-card p-6">
-              <p class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2">Real-world case</p>
+              <p
+                class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2"
+              >
+                Real-world case
+              </p>
               <h3 class="text-[16px] font-semibold mb-3">RockYou, 2009</h3>
-              <p class="text-[14px] text-stext leading-relaxed">A breach of the social-app company RockYou exposed more than 32 million user accounts, whose passwords had been stored in plain text. Leaked lists like this one are exactly what wordlist attacks are built from.</p>
-              <p class="mt-3 text-[12px] text-mtext">Source: <a href="https://techcrunch.com/2009/12/14/rockyou-hack-security-myspace-facebook-passwords/" target="_blank" rel="noopener" class="underline hover:text-ptext">TechCrunch (2009)</a></p>
+              <p class="text-[14px] text-stext leading-relaxed">
+                A breach of the social-app company RockYou exposed more than 32
+                million user accounts, whose passwords had been stored in plain
+                text. Leaked lists like this one are exactly what wordlist
+                attacks are built from.
+              </p>
+              <p class="mt-3 text-[12px] text-mtext">
+                Source:
+                <a
+                  href="https://techcrunch.com/2009/12/14/rockyou-hack-security-myspace-facebook-passwords/"
+                  target="_blank"
+                  rel="noopener"
+                  class="underline hover:text-ptext"
+                  >TechCrunch (2009)</a
+                >
+              </p>
             </div>
             <details class="group bg-card border border-brder rounded-card p-6">
               <summary class="cursor-pointer list-none">
-                <p class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2">Quick check</p>
-                <p class="text-[14px] text-ptext leading-relaxed">Which is stronger: "Tr0ub4dor&3" or "orange piano sunset ladder"?</p>
-                <p class="mt-3 text-[13px] font-semibold text-bred group-open:hidden">Show answer</p>
+                <p
+                  class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2"
+                >
+                  Quick check
+                </p>
+                <p class="text-[14px] text-ptext leading-relaxed">
+                  Which is stronger: "Tr0ub4dor&3" or "orange piano sunset
+                  ladder"?
+                </p>
+                <p
+                  class="mt-3 text-[13px] font-semibold text-bred group-open:hidden"
+                >
+                  Show answer
+                </p>
               </summary>
-              <p class="mt-3 text-[14px] text-stext leading-relaxed border-t border-brder pt-3">Usually the four-word passphrase: it is longer and its words are random, while symbol swaps are predictable to cracking tools.</p>
+              <p
+                class="mt-3 text-[14px] text-stext leading-relaxed border-t border-brder pt-3"
+              >
+                Usually the four-word passphrase: it is longer and its words are
+                random, while symbol swaps are predictable to cracking tools.
+              </p>
             </details>
-            <a href="security-awareness-challenges.html#AWR-02" class="self-start inline-flex items-center gap-2 bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">Try it: AWR-02 &rarr;</a>
+            <a
+              href="security-awareness-challenges.html#AWR-02"
+              class="self-start inline-flex items-center gap-2 bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors"
+              >Try it: AWR-02 &rarr;</a
+            >
           </aside>
         </div>
       </section>
       <!-- Lesson 3 -->
       <section id="lesson-3" class="py-20 border-t border-brder">
-        <div class="max-w-content mx-auto px-6 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,360px)] gap-10 lg:gap-14">
+        <div
+          class="max-w-content mx-auto px-6 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,360px)] gap-10 lg:gap-14"
+        >
           <div class="reveal">
-            <p class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3">Lesson 3 &middot; AWR-03</p>
-            <h2 class="font-display text-[28px] sm:text-[32px] font-semibold mb-5">Social Engineering by Phone</h2>
-            <div class="space-y-4 text-[15px] text-stext leading-relaxed"><p>Social engineering manipulates people into giving away access. On the phone (vishing), an attacker invents a believable <strong class="text-ptext">pretext</strong>, such as a new IT contractor, an auditor, or a stressed manager, and relies on politeness and urgency.</p></div>
+            <p
+              class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3"
+            >
+              Lesson 3 &middot; AWR-03
+            </p>
+            <h2
+              class="font-display text-[28px] sm:text-[32px] font-semibold mb-5"
+            >
+              Social Engineering by Phone
+            </h2>
+            <div class="space-y-4 text-[15px] text-stext leading-relaxed">
+              <p>
+                Social engineering manipulates people into giving away access.
+                On the phone (vishing), an attacker invents a believable
+                <strong class="text-ptext">pretext</strong>, such as a new IT
+                contractor, an auditor, or a stressed manager, and relies on
+                politeness and urgency.
+              </p>
+            </div>
             <h3 class="mt-10 text-[17px] font-semibold">How it works</h3>
-            <div class="mt-3 space-y-3 text-[15px] text-stext leading-relaxed"><p>A skilled caller rarely asks for a password. They collect small, harmless-sounding facts (your manager&rsquo;s name, your date of birth, your first pet, which systems you use) and combine them to pass account-recovery questions or to sound convincing on the next call.</p></div>
-            <pre class="mt-3 text-[13px] font-mono text-ptext whitespace-pre-wrap break-all bg-main border border-brder rounded-xl p-4">&quot;Hi, I&#x27;m with the IT contractor doing the email migration. Just confirming
+            <div class="mt-3 space-y-3 text-[15px] text-stext leading-relaxed">
+              <p>
+                A skilled caller rarely asks for a password. They collect small,
+                harmless-sounding facts (your manager&rsquo;s name, your date of
+                birth, your first pet, which systems you use) and combine them
+                to pass account-recovery questions or to sound convincing on the
+                next call.
+              </p>
+            </div>
+            <pre
+              class="mt-3 text-[13px] font-mono text-ptext whitespace-pre-wrap break-all bg-main border border-brder rounded-xl p-4"
+            >
+&quot;Hi, I&#x27;m with the IT contractor doing the email migration. Just confirming
  your details: you report to Ms. Al-Harbi, right? And your date of birth
  for the record?&quot;    ← each answer sounds harmless; together they reset an account</pre>
-            
+
             <h3 class="mt-10 text-[17px] font-semibold">How it is prevented</h3>
-            <ul class="mt-4 space-y-3 text-[15px] text-stext leading-relaxed"><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Verify callers by calling back on a number you look up yourself, never one they give you.</span></li><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Treat personal details as security information: they are often account-recovery answers.</span></li><li class="flex gap-3"><span class="text-success mt-0.5" aria-hidden="true">&#10003;</span><span>Help desks need a fixed verification procedure that does not bend for urgency.</span></li></ul>
+            <ul class="mt-4 space-y-3 text-[15px] text-stext leading-relaxed">
+              <li class="flex gap-3">
+                <span class="text-success mt-0.5" aria-hidden="true"
+                  >&#10003;</span
+                ><span
+                  >Verify callers by calling back on a number you look up
+                  yourself, never one they give you.</span
+                >
+              </li>
+              <li class="flex gap-3">
+                <span class="text-success mt-0.5" aria-hidden="true"
+                  >&#10003;</span
+                ><span
+                  >Treat personal details as security information: they are
+                  often account-recovery answers.</span
+                >
+              </li>
+              <li class="flex gap-3">
+                <span class="text-success mt-0.5" aria-hidden="true"
+                  >&#10003;</span
+                ><span
+                  >Help desks need a fixed verification procedure that does not
+                  bend for urgency.</span
+                >
+              </li>
+            </ul>
           </div>
           <aside class="reveal flex flex-col gap-5 lg:pt-10">
             <div class="bg-card border border-brder rounded-card p-6">
-              <p class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2">Real-world case</p>
+              <p
+                class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2"
+              >
+                Real-world case
+              </p>
               <h3 class="text-[16px] font-semibold mb-3">Twitter, July 2020</h3>
-              <p class="text-[14px] text-stext leading-relaxed">Attackers phoned Twitter employees while posing as the company&rsquo;s IT staff and talked some of them into entering their credentials. They took over high-profile accounts and used them to run a scam that collected more than US$118,000 in bitcoin, according to the New York Department of Financial Services.</p>
-              <p class="mt-3 text-[12px] text-mtext">Source: <a href="https://www.dfs.ny.gov/Twitter_Report" target="_blank" rel="noopener" class="underline hover:text-ptext">NYDFS Twitter investigation report (2020)</a></p>
+              <p class="text-[14px] text-stext leading-relaxed">
+                Attackers phoned Twitter employees while posing as the
+                company&rsquo;s IT staff and talked some of them into entering
+                their credentials. They took over high-profile accounts and used
+                them to run a scam that collected more than US$118,000 in
+                bitcoin, according to the New York Department of Financial
+                Services.
+              </p>
+              <p class="mt-3 text-[12px] text-mtext">
+                Source:
+                <a
+                  href="https://www.dfs.ny.gov/Twitter_Report"
+                  target="_blank"
+                  rel="noopener"
+                  class="underline hover:text-ptext"
+                  >NYDFS Twitter investigation report (2020)</a
+                >
+              </p>
             </div>
             <details class="group bg-card border border-brder rounded-card p-6">
               <summary class="cursor-pointer list-none">
-                <p class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2">Quick check</p>
-                <p class="text-[14px] text-ptext leading-relaxed">A caller never asks for your password. Can the call still be an attack?</p>
-                <p class="mt-3 text-[13px] font-semibold text-bred group-open:hidden">Show answer</p>
+                <p
+                  class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2"
+                >
+                  Quick check
+                </p>
+                <p class="text-[14px] text-ptext leading-relaxed">
+                  A caller never asks for your password. Can the call still be
+                  an attack?
+                </p>
+                <p
+                  class="mt-3 text-[13px] font-semibold text-bred group-open:hidden"
+                >
+                  Show answer
+                </p>
               </summary>
-              <p class="mt-3 text-[14px] text-stext leading-relaxed border-t border-brder pt-3">Yes. Harmless-looking details such as your birth date or manager&rsquo;s name are often enough to reset an account or impersonate you.</p>
+              <p
+                class="mt-3 text-[14px] text-stext leading-relaxed border-t border-brder pt-3"
+              >
+                Yes. Harmless-looking details such as your birth date or
+                manager&rsquo;s name are often enough to reset an account or
+                impersonate you.
+              </p>
             </details>
-            <a href="security-awareness-challenges.html#AWR-03" class="self-start inline-flex items-center gap-2 bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors">Try it: AWR-03 &rarr;</a>
+            <a
+              href="security-awareness-challenges.html#AWR-03"
+              class="self-start inline-flex items-center gap-2 bg-pred hover:bg-bred text-white text-[14px] font-semibold px-5 py-2.5 rounded-btn transition-colors"
+              >Try it: AWR-03 &rarr;</a
+            >
           </aside>
         </div>
       </section>
@@ -377,7 +664,70 @@ correct horse battery staple river   ← long, random words: far harder to guess
       <section id="sources" class="py-16 border-t border-brder bg-sec">
         <div class="max-w-content mx-auto px-6">
           <h2 class="font-display text-[22px] font-semibold mb-6">Sources</h2>
-          <ol class="max-w-3xl space-y-3 text-[13px] text-stext leading-relaxed"><li class="pl-6 -indent-6">US Department of Justice. (2019, March 20). <em>Lithuanian man pleads guilty to wire fraud for theft of over $100 million in fraudulent business email compromise scheme</em>. <a href="https://www.justice.gov/usao-sdny/pr/lithuanian-man-pleads-guilty-wire-fraud-theft-over-100-million-fraudulent-business" target="_blank" rel="noopener" class="text-bred hover:underline break-all">https://www.justice.gov/usao-sdny/pr/lithuanian-man-pleads-guilty-wire-fraud-theft-over-100-million-fraudulent-business</a></li><li class="pl-6 -indent-6">CISA. (n.d.). <em>Recognize and report phishing</em>. <a href="https://www.cisa.gov/secure-our-world/recognize-and-report-phishing" target="_blank" rel="noopener" class="text-bred hover:underline break-all">https://www.cisa.gov/secure-our-world/recognize-and-report-phishing</a></li><li class="pl-6 -indent-6">National Institute of Standards and Technology. (2017). <em>SP 800-63B: Digital identity guidelines, authentication and lifecycle management</em>. <a href="https://pages.nist.gov/800-63-3/sp800-63b.html" target="_blank" rel="noopener" class="text-bred hover:underline break-all">https://pages.nist.gov/800-63-3/sp800-63b.html</a></li><li class="pl-6 -indent-6">TechCrunch. (2009, December 14). <em>RockYou hack: From bad to worse</em>. <a href="https://techcrunch.com/2009/12/14/rockyou-hack-security-myspace-facebook-passwords/" target="_blank" rel="noopener" class="text-bred hover:underline break-all">https://techcrunch.com/2009/12/14/rockyou-hack-security-myspace-facebook-passwords/</a></li><li class="pl-6 -indent-6">New York State Department of Financial Services. (2020). <em>Twitter investigation report</em>. <a href="https://www.dfs.ny.gov/Twitter_Report" target="_blank" rel="noopener" class="text-bred hover:underline break-all">https://www.dfs.ny.gov/Twitter_Report</a></li></ol>
+          <ol
+            class="max-w-3xl space-y-3 text-[13px] text-stext leading-relaxed"
+          >
+            <li class="pl-6 -indent-6">
+              US Department of Justice. (2019, March 20).
+              <em
+                >Lithuanian man pleads guilty to wire fraud for theft of over
+                $100 million in fraudulent business email compromise scheme</em
+              >.
+              <a
+                href="https://www.justice.gov/usao-sdny/pr/lithuanian-man-pleads-guilty-wire-fraud-theft-over-100-million-fraudulent-business"
+                target="_blank"
+                rel="noopener"
+                class="text-bred hover:underline break-all"
+                >https://www.justice.gov/usao-sdny/pr/lithuanian-man-pleads-guilty-wire-fraud-theft-over-100-million-fraudulent-business</a
+              >
+            </li>
+            <li class="pl-6 -indent-6">
+              CISA. (n.d.). <em>Recognize and report phishing</em>.
+              <a
+                href="https://www.cisa.gov/secure-our-world/recognize-and-report-phishing"
+                target="_blank"
+                rel="noopener"
+                class="text-bred hover:underline break-all"
+                >https://www.cisa.gov/secure-our-world/recognize-and-report-phishing</a
+              >
+            </li>
+            <li class="pl-6 -indent-6">
+              National Institute of Standards and Technology. (2017).
+              <em
+                >SP 800-63B: Digital identity guidelines, authentication and
+                lifecycle management</em
+              >.
+              <a
+                href="https://pages.nist.gov/800-63-3/sp800-63b.html"
+                target="_blank"
+                rel="noopener"
+                class="text-bred hover:underline break-all"
+                >https://pages.nist.gov/800-63-3/sp800-63b.html</a
+              >
+            </li>
+            <li class="pl-6 -indent-6">
+              TechCrunch. (2009, December 14).
+              <em>RockYou hack: From bad to worse</em>.
+              <a
+                href="https://techcrunch.com/2009/12/14/rockyou-hack-security-myspace-facebook-passwords/"
+                target="_blank"
+                rel="noopener"
+                class="text-bred hover:underline break-all"
+                >https://techcrunch.com/2009/12/14/rockyou-hack-security-myspace-facebook-passwords/</a
+              >
+            </li>
+            <li class="pl-6 -indent-6">
+              New York State Department of Financial Services. (2020).
+              <em>Twitter investigation report</em>.
+              <a
+                href="https://www.dfs.ny.gov/Twitter_Report"
+                target="_blank"
+                rel="noopener"
+                class="text-bred hover:underline break-all"
+                >https://www.dfs.ny.gov/Twitter_Report</a
+              >
+            </li>
+          </ol>
         </div>
       </section>
 

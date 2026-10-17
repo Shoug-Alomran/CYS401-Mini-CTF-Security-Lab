@@ -259,7 +259,7 @@
     "<p>&copy; " +
     new Date().getFullYear() +
     " CYS401 Semester Project Group. Educational content purposes only.</p>" +
-    '<p>Prince Sultan University &middot; Semester 261 &middot; Project plan PDF made with <a href="https://blueprint.shoug-tech.com/" target="_blank" rel="noopener" class="text-stext hover:text-ptext underline underline-offset-2 transition-colors">Blueprint</a></p>' +
+    '<p>Prince Sultan University &middot; Semester 261 &middot; Made with <a href="https://blueprint.shoug-tech.com/" target="_blank" rel="noopener" class="text-stext hover:text-ptext underline underline-offset-2 transition-colors">Blueprint</a></p>' +
     "</div>" +
     "</div>" +
     "</footer>";
