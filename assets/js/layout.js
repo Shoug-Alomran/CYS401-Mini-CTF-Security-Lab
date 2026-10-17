@@ -190,7 +190,7 @@
     "</button>" +
     "</div>" +
     "</div>" +
-    '<nav id="mobile-nav" class="lg:hidden hidden max-h-[calc(100vh-72px)] overflow-y-auto border-b border-brder bg-main shadow-2xl" style="background-color:#09090B" aria-label="Mobile">' +
+    '<nav id="mobile-nav" class="lg:hidden hidden fixed left-0 right-0 top-[72px] overflow-y-auto overscroll-contain border-b border-brder bg-main shadow-2xl z-40" style="background-color:#09090B;max-height:calc(100dvh - 72px)" aria-label="Mobile">' +
     '<div class="max-w-content mx-auto px-6 py-4 flex flex-col gap-1 text-[15px] font-medium">' +
     mobileLinks +
     '<div data-auth-slot="mobile" class="sm:hidden mt-2 flex flex-wrap items-center gap-2"></div>' +
