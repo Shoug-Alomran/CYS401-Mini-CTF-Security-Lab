@@ -48,6 +48,12 @@ jobs:
           mkdir -p _site
           cp *.html *.pdf .nojekyll robots.txt sitemap.xml favicon.ico site.webmanifest _site/
           cp -R assets _site/
+          # Cache-bust JS/CSS: the CDN tells browsers to keep them for a month, so stamp
+          # every reference with this commit. Module imports get the same stamp so each
+          # module still loads from one URL.
+          v="${GITHUB_SHA::8}"
+          sed -i -E "s#((src|href)=\"assets/(js|css)/[^\"?]+\.(js|css))\"#\1?v=$v\"#g; s#(from \"\./[^\"?]+\.js)\"#\1?v=$v\"#g" _site/*.html
+          sed -i -E "s#(from \"\./[^\"?]+\.js)\"#\1?v=$v\"#g" _site/assets/js/*.js
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
