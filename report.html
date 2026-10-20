@@ -6,7 +6,7 @@
     <title>Report | CYS401 CTF Lab</title>
     <meta
       name="description"
-      content="The CTF Lab report as a presentation: security analysis, literature review and Gulf-region incidents, requirements, design and implementation, security controls, recommendations, and references."
+      content="The CTF Lab report as a presentation: security analysis, literature review and Gulf-region incidents, requirements, design and implementation, security controls, and recommendations."
     />
     <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="favicon.ico" sizes="32x32" />
@@ -19,7 +19,7 @@
     <meta property="og:title" content="Report | CYS401" />
     <meta
       property="og:description"
-      content="The CTF Lab report as a presentation: security analysis, literature review and Gulf-region incidents, requirements, design and implementation, security controls, recommendations, and references."
+      content="The CTF Lab report as a presentation: security analysis, literature review and Gulf-region incidents, requirements, design and implementation, security controls, and recommendations."
     />
     <meta
       property="og:url"
@@ -39,7 +39,7 @@
     <meta name="twitter:title" content="Report | CYS401" />
     <meta
       name="twitter:description"
-      content="The CTF Lab report as a presentation: security analysis, literature review and Gulf-region incidents, requirements, design and implementation, security controls, recommendations, and references."
+      content="The CTF Lab report as a presentation: security analysis, literature review and Gulf-region incidents, requirements, design and implementation, security controls, and recommendations."
     />
     <meta
       name="twitter:image"
@@ -76,7 +76,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        padding: clamp(64px, 10vh, 112px) 0;
+        padding: clamp(48px, 7vh, 80px) 0;
         overflow: hidden;
       }
       .slide + .slide {
@@ -610,16 +610,16 @@
               <p data-a class="eyebrow">At a glance</p>
               <h2 data-a="split" class="s-title">Report at a glance</h2>
               <p data-a class="lead mt-6" style="--i: 3">
-                Eleven parts, eight written. The parts still being written are
+                Ten parts, seven written. The parts still being written are
                 marked and added here as they are finished.
               </p>
               <div data-a class="mt-10" style="--i: 4">
                 <div class="flex items-baseline gap-3 mb-3">
-                  <span class="font-display text-[56px] font-semibold leading-none">8<span class="text-mtext">/11</span></span>
+                  <span class="font-display text-[56px] font-semibold leading-none">7<span class="text-mtext">/10</span></span>
                   <span class="label">parts complete</span>
                 </div>
                 <div class="h-1.5 rounded-full bg-elevated overflow-hidden">
-                  <div data-a="bar" class="h-full rounded-full" style="width: 72.7%; --i: 6; background: linear-gradient(90deg, #7f1d1d, #ef4444)"></div>
+                  <div data-a="bar" class="h-full rounded-full" style="width: 70%; --i: 6; background: linear-gradient(90deg, #7f1d1d, #ef4444)"></div>
                 </div>
               </div>
             </div>
@@ -633,8 +633,7 @@
               <li data-a style="--i: 7"><div class="card-x !p-4 flex items-center gap-3"><span class="kicker w-6 shrink-0">07</span><span class="text-[14px] flex-1 min-w-0 text-stext">Testing &amp; Results</span><span class="status status-wip">In progress</span></div></li>
               <li data-a style="--i: 8"><a href="#recommendations" class="card-x lift !p-4 flex items-center gap-3"><span class="kicker w-6 shrink-0">08</span><span class="text-[14px] flex-1 min-w-0">Application &amp; Recommendations</span><span class="status status-done">Done</span></a></li>
               <li data-a style="--i: 9"><a href="#conclusion" class="card-x lift !p-4 flex items-center gap-3"><span class="kicker w-6 shrink-0">09</span><span class="text-[14px] flex-1 min-w-0">Conclusion</span><span class="status status-done">Done</span></a></li>
-              <li data-a style="--i: 10"><a href="#references" class="card-x lift !p-4 flex items-center gap-3"><span class="kicker w-6 shrink-0">10</span><span class="text-[14px] flex-1 min-w-0">References</span><span class="status status-done">Done</span></a></li>
-              <li data-a style="--i: 11" class="sm:col-span-2"><div class="card-x !p-4 flex items-center gap-3"><span class="kicker w-6 shrink-0">A</span><span class="text-[14px] flex-1 min-w-0 text-stext">Appendix A &middot; Source Code</span><span class="status status-wip">In progress</span></div></li>
+              <li data-a style="--i: 10"><div class="card-x !p-4 flex items-center gap-3"><span class="kicker w-6 shrink-0">A</span><span class="text-[14px] flex-1 min-w-0 text-stext">Appendix A &middot; Source Code</span><span class="status status-wip">In progress</span></div></li>
             </ol>
           </div>
         </div>
@@ -898,7 +897,7 @@
                 </tbody>
               </table>
             </div>
-            <p data-a class="body mt-8 max-w-4xl" style="--i: 3">
+            <p data-a class="body mt-8" style="--i: 3">
               The three platforms cover technical skills well, but none of them
               includes awareness or ethics challenges by default. CTFd can host
               any category, but it ships with no challenges, so organizers must
@@ -1245,33 +1244,6 @@
               <ul class="flex flex-wrap gap-1.5 mb-4"><li class="chip chip-red">Salted cryptographic hashing</li><li class="chip chip-red">Input sanitization</li><li class="chip chip-red">Access control</li></ul>
               <p class="text-[14px] text-stext leading-relaxed">The system incorporates basic CYS401 knowledge in terms of application layer security mechanisms to protect itself from injection attacks, broken access control, and data leakage.</p>
             </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- ═══ 10 · References ═══════════════════════════════════════════════ -->
-      <section id="references" class="relative bg-sec">
-        <div class="slide" data-label="10 · References">
-          <div class="relative max-w-content mx-auto px-6 w-full">
-            <p data-a class="eyebrow">Section 10</p>
-            <h2 data-a="split" class="s-title">References</h2>
-            <p data-a class="body mt-4" style="--i: 2">APA 7th edition.</p>
-            <ol class="mt-8 grid lg:grid-cols-2 gap-x-10 text-[13px] text-stext leading-relaxed refs">
-              <li data-a style="--i: 1">Al Jazeera. (2013, May 18). <em>Hackers target Saudi government websites</em>. <a href="https://www.aljazeera.com/news/2013/5/18/hackers-target-saudi-government-websites" target="_blank" rel="noopener">https://www.aljazeera.com/news/2013/5/18/hackers-target-saudi-government-websites</a></li>
-              <li data-a style="--i: 2">Al Jazeera. (2016, April 26). <em>QNB bank investigates reports of massive data leak</em>. <a href="https://www.aljazeera.com/news/2016/4/26/qnb-bank-investigates-reports-of-massive-data-leak" target="_blank" rel="noopener">https://www.aljazeera.com/news/2016/4/26/qnb-bank-investigates-reports-of-massive-data-leak</a></li>
-              <li data-a style="--i: 3">Arab News. (2018, April 23). <em>Hackers access personal data of 14 million Careem taxi users</em>. <a href="https://www.arabnews.com/business/hackers-access-personal-data-of-14-million-careem-taxi-users-1289791" target="_blank" rel="noopener">https://www.arabnews.com/business/hackers-access-personal-data-of-14-million-careem-taxi-users-1289791</a></li>
-              <li data-a style="--i: 4">Carnegie Mellon University. (n.d.). <em>picoCTF</em>. <a href="https://picoctf.org/" target="_blank" rel="noopener">https://picoctf.org/</a></li>
-              <li data-a style="--i: 5">CTFd LLC. (n.d.). <em>CTFd documentation</em>. <a href="https://docs.ctfd.io/" target="_blank" rel="noopener">https://docs.ctfd.io/</a></li>
-              <li data-a style="--i: 6">Firebase. (n.d.-a). <em>Add multi-factor authentication to your web app</em>. <a href="https://firebase.google.com/docs/auth/web/multi-factor" target="_blank" rel="noopener">https://firebase.google.com/docs/auth/web/multi-factor</a></li>
-              <li data-a style="--i: 7">Firebase. (n.d.-b). <em>Firebase App Check</em>. <a href="https://firebase.google.com/docs/app-check" target="_blank" rel="noopener">https://firebase.google.com/docs/app-check</a></li>
-              <li data-a style="--i: 8">Firebase. (n.d.-c). <em>Writing conditions for Cloud Firestore Security Rules</em>. <a href="https://firebase.google.com/docs/firestore/security/rules-conditions" target="_blank" rel="noopener">https://firebase.google.com/docs/firestore/security/rules-conditions</a></li>
-              <li data-a style="--i: 1">Gulf News. (2013, May). <em>Saudi Arabia faces major cyber attack</em>. <a href="https://gulfnews.com/world/gulf/saudi/saudi-arabia-faces-major-cyber-attack-1.1184977" target="_blank" rel="noopener">https://gulfnews.com/world/gulf/saudi/saudi-arabia-faces-major-cyber-attack-1.1184977</a></li>
-              <li data-a style="--i: 2">Gulf News. (2018). <em>Careem working with leading cybersecurity firm to investigate hack</em>. <a href="https://gulfnews.com/technology/careem-working-with-leading-cybersecurity-firm-to-investigate-hack-1.2214959" target="_blank" rel="noopener">https://gulfnews.com/technology/careem-working-with-leading-cybersecurity-firm-to-investigate-hack-1.2214959</a></li>
-              <li data-a style="--i: 3">Have I Been Pwned. (2016). <em>Qatar National Bank data breach</em>. <a href="https://haveibeenpwned.com/Breach/QatarNationalBank" target="_blank" rel="noopener">https://haveibeenpwned.com/Breach/QatarNationalBank</a></li>
-              <li data-a style="--i: 4">OverTheWire. (n.d.). <em>Wargames</em>. <a href="https://overthewire.org/wargames/" target="_blank" rel="noopener">https://overthewire.org/wargames/</a></li>
-              <li data-a style="--i: 5">Švábenský, V., Čeleda, P., Vykopal, J., &amp; Brišáková, S. (2021). Cybersecurity knowledge and skills taught in capture the flag challenges. <em>Computers &amp; Security, 102</em>, 102154. <a href="https://doi.org/10.1016/j.cose.2020.102154" target="_blank" rel="noopener">https://doi.org/10.1016/j.cose.2020.102154</a></li>
-              <li data-a style="--i: 6">Tom&rsquo;s Hardware. (2018, April 23). <em>Careem data breach exposes data of 14 million users</em>. <a href="https://www.tomshardware.com/news/careem-data-breach-14-million,36937.html" target="_blank" rel="noopener">https://www.tomshardware.com/news/careem-data-breach-14-million,36937.html</a></li>
-            </ol>
           </div>
         </div>
       </section>
