@@ -54,1507 +54,1734 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="assets/js/tailwind-config.js"></script>
     <link rel="stylesheet" href="assets/css/styles.css" />
+    <script>
+      // Hide animated elements only once we know the deck script can reveal them.
+      // If it never reports ready, fall back to showing everything.
+      document.documentElement.classList.add("js-deck");
+      setTimeout(function () {
+        if (!window.__deckReady)
+          document.documentElement.classList.remove("js-deck");
+      }, 2500);
+    </script>
+    <style>
+      /* ── Report deck: each .slide is one screen of the presentation ───────── */
+      :root {
+        --hdr: 72px;
+        --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+      .slide {
+        position: relative;
+        min-height: calc(100vh - var(--hdr));
+        min-height: calc(100svh - var(--hdr));
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: clamp(64px, 10vh, 112px) 0;
+        overflow: hidden;
+      }
+      .slide + .slide {
+        border-top: 1px solid rgba(39, 39, 42, 0.7);
+      }
+
+      /* Type */
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: #dc2626;
+        margin-bottom: 20px;
+      }
+      .eyebrow::before {
+        content: "";
+        width: 28px;
+        height: 1px;
+        background: currentColor;
+      }
+      .s-title {
+        font-family: "Space Grotesk", Inter, sans-serif;
+        font-weight: 600;
+        font-size: clamp(30px, 4.2vw, 50px);
+        line-height: 1.06;
+        letter-spacing: -0.02em;
+      }
+      .chap-title {
+        font-family: "Space Grotesk", Inter, sans-serif;
+        font-weight: 600;
+        font-size: clamp(40px, 6vw, 76px);
+        line-height: 1.02;
+        letter-spacing: -0.03em;
+      }
+      .lead {
+        font-size: clamp(16px, 1.35vw, 19px);
+        line-height: 1.7;
+        color: #a1a1aa;
+      }
+      .body {
+        font-size: 15px;
+        line-height: 1.75;
+        color: #a1a1aa;
+      }
+      .kicker {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #71717a;
+      }
+      .label {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #71717a;
+      }
+      .kbd {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+        color: #a1a1aa;
+        border: 1px solid #3f3f46;
+        border-bottom-width: 2px;
+        border-radius: 6px;
+        padding: 1px 6px;
+      }
+
+      /* Cards: a cursor-following glow plus a gentle lift on hover */
+      .card-x {
+        position: relative;
+        background-color: #151518;
+        background-image: radial-gradient(
+          420px circle at var(--mx, -999px) var(--my, -999px),
+          rgba(220, 38, 38, 0.1),
+          transparent 45%
+        );
+        border: 1px solid #27272a;
+        border-radius: 16px;
+        padding: 24px;
+        transition:
+          translate 0.35s var(--ease),
+          border-color 0.35s,
+          box-shadow 0.35s;
+      }
+      .lift:hover {
+        translate: 0 -4px;
+        border-color: rgba(220, 38, 38, 0.35);
+        box-shadow: 0 22px 44px -24px rgba(220, 38, 38, 0.45);
+      }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        font-size: 11px;
+        font-weight: 500;
+        color: #a1a1aa;
+        background: #1c1c20;
+        border: 1px solid #27272a;
+        border-radius: 999px;
+        padding: 3px 10px;
+        white-space: nowrap;
+      }
+      .chip-red {
+        color: #ef4444;
+        background: #2a1012;
+        border-color: rgba(220, 38, 38, 0.35);
+      }
+      .status {
+        flex-shrink: 0;
+        white-space: nowrap;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        border: 1px solid;
+        border-radius: 999px;
+        padding: 2px 9px;
+      }
+      .status-done {
+        color: #22c55e;
+        border-color: rgba(34, 197, 94, 0.4);
+        background: rgba(34, 197, 94, 0.1);
+      }
+      .status-wip {
+        color: #f59e0b;
+        border-color: rgba(245, 158, 11, 0.4);
+        background: rgba(245, 158, 11, 0.1);
+      }
+
+      /* Chapter numbers fill with red from left to right as they arrive */
+      .chap-num {
+        font-family: "Space Grotesk", Inter, sans-serif;
+        font-weight: 700;
+        font-size: clamp(112px, 24vw, 300px);
+        line-height: 0.8;
+        letter-spacing: -0.05em;
+        color: transparent;
+        -webkit-text-stroke: 1.5px rgba(239, 68, 68, 0.45);
+        background: linear-gradient(100deg, #ef4444, #7f1d1d 70%) no-repeat;
+        background-size: 0% 100%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        user-select: none;
+      }
+
+      /* Ambient light */
+      .glow-orb {
+        position: absolute;
+        width: 64vmax;
+        height: 64vmax;
+        left: var(--x, 80%);
+        top: var(--y, 20%);
+        transform: translate(-50%, -50%);
+        background: radial-gradient(
+          circle,
+          rgba(220, 38, 38, 0.13),
+          transparent 60%
+        );
+        pointer-events: none;
+        animation: drift 20s ease-in-out infinite alternate;
+      }
+      @keyframes drift {
+        to {
+          translate: 7vmax 5vmax;
+        }
+      }
+      .deck-grid {
+        background-size: 44px 44px;
+        background-image:
+          linear-gradient(to right, rgba(39, 39, 42, 0.5) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(39, 39, 42, 0.5) 1px, transparent 1px);
+        -webkit-mask-image: radial-gradient(
+          ellipse at 70% 35%,
+          #000 5%,
+          transparent 65%
+        );
+        mask-image: radial-gradient(
+          ellipse at 70% 35%,
+          #000 5%,
+          transparent 65%
+        );
+        animation: grid-pan 40s linear infinite;
+      }
+      @keyframes grid-pan {
+        to {
+          background-position:
+            44px 44px,
+            44px 44px;
+        }
+      }
+      .scroll-cue {
+        animation: cue 1.8s ease-in-out infinite;
+      }
+      @keyframes cue {
+        50% {
+          translate: 0 5px;
+        }
+      }
+
+      /* Entrance animations: [data-a] elements arrive as they scroll into view.
+         --i staggers siblings. */
+      .js-deck [data-a] {
+        opacity: 0;
+        transform: translate3d(0, 28px, 0);
+        transition:
+          opacity 0.8s var(--ease),
+          transform 0.8s var(--ease),
+          filter 0.8s var(--ease),
+          translate 0.35s var(--ease),
+          border-color 0.35s,
+          box-shadow 0.35s;
+        transition-delay: calc(var(--i, 0) * 70ms);
+      }
+      .js-deck [data-a="left"] {
+        transform: translate3d(-40px, 0, 0);
+      }
+      .js-deck [data-a="right"] {
+        transform: translate3d(40px, 0, 0);
+      }
+      .js-deck [data-a="zoom"] {
+        transform: scale(0.94);
+      }
+      .js-deck [data-a="blur"] {
+        filter: blur(10px);
+        transform: translate3d(0, 10px, 0);
+      }
+      .js-deck [data-a="bar"] {
+        opacity: 1;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition-duration: 1.4s;
+      }
+      .js-deck [data-a].in {
+        opacity: 1;
+        transform: none;
+        filter: none;
+      }
+      .js-deck [data-a].done {
+        transition-delay: 0s;
+      }
+      .js-deck [data-a="split"],
+      .js-deck [data-a="num"] {
+        opacity: 1;
+        transform: none;
+      }
+      .js-deck .chap-num {
+        transition: background-size 1.6s var(--ease) 0.25s;
+      }
+      .js-deck .chap-num.in,
+      html:not(.js-deck) .chap-num {
+        background-size: 100% 100%;
+      }
+      .w {
+        display: inline-block;
+        overflow: hidden;
+        vertical-align: bottom;
+        padding-bottom: 0.1em;
+        margin-bottom: -0.1em;
+      }
+      .w > span {
+        display: inline-block;
+        transform: translateY(110%);
+        transition: transform 0.9s var(--ease);
+        transition-delay: calc(var(--w) * 45ms + var(--i, 0) * 70ms);
+      }
+      [data-a="split"].in .w > span {
+        transform: none;
+      }
+
+      /* Progress, slide rail, and controls */
+      #deck-progress {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: var(--hdr);
+        height: 2px;
+        z-index: 40;
+        transform-origin: left;
+        transform: scaleX(0);
+        background: linear-gradient(90deg, #7f1d1d, #ef4444);
+        box-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
+        pointer-events: none;
+      }
+      #deck-rail button {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
+        min-height: 12px;
+        padding: 2px 0;
+      }
+      #deck-rail .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: #3f3f46;
+        transition: all 0.35s var(--ease);
+      }
+      #deck-rail button:hover .dot {
+        background: #a1a1aa;
+      }
+      #deck-rail button[aria-current="true"] .dot {
+        height: 22px;
+        background: #ef4444;
+        box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+      }
+      #deck-rail .tip {
+        font-size: 11px;
+        color: #a1a1aa;
+        background: #151518;
+        border: 1px solid #27272a;
+        border-radius: 6px;
+        padding: 3px 8px;
+        white-space: nowrap;
+        opacity: 0;
+        translate: 6px 0;
+        transition: all 0.25s var(--ease);
+        pointer-events: none;
+      }
+      #deck-rail button:hover .tip,
+      #deck-rail button:focus-visible .tip {
+        opacity: 1;
+        translate: 0 0;
+      }
+      .hud-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fafafa;
+        transition: background-color 0.2s;
+      }
+      .hud-btn:hover {
+        background: #1c1c20;
+      }
+      .hud-btn:disabled {
+        opacity: 0.35;
+        pointer-events: none;
+      }
+
+      /* Present mode: fullscreen, one slide per screen, chrome hidden */
+      html.presenting {
+        --hdr: 0px;
+        scroll-snap-type: y mandatory;
+        scroll-padding-top: 0;
+      }
+      html.presenting .slide {
+        scroll-snap-align: start;
+        padding: clamp(40px, 7vh, 88px) 0;
+      }
+      html.presenting header,
+      html.presenting footer,
+      html.presenting div:has(> #toc-panel) {
+        display: none !important;
+      }
+      html.presenting #main {
+        padding-top: 0;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .js-deck [data-a],
+        .w > span {
+          opacity: 1 !important;
+          transform: none !important;
+          filter: none !important;
+          transition: none !important;
+        }
+        .js-deck .chap-num {
+          background-size: 100% 100%;
+          transition: none;
+        }
+        .glow-orb,
+        .deck-grid,
+        .scroll-cue {
+          animation: none;
+        }
+      }
+      @media print {
+        .js-deck [data-a],
+        .w > span {
+          opacity: 1 !important;
+          transform: none !important;
+          filter: none !important;
+        }
+        .slide {
+          min-height: 0;
+          break-inside: avoid-page;
+        }
+        #deck-progress,
+        #deck-rail,
+        #deck-hud,
+        .glow-orb,
+        .deck-grid {
+          display: none !important;
+        }
+      }
+    </style>
   </head>
   <body
     class="bg-main text-ptext font-sans antialiased selection:bg-pred selection:text-white"
   >
     <div id="site-header"></div>
+    <div id="deck-progress" aria-hidden="true"></div>
 
     <main id="main" class="pt-[72px]">
-      <!-- Hero -->
-      <section
-        class="relative py-20 lg:py-24 border-b border-brder overflow-hidden"
-      >
-        <div
-          class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(220,38,38,0.10),transparent_55%)] pointer-events-none"
-        ></div>
-        <div class="relative max-w-content mx-auto px-6">
-          <p
-            class="text-[12px] font-medium text-pred uppercase tracking-[0.2em] mb-5"
-          >
-            CYS401 &middot; Project Report
-          </p>
-          <h1
-            class="font-display text-[36px] sm:text-[48px] lg:text-[52px] font-semibold leading-[1.1] mb-6 max-w-4xl"
-          >
-            The Report Behind the Lab
-          </h1>
-          <p class="text-[16px] text-stext leading-relaxed max-w-2xl mb-10">
-            The completed sections of our CYS401 report: why the platform
-            exists, what it has to protect, how existing CTF platforms compare,
-            and the requirements the lab is built against. Sections still being
-            written are marked below and added as they are finished.
-          </p>
-          <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            <li
-              class="flex items-center justify-between gap-3 bg-card border border-brder rounded-xl px-4 py-3"
+      <!-- ═══ Opening ═══════════════════════════════════════════════════════ -->
+      <section id="overview" class="relative bg-main">
+        <div class="slide" data-label="Title">
+          <div class="absolute inset-0 deck-grid" aria-hidden="true"></div>
+          <div class="glow-orb" style="--x: 78%; --y: 25%"></div>
+          <div class="relative max-w-content mx-auto px-6 w-full">
+            <p data-a class="eyebrow">CYS401 &middot; Project Report</p>
+            <h1
+              data-a="split"
+              class="font-display text-[44px] sm:text-[68px] lg:text-[92px] font-semibold leading-[1.02] tracking-[-0.03em] max-w-5xl"
             >
-              <span class="text-[13px]">1 &middot; Introduction</span
-              ><span
-                class="shrink-0 whitespace-nowrap text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border text-success border-success/40 bg-success/10"
-                >Done</span
-              >
-            </li>
-            <li
-              class="flex items-center justify-between gap-3 bg-card border border-brder rounded-xl px-4 py-3"
-            >
-              <span class="text-[13px]">2 &middot; Security Analysis</span
-              ><span
-                class="shrink-0 whitespace-nowrap text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border text-success border-success/40 bg-success/10"
-                >Done</span
-              >
-            </li>
-            <li
-              class="flex items-center justify-between gap-3 bg-card border border-brder rounded-xl px-4 py-3"
-            >
-              <span class="text-[13px]"
-                >3.1&ndash;3.2 &middot; Literature Review</span
-              ><span
-                class="shrink-0 whitespace-nowrap text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border text-success border-success/40 bg-success/10"
-                >Done</span
-              >
-            </li>
-            <li
-              class="flex items-center justify-between gap-3 bg-card border border-brder rounded-xl px-4 py-3"
-            >
-              <span class="text-[13px]"
-                >3.3&ndash;3.4 &middot; Comparison &amp; Incidents</span
-              ><span
-                class="shrink-0 whitespace-nowrap text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border text-mtext border-brder2"
-                >In progress</span
-              >
-            </li>
-            <li
-              class="flex items-center justify-between gap-3 bg-card border border-brder rounded-xl px-4 py-3"
-            >
-              <span class="text-[13px]"
-                >4.1&ndash;4.3 &middot; Objectives &amp; Requirements</span
-              ><span
-                class="shrink-0 whitespace-nowrap text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border text-success border-success/40 bg-success/10"
-                >Done</span
-              >
-            </li>
-            <li
-              class="flex items-center justify-between gap-3 bg-card border border-brder rounded-xl px-4 py-3"
-            >
-              <span class="text-[13px]"
-                >4.4&ndash;5 &middot; Challenges &amp; Implementation</span
-              ><span
-                class="shrink-0 whitespace-nowrap text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border text-mtext border-brder2"
-                >In progress</span
-              >
-            </li>
-            <li
-              class="flex items-center justify-between gap-3 bg-card border border-brder rounded-xl px-4 py-3"
-            >
-              <span class="text-[13px]"
-                >6&ndash;8 &middot; Controls, Testing, Recommendations</span
-              ><span
-                class="shrink-0 whitespace-nowrap text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border text-mtext border-brder2"
-                >In progress</span
-              >
-            </li>
-            <li
-              class="flex items-center justify-between gap-3 bg-card border border-brder rounded-xl px-4 py-3"
-            >
-              <span class="text-[13px]"
-                >9&ndash;10 &middot; Conclusion &amp; References</span
-              ><span
-                class="shrink-0 whitespace-nowrap text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border text-success border-success/40 bg-success/10"
-                >Done</span
-              >
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <section id="introduction" class="py-20 border-b border-brder">
-        <div class="max-w-content mx-auto px-6">
-          <div class="reveal max-w-3xl mb-10">
-            <p
-              class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3"
-            >
-              Section 1
+              The Report<br />Behind <span class="text-pred">the Lab</span>
+            </h1>
+            <p data-a class="lead max-w-2xl mt-8" style="--i: 4">
+              Mini Capture-the-Flag (CTF) Security Lab Platform: why it exists,
+              what it has to protect, how existing CTF platforms compare, and
+              the requirements the lab is built against.
             </p>
-            <h2
-              class="font-display text-[28px] sm:text-[32px] font-semibold mb-4"
+            <dl
+              data-a
+              class="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-6 max-w-4xl border-t border-brder pt-8"
+              style="--i: 5"
             >
-              Introduction
-            </h2>
-          </div>
-          <div
-            class="reveal max-w-3xl space-y-4 text-[15px] text-stext leading-relaxed"
-          >
-            <p>
-              Cybersecurity education covers both learning security concepts and
-              applying them in practice. Capture-the-Flag (CTF) events offer a
-              hands-on approach: learners analyze cybersecurity problems,
-              identify security vulnerabilities, and solve them to obtain and
-              submit flags. This lets learners use their cybersecurity knowledge
-              in practical situations and builds critical thinking and
-              problem-solving skills.
-            </p>
-            <p>
-              This project presents the design and implementation of a Mini
-              Capture-the-Flag (CTF) Security Lab Platform that offers guided
-              cybersecurity challenges based on fundamental security topics. The
-              platform provides realistic security scenarios covering
-              authentication flaws, insecure website and application
-              configuration, phishing awareness, basic cryptography, and
-              cybersecurity ethics.
-            </p>
-            <p>
-              Challenges are divided into four groups:
-              <a href="web-security.html" class="text-bred hover:underline"
-                >Web Security</a
-              >,
-              <a href="cryptography.html" class="text-bred hover:underline"
-                >Cryptography</a
-              >,
-              <a
-                href="security-awareness.html"
-                class="text-bred hover:underline"
-                >Security Awareness</a
-              >, and
-              <a href="ethics.html" class="text-bred hover:underline"
-                >Cybersecurity Ethics</a
-              >. Users pick any challenge, read its scenario and objectives,
-              solve the problem, and submit the flag they obtain. A scoreboard
-              and completion status let users monitor their progress.
-            </p>
-            <p>
-              The main objective is an interactive, educational CTF security lab
-              that lets users apply fundamental cybersecurity concepts through
-              practical challenges, while strengthening security awareness,
-              critical thinking, and CTF-style problem solving in a safe and
-              controlled environment.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section
-        id="security-analysis"
-        class="py-20 border-b border-brder bg-sec"
-      >
-        <div class="max-w-content mx-auto px-6">
-          <div class="reveal max-w-3xl mb-10">
-            <p
-              class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3"
-            >
-              Section 2
-            </p>
-            <h2
-              class="font-display text-[28px] sm:text-[32px] font-semibold mb-4"
-            >
-              Security Background and Analysis
-            </h2>
-          </div>
-          <div
-            class="reveal max-w-3xl space-y-4 text-[15px] text-stext leading-relaxed"
-          >
-            <p>
-              A CTF lab holds things worth protecting: user identities, the
-              flags that prove a challenge was solved, and the scores that rank
-              participants. Identifying these assets, and the threats,
-              vulnerabilities, and attacks against them, is the basis for the
-              controls the platform needs.
-            </p>
-          </div>
-          <h3 class="reveal font-display text-[20px] font-semibold mt-12 mb-5">
-            2.1 Assets
-          </h3>
-          <div
-            class="reveal overflow-x-auto rounded-card border border-brder bg-card"
-          >
-            <table class="w-full min-w-[720px] text-left text-[14px]">
-              <thead
-                class="bg-elevated text-[11px] uppercase tracking-wider text-mtext"
-              >
-                <tr>
-                  <th scope="col" class="px-5 py-3 font-semibold">Asset</th>
-                  <th scope="col" class="px-5 py-3 font-semibold">
-                    Description
-                  </th>
-                  <th scope="col" class="px-5 py-3 font-semibold">
-                    Security Importance
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-brder text-stext">
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    User Accounts
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Individual accounts used to identify users and associate
-                    their activity with the platform.
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Accounts must be protected from unauthorized access and
-                    impersonation so that activity and progress are associated
-                    with the correct user.
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    User Credentials
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Authentication information used to verify the identity of
-                    users when accessing their accounts.
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Credentials must remain confidential to prevent account
-                    compromise and unauthorized access to the platform.
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    Challenge Flags
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Secret values that users must discover and submit to
-                    complete CTF challenges.
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Flags must remain confidential until legitimately
-                    discovered. Exposed flags let users bypass the challenge and
-                    undermine the integrity of the CTF.
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    Challenge Content
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Security scenarios, instructions, hints, resources, and
-                    educational explanations for each challenge.
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Content must keep its integrity so challenges stay accurate,
-                    functional, and consistent with their learning objectives.
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    User Progress
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Records of challenges attempted and completed by each user.
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Progress data must remain accurate and protected from
-                    unauthorized modification so users receive the correct
-                    completion status.
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    Scoreboard Data
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Information used to represent participant scores, completed
-                    challenges, and rankings.
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Scoreboard data must keep its integrity to prevent
-                    manipulation of scores or rankings and ensure fair results.
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    Database
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    The underlying storage for user, challenge, progress, and
-                    other application data.
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Unauthorized access, modification, or loss of database
-                    information could compromise the confidentiality, integrity,
-                    and availability of multiple platform assets.
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <h3 class="reveal font-display text-[20px] font-semibold mt-12 mb-5">
-            2.2 Security Risks and Threats
-          </h3>
-          <div
-            class="reveal max-w-3xl space-y-4 text-[15px] text-stext leading-relaxed"
-          >
-            <p>
-              Recognizing the risks that threaten users, content, the evaluation
-              system, and platform data is crucial to choosing the right
-              security controls.
-            </p>
-          </div>
-          <div class="mt-6"></div>
-          <div
-            class="reveal overflow-x-auto rounded-card border border-brder bg-card"
-          >
-            <table class="w-full min-w-[860px] text-left text-[14px]">
-              <thead
-                class="bg-elevated text-[11px] uppercase tracking-wider text-mtext"
-              >
-                <tr>
-                  <th scope="col" class="px-5 py-3 font-semibold">Threat</th>
-                  <th scope="col" class="px-5 py-3 font-semibold">
-                    Description
-                  </th>
-                  <th scope="col" class="px-5 py-3 font-semibold">
-                    Affected Assets
-                  </th>
-                  <th scope="col" class="px-5 py-3 font-semibold">
-                    Potential Impact
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-brder text-stext">
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    Unauthorized Access
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    An unauthorized individual attempts to access another
-                    user&rsquo;s account or restricted areas of the platform.
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    User Accounts, User Credentials, Database
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Account compromise, exposure of protected information, or
-                    unauthorized changes to user data and progress.
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    Credential Theft
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    User authentication information is obtained through phishing
-                    or other credential-stealing techniques.
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    User Credentials, User Accounts
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    An attacker impersonates a legitimate user and gains
-                    unauthorized access to their account.
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    Flag Disclosure
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Challenge flags are exposed to users without them
-                    legitimately solving the challenge.
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Challenge Flags, Challenge Content
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Users submit exposed flags without completing challenges,
-                    reducing fairness and educational value.
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    Data Manipulation
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    An unauthorized user alters stored completion records,
-                    scores, or challenge content.
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    User Progress, Scoreboard Data, Challenge Content, Database
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Incorrect progress records, unfair rankings, altered
-                    challenges, and loss of data integrity.
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    Data Loss or Unavailability
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Platform data or services become unavailable through system
-                    failure, accidental deletion, or disruption.
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Database, User Progress, Challenge Content, User Accounts
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Users cannot access the platform, and stored progress or
-                    other information could be lost.
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    Malicious Input
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Users intentionally provide unexpected or malicious input
-                    through flag submissions or account forms.
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Database, Application, User Accounts
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Improperly handled input could affect application behavior,
-                    stored data, or platform security.
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <h3 class="reveal font-display text-[20px] font-semibold mt-12 mb-5">
-            2.3 Vulnerabilities
-          </h3>
-          <div
-            class="reveal max-w-3xl space-y-4 text-[15px] text-stext leading-relaxed"
-          >
-            <p>
-              A vulnerability is a flaw that an attack can exploit to cause
-              harm. In the CTF Security Lab, vulnerabilities range across
-              authentication, input processing, access control, data protection,
-              and system configuration.
-            </p>
-          </div>
-          <div class="mt-6"></div>
-          <div
-            class="reveal overflow-x-auto rounded-card border border-brder bg-card"
-          >
-            <table class="w-full min-w-[720px] text-left text-[14px]">
-              <thead
-                class="bg-elevated text-[11px] uppercase tracking-wider text-mtext"
-              >
-                <tr>
-                  <th scope="col" class="px-5 py-3 font-semibold">
-                    Vulnerability
-                  </th>
-                  <th scope="col" class="px-5 py-3 font-semibold">
-                    Affected Component
-                  </th>
-                  <th scope="col" class="px-5 py-3 font-semibold">
-                    Potential Consequence
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-brder text-stext">
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    Weak Authentication Controls
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    User Authentication and Accounts
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Unauthorized individuals gain access to user accounts and
-                    impersonate legitimate users.
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    Improper Input Validation
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Flag Submission and User Input Forms
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Malicious or unexpected input affects application behavior
-                    or stored data.
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    Insufficient Access Control
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    User Accounts, Progress Records, Scoreboard, Database
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Users access or modify information or functionality
-                    restricted to other users or administrators.
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    Insecure Flag Storage
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Challenge and Flag Validation System
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Users retrieve flags without solving the intended
-                    challenges.
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    Insecure Data Storage
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">Database</td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    User information, progress records, challenge information,
-                    or other data is exposed to unauthorized parties.
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    Security Misconfiguration
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Web Application and Hosting Environment
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Incorrect permissions, exposed configuration, or insecure
-                    settings expose sensitive information or functionality.
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <h3 class="reveal font-display text-[20px] font-semibold mt-12 mb-5">
-            2.4 Potential Attacks
-          </h3>
-          <div
-            class="reveal max-w-3xl space-y-4 text-[15px] text-stext leading-relaxed"
-          >
-            <p>
-              The vulnerabilities above could be exploited through several
-              attacks that compromise the confidentiality, integrity, or
-              availability of platform assets. These four are the most relevant
-              to the platform&rsquo;s functionality.
-            </p>
-          </div>
-          <div class="mt-6"></div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <article
-              class="reveal bg-card border border-brder rounded-card p-6 sm:p-7"
-            >
-              <div class="flex items-start justify-between gap-4 mb-4">
-                <h4 class="font-display text-[18px] font-semibold">
-                  Brute-Force Login Attack
-                </h4>
-                <span
-                  class="shrink-0 text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border border-rborder bg-sred text-bred"
-                  >Confidentiality &middot; Integrity</span
-                >
+              <div>
+                <dt class="label mb-1.5">Course</dt>
+                <dd class="text-[14px]">CYS401</dd>
               </div>
-              <p class="text-[14px] text-stext leading-relaxed mb-4">
-                An attacker repeatedly tries different username and password
-                combinations to gain unauthorized access to a user&rsquo;s
-                account.
-              </p>
-              <dl class="space-y-3 text-[13px]">
-                <div>
-                  <dt
-                    class="text-[11px] font-semibold uppercase tracking-wider text-mtext mb-1"
-                  >
-                    Target
-                  </dt>
-                  <dd class="text-stext leading-relaxed">
-                    User accounts and the authentication system.
-                  </dd>
-                </div>
-                <div>
-                  <dt
-                    class="text-[11px] font-semibold uppercase tracking-wider text-mtext mb-1"
-                  >
-                    Potential impact
-                  </dt>
-                  <dd class="text-stext leading-relaxed">
-                    Access to another user&rsquo;s account, viewing or modifying
-                    their progress, and impersonating the legitimate user.
-                  </dd>
-                </div>
-              </dl>
-            </article>
-            <article
-              class="reveal bg-card border border-brder rounded-card p-6 sm:p-7"
-            >
-              <div class="flex items-start justify-between gap-4 mb-4">
-                <h4 class="font-display text-[18px] font-semibold">
-                  Injection Attack
-                </h4>
-                <span
-                  class="shrink-0 text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border border-rborder bg-sred text-bred"
-                  >Confidentiality &middot; Integrity</span
-                >
+              <div>
+                <dt class="label mb-1.5">Instructor</dt>
+                <dd class="text-[14px]">Dr. Basmah Ibrahim Alkanjr</dd>
               </div>
-              <p class="text-[14px] text-stext leading-relaxed mb-4">
-                An attacker submits specially crafted input through application
-                fields to manipulate how the application processes data.
-              </p>
-              <dl class="space-y-3 text-[13px]">
-                <div>
-                  <dt
-                    class="text-[11px] font-semibold uppercase tracking-wider text-mtext mb-1"
-                  >
-                    Target
-                  </dt>
-                  <dd class="text-stext leading-relaxed">
-                    Flag submission fields, authentication forms, other input
-                    fields, and the database.
-                  </dd>
-                </div>
-                <div>
-                  <dt
-                    class="text-[11px] font-semibold uppercase tracking-wider text-mtext mb-1"
-                  >
-                    Potential impact
-                  </dt>
-                  <dd class="text-stext leading-relaxed">
-                    Access to or modification of application data, interference
-                    with platform functionality, or compromise of stored
-                    information.
-                  </dd>
-                </div>
-              </dl>
-            </article>
-            <article
-              class="reveal bg-card border border-brder rounded-card p-6 sm:p-7"
-            >
-              <div class="flex items-start justify-between gap-4 mb-4">
-                <h4 class="font-display text-[18px] font-semibold">
-                  Broken Access Control
-                </h4>
-                <span
-                  class="shrink-0 text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border border-rborder bg-sred text-bred"
-                  >Confidentiality &middot; Integrity</span
-                >
+              <div>
+                <dt class="label mb-1.5">Team</dt>
+                <dd class="text-[14px] leading-relaxed">
+                  Leen Nasser, Aljawhara Alruzuq, Areej Almarri, Shoug Alomran
+                </dd>
               </div>
-              <p class="text-[14px] text-stext leading-relaxed mb-4">
-                A user attempts to access restricted resources or perform
-                actions reserved for another user or an administrator.
-              </p>
-              <dl class="space-y-3 text-[13px]">
-                <div>
-                  <dt
-                    class="text-[11px] font-semibold uppercase tracking-wider text-mtext mb-1"
-                  >
-                    Target
-                  </dt>
-                  <dd class="text-stext leading-relaxed">
-                    User progress, scoreboard data, challenge management
-                    functions, and database records.
-                  </dd>
-                </div>
-                <div>
-                  <dt
-                    class="text-[11px] font-semibold uppercase tracking-wider text-mtext mb-1"
-                  >
-                    Potential impact
-                  </dt>
-                  <dd class="text-stext leading-relaxed">
-                    Modified scores, challenges falsely marked complete, access
-                    to another user&rsquo;s information, or altered challenge
-                    content.
-                  </dd>
-                </div>
-              </dl>
-            </article>
-            <article
-              class="reveal bg-card border border-brder rounded-card p-6 sm:p-7"
-            >
-              <div class="flex items-start justify-between gap-4 mb-4">
-                <h4 class="font-display text-[18px] font-semibold">
-                  Denial-of-Service (DoS)
-                </h4>
-                <span
-                  class="shrink-0 text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border border-rborder bg-sred text-bred"
-                  >Availability</span
-                >
+              <div>
+                <dt class="label mb-1.5">Due</dt>
+                <dd class="text-[14px]">28 October 2026</dd>
               </div>
-              <p class="text-[14px] text-stext leading-relaxed mb-4">
-                An attacker sends an excessive number of requests to consume
-                resources and prevent legitimate users from reaching the
-                service.
-              </p>
-              <dl class="space-y-3 text-[13px]">
-                <div>
-                  <dt
-                    class="text-[11px] font-semibold uppercase tracking-wider text-mtext mb-1"
-                  >
-                    Target
-                  </dt>
-                  <dd class="text-stext leading-relaxed">
-                    The web application and hosting infrastructure.
-                  </dd>
-                </div>
-                <div>
-                  <dt
-                    class="text-[11px] font-semibold uppercase tracking-wider text-mtext mb-1"
-                  >
-                    Potential impact
-                  </dt>
-                  <dd class="text-stext leading-relaxed">
-                    The platform becomes slow or unavailable; users cannot open
-                    challenges, submit flags, or view progress.
-                  </dd>
-                </div>
-              </dl>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section id="literature-review" class="py-20 border-b border-brder">
-        <div class="max-w-content mx-auto px-6">
-          <div class="reveal max-w-3xl mb-10">
-            <p
-              class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3"
+            </dl>
+            <div
+              data-a
+              class="mt-12 flex flex-wrap items-center gap-4"
+              style="--i: 6"
             >
-              Section 3
-            </p>
-            <h2
-              class="font-display text-[28px] sm:text-[32px] font-semibold mb-4"
-            >
-              Literature Review
-            </h2>
-          </div>
-          <h3 class="reveal font-display text-[20px] font-semibold mt-0 mb-5">
-            3.1 Capture-the-Flag in Cybersecurity Education
-          </h3>
-          <div
-            class="reveal max-w-3xl space-y-4 text-[15px] text-stext leading-relaxed"
-          >
-            <p>
-              Capture the Flag (CTF) is an effective way to learn cybersecurity:
-              participants complete challenges to find hidden flags, and each
-              flag proves a challenge was solved. CTF lets participants apply
-              security principles to problem-solving tasks in cryptography, web
-              security, network security, and more.
-            </p>
-            <p>
-              CTF competitions are usually
-              <strong class="text-ptext">Jeopardy-style</strong> or
-              <strong class="text-ptext">Attack-Defense</strong>. Jeopardy-style
-              CTFs consist of separate challenges grouped into categories; in
-              Attack-Defense CTFs, teams exploit vulnerabilities in opposing
-              systems while protecting their own infrastructure. The Mini CTF
-              Security Lab follows the Jeopardy-style approach because it lets
-              users complete individual educational challenges and track their
-              progress.
-            </p>
-            <p>
-              CTF activities increasingly complement traditional cybersecurity
-              education. Švábenský et al. (2021) analyzed 15,963 textual
-              solutions to CTF challenges and found that CTFs offer real
-              opportunities to gain practical cybersecurity knowledge, but that
-              human-centric topics such as social engineering and security
-              awareness receive comparatively little attention. CTF learning can
-              also be hard for beginners and light on non-technical aspects of
-              security.
-            </p>
-            <p>
-              The Mini CTF Security Lab addresses these gaps with an equal
-              combination of technical and non-technical learning, including
-              dedicated security awareness and ethical reasoning tracks.
-            </p>
-          </div>
-          <h3 class="reveal font-display text-[20px] font-semibold mt-12 mb-5">
-            3.2 Existing and Previous Solutions
-          </h3>
-          <div
-            class="reveal max-w-3xl space-y-4 text-[15px] text-stext leading-relaxed"
-          >
-            <p>
-              Three existing platforms show different ways of organizing
-              cybersecurity tasks for learning.
-            </p>
-          </div>
-          <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <article
-              class="reveal bg-card border border-brder rounded-card p-6 sm:p-7 flex flex-col"
-            >
+              <button
+                type="button"
+                data-deck-next
+                class="inline-flex items-center gap-2 bg-pred hover:bg-bred text-white text-[15px] font-semibold px-6 py-3 rounded-btn transition-colors"
+              >
+                Begin
+                <svg
+                  class="scroll-cue"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M12 5v14M6 13l6 6 6-6" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                data-deck-present
+                class="hidden md:inline-flex items-center gap-2 border border-brder2 hover:bg-elevated text-[15px] font-semibold px-6 py-3 rounded-btn transition-colors"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
+                </svg>
+                Present fullscreen
+              </button>
               <p
-                class="text-[11px] font-mono text-mtext uppercase tracking-widest mb-2"
+                class="hidden md:flex items-center gap-2 text-[12px] text-mtext"
               >
-                Carnegie Mellon University
+                <span class="kbd">&larr;</span><span class="kbd">&rarr;</span>
+                move between slides
               </p>
-              <h4 class="font-display text-[20px] font-semibold mb-4">
-                picoCTF
-              </h4>
-              <p class="text-[14px] text-stext leading-relaxed mb-5">
-                An educational platform with interactive challenges and contests
-                aimed mainly at students and novices, covering cryptography, web
-                exploitation, and more. picoGym lets learners practise on
-                challenges from past competitions, while picoCTF competitions
-                run them in a competitive setting with increasingly difficult
-                tasks.
+            </div>
+          </div>
+        </div>
+
+        <div class="slide" data-label="At a glance">
+          <div
+            class="relative max-w-content mx-auto px-6 w-full grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-12 lg:gap-16 items-center"
+          >
+            <div>
+              <p data-a class="eyebrow">At a glance</p>
+              <h2 data-a="split" class="s-title">Report at a glance</h2>
+              <p data-a class="lead mt-6" style="--i: 3">
+                Eight parts, five written. Sections still being written are
+                marked and added here as they are finished.
               </p>
-              <div class="mt-auto border-t border-brder pt-4">
-                <p
-                  class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2"
-                >
-                  Lesson for our lab
-                </p>
-                <p class="text-[13px] text-stext leading-relaxed mb-4">
-                  With so many technical challenges, users without a security
-                  background may need more guidance &mdash; so our lab gives
-                  every challenge clear instructions and a hint.
-                </p>
-                <a
-                  href="https://picoctf.org/"
-                  target="_blank"
-                  rel="noopener"
-                  class="text-[13px] font-semibold text-bred hover:underline"
-                  >picoctf.org &nearr;</a
-                >
+              <div data-a class="mt-10" style="--i: 4">
+                <div class="flex items-baseline gap-3 mb-3">
+                  <span class="font-display text-[56px] font-semibold leading-none"
+                    >5<span class="text-mtext">/8</span></span
+                  >
+                  <span class="label">parts complete</span>
+                </div>
+                <div class="h-1.5 rounded-full bg-elevated overflow-hidden">
+                  <div
+                    data-a="bar"
+                    class="h-full rounded-full"
+                    style="
+                      width: 62.5%;
+                      --i: 6;
+                      background: linear-gradient(90deg, #7f1d1d, #ef4444);
+                    "
+                  ></div>
+                </div>
               </div>
-            </article>
-            <article
-              class="reveal bg-card border border-brder rounded-card p-6 sm:p-7 flex flex-col"
-            >
-              <p
-                class="text-[11px] font-mono text-mtext uppercase tracking-widest mb-2"
-              >
-                Open-source CTF framework
-              </p>
-              <h4 class="font-display text-[20px] font-semibold mb-4">CTFd</h4>
-              <p class="text-[14px] text-stext leading-relaxed mb-5">
-                Open-source software for running CTF competitions.
-                Administrators create challenges, manage participants, and check
-                flags and results. It supports challenge descriptions,
-                downloadable files, hints, points, automated flag validation, a
-                configurable scoreboard, plugins, and themes.
-              </p>
-              <div class="mt-auto border-t border-brder pt-4">
-                <p
-                  class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2"
-                >
-                  Lesson for our lab
-                </p>
-                <p class="text-[13px] text-stext leading-relaxed mb-4">
-                  CTFd is a framework: organizers must write all the challenges
-                  and educational content themselves. Our lab instead ships a
-                  small, guided set of challenges aligned with fundamental
-                  concepts.
-                </p>
+            </div>
+            <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2.5">
+              <li data-a style="--i: 1">
                 <a
-                  href="https://docs.ctfd.io/"
-                  target="_blank"
-                  rel="noopener"
-                  class="text-[13px] font-semibold text-bred hover:underline"
-                  >docs.ctfd.io &nearr;</a
+                  href="#introduction"
+                  class="card-x lift !p-4 flex items-center gap-4"
+                  ><span class="kicker w-[60px] shrink-0">01</span
+                  ><span class="text-[14px] flex-1 min-w-0">Introduction</span
+                  ><span class="status status-done">Done</span></a
                 >
-              </div>
-            </article>
-            <article
-              class="reveal bg-card border border-brder rounded-card p-6 sm:p-7 flex flex-col"
-            >
-              <p
-                class="text-[11px] font-mono text-mtext uppercase tracking-widest mb-2"
-              >
-                Wargames community
-              </p>
-              <h4 class="font-display text-[20px] font-semibold mb-4">
-                OverTheWire
-              </h4>
-              <p class="text-[14px] text-stext leading-relaxed mb-5">
-                A set of wargames teaching security through technical exercises:
-                Bandit covers Linux command-line basics, Natas covers web
-                security, and Krypton covers cryptography. Unlike separate CTF
-                challenges, it uses levels, where solving one level yields what
-                you need for the next.
-              </p>
-              <div class="mt-auto border-t border-brder pt-4">
-                <p
-                  class="text-[11px] font-semibold uppercase tracking-wider text-pred mb-2"
-                >
-                  Lesson for our lab
-                </p>
-                <p class="text-[13px] text-stext leading-relaxed mb-4">
-                  Heavy reliance on command-line tools can be hard for people
-                  unfamiliar with Linux; our lab is web-based and solved
-                  entirely through a graphical interface.
-                </p>
+              </li>
+              <li data-a style="--i: 2">
                 <a
-                  href="https://overthewire.org/wargames/"
-                  target="_blank"
-                  rel="noopener"
-                  class="text-[13px] font-semibold text-bred hover:underline"
-                  >overthewire.org/wargames &nearr;</a
+                  href="#security-analysis"
+                  class="card-x lift !p-4 flex items-center gap-4"
+                  ><span class="kicker w-[60px] shrink-0">02</span
+                  ><span class="text-[14px] flex-1 min-w-0">Security Analysis</span
+                  ><span class="status status-done">Done</span></a
                 >
+              </li>
+              <li data-a style="--i: 3">
+                <a
+                  href="#literature-review"
+                  class="card-x lift !p-4 flex items-center gap-4"
+                  ><span class="kicker w-[60px] shrink-0">3.1&ndash;3.2</span
+                  ><span class="text-[14px] flex-1 min-w-0"
+                    >Literature Review</span
+                  ><span class="status status-done">Done</span></a
+                >
+              </li>
+              <li data-a style="--i: 4">
+                <div class="card-x !p-4 flex items-center gap-4">
+                  <span class="kicker w-[60px] shrink-0">3.3&ndash;3.4</span
+                  ><span class="text-[14px] flex-1 min-w-0 text-stext"
+                    >Comparison &amp; Incidents</span
+                  ><span class="status status-wip">In progress</span>
+                </div>
+              </li>
+              <li data-a style="--i: 5">
+                <a
+                  href="#proposed-platform"
+                  class="card-x lift !p-4 flex items-center gap-4"
+                  ><span class="kicker w-[60px] shrink-0">4.1&ndash;4.3</span
+                  ><span class="text-[14px] flex-1 min-w-0"
+                    >Objectives &amp; Requirements</span
+                  ><span class="status status-done">Done</span></a
+                >
+              </li>
+              <li data-a style="--i: 6">
+                <div class="card-x !p-4 flex items-center gap-4">
+                  <span class="kicker w-[60px] shrink-0">4.4&ndash;5</span
+                  ><span class="text-[14px] flex-1 min-w-0 text-stext"
+                    >Challenges &amp; Implementation</span
+                  ><span class="status status-wip">In progress</span>
+                </div>
+              </li>
+              <li data-a style="--i: 7">
+                <div class="card-x !p-4 flex items-center gap-4">
+                  <span class="kicker w-[60px] shrink-0">6&ndash;8</span
+                  ><span class="text-[14px] flex-1 min-w-0 text-stext"
+                    >Controls, Testing &amp; Recommendations</span
+                  ><span class="status status-wip">In progress</span>
+                </div>
+              </li>
+              <li data-a style="--i: 8">
+                <a
+                  href="#conclusion"
+                  class="card-x lift !p-4 flex items-center gap-4"
+                  ><span class="kicker w-[60px] shrink-0">9&ndash;10</span
+                  ><span class="text-[14px] flex-1 min-w-0"
+                    >Conclusion &amp; References</span
+                  ><span class="status status-done">Done</span></a
+                >
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ 1 · Introduction ══════════════════════════════════════════════ -->
+      <section id="introduction" class="relative bg-sec">
+        <div class="slide" data-label="1 · Introduction">
+          <div class="glow-orb" style="--x: 15%; --y: 70%"></div>
+          <div
+            class="relative max-w-content mx-auto px-6 w-full grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-8 lg:gap-16 items-end"
+          >
+            <p data-a="num" class="chap-num" aria-hidden="true">01</p>
+            <div>
+              <p data-a class="eyebrow">Section 1</p>
+              <h2 data-a="split" class="chap-title">Introduction</h2>
+              <p data-a class="lead mt-8" style="--i: 3">
+                Cybersecurity education covers both learning security concepts
+                and applying them in practice. Capture-the-Flag (CTF) events
+                offer a hands-on approach: learners analyze cybersecurity
+                problems, identify security vulnerabilities, and solve them to
+                obtain and submit flags. This lets learners use their
+                cybersecurity knowledge in practical situations and builds
+                critical thinking and problem-solving skills.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide" data-label="1 · The platform">
+          <div class="relative max-w-content mx-auto px-6 w-full">
+            <div class="max-w-3xl">
+              <p data-a class="eyebrow">1 &middot; The platform</p>
+              <h3 data-a="split" class="s-title">
+                Guided challenges built on fundamental security topics
+              </h3>
+              <p data-a class="lead mt-6" style="--i: 3">
+                This project presents the design and implementation of a Mini
+                Capture-the-Flag (CTF) Security Lab Platform that offers guided
+                cybersecurity challenges based on fundamental security topics.
+                The platform provides realistic security scenarios covering:
+              </p>
+            </div>
+            <ul class="mt-8 flex flex-wrap gap-2.5">
+              <li data-a="zoom" style="--i: 4" class="chip chip-red !text-[13px] !px-4 !py-1.5">Authentication flaws</li>
+              <li data-a="zoom" style="--i: 5" class="chip chip-red !text-[13px] !px-4 !py-1.5">Insecure website &amp; application configuration</li>
+              <li data-a="zoom" style="--i: 6" class="chip chip-red !text-[13px] !px-4 !py-1.5">Phishing awareness</li>
+              <li data-a="zoom" style="--i: 7" class="chip chip-red !text-[13px] !px-4 !py-1.5">Basic cryptography</li>
+              <li data-a="zoom" style="--i: 8" class="chip chip-red !text-[13px] !px-4 !py-1.5">Cybersecurity ethics</li>
+            </ul>
+            <p data-a class="label mt-14 mb-4" style="--i: 4">
+              Four challenge groups
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <a href="web-security.html" data-a style="--i: 5" class="card-x lift group">
+                <p class="kicker mb-8">Track 01</p>
+                <p class="font-display text-[20px] font-semibold">Web Security</p>
+                <p class="text-[13px] text-bred mt-2">Open workshop <span class="inline-block transition-transform group-hover:translate-x-1">&rarr;</span></p>
+              </a>
+              <a href="cryptography.html" data-a style="--i: 6" class="card-x lift group">
+                <p class="kicker mb-8">Track 02</p>
+                <p class="font-display text-[20px] font-semibold">Cryptography</p>
+                <p class="text-[13px] text-bred mt-2">Open workshop <span class="inline-block transition-transform group-hover:translate-x-1">&rarr;</span></p>
+              </a>
+              <a href="security-awareness.html" data-a style="--i: 7" class="card-x lift group">
+                <p class="kicker mb-8">Track 03</p>
+                <p class="font-display text-[20px] font-semibold">Security Awareness</p>
+                <p class="text-[13px] text-bred mt-2">Open workshop <span class="inline-block transition-transform group-hover:translate-x-1">&rarr;</span></p>
+              </a>
+              <a href="ethics.html" data-a style="--i: 8" class="card-x lift group">
+                <p class="kicker mb-8">Track 04</p>
+                <p class="font-display text-[20px] font-semibold">Cybersecurity Ethics</p>
+                <p class="text-[13px] text-bred mt-2">Open workshop <span class="inline-block transition-transform group-hover:translate-x-1">&rarr;</span></p>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide" data-label="1 · How it works">
+          <div class="relative max-w-content mx-auto px-6 w-full">
+            <p data-a class="eyebrow">1 &middot; How it works</p>
+            <h3 data-a="split" class="s-title max-w-3xl">
+              From challenge to scoreboard
+            </h3>
+            <div class="relative mt-12">
+              <div
+                data-a="bar"
+                class="hidden lg:block absolute left-0 right-0 top-[27px] h-px"
+                style="--i: 2; background: linear-gradient(90deg, #7f1d1d, #ef4444, #7f1d1d)"
+                aria-hidden="true"
+              ></div>
+              <ol class="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                <li data-a style="--i: 3">
+                  <span class="w-14 h-14 rounded-full border border-pred bg-main flex items-center justify-center font-mono text-[13px] text-bred glow-red-strong">01</span>
+                  <p class="mt-4 text-[15px] font-semibold">Pick a challenge</p>
+                </li>
+                <li data-a style="--i: 4">
+                  <span class="w-14 h-14 rounded-full border border-brder2 bg-main flex items-center justify-center font-mono text-[13px] text-stext">02</span>
+                  <p class="mt-4 text-[15px] font-semibold">Read its scenario &amp; objectives</p>
+                </li>
+                <li data-a style="--i: 5">
+                  <span class="w-14 h-14 rounded-full border border-brder2 bg-main flex items-center justify-center font-mono text-[13px] text-stext">03</span>
+                  <p class="mt-4 text-[15px] font-semibold">Solve the problem</p>
+                </li>
+                <li data-a style="--i: 6">
+                  <span class="w-14 h-14 rounded-full border border-brder2 bg-main flex items-center justify-center font-mono text-[13px] text-stext">04</span>
+                  <p class="mt-4 text-[15px] font-semibold">Submit the flag</p>
+                </li>
+                <li data-a style="--i: 7">
+                  <span class="w-14 h-14 rounded-full border border-success bg-main flex items-center justify-center font-mono text-[13px] text-success glow-green">05</span>
+                  <p class="mt-4 text-[15px] font-semibold">Track progress</p>
+                </li>
+              </ol>
+            </div>
+            <div class="mt-14 grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+              <p data-a class="body" style="--i: 3">
+                Challenges are divided into four groups:
+                <a href="web-security.html" class="text-bred hover:underline">Web Security</a>,
+                <a href="cryptography.html" class="text-bred hover:underline">Cryptography</a>,
+                <a href="security-awareness.html" class="text-bred hover:underline">Security Awareness</a>,
+                and
+                <a href="ethics.html" class="text-bred hover:underline">Cybersecurity Ethics</a>.
+                Users pick any challenge, read its scenario and objectives,
+                solve the problem, and submit the flag they obtain. A scoreboard
+                and completion status let users monitor their progress.
+              </p>
+              <blockquote
+                data-a="right"
+                class="relative border-l-2 border-pred pl-6"
+                style="--i: 4"
+              >
+                <p class="label !text-bred mb-3">Main objective</p>
+                <p class="text-[17px] leading-relaxed">
+                  An interactive, educational CTF security lab that lets users
+                  apply fundamental cybersecurity concepts through practical
+                  challenges, while strengthening security awareness, critical
+                  thinking, and CTF-style problem solving in a safe and
+                  controlled environment.
+                </p>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ 2 · Security Background and Analysis ══════════════════════════ -->
+      <section id="security-analysis" class="relative bg-main">
+        <div class="slide" data-label="2 · Security analysis">
+          <div class="glow-orb" style="--x: 85%; --y: 30%"></div>
+          <div
+            class="relative max-w-content mx-auto px-6 w-full grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-8 lg:gap-16 items-end"
+          >
+            <p data-a="num" class="chap-num" aria-hidden="true">02</p>
+            <div>
+              <p data-a class="eyebrow">Section 2</p>
+              <h2 data-a="split" class="chap-title">
+                Security Background and Analysis
+              </h2>
+              <p data-a class="lead mt-8" style="--i: 3">
+                A CTF lab holds things worth protecting: user identities, the
+                flags that prove a challenge was solved, and the scores that
+                rank participants. Identifying these assets, and the threats,
+                vulnerabilities, and attacks against them, is the basis for the
+                controls the platform needs.
+              </p>
+            </div>
+          </div>
+          <div class="relative max-w-content mx-auto px-6 w-full mt-14">
+            <dl class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              <div data-a style="--i: 4" class="card-x !p-5">
+                <dt class="kicker">2.1 Assets</dt>
+                <dd class="font-display text-[40px] font-semibold mt-2 leading-none">7</dd>
               </div>
+              <div data-a style="--i: 5" class="card-x !p-5">
+                <dt class="kicker">2.2 Threats</dt>
+                <dd class="font-display text-[40px] font-semibold mt-2 leading-none">6</dd>
+              </div>
+              <div data-a style="--i: 6" class="card-x !p-5">
+                <dt class="kicker">2.3 Vulnerabilities</dt>
+                <dd class="font-display text-[40px] font-semibold mt-2 leading-none">6</dd>
+              </div>
+              <div data-a style="--i: 7" class="card-x !p-5">
+                <dt class="kicker">2.4 Attacks</dt>
+                <dd class="font-display text-[40px] font-semibold mt-2 leading-none">4</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+
+        <div class="slide" data-label="2.1 · Assets">
+          <div class="relative max-w-content mx-auto px-6 w-full">
+            <p data-a class="eyebrow">2.1 &middot; Assets</p>
+            <h3 data-a="split" class="s-title max-w-3xl">
+              Seven assets the platform has to protect
+            </h3>
+            <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <article data-a style="--i: 2" class="card-x lift">
+                <h4 class="text-[16px] font-semibold">User Accounts</h4>
+                <p class="text-[14px] text-stext leading-relaxed mt-2">Individual accounts used to identify users and associate their activity with the platform.</p>
+                <p class="label mt-5 mb-1.5">Security importance</p>
+                <p class="text-[13px] text-stext leading-relaxed">Accounts must be protected from unauthorized access and impersonation so that activity and progress are associated with the correct user.</p>
+              </article>
+              <article data-a style="--i: 3" class="card-x lift">
+                <h4 class="text-[16px] font-semibold">User Credentials</h4>
+                <p class="text-[14px] text-stext leading-relaxed mt-2">Authentication information used to verify the identity of users when accessing their accounts.</p>
+                <p class="label mt-5 mb-1.5">Security importance</p>
+                <p class="text-[13px] text-stext leading-relaxed">Credentials must remain confidential to prevent account compromise and unauthorized access to the platform.</p>
+              </article>
+              <article data-a style="--i: 4" class="card-x lift">
+                <h4 class="text-[16px] font-semibold">Challenge Flags</h4>
+                <p class="text-[14px] text-stext leading-relaxed mt-2">Secret values that users must discover and submit to complete CTF challenges.</p>
+                <p class="label mt-5 mb-1.5">Security importance</p>
+                <p class="text-[13px] text-stext leading-relaxed">Flags must remain confidential until legitimately discovered. Exposed flags let users bypass the challenge and undermine the integrity of the CTF.</p>
+              </article>
+              <article data-a style="--i: 5" class="card-x lift">
+                <h4 class="text-[16px] font-semibold">Challenge Content</h4>
+                <p class="text-[14px] text-stext leading-relaxed mt-2">Security scenarios, instructions, hints, resources, and educational explanations for each challenge.</p>
+                <p class="label mt-5 mb-1.5">Security importance</p>
+                <p class="text-[13px] text-stext leading-relaxed">Content must keep its integrity so challenges stay accurate, functional, and consistent with their learning objectives.</p>
+              </article>
+              <article data-a style="--i: 6" class="card-x lift">
+                <h4 class="text-[16px] font-semibold">User Progress</h4>
+                <p class="text-[14px] text-stext leading-relaxed mt-2">Records of challenges attempted and completed by each user.</p>
+                <p class="label mt-5 mb-1.5">Security importance</p>
+                <p class="text-[13px] text-stext leading-relaxed">Progress data must remain accurate and protected from unauthorized modification so users receive the correct completion status.</p>
+              </article>
+              <article data-a style="--i: 7" class="card-x lift">
+                <h4 class="text-[16px] font-semibold">Scoreboard Data</h4>
+                <p class="text-[14px] text-stext leading-relaxed mt-2">Information used to represent participant scores, completed challenges, and rankings.</p>
+                <p class="label mt-5 mb-1.5">Security importance</p>
+                <p class="text-[13px] text-stext leading-relaxed">Scoreboard data must keep its integrity to prevent manipulation of scores or rankings and ensure fair results.</p>
+              </article>
+              <article
+                data-a
+                style="--i: 8; background-color: #1a0d0f; border-color: rgba(220, 38, 38, 0.35)"
+                class="card-x lift sm:col-span-2 lg:col-span-3 grid md:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] gap-x-10 gap-y-3"
+              >
+                <div>
+                  <p class="kicker !text-bred mb-2">Underpins every asset</p>
+                  <h4 class="text-[16px] font-semibold">Database</h4>
+                  <p class="text-[14px] text-stext leading-relaxed mt-2">The underlying storage for user, challenge, progress, and other application data.</p>
+                </div>
+                <div>
+                  <p class="label mb-1.5 md:mt-6">Security importance</p>
+                  <p class="text-[13px] text-stext leading-relaxed">Unauthorized access, modification, or loss of database information could compromise the confidentiality, integrity, and availability of multiple platform assets.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide" data-label="2.2 · Threats">
+          <div class="relative max-w-content mx-auto px-6 w-full">
+            <div class="grid lg:grid-cols-2 gap-6 lg:gap-12 items-end">
+              <div>
+                <p data-a class="eyebrow">2.2 &middot; Security Risks and Threats</p>
+                <h3 data-a="split" class="s-title">Six threats to users, content, and data</h3>
+              </div>
+              <p data-a class="body" style="--i: 3">
+                Recognizing the risks that threaten users, content, the
+                evaluation system, and platform data is crucial to choosing the
+                right security controls.
+              </p>
+            </div>
+            <div class="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <article data-a style="--i: 2" class="card-x lift flex flex-col">
+                <p class="kicker !text-bred">T1</p>
+                <h4 class="text-[16px] font-semibold mt-2">Unauthorized Access</h4>
+                <p class="text-[14px] text-stext leading-relaxed mt-2">An unauthorized individual attempts to access another user&rsquo;s account or restricted areas of the platform.</p>
+                <ul class="flex flex-wrap gap-1.5 mt-4" aria-label="Affected assets"><li class="chip">User Accounts</li><li class="chip">User Credentials</li><li class="chip">Database</li></ul>
+                <p class="mt-auto pt-4 border-t border-brder text-[13px] text-stext leading-relaxed mt-5"><span class="label block mb-1">Potential impact</span>Account compromise, exposure of protected information, or unauthorized changes to user data and progress.</p>
+              </article>
+              <article data-a style="--i: 3" class="card-x lift flex flex-col">
+                <p class="kicker !text-bred">T2</p>
+                <h4 class="text-[16px] font-semibold mt-2">Credential Theft</h4>
+                <p class="text-[14px] text-stext leading-relaxed mt-2">User authentication information is obtained through phishing or other credential-stealing techniques.</p>
+                <ul class="flex flex-wrap gap-1.5 mt-4" aria-label="Affected assets"><li class="chip">User Credentials</li><li class="chip">User Accounts</li></ul>
+                <p class="mt-auto pt-4 border-t border-brder text-[13px] text-stext leading-relaxed mt-5"><span class="label block mb-1">Potential impact</span>An attacker impersonates a legitimate user and gains unauthorized access to their account.</p>
+              </article>
+              <article data-a style="--i: 4" class="card-x lift flex flex-col">
+                <p class="kicker !text-bred">T3</p>
+                <h4 class="text-[16px] font-semibold mt-2">Flag Disclosure</h4>
+                <p class="text-[14px] text-stext leading-relaxed mt-2">Challenge flags are exposed to users without them legitimately solving the challenge.</p>
+                <ul class="flex flex-wrap gap-1.5 mt-4" aria-label="Affected assets"><li class="chip">Challenge Flags</li><li class="chip">Challenge Content</li></ul>
+                <p class="mt-auto pt-4 border-t border-brder text-[13px] text-stext leading-relaxed mt-5"><span class="label block mb-1">Potential impact</span>Users submit exposed flags without completing challenges, reducing fairness and educational value.</p>
+              </article>
+              <article data-a style="--i: 5" class="card-x lift flex flex-col">
+                <p class="kicker !text-bred">T4</p>
+                <h4 class="text-[16px] font-semibold mt-2">Data Manipulation</h4>
+                <p class="text-[14px] text-stext leading-relaxed mt-2">An unauthorized user alters stored completion records, scores, or challenge content.</p>
+                <ul class="flex flex-wrap gap-1.5 mt-4" aria-label="Affected assets"><li class="chip">User Progress</li><li class="chip">Scoreboard Data</li><li class="chip">Challenge Content</li><li class="chip">Database</li></ul>
+                <p class="mt-auto pt-4 border-t border-brder text-[13px] text-stext leading-relaxed mt-5"><span class="label block mb-1">Potential impact</span>Incorrect progress records, unfair rankings, altered challenges, and loss of data integrity.</p>
+              </article>
+              <article data-a style="--i: 6" class="card-x lift flex flex-col">
+                <p class="kicker !text-bred">T5</p>
+                <h4 class="text-[16px] font-semibold mt-2">Data Loss or Unavailability</h4>
+                <p class="text-[14px] text-stext leading-relaxed mt-2">Platform data or services become unavailable through system failure, accidental deletion, or disruption.</p>
+                <ul class="flex flex-wrap gap-1.5 mt-4" aria-label="Affected assets"><li class="chip">Database</li><li class="chip">User Progress</li><li class="chip">Challenge Content</li><li class="chip">User Accounts</li></ul>
+                <p class="mt-auto pt-4 border-t border-brder text-[13px] text-stext leading-relaxed mt-5"><span class="label block mb-1">Potential impact</span>Users cannot access the platform, and stored progress or other information could be lost.</p>
+              </article>
+              <article data-a style="--i: 7" class="card-x lift flex flex-col">
+                <p class="kicker !text-bred">T6</p>
+                <h4 class="text-[16px] font-semibold mt-2">Malicious Input</h4>
+                <p class="text-[14px] text-stext leading-relaxed mt-2">Users intentionally provide unexpected or malicious input through flag submissions or account forms.</p>
+                <ul class="flex flex-wrap gap-1.5 mt-4" aria-label="Affected assets"><li class="chip">Database</li><li class="chip">Application</li><li class="chip">User Accounts</li></ul>
+                <p class="mt-auto pt-4 border-t border-brder text-[13px] text-stext leading-relaxed mt-5"><span class="label block mb-1">Potential impact</span>Improperly handled input could affect application behavior, stored data, or platform security.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide" data-label="2.3 · Vulnerabilities">
+          <div
+            class="relative max-w-content mx-auto px-6 w-full grid lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] gap-10 lg:gap-16"
+          >
+            <div class="lg:pt-2">
+              <p data-a class="eyebrow">2.3 &middot; Vulnerabilities</p>
+              <h3 data-a="split" class="s-title">Where an attack could get in</h3>
+              <p data-a class="body mt-6" style="--i: 3">
+                A vulnerability is a flaw that an attack can exploit to cause
+                harm. In the CTF Security Lab, vulnerabilities range across
+                authentication, input processing, access control, data
+                protection, and system configuration.
+              </p>
+            </div>
+            <ol class="divide-y divide-brder border-y border-brder">
+              <li data-a="right" style="--i: 2" class="py-5 grid sm:grid-cols-[48px_minmax(0,1fr)] gap-x-4 gap-y-2">
+                <span class="kicker !text-bred pt-1">V1</span>
+                <div>
+                  <div class="flex flex-wrap items-center gap-x-3 gap-y-2"><h4 class="text-[16px] font-semibold">Weak Authentication Controls</h4><span class="chip">User Authentication and Accounts</span></div>
+                  <p class="text-[14px] text-stext leading-relaxed mt-2">Unauthorized individuals gain access to user accounts and impersonate legitimate users.</p>
+                </div>
+              </li>
+              <li data-a="right" style="--i: 3" class="py-5 grid sm:grid-cols-[48px_minmax(0,1fr)] gap-x-4 gap-y-2">
+                <span class="kicker !text-bred pt-1">V2</span>
+                <div>
+                  <div class="flex flex-wrap items-center gap-x-3 gap-y-2"><h4 class="text-[16px] font-semibold">Improper Input Validation</h4><span class="chip">Flag Submission and User Input Forms</span></div>
+                  <p class="text-[14px] text-stext leading-relaxed mt-2">Malicious or unexpected input affects application behavior or stored data.</p>
+                </div>
+              </li>
+              <li data-a="right" style="--i: 4" class="py-5 grid sm:grid-cols-[48px_minmax(0,1fr)] gap-x-4 gap-y-2">
+                <span class="kicker !text-bred pt-1">V3</span>
+                <div>
+                  <div class="flex flex-wrap items-center gap-x-3 gap-y-2"><h4 class="text-[16px] font-semibold">Insufficient Access Control</h4><span class="chip">User Accounts, Progress Records, Scoreboard, Database</span></div>
+                  <p class="text-[14px] text-stext leading-relaxed mt-2">Users access or modify information or functionality restricted to other users or administrators.</p>
+                </div>
+              </li>
+              <li data-a="right" style="--i: 5" class="py-5 grid sm:grid-cols-[48px_minmax(0,1fr)] gap-x-4 gap-y-2">
+                <span class="kicker !text-bred pt-1">V4</span>
+                <div>
+                  <div class="flex flex-wrap items-center gap-x-3 gap-y-2"><h4 class="text-[16px] font-semibold">Insecure Flag Storage</h4><span class="chip">Challenge and Flag Validation System</span></div>
+                  <p class="text-[14px] text-stext leading-relaxed mt-2">Users retrieve flags without solving the intended challenges.</p>
+                </div>
+              </li>
+              <li data-a="right" style="--i: 6" class="py-5 grid sm:grid-cols-[48px_minmax(0,1fr)] gap-x-4 gap-y-2">
+                <span class="kicker !text-bred pt-1">V5</span>
+                <div>
+                  <div class="flex flex-wrap items-center gap-x-3 gap-y-2"><h4 class="text-[16px] font-semibold">Insecure Data Storage</h4><span class="chip">Database</span></div>
+                  <p class="text-[14px] text-stext leading-relaxed mt-2">User information, progress records, challenge information, or other data is exposed to unauthorized parties.</p>
+                </div>
+              </li>
+              <li data-a="right" style="--i: 7" class="py-5 grid sm:grid-cols-[48px_minmax(0,1fr)] gap-x-4 gap-y-2">
+                <span class="kicker !text-bred pt-1">V6</span>
+                <div>
+                  <div class="flex flex-wrap items-center gap-x-3 gap-y-2"><h4 class="text-[16px] font-semibold">Security Misconfiguration</h4><span class="chip">Web Application and Hosting Environment</span></div>
+                  <p class="text-[14px] text-stext leading-relaxed mt-2">Incorrect permissions, exposed configuration, or insecure settings expose sensitive information or functionality.</p>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="slide" data-label="2.4 · Attacks">
+          <div class="relative max-w-content mx-auto px-6 w-full">
+            <div class="grid lg:grid-cols-2 gap-6 lg:gap-12 items-end">
+              <div>
+                <p data-a class="eyebrow">2.4 &middot; Potential Attacks</p>
+                <h3 data-a="split" class="s-title">Four attacks most relevant to the platform</h3>
+              </div>
+              <p data-a class="body" style="--i: 3">
+                The vulnerabilities above could be exploited through several
+                attacks that compromise the confidentiality, integrity, or
+                availability of platform assets. These four are the most
+                relevant to the platform&rsquo;s functionality.
+              </p>
+            </div>
+            <div class="mt-10 grid lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] gap-4">
+              <div data-a="left" style="--i: 2" class="card-x self-start">
+                <p class="label mb-4">What each attack threatens</p>
+                <table class="w-full text-[13px]">
+                  <thead>
+                    <tr class="text-mtext">
+                      <th scope="col" class="text-left font-medium pb-3">Attack</th>
+                      <th scope="col" class="font-mono font-medium pb-3 w-9" title="Confidentiality"><abbr title="Confidentiality" class="no-underline">C</abbr></th>
+                      <th scope="col" class="font-mono font-medium pb-3 w-9" title="Integrity"><abbr title="Integrity" class="no-underline">I</abbr></th>
+                      <th scope="col" class="font-mono font-medium pb-3 w-9" title="Availability"><abbr title="Availability" class="no-underline">A</abbr></th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-brder">
+                    <tr><th scope="row" class="text-left font-medium py-3">Brute-force login</th><td class="text-center text-bred">&#9679;<span class="sr-only">Yes</span></td><td class="text-center text-bred">&#9679;<span class="sr-only">Yes</span></td><td class="text-center text-brder2">&#9675;<span class="sr-only">No</span></td></tr>
+                    <tr><th scope="row" class="text-left font-medium py-3">Injection</th><td class="text-center text-bred">&#9679;<span class="sr-only">Yes</span></td><td class="text-center text-bred">&#9679;<span class="sr-only">Yes</span></td><td class="text-center text-brder2">&#9675;<span class="sr-only">No</span></td></tr>
+                    <tr><th scope="row" class="text-left font-medium py-3">Broken access control</th><td class="text-center text-bred">&#9679;<span class="sr-only">Yes</span></td><td class="text-center text-bred">&#9679;<span class="sr-only">Yes</span></td><td class="text-center text-brder2">&#9675;<span class="sr-only">No</span></td></tr>
+                    <tr><th scope="row" class="text-left font-medium py-3">Denial-of-service</th><td class="text-center text-brder2">&#9675;<span class="sr-only">No</span></td><td class="text-center text-brder2">&#9675;<span class="sr-only">No</span></td><td class="text-center text-bred">&#9679;<span class="sr-only">Yes</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="grid sm:grid-cols-2 gap-4">
+                <article data-a style="--i: 3" class="card-x lift">
+                  <div class="flex items-start justify-between gap-3"><h4 class="text-[16px] font-semibold">Brute-Force Login Attack</h4><span class="chip chip-red">C &middot; I</span></div>
+                  <p class="text-[14px] text-stext leading-relaxed mt-2">An attacker repeatedly tries different username and password combinations to gain unauthorized access to a user&rsquo;s account.</p>
+                  <dl class="mt-4 space-y-2.5 text-[13px] text-stext leading-relaxed">
+                    <div><dt class="label mb-0.5">Target</dt><dd>User accounts and the authentication system.</dd></div>
+                    <div><dt class="label mb-0.5">Potential impact</dt><dd>Access to another user&rsquo;s account, viewing or modifying their progress, and impersonating the legitimate user.</dd></div>
+                  </dl>
+                </article>
+                <article data-a style="--i: 4" class="card-x lift">
+                  <div class="flex items-start justify-between gap-3"><h4 class="text-[16px] font-semibold">Injection Attack</h4><span class="chip chip-red">C &middot; I</span></div>
+                  <p class="text-[14px] text-stext leading-relaxed mt-2">An attacker submits specially crafted input through application fields to manipulate how the application processes data.</p>
+                  <dl class="mt-4 space-y-2.5 text-[13px] text-stext leading-relaxed">
+                    <div><dt class="label mb-0.5">Target</dt><dd>Flag submission fields, authentication forms, other input fields, and the database.</dd></div>
+                    <div><dt class="label mb-0.5">Potential impact</dt><dd>Access to or modification of application data, interference with platform functionality, or compromise of stored information.</dd></div>
+                  </dl>
+                </article>
+                <article data-a style="--i: 5" class="card-x lift">
+                  <div class="flex items-start justify-between gap-3"><h4 class="text-[16px] font-semibold">Broken Access Control</h4><span class="chip chip-red">C &middot; I</span></div>
+                  <p class="text-[14px] text-stext leading-relaxed mt-2">A user attempts to access restricted resources or perform actions reserved for another user or an administrator.</p>
+                  <dl class="mt-4 space-y-2.5 text-[13px] text-stext leading-relaxed">
+                    <div><dt class="label mb-0.5">Target</dt><dd>User progress, scoreboard data, challenge management functions, and database records.</dd></div>
+                    <div><dt class="label mb-0.5">Potential impact</dt><dd>Modified scores, challenges falsely marked complete, access to another user&rsquo;s information, or altered challenge content.</dd></div>
+                  </dl>
+                </article>
+                <article data-a style="--i: 6" class="card-x lift">
+                  <div class="flex items-start justify-between gap-3"><h4 class="text-[16px] font-semibold">Denial-of-Service (DoS)</h4><span class="chip chip-red">A</span></div>
+                  <p class="text-[14px] text-stext leading-relaxed mt-2">An attacker sends an excessive number of requests to consume resources and prevent legitimate users from reaching the service.</p>
+                  <dl class="mt-4 space-y-2.5 text-[13px] text-stext leading-relaxed">
+                    <div><dt class="label mb-0.5">Target</dt><dd>The web application and hosting infrastructure.</dd></div>
+                    <div><dt class="label mb-0.5">Potential impact</dt><dd>The platform becomes slow or unavailable; users cannot open challenges, submit flags, or view progress.</dd></div>
+                  </dl>
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ 3 · Literature Review ═════════════════════════════════════════ -->
+      <section id="literature-review" class="relative bg-sec">
+        <div class="slide" data-label="3 · Literature review">
+          <div class="glow-orb" style="--x: 20%; --y: 30%"></div>
+          <div
+            class="relative max-w-content mx-auto px-6 w-full grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-8 lg:gap-16 items-end"
+          >
+            <p data-a="num" class="chap-num" aria-hidden="true">03</p>
+            <div>
+              <p data-a class="eyebrow">Section 3</p>
+              <h2 data-a="split" class="chap-title">Literature Review</h2>
+              <p data-a class="label !text-stext mt-8" style="--i: 2">
+                3.1 Capture-the-Flag in Cybersecurity Education
+              </p>
+              <p data-a class="lead mt-3" style="--i: 3">
+                Capture the Flag (CTF) is an effective way to learn
+                cybersecurity: participants complete challenges to find hidden
+                flags, and each flag proves a challenge was solved. CTF lets
+                participants apply security principles to problem-solving tasks
+                in cryptography, web security, network security, and more.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide" data-label="3.1 · CTF in education">
+          <div class="relative max-w-content mx-auto px-6 w-full">
+            <p data-a class="eyebrow">3.1 &middot; Capture-the-Flag in Cybersecurity Education</p>
+            <h3 data-a="split" class="s-title max-w-3xl">Two formats, and the gap we fill</h3>
+            <div class="mt-10 grid lg:grid-cols-2 gap-4">
+              <div class="grid gap-4">
+                <p data-a class="body" style="--i: 2">
+                  CTF competitions are usually
+                  <strong class="text-ptext">Jeopardy-style</strong> or
+                  <strong class="text-ptext">Attack-Defense</strong>.
+                </p>
+                <article data-a="left" style="--i: 3; border-color: rgba(220, 38, 38, 0.35)" class="card-x lift">
+                  <div class="flex items-center justify-between gap-3 mb-2"><h4 class="font-display text-[20px] font-semibold">Jeopardy-style</h4><span class="chip chip-red">Our approach</span></div>
+                  <p class="text-[14px] text-stext leading-relaxed">Separate challenges grouped into categories. The Mini CTF Security Lab follows this approach because it lets users complete individual educational challenges and track their progress.</p>
+                </article>
+                <article data-a="left" style="--i: 4" class="card-x lift">
+                  <h4 class="font-display text-[20px] font-semibold mb-2">Attack-Defense</h4>
+                  <p class="text-[14px] text-stext leading-relaxed">Teams exploit vulnerabilities in opposing systems while protecting their own infrastructure.</p>
+                </article>
+              </div>
+              <div class="grid gap-4">
+                <div data-a="zoom" style="--i: 4" class="card-x">
+                  <p class="font-display text-[56px] sm:text-[72px] font-semibold leading-none tracking-tight text-bred" data-count="15963">15,963</p>
+                  <p class="text-[14px] mt-3">textual solutions to CTF challenges analyzed by Švábenský et al. (2021)</p>
+                  <p class="text-[14px] text-stext leading-relaxed mt-4">
+                    CTF activities increasingly complement traditional
+                    cybersecurity education. The study found that CTFs offer
+                    real opportunities to gain practical cybersecurity
+                    knowledge, but that human-centric topics such as social
+                    engineering and security awareness receive comparatively
+                    little attention. CTF learning can also be hard for
+                    beginners and light on non-technical aspects of security.
+                  </p>
+                </div>
+                <div data-a style="--i: 5; background-color: #1a0d0f" class="card-x">
+                  <p class="label !text-bred mb-2">How our lab responds</p>
+                  <p class="text-[15px] leading-relaxed">
+                    The Mini CTF Security Lab addresses these gaps with an equal
+                    combination of technical and non-technical learning,
+                    including dedicated security awareness and ethical
+                    reasoning tracks.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide" data-label="3.2 · Existing solutions">
+          <div class="relative max-w-content mx-auto px-6 w-full">
+            <div class="grid lg:grid-cols-2 gap-6 lg:gap-12 items-end">
+              <div>
+                <p data-a class="eyebrow">3.2 &middot; Existing and Previous Solutions</p>
+                <h3 data-a="split" class="s-title">What three platforms teach us</h3>
+              </div>
+              <p data-a class="body" style="--i: 3">
+                Three existing platforms show different ways of organizing
+                cybersecurity tasks for learning.
+              </p>
+            </div>
+            <div class="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-4">
+              <article data-a style="--i: 2" class="card-x lift !p-7 flex flex-col">
+                <p class="kicker mb-2">Carnegie Mellon University</p>
+                <h4 class="font-display text-[24px] font-semibold mb-4">picoCTF</h4>
+                <p class="text-[14px] text-stext leading-relaxed mb-6">An educational platform with interactive challenges and contests aimed mainly at students and novices, covering cryptography, web exploitation, and more. picoGym lets learners practise on challenges from past competitions, while picoCTF competitions run them in a competitive setting with increasingly difficult tasks.</p>
+                <div class="mt-auto border-t border-brder pt-5">
+                  <p class="label !text-pred mb-2">Lesson for our lab</p>
+                  <p class="text-[13px] text-stext leading-relaxed mb-4">With so many technical challenges, users without a security background may need more guidance &mdash; so our lab gives every challenge clear instructions and a hint.</p>
+                  <a href="https://picoctf.org/" target="_blank" rel="noopener" class="text-[13px] font-semibold text-bred hover:underline">picoctf.org &nearr;</a>
+                </div>
+              </article>
+              <article data-a style="--i: 3" class="card-x lift !p-7 flex flex-col">
+                <p class="kicker mb-2">Open-source CTF framework</p>
+                <h4 class="font-display text-[24px] font-semibold mb-4">CTFd</h4>
+                <p class="text-[14px] text-stext leading-relaxed mb-6">Open-source software for running CTF competitions. Administrators create challenges, manage participants, and check flags and results. It supports challenge descriptions, downloadable files, hints, points, automated flag validation, a configurable scoreboard, plugins, and themes.</p>
+                <div class="mt-auto border-t border-brder pt-5">
+                  <p class="label !text-pred mb-2">Lesson for our lab</p>
+                  <p class="text-[13px] text-stext leading-relaxed mb-4">CTFd is a framework: organizers must write all the challenges and educational content themselves. Our lab instead ships a small, guided set of challenges aligned with fundamental concepts.</p>
+                  <a href="https://docs.ctfd.io/" target="_blank" rel="noopener" class="text-[13px] font-semibold text-bred hover:underline">docs.ctfd.io &nearr;</a>
+                </div>
+              </article>
+              <article data-a style="--i: 4" class="card-x lift !p-7 flex flex-col">
+                <p class="kicker mb-2">Wargames community</p>
+                <h4 class="font-display text-[24px] font-semibold mb-4">OverTheWire</h4>
+                <p class="text-[14px] text-stext leading-relaxed mb-6">A set of wargames teaching security through technical exercises: Bandit covers Linux command-line basics, Natas covers web security, and Krypton covers cryptography. Unlike separate CTF challenges, it uses levels, where solving one level yields what you need for the next.</p>
+                <div class="mt-auto border-t border-brder pt-5">
+                  <p class="label !text-pred mb-2">Lesson for our lab</p>
+                  <p class="text-[13px] text-stext leading-relaxed mb-4">Heavy reliance on command-line tools can be hard for people unfamiliar with Linux; our lab is web-based and solved entirely through a graphical interface.</p>
+                  <a href="https://overthewire.org/wargames/" target="_blank" rel="noopener" class="text-[13px] font-semibold text-bred hover:underline">overthewire.org/wargames &nearr;</a>
+                </div>
+              </article>
+            </div>
+            <p
+              data-a
+              style="--i: 5"
+              class="mt-6 flex flex-wrap items-center gap-3 text-[13px] text-stext border border-dashed border-brder2 rounded-card px-5 py-4"
+            >
+              <span class="status status-wip">Coming next</span>
+              3.3 Comparison of Existing Approaches and 3.4 Related Security
+              Incidents are still being written and will be added here when
+              they are done.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ 4 · Proposed CTF Security Lab Platform ════════════════════════ -->
+      <section id="proposed-platform" class="relative bg-main">
+        <div class="slide" data-label="4 · Proposed platform">
+          <div class="glow-orb" style="--x: 80%; --y: 75%"></div>
+          <div
+            class="relative max-w-content mx-auto px-6 w-full grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-8 lg:gap-16 items-end"
+          >
+            <p data-a="num" class="chap-num" aria-hidden="true">04</p>
+            <div>
+              <p data-a class="eyebrow">Section 4</p>
+              <h2 data-a="split" class="chap-title">
+                Proposed CTF Security Lab Platform
+              </h2>
+            </div>
+          </div>
+          <div class="relative max-w-content mx-auto px-6 w-full mt-14">
+            <blockquote
+              data-a="blur"
+              style="--i: 3"
+              class="border-l-2 border-pred pl-6 sm:pl-8 max-w-4xl"
+            >
+              <p class="label !text-bred mb-3">4.1 &middot; Main objective</p>
+              <p class="font-display text-[22px] sm:text-[28px] leading-[1.35] font-medium">
+                To design and implement a secure, web-based Mini
+                Capture-The-Flag (CTF) Security Lab Platform that delivers
+                guided, hands-on cybersecurity challenges across both technical
+                and non-technical domains, reinforcing fundamental
+                cybersecurity principles in a controlled educational
+                environment.
+              </p>
+            </blockquote>
+          </div>
+        </div>
+
+        <div class="slide" data-label="4.1 · Objectives">
+          <div class="relative max-w-content mx-auto px-6 w-full">
+            <p data-a class="eyebrow">4.1 &middot; Project Objectives</p>
+            <h3 data-a="split" class="s-title max-w-3xl">Six objectives behind the build</h3>
+            <ol class="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <li data-a style="--i: 2" class="card-x lift">
+                <p class="font-display text-[34px] font-semibold text-pred/80 leading-none mb-5">01</p>
+                <h4 class="text-[16px] font-semibold mb-2">Diversify challenge categories</h4>
+                <p class="text-[14px] text-stext leading-relaxed">Create 8&ndash;12 guided CTF challenges covering all four categories: Web Security, Cryptography, Security Awareness, and Cybersecurity Ethics.</p>
+              </li>
+              <li data-a style="--i: 3" class="card-x lift">
+                <p class="font-display text-[34px] font-semibold text-pred/80 leading-none mb-5">02</p>
+                <h4 class="text-[16px] font-semibold mb-2">Automate flag validation</h4>
+                <p class="text-[14px] text-stext leading-relaxed">Validate submitted flags automatically against hashes stored safely in the system.</p>
+              </li>
+              <li data-a style="--i: 4" class="card-x lift">
+                <p class="font-display text-[34px] font-semibold text-pred/80 leading-none mb-5">03</p>
+                <h4 class="text-[16px] font-semibold mb-2">Hints and explanations</h4>
+                <p class="text-[14px] text-stext leading-relaxed">Give a hint that helps the user while solving, and an explanation of the concept once the challenge is solved.</p>
+              </li>
+              <li data-a style="--i: 5" class="card-x lift">
+                <p class="font-display text-[34px] font-semibold text-pred/80 leading-none mb-5">04</p>
+                <h4 class="text-[16px] font-semibold mb-2">Track progress and points</h4>
+                <p class="text-[14px] text-stext leading-relaxed">Calculate the points each user earns and show them on a user progress section and a live leaderboard.</p>
+              </li>
+              <li data-a style="--i: 6" class="card-x lift">
+                <p class="font-display text-[34px] font-semibold text-pred/80 leading-none mb-5">05</p>
+                <h4 class="text-[16px] font-semibold mb-2">Platform security controls</h4>
+                <p class="text-[14px] text-stext leading-relaxed">Apply application-layer controls such as salted password hashing, input validation, and session-based access control to prevent SQL injection and flag leakage.</p>
+              </li>
+              <li data-a style="--i: 7" class="card-x lift">
+                <p class="font-display text-[34px] font-semibold text-pred/80 leading-none mb-5">06</p>
+                <h4 class="text-[16px] font-semibold mb-2">Intuitive user experience</h4>
+                <p class="text-[14px] text-stext leading-relaxed">A simple web-based graphical interface, so users solve problems without needing a command line.</p>
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="slide" data-label="4.2 · Functional requirements">
+          <div class="relative max-w-content mx-auto px-6 w-full">
+            <p data-a class="eyebrow">4.2 &middot; Functional Requirements</p>
+            <h3 data-a="split" class="s-title max-w-3xl">What the system shall do</h3>
+            <ol class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <li data-a style="--i: 2" class="card-x lift"><p class="kicker !text-bred">FR-01</p><h4 class="text-[15px] font-semibold mt-2 mb-2">User Authentication</h4><p class="text-[13px] text-stext leading-relaxed">The system shall allow users to register an account, securely log in using username/password, and manage active sessions.</p></li>
+              <li data-a style="--i: 3" class="card-x lift"><p class="kicker !text-bred">FR-02</p><h4 class="text-[15px] font-semibold mt-2 mb-2">Challenge Listing</h4><p class="text-[13px] text-stext leading-relaxed">The system shall display all available challenges categorized by domain (Web, Cryptography, Awareness, Ethics) alongside their difficulty levels and point values.</p></li>
+              <li data-a style="--i: 4" class="card-x lift"><p class="kicker !text-bred">FR-03</p><h4 class="text-[15px] font-semibold mt-2 mb-2">Challenge Execution</h4><p class="text-[13px] text-stext leading-relaxed">The system shall display scenario descriptions, target environment details, instructions, and flag submission fields upon selecting a challenge.</p></li>
+              <li data-a style="--i: 5" class="card-x lift"><p class="kicker !text-bred">FR-04</p><h4 class="text-[15px] font-semibold mt-2 mb-2">Automated Flag Validation</h4><p class="text-[13px] text-stext leading-relaxed">The system shall accept flag inputs, evaluate them against stored secret hashes, and display immediate visual confirmation (Success / Incorrect).</p></li>
+              <li data-a style="--i: 6" class="card-x lift"><p class="kicker !text-bred">FR-05</p><h4 class="text-[15px] font-semibold mt-2 mb-2">Hints and Explanations</h4><p class="text-[13px] text-stext leading-relaxed">The system shall provide unlockable hints during challenge attempts and reveal detailed post-completion explanations reinforcing cybersecurity principles.</p></li>
+              <li data-a style="--i: 7" class="card-x lift"><p class="kicker !text-bred">FR-06</p><h4 class="text-[15px] font-semibold mt-2 mb-2">Progress Tracking</h4><p class="text-[13px] text-stext leading-relaxed">The system shall track individual user progress: solved challenges, completion percentages, and timestamps.</p></li>
+              <li data-a style="--i: 8" class="card-x lift"><p class="kicker !text-bred">FR-07</p><h4 class="text-[15px] font-semibold mt-2 mb-2">Scoreboard &amp; Leaderboard</h4><p class="text-[13px] text-stext leading-relaxed">The system shall compute total points earned by each user and maintain an updated public scoreboard ranking all participants.</p></li>
+              <li data-a style="--i: 9" class="card-x lift"><p class="kicker !text-bred">FR-08</p><h4 class="text-[15px] font-semibold mt-2 mb-2">Access Control &amp; Roles</h4><p class="text-[13px] text-stext leading-relaxed">The system shall enforce role-based access control (User vs. Admin) to restrict challenge editing and administrative configuration to authorized users.</p></li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="slide" data-label="4.3 · Non-functional requirements">
+          <div class="relative max-w-content mx-auto px-6 w-full">
+            <p data-a class="eyebrow">4.3 &middot; Non-Functional Requirements</p>
+            <h3 data-a="split" class="s-title max-w-3xl">How well it shall do it</h3>
+            <ol class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+              <li data-a style="--i: 2" class="card-x lift lg:col-span-3">
+                <p class="kicker">NFR-01 &middot; Usability</p>
+                <p class="font-display text-[44px] font-semibold leading-none mt-4 mb-4">3 <span class="text-[18px] text-stext font-medium">clicks</span></p>
+                <p class="text-[13px] text-stext leading-relaxed">The interface shall be intuitive and responsive, letting users reach any challenge within three clicks from the main dashboard.</p>
+              </li>
+              <li data-a style="--i: 3" class="card-x lift lg:col-span-3">
+                <p class="kicker">NFR-02 &middot; Security</p>
+                <p class="font-display text-[30px] sm:text-[36px] font-semibold leading-none mt-4 mb-4">bcrypt <span class="text-stext">/</span> SHA-256</p>
+                <p class="text-[13px] text-stext leading-relaxed">Stored passwords and secret challenge flags must be hashed with secure algorithms (e.g. bcrypt / SHA-256). Input fields must sanitize user input to prevent SQL injection and cross-site scripting (XSS).</p>
+              </li>
+              <li data-a style="--i: 4" class="card-x lift lg:col-span-2">
+                <p class="kicker">NFR-03 &middot; Performance</p>
+                <p class="font-display text-[44px] font-semibold leading-none mt-4 mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-2">&lt;2s <span class="chip chip-red !text-[12px]">&lt;500 ms validation</span></p>
+                <p class="text-[13px] text-stext leading-relaxed">Page load times under 2 seconds, and flag validation requests processed in under 500 milliseconds under normal operation.</p>
+              </li>
+              <li data-a style="--i: 5" class="card-x lift lg:col-span-2">
+                <p class="kicker">NFR-04 &middot; Reliability</p>
+                <p class="font-display text-[44px] font-semibold leading-none mt-4 mb-4"><span data-count="99">99</span><span class="text-[18px] text-stext font-medium">% uptime</span></p>
+                <p class="text-[13px] text-stext leading-relaxed">99% operational uptime during active lab sessions, with no loss of user progress state in the database.</p>
+              </li>
+              <li data-a style="--i: 6" class="card-x lift sm:col-span-2 lg:col-span-2">
+                <p class="kicker">NFR-05 &middot; Compatibility</p>
+                <p class="font-display text-[44px] font-semibold leading-none mt-4 mb-4">4 <span class="text-[18px] text-stext font-medium">browsers</span></p>
+                <p class="text-[13px] text-stext leading-relaxed">Works across modern, standards-compliant browsers (Chrome, Firefox, Edge, Safari) without third-party plugins.</p>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ 9 · Conclusion ════════════════════════════════════════════════ -->
+      <section id="conclusion" class="relative bg-sec">
+        <div class="slide" data-label="9 · Conclusion">
+          <div class="glow-orb" style="--x: 15%; --y: 25%"></div>
+          <div
+            class="relative max-w-content mx-auto px-6 w-full grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-8 lg:gap-16 items-end"
+          >
+            <p data-a="num" class="chap-num" aria-hidden="true">09</p>
+            <div>
+              <p data-a class="eyebrow">Section 9</p>
+              <h2 data-a="split" class="chap-title">Conclusion</h2>
+              <p data-a class="lead mt-8" style="--i: 3">
+                The project develops a web-based Mini CTF Security Lab Platform
+                that bridges the gap between cybersecurity theory and practice.
+                Recognizing that non-technical cybersecurity concepts are often
+                neglected in CTF education, the platform offers a well-rounded
+                curriculum through Web Security, Cryptography, Security
+                Awareness, and Cybersecurity Ethics challenges.
+              </p>
+            </div>
+          </div>
+          <div class="relative max-w-content mx-auto px-6 w-full mt-14 grid lg:grid-cols-3 gap-4">
+            <article data-a style="--i: 4" class="card-x">
+              <p class="label !text-bred mb-3">Key elements</p>
+              <ul class="flex flex-wrap gap-1.5 mb-4"><li class="chip">Automatic flag validation</li><li class="chip">Hints &amp; explanations</li><li class="chip">Progress tracker</li><li class="chip">Leaderboard</li></ul>
+              <p class="text-[14px] text-stext leading-relaxed">Its key elements &mdash; automatic flag validation, the hint and explanation module, the progress tracker, and the leaderboard &mdash; work together so users can learn at their own pace with timely feedback.</p>
+            </article>
+            <article data-a style="--i: 5" class="card-x">
+              <p class="label !text-bred mb-3">Security by design</p>
+              <p class="text-[14px] text-stext leading-relaxed">Through system integration and functional and security testing, the application demonstrates the key information security concepts covered in CYS401. Access controls, salted cryptographic hashing for passwords and flags, and input sanitization are built into the platform architecture to guard against injection attacks, broken access control, and unauthorized data disclosure.</p>
+            </article>
+            <article data-a style="--i: 6" class="card-x">
+              <p class="label !text-bred mb-3">Looking ahead</p>
+              <p class="text-[14px] text-stext leading-relaxed mb-4">Overall, the Mini CTF Security Lab Platform provides a scalable, secure, and user-friendly environment for university students and cybersecurity beginners. Future enhancements such as team-based competition modes, dynamic point decay, and expanded network defense scenarios would further strengthen it as a tool for cybersecurity training and academic instruction.</p>
+              <ul class="flex flex-wrap gap-1.5"><li class="chip chip-red">Team-based modes</li><li class="chip chip-red">Dynamic point decay</li><li class="chip chip-red">Network defense scenarios</li></ul>
             </article>
           </div>
+        </div>
+      </section>
+
+      <!-- ═══ 10 · References ═══════════════════════════════════════════════ -->
+      <section id="references" class="relative bg-main">
+        <div class="slide" data-label="10 · References">
           <div
-            class="reveal mt-10 bg-card border border-dashed border-brder2 rounded-card p-6 text-[14px] text-stext leading-relaxed"
+            class="relative max-w-content mx-auto px-6 w-full grid lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] gap-10 lg:gap-16"
           >
-            <strong class="text-ptext">Coming next:</strong> 3.3 Comparison of
-            Existing Approaches and 3.4 Related Security Incidents are still
-            being written and will be added here when they are done.
+            <div>
+              <p data-a class="eyebrow">Section 10</p>
+              <h2 data-a="split" class="s-title">References</h2>
+              <p data-a class="body mt-6" style="--i: 3">
+                Sources cited in the completed sections, in APA 7th edition
+                style.
+              </p>
+            </div>
+            <ol class="divide-y divide-brder border-y border-brder text-[14px] text-stext leading-relaxed">
+              <li data-a="right" style="--i: 2" class="py-5 pl-8 -indent-8">
+                Carnegie Mellon University. (n.d.). <em>picoCTF</em>.
+                <a href="https://picoctf.org/" target="_blank" rel="noopener" class="text-bred hover:underline break-all">https://picoctf.org/</a>
+              </li>
+              <li data-a="right" style="--i: 3" class="py-5 pl-8 -indent-8">
+                CTFd LLC. (n.d.). <em>CTFd documentation</em>.
+                <a href="https://docs.ctfd.io/" target="_blank" rel="noopener" class="text-bred hover:underline break-all">https://docs.ctfd.io/</a>
+              </li>
+              <li data-a="right" style="--i: 4" class="py-5 pl-8 -indent-8">
+                OverTheWire. (n.d.). <em>Wargames</em>.
+                <a href="https://overthewire.org/wargames/" target="_blank" rel="noopener" class="text-bred hover:underline break-all">https://overthewire.org/wargames/</a>
+              </li>
+              <li data-a="right" style="--i: 5" class="py-5 pl-8 -indent-8">
+                Švábenský, V., Čeleda, P., Vykopal, J., &amp; Brišáková, S.
+                (2021). Cybersecurity knowledge and skills taught in capture
+                the flag challenges. <em>Computers &amp; Security, 102</em>,
+                102154.
+                <a href="https://doi.org/10.1016/j.cose.2020.102154" target="_blank" rel="noopener" class="text-bred hover:underline break-all">https://doi.org/10.1016/j.cose.2020.102154</a>
+              </li>
+            </ol>
           </div>
         </div>
       </section>
 
-      <section
-        id="proposed-platform"
-        class="py-20 border-b border-brder bg-sec"
-      >
-        <div class="max-w-content mx-auto px-6">
-          <div class="reveal max-w-3xl mb-10">
-            <p
-              class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3"
-            >
-              Section 4
-            </p>
-            <h2
-              class="font-display text-[28px] sm:text-[32px] font-semibold mb-4"
-            >
-              Proposed CTF Security Lab Platform
+      <!-- ═══ Close ═════════════════════════════════════════════════════════ -->
+      <section class="relative bg-sec">
+        <div class="slide text-center" data-label="End">
+          <div class="absolute inset-0 deck-grid" aria-hidden="true"></div>
+          <div class="glow-orb" style="--x: 50%; --y: 55%"></div>
+          <div class="relative max-w-content mx-auto px-6 w-full">
+            <p data-a class="eyebrow justify-center">End of report</p>
+            <h2 data-a="split" class="chap-title">
+              See the requirements <span class="text-pred">in action</span>
             </h2>
-          </div>
-          <h3 class="reveal font-display text-[20px] font-semibold mt-0 mb-5">
-            4.1 Project Objectives
-          </h3>
-          <div
-            class="reveal bg-sred/30 border border-rborder rounded-card p-6 sm:p-8 mb-8"
-          >
-            <p
-              class="text-[11px] font-semibold uppercase tracking-wider text-bred mb-3"
+            <p data-a class="lead mt-6" style="--i: 3">
+              Try the challenge tracks, or see how the project is scoped and
+              graded.
+            </p>
+            <div
+              data-a
+              style="--i: 4"
+              class="mt-10 flex flex-wrap items-center justify-center gap-4"
             >
-              Main objective
-            </p>
-            <p class="text-[16px] leading-relaxed">
-              To design and implement a secure, web-based Mini Capture-The-Flag
-              (CTF) Security Lab Platform that delivers guided, hands-on
-              cybersecurity challenges across both technical and non-technical
-              domains, reinforcing fundamental cybersecurity principles in a
-              controlled educational environment.
-            </p>
-          </div>
-          <ol class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <li class="reveal bg-card border border-brder rounded-card p-6">
-              <p class="text-[11px] font-mono text-pred mb-2">01</p>
-              <h4 class="text-[15px] font-semibold mb-2">
-                Diversify challenge categories
-              </h4>
-              <p class="text-[14px] text-stext leading-relaxed">
-                Create 8&ndash;12 guided CTF challenges covering all four
-                categories: Web Security, Cryptography, Security Awareness, and
-                Cybersecurity Ethics.
-              </p>
-            </li>
-            <li class="reveal bg-card border border-brder rounded-card p-6">
-              <p class="text-[11px] font-mono text-pred mb-2">02</p>
-              <h4 class="text-[15px] font-semibold mb-2">
-                Automate flag validation
-              </h4>
-              <p class="text-[14px] text-stext leading-relaxed">
-                Validate submitted flags automatically against hashes stored
-                safely in the system.
-              </p>
-            </li>
-            <li class="reveal bg-card border border-brder rounded-card p-6">
-              <p class="text-[11px] font-mono text-pred mb-2">03</p>
-              <h4 class="text-[15px] font-semibold mb-2">
-                Hints and explanations
-              </h4>
-              <p class="text-[14px] text-stext leading-relaxed">
-                Give a hint that helps the user while solving, and an
-                explanation of the concept once the challenge is solved.
-              </p>
-            </li>
-            <li class="reveal bg-card border border-brder rounded-card p-6">
-              <p class="text-[11px] font-mono text-pred mb-2">04</p>
-              <h4 class="text-[15px] font-semibold mb-2">
-                Track progress and points
-              </h4>
-              <p class="text-[14px] text-stext leading-relaxed">
-                Calculate the points each user earns and show them on a user
-                progress section and a live leaderboard.
-              </p>
-            </li>
-            <li class="reveal bg-card border border-brder rounded-card p-6">
-              <p class="text-[11px] font-mono text-pred mb-2">05</p>
-              <h4 class="text-[15px] font-semibold mb-2">
-                Platform security controls
-              </h4>
-              <p class="text-[14px] text-stext leading-relaxed">
-                Apply application-layer controls such as salted password
-                hashing, input validation, and session-based access control to
-                prevent SQL injection and flag leakage.
-              </p>
-            </li>
-            <li class="reveal bg-card border border-brder rounded-card p-6">
-              <p class="text-[11px] font-mono text-pred mb-2">06</p>
-              <h4 class="text-[15px] font-semibold mb-2">
-                Intuitive user experience
-              </h4>
-              <p class="text-[14px] text-stext leading-relaxed">
-                A simple web-based graphical interface, so users solve problems
-                without needing a command line.
-              </p>
-            </li>
-          </ol>
-          <h3 class="reveal font-display text-[20px] font-semibold mt-12 mb-5">
-            4.2 Functional Requirements
-          </h3>
-          <div
-            class="reveal overflow-x-auto rounded-card border border-brder bg-card"
-          >
-            <table class="w-full min-w-[680px] text-left text-[14px]">
-              <thead
-                class="bg-elevated text-[11px] uppercase tracking-wider text-mtext"
-              >
-                <tr>
-                  <th scope="col" class="px-5 py-3 font-semibold">ID</th>
-                  <th scope="col" class="px-5 py-3 font-semibold">
-                    Module / Feature
-                  </th>
-                  <th scope="col" class="px-5 py-3 font-semibold">
-                    Requirement
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-brder text-stext">
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    FR-01
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    User Authentication
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    The system shall allow users to register an account,
-                    securely log in using username/password, and manage active
-                    sessions.
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    FR-02
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Challenge Listing
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    The system shall display all available challenges
-                    categorized by domain (Web, Cryptography, Awareness, Ethics)
-                    alongside their difficulty levels and point values.
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    FR-03
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Challenge Execution
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    The system shall display scenario descriptions, target
-                    environment details, instructions, and flag submission
-                    fields upon selecting a challenge.
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    FR-04
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Automated Flag Validation
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    The system shall accept flag inputs, evaluate them against
-                    stored secret hashes, and display immediate visual
-                    confirmation (Success / Incorrect).
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    FR-05
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Hints and Explanations
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    The system shall provide unlockable hints during challenge
-                    attempts and reveal detailed post-completion explanations
-                    reinforcing cybersecurity principles.
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    FR-06
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Progress Tracking
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    The system shall track individual user progress: solved
-                    challenges, completion percentages, and timestamps.
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    FR-07
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Scoreboard &amp; Leaderboard
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    The system shall compute total points earned by each user
-                    and maintain an updated public scoreboard ranking all
-                    participants.
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    FR-08
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Access Control &amp; Roles
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    The system shall enforce role-based access control (User vs.
-                    Admin) to restrict challenge editing and administrative
-                    configuration to authorized users.
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <h3 class="reveal font-display text-[20px] font-semibold mt-12 mb-5">
-            4.3 Non-Functional Requirements
-          </h3>
-          <div
-            class="reveal overflow-x-auto rounded-card border border-brder bg-card"
-          >
-            <table class="w-full min-w-[680px] text-left text-[14px]">
-              <thead
-                class="bg-elevated text-[11px] uppercase tracking-wider text-mtext"
-              >
-                <tr>
-                  <th scope="col" class="px-5 py-3 font-semibold">ID</th>
-                  <th scope="col" class="px-5 py-3 font-semibold">
-                    Requirement
-                  </th>
-                  <th scope="col" class="px-5 py-3 font-semibold">
-                    Description
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-brder text-stext">
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    NFR-01
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">Usability</td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    The interface shall be intuitive and responsive, letting
-                    users reach any challenge within three clicks from the main
-                    dashboard.
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    NFR-02
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">Security</td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Stored passwords and secret challenge flags must be hashed
-                    with secure algorithms (e.g. bcrypt / SHA-256). Input fields
-                    must sanitize user input to prevent SQL injection and
-                    cross-site scripting (XSS).
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    NFR-03
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Performance
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Page load times under 2 seconds, and flag validation
-                    requests processed in under 500 milliseconds under normal
-                    operation.
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    NFR-04
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Reliability
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    99% operational uptime during active lab sessions, with no
-                    loss of user progress state in the database.
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    class="px-5 py-4 align-top font-semibold text-ptext whitespace-nowrap"
-                  >
-                    NFR-05
-                  </th>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Compatibility
-                  </td>
-                  <td class="px-5 py-4 align-top leading-relaxed">
-                    Works across modern, standards-compliant browsers (Chrome,
-                    Firefox, Edge, Safari) without third-party plugins.
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <section id="conclusion" class="py-20 border-b border-brder">
-        <div class="max-w-content mx-auto px-6">
-          <div class="reveal max-w-3xl mb-10">
-            <p
-              class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3"
-            >
-              Section 9
-            </p>
-            <h2
-              class="font-display text-[28px] sm:text-[32px] font-semibold mb-4"
-            >
-              Conclusion
-            </h2>
-          </div>
-          <div
-            class="reveal max-w-3xl space-y-4 text-[15px] text-stext leading-relaxed"
-          >
-            <p>
-              The project develops a web-based Mini CTF Security Lab Platform
-              that bridges the gap between cybersecurity theory and practice.
-              Recognizing that non-technical cybersecurity concepts are often
-              neglected in CTF education, the platform offers a well-rounded
-              curriculum through Web Security, Cryptography, Security Awareness,
-              and Cybersecurity Ethics challenges.
-            </p>
-            <p>
-              Its key elements &mdash; automatic flag validation, the hint and
-              explanation module, the progress tracker, and the leaderboard
-              &mdash; work together so users can learn at their own pace with
-              timely feedback.
-            </p>
-            <p>
-              Through system integration and functional and security testing,
-              the application demonstrates the key information security concepts
-              covered in CYS401. Access controls, salted cryptographic hashing
-              for passwords and flags, and input sanitization are built into the
-              platform architecture to guard against injection attacks, broken
-              access control, and unauthorized data disclosure.
-            </p>
-            <p>
-              Overall, the Mini CTF Security Lab Platform provides a scalable,
-              secure, and user-friendly environment for university students and
-              cybersecurity beginners. Future enhancements such as team-based
-              competition modes, dynamic point decay, and expanded network
-              defense scenarios would further strengthen it as a tool for
-              cybersecurity training and academic instruction.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section id="references" class="py-20 border-b border-brder bg-sec">
-        <div class="max-w-content mx-auto px-6">
-          <div class="reveal max-w-3xl mb-10">
-            <p
-              class="text-[12px] font-medium text-pred uppercase tracking-widest mb-3"
-            >
-              Section 10
-            </p>
-            <h2
-              class="font-display text-[28px] sm:text-[32px] font-semibold mb-4"
-            >
-              References
-            </h2>
-            <p class="text-[15px] text-stext leading-relaxed">
-              Sources cited in the completed sections, in APA 7th edition style.
-            </p>
-          </div>
-          <ol
-            class="reveal max-w-3xl space-y-4 text-[14px] text-stext leading-relaxed"
-          >
-            <li class="pl-8 -indent-8">
-              Carnegie Mellon University. (n.d.). <em>picoCTF</em>.
               <a
-                href="https://picoctf.org/"
-                target="_blank"
-                rel="noopener"
-                class="text-bred hover:underline break-all"
-                >https://picoctf.org/</a
+                href="challenges.html"
+                class="bg-pred hover:bg-bred text-white text-[15px] font-semibold px-6 py-3 rounded-btn transition-colors"
+                >Explore Challenges</a
               >
-            </li>
-            <li class="pl-8 -indent-8">
-              CTFd LLC. (n.d.). <em>CTFd documentation</em>.
               <a
-                href="https://docs.ctfd.io/"
-                target="_blank"
-                rel="noopener"
-                class="text-bred hover:underline break-all"
-                >https://docs.ctfd.io/</a
+                href="project.html"
+                class="border border-brder2 hover:bg-elevated text-[15px] font-semibold px-6 py-3 rounded-btn transition-colors"
+                >Project Overview</a
               >
-            </li>
-            <li class="pl-8 -indent-8">
-              OverTheWire. (n.d.). <em>Wargames</em>.
-              <a
-                href="https://overthewire.org/wargames/"
-                target="_blank"
-                rel="noopener"
-                class="text-bred hover:underline break-all"
-                >https://overthewire.org/wargames/</a
-              >
-            </li>
-            <li class="pl-8 -indent-8">
-              Švábenský, V., Čeleda, P., Vykopal, J., &amp; Brišáková, S.
-              (2021). Cybersecurity knowledge and skills taught in capture the
-              flag challenges. <em>Computers &amp; Security, 102</em>, 102154.
-              <a
-                href="https://doi.org/10.1016/j.cose.2020.102154"
-                target="_blank"
-                rel="noopener"
-                class="text-bred hover:underline break-all"
-                >https://doi.org/10.1016/j.cose.2020.102154</a
-              >
-            </li>
-          </ol>
-        </div>
-      </section>
-
-      <!-- CTA -->
-      <section class="relative py-24 overflow-hidden">
-        <div
-          class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(220,38,38,0.12),transparent_60%)] pointer-events-none"
-        ></div>
-        <div class="relative max-w-content mx-auto px-6 text-center">
-          <h2
-            class="font-display text-[28px] sm:text-[36px] font-semibold mb-4"
-          >
-            See the requirements in action
-          </h2>
-          <p class="text-[15px] text-stext mb-8">
-            Try the challenge tracks, or see how the project is scoped and
-            graded.
-          </p>
-          <div class="flex flex-wrap items-center justify-center gap-4">
-            <a
-              href="index.html#challenges"
-              class="bg-pred hover:bg-bred text-white text-[15px] font-semibold px-6 py-3 rounded-btn transition-colors"
-              >Explore Challenges</a
-            >
-            <a
-              href="project.html"
-              class="border border-brder2 hover:bg-elevated text-[15px] font-semibold px-6 py-3 rounded-btn transition-colors"
-              >Project Overview</a
-            >
+            </div>
           </div>
         </div>
       </section>
     </main>
 
+    <!-- Slide rail (wide screens) and deck controls -->
+    <nav
+      id="deck-rail"
+      class="hidden xl:flex fixed right-5 top-1/2 -translate-y-1/2 z-30 flex-col items-end gap-1.5"
+      aria-label="Slides"
+    ></nav>
+    <div
+      id="deck-hud"
+      class="hidden md:flex fixed bottom-5 left-5 z-40 items-center gap-1 border border-brder rounded-full p-1.5 shadow-2xl"
+      style="background-color: rgba(21, 21, 24, 0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px)"
+    >
+      <button type="button" id="deck-prev" class="hud-btn" aria-label="Previous slide">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M15 6l-6 6 6 6" /></svg>
+      </button>
+      <div class="px-2 w-[190px]" aria-live="polite">
+        <p class="font-mono text-[11px] text-mtext leading-tight">
+          <span id="deck-num" class="text-ptext">01</span> /
+          <span id="deck-total">--</span>
+        </p>
+        <p id="deck-label" class="text-[12px] text-stext truncate leading-tight mt-0.5">Title</p>
+      </div>
+      <button type="button" id="deck-next" class="hud-btn" aria-label="Next slide">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
+      </button>
+      <span class="w-px h-6 bg-brder mx-1" aria-hidden="true"></span>
+      <button
+        type="button"
+        data-deck-present
+        class="h-9 px-3 rounded-full flex items-center gap-2 text-[12px] font-semibold hover:bg-elevated transition-colors"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg>
+        <span data-present-label>Present</span>
+      </button>
+    </div>
+
     <div id="site-footer"></div>
     <script src="assets/js/layout.js"></script>
     <script src="assets/js/guide.js"></script>
+    <script>
+      // Report deck: entrance animations, slide navigation, and present mode.
+      (function () {
+        var root = document.documentElement;
+        var slides = Array.prototype.slice.call(
+          document.querySelectorAll("#main .slide"),
+        );
+        var reduced = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+        var pad = function (n) {
+          return n < 10 ? "0" + n : String(n);
+        };
+
+        // Headings rise in word by word.
+        function splitWords(el) {
+          var n = 0;
+          (function walk(node) {
+            Array.prototype.slice.call(node.childNodes).forEach(function (c) {
+              if (c.nodeType === 3) {
+                var frag = document.createDocumentFragment();
+                c.textContent.split(/(\s+)/).forEach(function (part) {
+                  if (!part) return;
+                  if (/^\s+$/.test(part)) {
+                    frag.appendChild(document.createTextNode(part));
+                    return;
+                  }
+                  var outer = document.createElement("span");
+                  var inner = document.createElement("span");
+                  outer.className = "w";
+                  inner.textContent = part;
+                  inner.style.setProperty("--w", n++);
+                  outer.appendChild(inner);
+                  frag.appendChild(outer);
+                });
+                node.replaceChild(frag, c);
+              } else if (c.nodeType === 1 && c.tagName !== "BR") {
+                walk(c);
+              }
+            });
+          })(el);
+        }
+        document.querySelectorAll('[data-a="split"]').forEach(splitWords);
+
+        function countUp(el) {
+          var end = Number(el.getAttribute("data-count"));
+          if (reduced || !end) return;
+          var start = null;
+          function frame(t) {
+            if (start === null) start = t;
+            var p = Math.min(1, (t - start) / 1600);
+            el.textContent = Math.round(
+              end * (1 - Math.pow(1 - p, 3)),
+            ).toLocaleString("en-US");
+            if (p < 1) requestAnimationFrame(frame);
+          }
+          requestAnimationFrame(frame);
+        }
+
+        function reveal(el) {
+          el.classList.add("in");
+          el.querySelectorAll("[data-count]").forEach(countUp);
+          if (el.hasAttribute("data-count")) countUp(el);
+          setTimeout(function () {
+            el.classList.add("done");
+          }, 1800);
+        }
+        var animated = document.querySelectorAll("[data-a]");
+        if ("IntersectionObserver" in window) {
+          var io = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (e) {
+                if (!e.isIntersecting) return;
+                reveal(e.target);
+                io.unobserve(e.target);
+              });
+            },
+            { threshold: 0.1, rootMargin: "0px 0px -6% 0px" },
+          );
+          animated.forEach(function (el) {
+            io.observe(el);
+          });
+        } else {
+          animated.forEach(reveal);
+        }
+        window.__deckReady = true;
+
+        // ── Navigation ──────────────────────────────────────────────────────
+        var rail = document.getElementById("deck-rail");
+        var numEl = document.getElementById("deck-num");
+        var labelEl = document.getElementById("deck-label");
+        var prevBtn = document.getElementById("deck-prev");
+        var nextBtn = document.getElementById("deck-next");
+        var bar = document.getElementById("deck-progress");
+        document.getElementById("deck-total").textContent = pad(slides.length);
+
+        var dots = slides.map(function (slide, i) {
+          var b = document.createElement("button");
+          b.type = "button";
+          b.setAttribute(
+            "aria-label",
+            "Slide " + (i + 1) + ": " + slide.getAttribute("data-label"),
+          );
+          b.innerHTML =
+            '<span class="tip"></span><span class="dot" aria-hidden="true"></span>';
+          b.firstChild.textContent = slide.getAttribute("data-label");
+          b.addEventListener("click", function () {
+            goTo(i);
+          });
+          rail.appendChild(b);
+          return b;
+        });
+
+        function headerOffset() {
+          return root.classList.contains("presenting") ? 0 : 72;
+        }
+        function goTo(i, instant) {
+          i = Math.max(0, Math.min(slides.length - 1, i));
+          var top =
+            slides[i].getBoundingClientRect().top +
+            window.scrollY -
+            headerOffset();
+          window.scrollTo({
+            top: Math.max(0, top),
+            behavior: instant || reduced ? "auto" : "smooth",
+          });
+        }
+
+        var current = -1;
+        function update() {
+          var line =
+            headerOffset() + (window.innerHeight - headerOffset()) * 0.4;
+          var idx = 0;
+          for (var i = 0; i < slides.length; i++) {
+            if (slides[i].getBoundingClientRect().top <= line) idx = i;
+          }
+          var main = document.getElementById("main");
+          var max = main.offsetTop + main.offsetHeight - window.innerHeight;
+          bar.style.transform =
+            "scaleX(" + Math.max(0, Math.min(1, window.scrollY / max)) + ")";
+          if (idx === current) return;
+          current = idx;
+          numEl.textContent = pad(idx + 1);
+          labelEl.textContent = slides[idx].getAttribute("data-label");
+          prevBtn.disabled = idx === 0;
+          nextBtn.disabled = idx === slides.length - 1;
+          dots.forEach(function (d, j) {
+            d.setAttribute("aria-current", j === idx ? "true" : "false");
+          });
+        }
+        var ticking = false;
+        window.addEventListener(
+          "scroll",
+          function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              ticking = false;
+              update();
+            });
+          },
+          { passive: true },
+        );
+        window.addEventListener("resize", update);
+        update();
+
+        prevBtn.addEventListener("click", function () {
+          goTo(current - 1);
+        });
+        nextBtn.addEventListener("click", function () {
+          goTo(current + 1);
+        });
+        document.querySelectorAll("[data-deck-next]").forEach(function (b) {
+          b.addEventListener("click", function () {
+            goTo(current + 1);
+          });
+        });
+
+        document.addEventListener("keydown", function (e) {
+          if (e.altKey || e.ctrlKey || e.metaKey) return;
+          if (e.target.closest("input, textarea, select, [contenteditable]"))
+            return;
+          var tour = document.getElementById("tour-box");
+          if (tour && !tour.parentElement.classList.contains("hidden")) return;
+          var presenting = root.classList.contains("presenting");
+          var next = ["ArrowRight", "PageDown"];
+          var prev = ["ArrowLeft", "PageUp"];
+          if (presenting) {
+            next.push("ArrowDown", " ");
+            prev.push("ArrowUp");
+          }
+          if (next.indexOf(e.key) > -1 && !(e.key === " " && e.shiftKey)) {
+            e.preventDefault();
+            goTo(current + 1);
+          } else if (prev.indexOf(e.key) > -1 || (e.key === " " && e.shiftKey)) {
+            e.preventDefault();
+            goTo(current - 1);
+          } else if (e.key === "Escape" && presenting) {
+            setPresenting(false);
+          }
+        });
+
+        // ── Present mode ────────────────────────────────────────────────────
+        function setPresenting(on) {
+          var at = current;
+          root.classList.toggle("presenting", on);
+          document.querySelectorAll("[data-present-label]").forEach(function (l) {
+            l.textContent = on ? "Exit" : "Present";
+          });
+          if (on && root.requestFullscreen && !document.fullscreenElement) {
+            root.requestFullscreen().catch(function () {});
+          } else if (!on && document.fullscreenElement) {
+            document.exitFullscreen().catch(function () {});
+          }
+          requestAnimationFrame(function () {
+            goTo(at, true);
+          });
+        }
+        document.querySelectorAll("[data-deck-present]").forEach(function (b) {
+          b.addEventListener("click", function () {
+            setPresenting(!root.classList.contains("presenting"));
+          });
+        });
+        document.addEventListener("fullscreenchange", function () {
+          if (!document.fullscreenElement && root.classList.contains("presenting"))
+            setPresenting(false);
+        });
+
+        // Cards glow where the cursor is.
+        document.addEventListener(
+          "pointermove",
+          function (e) {
+            var card = e.target.closest && e.target.closest(".card-x");
+            if (!card) return;
+            var r = card.getBoundingClientRect();
+            card.style.setProperty("--mx", e.clientX - r.left + "px");
+            card.style.setProperty("--my", e.clientY - r.top + "px");
+          },
+          { passive: true },
+        );
+      })();
+    </script>
   </body>
 </html>
