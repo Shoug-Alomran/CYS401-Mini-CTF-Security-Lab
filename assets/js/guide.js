@@ -54,7 +54,7 @@
       [
         "#proposed-platform",
         "Requirements",
-        "The objectives and functional and non-functional requirements the platform is built against.",
+        "The functional requirements and the four challenge categories the platform delivers.",
       ],
     ],
     challenge: [
