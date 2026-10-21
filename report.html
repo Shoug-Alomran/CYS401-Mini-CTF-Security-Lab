@@ -616,8 +616,9 @@
               <li data-a style="--i: 5"><a href="#proposed-platform" class="group flex items-baseline gap-5 border-b border-brder py-4 hover:border-rborder transition-colors"><span class="kicker !text-bred w-6 shrink-0">04</span><span class="text-[17px] flex-1 group-hover:text-bred transition-colors">Proposed CTF Security Lab Platform</span><span class="text-mtext group-hover:text-bred group-hover:translate-x-1 transition-all" aria-hidden="true">&rarr;</span></a></li>
               <li data-a style="--i: 6"><a href="#system-design" class="group flex items-baseline gap-5 border-b border-brder py-4 hover:border-rborder transition-colors"><span class="kicker !text-bred w-6 shrink-0">05</span><span class="text-[17px] flex-1 group-hover:text-bred transition-colors">System Design and Implementation</span><span class="text-mtext group-hover:text-bred group-hover:translate-x-1 transition-all" aria-hidden="true">&rarr;</span></a></li>
               <li data-a style="--i: 7"><a href="#security-controls" class="group flex items-baseline gap-5 border-b border-brder py-4 hover:border-rborder transition-colors"><span class="kicker !text-bred w-6 shrink-0">06</span><span class="text-[17px] flex-1 group-hover:text-bred transition-colors">Security Analysis and Controls</span><span class="text-mtext group-hover:text-bred group-hover:translate-x-1 transition-all" aria-hidden="true">&rarr;</span></a></li>
-              <li data-a style="--i: 8"><a href="#recommendations" class="group flex items-baseline gap-5 border-b border-brder py-4 hover:border-rborder transition-colors"><span class="kicker !text-bred w-6 shrink-0">08</span><span class="text-[17px] flex-1 group-hover:text-bred transition-colors">Application and Recommendations</span><span class="text-mtext group-hover:text-bred group-hover:translate-x-1 transition-all" aria-hidden="true">&rarr;</span></a></li>
-              <li data-a style="--i: 9"><a href="#conclusion" class="group flex items-baseline gap-5 border-b border-brder py-4 hover:border-rborder transition-colors"><span class="kicker !text-bred w-6 shrink-0">09</span><span class="text-[17px] flex-1 group-hover:text-bred transition-colors">Conclusion</span><span class="text-mtext group-hover:text-bred group-hover:translate-x-1 transition-all" aria-hidden="true">&rarr;</span></a></li>
+              <li data-a style="--i: 8"><a href="#testing" class="group flex items-baseline gap-5 border-b border-brder py-4 hover:border-rborder transition-colors"><span class="kicker !text-bred w-6 shrink-0">07</span><span class="text-[17px] flex-1 group-hover:text-bred transition-colors">Testing and Results</span><span class="text-mtext group-hover:text-bred group-hover:translate-x-1 transition-all" aria-hidden="true">&rarr;</span></a></li>
+              <li data-a style="--i: 9"><a href="#recommendations" class="group flex items-baseline gap-5 border-b border-brder py-4 hover:border-rborder transition-colors"><span class="kicker !text-bred w-6 shrink-0">08</span><span class="text-[17px] flex-1 group-hover:text-bred transition-colors">Application and Recommendations</span><span class="text-mtext group-hover:text-bred group-hover:translate-x-1 transition-all" aria-hidden="true">&rarr;</span></a></li>
+              <li data-a style="--i: 10"><a href="#conclusion" class="group flex items-baseline gap-5 border-b border-brder py-4 hover:border-rborder transition-colors"><span class="kicker !text-bred w-6 shrink-0">09</span><span class="text-[17px] flex-1 group-hover:text-bred transition-colors">Conclusion</span><span class="text-mtext group-hover:text-bred group-hover:translate-x-1 transition-all" aria-hidden="true">&rarr;</span></a></li>
             </ol>
           </div>
         </div>
@@ -1164,8 +1165,50 @@
         </div>
       </section>
 
+      <!-- ═══ 7 · Testing and Results ══════════════════════════════════════ -->
+      <section id="testing" class="relative bg-sec">
+        <div class="slide" data-label="7 · Testing & results">
+          <div class="glow-orb" style="--x: 80%; --y: 30%"></div>
+          <div class="relative max-w-content mx-auto px-6 w-full grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-8 lg:gap-16 items-end">
+            <p data-a="num" class="chap-num" aria-hidden="true">07</p>
+            <div>
+              <p data-a class="eyebrow">Section 7</p>
+              <h2 data-a="split" class="chap-title">Testing and Results</h2>
+              <p data-a class="lead mt-8" style="--i: 3">We tested the main features on the live platform: login, challenges, flag validation, progress tracking, and two negative cases (a wrong flag and a wrong password).</p>
+              <div data-a class="mt-8 flex flex-wrap gap-4" style="--i: 4">
+                <div class="card-x"><p class="font-display text-[48px] font-semibold leading-none text-bred">6 / 6</p><p class="label mt-2">tests passed</p></div>
+                <div class="card-x"><p class="font-display text-[48px] font-semibold leading-none text-bred">0</p><p class="label mt-2">issues found</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide" data-label="7.1 · Test cases">
+          <div class="relative max-w-content mx-auto px-6 w-full">
+            <p data-a class="eyebrow">7.1 &middot; Test Cases</p>
+            <h3 data-a="split" class="s-title max-w-3xl">What we tested and what happened</h3>
+            <div data-a style="--i: 2" class="mt-10 overflow-x-auto rounded-card border border-brder bg-card">
+              <table class="cmp w-full min-w-[860px] text-left text-[13px]">
+                <thead class="bg-elevated text-[11px] uppercase tracking-wider text-mtext">
+                  <tr><th scope="col" class="px-5 py-3 font-semibold">ID</th><th scope="col" class="px-5 py-3 font-semibold">Feature</th><th scope="col" class="px-5 py-3 font-semibold">Test</th><th scope="col" class="px-5 py-3 font-semibold">Expected</th><th scope="col" class="px-5 py-3 font-semibold">Actual</th><th scope="col" class="px-5 py-3 font-semibold">Status</th></tr>
+                </thead>
+                <tbody class="divide-y divide-brder text-stext">
+                  <tr><th scope="row" class="font-mono text-bred">T01</th><td class="font-medium text-ptext">Login</td><td>Log in with a valid email and password.</td><td>The user logs in.</td><td>The website displayed the user&rsquo;s account after login.</td><td><span class="status status-done">Pass</span></td></tr>
+                  <tr><th scope="row" class="font-mono text-bred">T02</th><td class="font-medium text-ptext">Challenge</td><td>Open a Web Security challenge.</td><td>The challenge instructions are displayed correctly.</td><td>The lab opened and displayed the challenge instructions and input fields.</td><td><span class="status status-done">Pass</span></td></tr>
+                  <tr><th scope="row" class="font-mono text-bred">T03</th><td class="font-medium text-ptext">Flag validation</td><td>Submit the correct flag for WEB-01.</td><td>The flag is accepted and 50 points are awarded.</td><td>The flag was accepted, WEB-01 was marked as solved, and 50 points were awarded.</td><td><span class="status status-done">Pass</span></td></tr>
+                  <tr><th scope="row" class="font-mono text-bred">T04</th><td class="font-medium text-ptext">Invalid flag</td><td>Submit an incorrect flag for WEB-02.</td><td>The flag is rejected and no points are awarded.</td><td>An incorrect-flag message was shown, and WEB-02 stayed unsolved.</td><td><span class="status status-done">Pass</span></td></tr>
+                  <tr><th scope="row" class="font-mono text-bred">T05</th><td class="font-medium text-ptext">Progress</td><td>Solve a challenge, then open the dashboard.</td><td>Solved challenges and points update.</td><td>The dashboard showed 1 of 12 challenges solved and 50 of 1,200 points, with WEB-01 listed as completed.</td><td><span class="status status-done">Pass</span></td></tr>
+                  <tr><th scope="row" class="font-mono text-bred">T06</th><td class="font-medium text-ptext">Invalid login</td><td>Log in with an incorrect password.</td><td>The login is rejected.</td><td>The incorrect password was rejected and the user was not logged in.</td><td><span class="status status-done">Pass</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p data-a class="body mt-6 max-w-3xl" style="--i: 3">The platform worked correctly for every tested feature. A correct flag was accepted and scored, a wrong flag and a wrong password were both rejected, and the dashboard updated the user&rsquo;s progress right after the solve.</p>
+          </div>
+        </div>
+      </section>
+
       <!-- ═══ 8 · Application and Recommendations ═══════════════════════════ -->
-      <section id="recommendations" class="relative bg-sec">
+      <section id="recommendations" class="relative bg-main">
         <div class="slide" data-label="8 · Application & recommendations">
           <div class="glow-orb" style="--x: 20%; --y: 70%"></div>
           <div class="relative max-w-content mx-auto px-6 w-full grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-8 lg:gap-16 items-end">
@@ -1174,7 +1217,6 @@
               <p data-a class="eyebrow">Section 8</p>
               <h2 data-a="split" class="chap-title">Application and Recommendations</h2>
               <p data-a class="lead mt-8" style="--i: 3">Where the platform can be used, who it is for, and four changes that would make it more secure.</p>
-              <p data-a class="mt-6 inline-flex items-center gap-3 text-[13px] text-stext" style="--i: 4"><span class="status status-wip">Coming next</span> Section 7, Testing and Results, is still being written.</p>
             </div>
           </div>
         </div>
@@ -1206,7 +1248,7 @@
       </section>
 
       <!-- ═══ 9 · Conclusion ════════════════════════════════════════════════ -->
-      <section id="conclusion" class="relative bg-main">
+      <section id="conclusion" class="relative bg-sec">
         <div class="slide" data-label="9 · Conclusion">
           <div class="glow-orb" style="--x: 15%; --y: 25%"></div>
           <div class="relative max-w-content mx-auto px-6 w-full grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-8 lg:gap-16 items-end">
@@ -1220,12 +1262,12 @@
           <div class="relative max-w-content mx-auto px-6 w-full mt-14 grid lg:grid-cols-2 gap-4">
             <article data-a style="--i: 4" class="card-x">
               <p class="label !text-bred mb-3">Learning at their own pace</p>
-              <ul class="flex flex-wrap gap-1.5 mb-4"><li class="chip">Automated flag verification</li><li class="chip">Non-punitive hints</li><li class="chip">Post-solve explanations</li><li class="chip">Progress monitoring</li><li class="chip">Dynamic leaderboards</li></ul>
+              <ul class="flex flex-wrap gap-1.5 mb-4"><li class="chip">Automated flag verification</li><li class="chip">Non-punitive hints</li><li class="chip">Post-solve explanations</li><li class="chip">Progress monitoring</li><li class="chip">Live scoreboard</li></ul>
               <p class="text-[14px] text-stext leading-relaxed">The key features of the system give participants an opportunity to learn at their own pace and get immediate feedback from the system.</p>
             </article>
             <article data-a style="--i: 5" class="card-x">
               <p class="label !text-bred mb-3">Security built in</p>
-              <ul class="flex flex-wrap gap-1.5 mb-4"><li class="chip chip-red">Salted cryptographic hashing</li><li class="chip chip-red">Input sanitization</li><li class="chip chip-red">Access control</li></ul>
+              <ul class="flex flex-wrap gap-1.5 mb-4"><li class="chip chip-red">Cryptographic hashing</li><li class="chip chip-red">Input sanitization</li><li class="chip chip-red">Access control</li></ul>
               <p class="text-[14px] text-stext leading-relaxed">The system incorporates basic CYS401 knowledge in terms of application layer security mechanisms to protect itself from injection attacks, broken access control, and data leakage.</p>
             </article>
           </div>
