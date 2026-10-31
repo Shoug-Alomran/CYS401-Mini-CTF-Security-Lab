@@ -53,6 +53,8 @@
     ROOT.dir = arabic ? "rtl" : "ltr";
     ROOT.classList.toggle("arabic-mode", arabic);
     try { localStorage.setItem("cys401-language", language); } catch (e) {}
+    var statusMessage = document.getElementById("translation-status");
+    if (!arabic && statusMessage) statusMessage.textContent = "";
     if (observer) observer.disconnect();
     document.querySelectorAll("body *").forEach(function (el) {
       var attrs = originalAttrs.get(el);
@@ -79,6 +81,21 @@
     observe();
   }
 
+  function translateOne(value) {
+    var params = new URLSearchParams({ client: "gtx", sl: "en", tl: "ar", dt: "t", q: value });
+    return fetch("https://translate.googleapis.com/translate_a/single?" + params.toString())
+      .then(function (response) { if (!response.ok) throw new Error("Translation service unavailable"); return response.json(); })
+      .then(function (data) {
+        var segments = data && data[0];
+        if (!Array.isArray(segments)) throw new Error("Unexpected translation response");
+        var translated = segments.map(function (piece) {
+          return Array.isArray(piece) ? piece[0] || "" : "";
+        }).join("");
+        if (!translated) throw new Error("Empty translation response");
+        cache[value] = translated;
+      });
+  }
+
   function translateBatch(nodes) {
     var unique = [];
     var seen = new Set();
@@ -89,16 +106,13 @@
       unique.push(value);
     });
     if (!unique.length) return Promise.resolve();
-    var params = new URLSearchParams({ client: "gtx", sl: "en", tl: "ar", dt: "t" });
-    unique.forEach(function (value) { params.append("q", value); });
-    return fetch("https://translate.googleapis.com/translate_a/single?" + params.toString())
-      .then(function (response) { if (!response.ok) throw new Error("Translation service unavailable"); return response.json(); })
-      .then(function (data) {
-        unique.forEach(function (value, index) {
-          var pieces = data[index] || [];
-          cache[value] = pieces.map(function (piece) { return piece[0] || ""; }).join("");
-        });
-      });
+    var next = 0;
+    function worker() {
+      var index = next++;
+      if (index >= unique.length) return Promise.resolve();
+      return translateOne(unique[index]).then(worker);
+    }
+    return Promise.all([worker(), worker(), worker(), worker()]);
   }
 
   function translatePending() {
