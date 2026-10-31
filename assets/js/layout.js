@@ -256,6 +256,7 @@
     ]) +
     "</div>" +
     '<div class="mt-12 pt-6 border-t border-brder flex flex-col sm:flex-row gap-4 justify-between text-[12px] text-mtext">' +
+    '<div class="flex flex-wrap items-center gap-3"><span id="translation-status" class="text-[11px]" role="status" aria-live="polite"></span><label class="inline-flex items-center gap-2" for="site-language"><span>Language</span><select id="site-language" class="bg-card border border-brder rounded-btn px-3 py-2 text-ptext" aria-label="Choose language"><option value="en">English</option><option value="ar">العربية</option></select></label></div>' +
     "<p>&copy; " +
     new Date().getFullYear() +
     " CYS401 Semester Project Group. Educational content purposes only.</p>" +
@@ -270,6 +271,19 @@
     if (h) h.outerHTML = header;
     if (f) f.outerHTML = footer;
     document.dispatchEvent(new Event("layout:ready"));
+
+    var languageSelect = document.getElementById("site-language");
+    if (languageSelect) {
+      var savedLanguage = "en";
+      try { savedLanguage = localStorage.getItem("cys401-language") || "en"; } catch (e) {}
+      languageSelect.value = savedLanguage;
+      var translator = document.createElement("script");
+      translator.src = "assets/js/translate.js";
+      translator.onload = function () {
+        window.CYS401Translator.init(languageSelect);
+      };
+      document.head.appendChild(translator);
+    }
 
     var toggle = document.getElementById("nav-toggle");
     var menu = document.getElementById("mobile-nav");

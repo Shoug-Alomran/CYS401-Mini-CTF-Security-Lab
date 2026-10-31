@@ -69,6 +69,56 @@
         --hdr: 72px;
         --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
       }
+      html.light-mode {
+        color-scheme: light;
+        --page: #f8f8fa;
+        --surface: #fff;
+        --surface-raised: #f0f0f3;
+        --ink: #18181b;
+        --muted: #52525b;
+        --subtle: #71717a;
+        --line: #e4e4e7;
+      }
+      html.light-mode body,
+      html.light-mode #main,
+      html.light-mode #overview,
+      html.light-mode #site-header,
+      html.light-mode #site-footer {
+        background-color: var(--page);
+        color: var(--ink);
+      }
+      html.light-mode .text-ptext { color: var(--ink) !important; }
+      html.light-mode .text-stext { color: #3f3f46 !important; }
+      html.light-mode .text-mtext { color: var(--muted) !important; }
+      html.light-mode .bg-main { background-color: var(--page) !important; }
+      html.light-mode .bg-elevated { background-color: var(--surface-raised) !important; }
+      html.light-mode .border-brder,
+      html.light-mode .border-brder2,
+      html.light-mode .slide + .slide { border-color: var(--line) !important; }
+      html.light-mode .slide { color: var(--ink); }
+      html.light-mode .lead,
+      html.light-mode .body { color: var(--muted); }
+      html.light-mode .kicker,
+      html.light-mode .label { color: var(--subtle); }
+      html.light-mode .kbd { color: var(--muted); border-color: #d4d4d8; }
+      html.light-mode .card-x { background-color: var(--surface); border-color: var(--line); }
+      html.light-mode .chip { color: var(--muted); background-color: var(--surface-raised); }
+      html.light-mode .cmp .ours { color: var(--ink); }
+      html.light-mode .cmp td.n::before { background: #d4d4d8; }
+      html.light-mode .refs li { border-color: var(--line); }
+      html.light-mode #deck-progress { background-color: #ef4444; }
+      html.light-mode #deck-hud {
+        background-color: rgba(255, 255, 255, 0.94) !important;
+        border-color: var(--line);
+        box-shadow: 0 12px 32px rgba(24, 24, 27, 0.12);
+      }
+      html.light-mode #deck-theme-mobile {
+        background-color: rgba(255, 255, 255, 0.96) !important;
+        border-color: var(--line);
+        color: var(--ink);
+        box-shadow: 0 12px 32px rgba(24, 24, 27, 0.12);
+      }
+      html.light-mode .deck-grid { opacity: 0.24; }
       .slide {
         position: relative;
         min-height: calc(100vh - var(--hdr));
@@ -4022,7 +4072,36 @@
         </svg>
         <span data-present-label>Present</span>
       </button>
+      <span class="w-px h-6 bg-brder mx-1" aria-hidden="true"></span>
+      <button
+        type="button"
+        id="deck-theme"
+        class="h-9 px-3 rounded-full flex items-center gap-2 text-[12px] font-semibold hover:bg-elevated transition-colors"
+        aria-label="Switch to light mode"
+        aria-pressed="false"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" />
+        </svg>
+        <span id="deck-theme-label">Light mode</span>
+      </button>
     </div>
+
+    <button
+      type="button"
+      id="deck-theme-mobile"
+      class="md:hidden fixed bottom-5 right-5 z-40 h-11 px-4 rounded-full flex items-center gap-2 border border-brder shadow-xl text-[12px] font-semibold"
+      style="background-color: rgba(21, 21, 24, 0.94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);"
+      aria-label="Switch to light mode"
+      aria-pressed="false"
+    >
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" />
+      </svg>
+      <span>Light mode</span>
+    </button>
 
     <div id="site-footer"></div>
     <script src="assets/js/layout.js"></script>
@@ -4121,6 +4200,22 @@
         var prevBtn = document.getElementById("deck-prev");
         var nextBtn = document.getElementById("deck-next");
         var bar = document.getElementById("deck-progress");
+        var themeBtns = Array.prototype.slice.call(
+          document.querySelectorAll("#deck-theme, #deck-theme-mobile"),
+        );
+        function setLightMode(on) {
+          root.classList.toggle("light-mode", on);
+          themeBtns.forEach(function (button) {
+            button.setAttribute("aria-pressed", on ? "true" : "false");
+            button.setAttribute("aria-label", on ? "Switch to dark mode" : "Switch to light mode");
+            button.querySelector("span").textContent = on ? "Dark mode" : "Light mode";
+          });
+          try { localStorage.setItem("cys401-report-theme", on ? "light" : "dark"); } catch (e) {}
+        }
+        try { setLightMode(localStorage.getItem("cys401-report-theme") === "light"); } catch (e) { setLightMode(false); }
+        themeBtns.forEach(function (button) { button.addEventListener("click", function () {
+          setLightMode(!root.classList.contains("light-mode"));
+        }); });
         // Present mode shows only the [data-core] slides, so the rail and
         // counter are rebuilt from whichever slides are visible.
         var all = slides;

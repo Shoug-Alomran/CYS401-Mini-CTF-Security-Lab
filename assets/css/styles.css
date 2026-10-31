@@ -111,3 +111,10 @@ body {
 .animate-spin-slow {
   animation: spin-slow 40s linear infinite;
 }
+/* Arabic translation uses natural RTL reading order while preserving centered UI. */
+html[dir="rtl"] body {
+  font-family: Tahoma, Arial, sans-serif;
+}
+html[dir="rtl"] .text-left { text-align: right !important; }
+html[dir="rtl"] input,
+html[dir="rtl"] textarea { text-align: right; }
