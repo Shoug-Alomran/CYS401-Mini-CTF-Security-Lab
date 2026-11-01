@@ -565,6 +565,14 @@
         scroll-snap-type: y mandatory;
         scroll-padding-top: 0;
       }
+      /* Short deck: its slides appear only in "Present short", which hides
+         every full-report slide except the title and the closing slide. */
+      html:not(.presenting-short) .slide[data-short] {
+        display: none !important;
+      }
+      html.presenting-short .slide:not([data-short]):not([data-in-short]) {
+        display: none !important;
+      }
       html.presenting .slide {
         scroll-snap-align: start;
         padding: clamp(40px, 7vh, 88px) 0;
@@ -626,7 +634,7 @@
     <main id="main" class="pt-[72px]">
       <!-- ═══ Opening ═══════════════════════════════════════════════════════ -->
       <section id="overview" class="relative bg-main">
-        <div class="slide" data-core data-label="Title">
+        <div class="slide" data-core data-in-short data-label="Title">
           <div class="absolute inset-0 deck-grid" aria-hidden="true"></div>
           <div class="glow-orb" style="--x: 78%; --y: 25%"></div>
           <div class="relative max-w-content mx-auto px-6 w-full">
@@ -709,6 +717,14 @@
                 </svg>
                 Present fullscreen
               </button>
+              <button
+                type="button"
+                data-deck-present-short
+                class="hidden md:inline-flex items-center gap-2 border border-brder2 hover:bg-elevated text-[15px] font-semibold px-6 py-3 rounded-btn transition-colors"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="13" r="8" /><path d="M12 9v4l2 2M9 2h6" /></svg>
+                Present short
+              </button>
               <a
                 href="cys401-mini-ctf-security-lab-presentation.pdf"
                 download
@@ -721,7 +737,7 @@
               >
                 <span class="kbd">&larr;</span
                 ><span class="kbd">&rarr;</span> move between slides &middot;
-                Esc exits present mode
+                Present short is the 10-minute version &middot; Esc exits
               </p>
             </div>
           </div>
@@ -3962,8 +3978,337 @@
       </section>
 
       <!-- ═══ Close ═════════════════════════════════════════════════════════ -->
+      <!-- ═══ Short deck: shown only in "Present short" (10-minute talk) ═════
+           Condensed from the full report above; hidden in the normal page
+           and in the full Present mode. data-ref names the full section each
+           slide summarises, so switching modes lands in the right place. -->
+      <section id="short-deck" class="relative bg-main">
+        <div class="slide" data-short data-ref="introduction" data-label="1 · Introduction">
+          <div class="glow-orb" style="--x: 85%; --y: 25%"></div>
+          <div class="relative max-w-content mx-auto px-6 w-full">
+            <p data-a class="eyebrow">01 &middot; Introduction</p>
+            <h3 data-a="split" class="s-title max-w-4xl">
+              A guided CTF lab that connects theory with practice
+            </h3>
+            <p data-a class="lead max-w-3xl mt-6" style="--i: 3">
+              A web-based Capture-The-Flag platform with a graphical interface
+              and no command line, offering guided challenges in technical and
+              non-technical areas.
+            </p>
+            <div class="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-4">
+              <article data-a style="--i: 4" class="card-x lift">
+                <p class="kicker">Track 01</p>
+                <h4 class="font-display text-[18px] font-semibold mt-2">Web Security</h4>
+                <p class="text-[13px] text-stext leading-relaxed mt-2">Common web application vulnerabilities.</p>
+              </article>
+              <article data-a style="--i: 5" class="card-x lift">
+                <p class="kicker">Track 02</p>
+                <h4 class="font-display text-[18px] font-semibold mt-2">Cryptography</h4>
+                <p class="text-[13px] text-stext leading-relaxed mt-2">Weak encryption, encoding, and simple ciphers.</p>
+              </article>
+              <article data-a style="--i: 6" class="card-x lift">
+                <p class="kicker">Track 03</p>
+                <h4 class="font-display text-[18px] font-semibold mt-2">Security Awareness</h4>
+                <p class="text-[13px] text-stext leading-relaxed mt-2">Phishing, password strength, and suspicious links.</p>
+              </article>
+              <article data-a style="--i: 7" class="card-x lift">
+                <p class="kicker">Track 04</p>
+                <h4 class="font-display text-[18px] font-semibold mt-2">Cybersecurity Ethics</h4>
+                <p class="text-[13px] text-stext leading-relaxed mt-2">Authorized scope, privacy, and responsible disclosure.</p>
+              </article>
+            </div>
+            <div data-a style="--i: 8" class="mt-6 flex flex-wrap gap-2">
+              <span class="chip">Automatic flag verification</span>
+              <span class="chip">Hints &amp; post-solution explanations</span>
+              <span class="chip">Progress &amp; live scoreboard</span>
+              <span class="chip">Application security measures</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide" data-short data-ref="security-analysis" data-label="2 · Assets, threats, vulnerabilities">
+          <div class="relative max-w-content mx-auto px-6 w-full">
+            <p data-a class="eyebrow">02 &middot; Security Background</p>
+            <h3 data-a="split" class="s-title max-w-4xl">
+              What we protect, and what puts it at risk
+            </h3>
+            <div class="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-4">
+              <article data-a style="--i: 2" class="card-x">
+                <div class="flex items-baseline justify-between">
+                  <h4 class="font-display text-[18px] font-semibold">Assets</h4>
+                  <span class="font-display text-[32px] font-semibold text-bred leading-none">7</span>
+                </div>
+                <ul class="mt-4 space-y-2 text-[14px] text-stext">
+                  <li>User accounts &amp; credentials</li>
+                  <li>Challenge flags &amp; content</li>
+                  <li>User progress &amp; scoreboard data</li>
+                  <li>The database underneath them all</li>
+                </ul>
+              </article>
+              <article data-a style="--i: 3" class="card-x">
+                <div class="flex items-baseline justify-between">
+                  <h4 class="font-display text-[18px] font-semibold">Threats</h4>
+                  <span class="font-display text-[32px] font-semibold text-bred leading-none">6</span>
+                </div>
+                <ul class="mt-4 space-y-2 text-[14px] text-stext">
+                  <li><span class="font-mono text-mtext">T1</span> Unauthorized access</li>
+                  <li><span class="font-mono text-mtext">T2</span> Credential theft</li>
+                  <li><span class="font-mono text-mtext">T3</span> Flag disclosure</li>
+                  <li><span class="font-mono text-mtext">T4</span> Data manipulation</li>
+                  <li><span class="font-mono text-mtext">T5</span> Data loss or unavailability</li>
+                  <li><span class="font-mono text-mtext">T6</span> Malicious input</li>
+                </ul>
+              </article>
+              <article data-a style="--i: 4" class="card-x">
+                <div class="flex items-baseline justify-between">
+                  <h4 class="font-display text-[18px] font-semibold">Vulnerabilities</h4>
+                  <span class="font-display text-[32px] font-semibold text-bred leading-none">6</span>
+                </div>
+                <ul class="mt-4 space-y-2 text-[14px] text-stext">
+                  <li><span class="font-mono text-mtext">V1</span> Weak authentication controls</li>
+                  <li><span class="font-mono text-mtext">V2</span> Improper input validation</li>
+                  <li><span class="font-mono text-mtext">V3</span> Insufficient access control</li>
+                  <li><span class="font-mono text-mtext">V4</span> Insecure flag storage</li>
+                  <li><span class="font-mono text-mtext">V5</span> Insecure data storage</li>
+                  <li><span class="font-mono text-mtext">V6</span> Security misconfiguration</li>
+                </ul>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide" data-short data-ref="security-analysis" data-label="2.4 · Attacks & Gulf incidents">
+          <div class="relative max-w-content mx-auto px-6 w-full">
+            <p data-a class="eyebrow">2.4 &amp; 3.4 &middot; Attacks and Incidents</p>
+            <h3 data-a="split" class="s-title max-w-4xl">
+              Four attacks, and the real incidents behind them
+            </h3>
+            <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <article data-a style="--i: 2" class="card-x lift flex flex-col">
+                <div class="flex items-start justify-between gap-3">
+                  <h4 class="text-[16px] font-semibold">Brute-Force Login</h4>
+                  <span class="chip chip-red">C &middot; I</span>
+                </div>
+                <p class="text-[13px] text-stext leading-relaxed mt-3">Automated login attempts to take over accounts.</p>
+                <p class="label mt-auto pt-5 mb-1">Target</p>
+                <p class="text-[13px]">Authentication system</p>
+              </article>
+              <article data-a style="--i: 3" class="card-x lift flex flex-col">
+                <div class="flex items-start justify-between gap-3">
+                  <h4 class="text-[16px] font-semibold">Injection</h4>
+                  <span class="chip chip-red">C &middot; I</span>
+                </div>
+                <p class="text-[13px] text-stext leading-relaxed mt-3">Malicious form input that manipulates or leaks data.</p>
+                <p class="label mt-auto pt-5 mb-1">Real incident</p>
+                <p class="text-[13px]"><strong>QNB, 2015&ndash;16:</strong> SQL injection exposed 100,000+ accounts.</p>
+              </article>
+              <article data-a style="--i: 4" class="card-x lift flex flex-col">
+                <div class="flex items-start justify-between gap-3">
+                  <h4 class="text-[16px] font-semibold">Broken Access Control</h4>
+                  <span class="chip chip-red">C &middot; I</span>
+                </div>
+                <p class="text-[13px] text-stext leading-relaxed mt-3">Authorization flaws used to read or change scores and content.</p>
+                <p class="label mt-auto pt-5 mb-1">Real incident</p>
+                <p class="text-[13px]"><strong>Careem, 2018:</strong> data of about 14 million users accessed.</p>
+              </article>
+              <article data-a style="--i: 5" class="card-x lift flex flex-col">
+                <div class="flex items-start justify-between gap-3">
+                  <h4 class="text-[16px] font-semibold">Denial-of-Service</h4>
+                  <span class="chip chip-red">A</span>
+                </div>
+                <p class="text-[13px] text-stext leading-relaxed mt-3">Flooding the server until the platform slows or goes down.</p>
+                <p class="label mt-auto pt-5 mb-1">Real incident</p>
+                <p class="text-[13px]"><strong>Saudi government sites, 2013:</strong> DDoS took the Ministry of Interior site offline.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide" data-short data-ref="literature-review" data-label="3 · Existing solutions">
+          <div class="relative max-w-content mx-auto px-6 w-full">
+            <p data-a class="eyebrow">03 &middot; Literature Review</p>
+            <h3 data-a="split" class="s-title max-w-4xl">
+              Where existing platforms leave beginners behind
+            </h3>
+            <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
+              <article data-a style="--i: 2" class="card-x">
+                <h4 class="font-display text-[18px] font-semibold">picoCTF</h4>
+                <p class="text-[13px] text-stext leading-relaxed mt-2">Many technical exercises lack step-by-step guidance for beginners.</p>
+              </article>
+              <article data-a style="--i: 3" class="card-x">
+                <h4 class="font-display text-[18px] font-semibold">CTFd</h4>
+                <p class="text-[13px] text-stext leading-relaxed mt-2">No built-in educational content; organizers write every challenge.</p>
+              </article>
+              <article data-a style="--i: 4" class="card-x">
+                <h4 class="font-display text-[18px] font-semibold">OverTheWire</h4>
+                <p class="text-[13px] text-stext leading-relaxed mt-2">Heavy command-line use creates a steep learning curve.</p>
+              </article>
+            </div>
+            <div data-a class="card-x mt-4" style="--i: 5; border-color: rgba(220, 38, 38, 0.35)">
+              <p class="label text-bred mb-2">Our platform</p>
+              <p class="text-[15px] leading-relaxed">
+                Browser-based and guided, with free hints, post-solution
+                explanations, hashed-flag validation, and the dedicated
+                <strong>Security Awareness</strong> and <strong>Ethics</strong>
+                tracks that the others do not offer.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide" data-short data-ref="proposed-platform" data-label="4 · Requirements">
+          <div class="relative max-w-content mx-auto px-6 w-full">
+            <p data-a class="eyebrow">04 &middot; Proposed Platform</p>
+            <h3 data-a="split" class="s-title max-w-4xl">What the system shall do</h3>
+            <div class="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-4">
+              <div data-a style="--i: 2" class="card-x !p-5"><p class="kicker">FR-01</p><p class="text-[15px] font-semibold mt-2">User authentication</p></div>
+              <div data-a style="--i: 3" class="card-x !p-5"><p class="kicker">FR-02</p><p class="text-[15px] font-semibold mt-2">Challenge listing</p></div>
+              <div data-a style="--i: 4" class="card-x !p-5"><p class="kicker">FR-03</p><p class="text-[15px] font-semibold mt-2">Challenge execution</p></div>
+              <div data-a style="--i: 5" class="card-x !p-5"><p class="kicker">FR-04</p><p class="text-[15px] font-semibold mt-2">Automated flag validation</p></div>
+              <div data-a style="--i: 6" class="card-x !p-5"><p class="kicker">FR-05</p><p class="text-[15px] font-semibold mt-2">Hints &amp; explanations</p></div>
+              <div data-a style="--i: 7" class="card-x !p-5"><p class="kicker">FR-06</p><p class="text-[15px] font-semibold mt-2">Progress tracking</p></div>
+              <div data-a style="--i: 8" class="card-x !p-5"><p class="kicker">FR-07</p><p class="text-[15px] font-semibold mt-2">Scoreboard &amp; leaderboard</p></div>
+              <div data-a style="--i: 9" class="card-x !p-5"><p class="kicker">FR-08</p><p class="text-[15px] font-semibold mt-2">Role-based access control</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide" data-short data-ref="system-design" data-label="5 · Design & flag validation">
+          <div class="relative max-w-content mx-auto px-6 w-full">
+            <p data-a class="eyebrow">05 &middot; Design and Implementation</p>
+            <h3 data-a="split" class="s-title max-w-4xl">
+              Static pages, serverless backend, hashed flags
+            </h3>
+            <div class="mt-10 grid grid-cols-1 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-4">
+              <div data-a="left" style="--i: 2" class="card-x">
+                <p class="label mb-4">The stack</p>
+                <dl class="space-y-4 text-[14px]">
+                  <div><dt class="kicker">Frontend</dt><dd class="mt-1">Static HTML, Tailwind CSS, vanilla JavaScript</dd></div>
+                  <div><dt class="kicker">Backend</dt><dd class="mt-1">Firebase Authentication + Firestore Security Rules</dd></div>
+                  <div><dt class="kicker">Hosting</dt><dd class="mt-1">GitHub Pages over HTTPS, deployed by GitHub Actions</dd></div>
+                </dl>
+              </div>
+              <div data-a="right" style="--i: 3" class="card-x">
+                <p class="label mb-4">From submission to score</p>
+                <ol class="grid grid-cols-2 gap-4 text-[14px]">
+                  <li><span class="font-mono text-bred text-[12px]">01</span><p class="font-semibold mt-1">Submit</p><p class="text-[13px] text-stext mt-1">The participant enters a flag.</p></li>
+                  <li><span class="font-mono text-bred text-[12px]">02</span><p class="font-semibold mt-1">Hash &amp; compare</p><p class="text-[13px] text-stext mt-1">Server rules SHA-256 hash it and compare with the stored hash.</p></li>
+                  <li><span class="font-mono text-bred text-[12px]">03</span><p class="font-semibold mt-1">Award once</p><p class="text-[13px] text-stext mt-1">Correct flags score once per challenge; wrong ones score nothing.</p></li>
+                  <li><span class="font-mono text-success text-[12px]">04</span><p class="font-semibold mt-1">Learn</p><p class="text-[13px] text-stext mt-1">Score and scoreboard update, and an explanation is shown.</p></li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide" data-short data-ref="system-design" data-label="Live demo">
+          <div class="glow-orb" style="--x: 80%; --y: 40%"></div>
+          <div class="relative max-w-content mx-auto px-6 w-full">
+            <p data-a class="eyebrow">Live demonstration</p>
+            <h3 data-a="split" class="s-title max-w-3xl">From login to the scoreboard</h3>
+            <ol class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <li data-a style="--i: 2"><a href="auth.html" target="_blank" rel="noopener" class="card-x lift group flex flex-col h-full"><span class="w-10 h-10 rounded-full border border-pred text-bred font-mono text-[12px] flex items-center justify-center glow-red-strong">01</span><span class="font-display text-[18px] font-semibold mt-5">Log in</span><span class="text-[13px] text-stext leading-relaxed mt-2">Sign in as a participant with Firebase Authentication.</span><span class="mt-auto pt-5 text-[13px] font-semibold text-bred">Open &nearr;</span></a></li>
+              <li data-a style="--i: 3"><a href="web-security-challenges.html" target="_blank" rel="noopener" class="card-x lift group flex flex-col h-full"><span class="w-10 h-10 rounded-full border border-brder2 text-stext font-mono text-[12px] flex items-center justify-center">02</span><span class="font-display text-[18px] font-semibold mt-5">Select a challenge</span><span class="text-[13px] text-stext leading-relaxed mt-2">Open a Web Security challenge and read its scenario.</span><span class="mt-auto pt-5 text-[13px] font-semibold text-bred">Open &nearr;</span></a></li>
+              <li data-a style="--i: 4"><a href="lab-web-01.html" target="_blank" rel="noopener" class="card-x lift group flex flex-col h-full"><span class="w-10 h-10 rounded-full border border-brder2 text-stext font-mono text-[12px] flex items-center justify-center">03</span><span class="font-display text-[18px] font-semibold mt-5">Solve and submit</span><span class="text-[13px] text-stext leading-relaxed mt-2">Find the flag, submit it, and see it validated against the stored hash.</span><span class="mt-auto pt-5 text-[13px] font-semibold text-bred">Open &nearr;</span></a></li>
+              <li data-a style="--i: 5"><a href="scoreboard.html" target="_blank" rel="noopener" class="card-x lift group flex flex-col h-full"><span class="w-10 h-10 rounded-full border border-success text-success font-mono text-[12px] flex items-center justify-center glow-green">04</span><span class="font-display text-[18px] font-semibold mt-5">Watch the scoreboard</span><span class="text-[13px] text-stext leading-relaxed mt-2">The points and ranking update after the solve.</span><span class="mt-auto pt-5 text-[13px] font-semibold text-bred">Open &nearr;</span></a></li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="slide" data-short data-ref="security-controls" data-label="6 · Security controls">
+          <div class="relative max-w-content mx-auto px-6 w-full">
+            <p data-a class="eyebrow">06 &middot; Security Analysis and Controls</p>
+            <h3 data-a="split" class="s-title max-w-4xl">
+              The CIA triad, enforced on the server
+            </h3>
+            <div class="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-4">
+              <article data-a style="--i: 2" class="card-x lift">
+                <p class="font-display text-[48px] font-semibold leading-none text-bred">C</p>
+                <h4 class="font-display text-[18px] font-semibold mt-3">Confidentiality</h4>
+                <p class="text-[13px] text-stext leading-relaxed mt-2">Flags stored only as SHA-256 hashes no user can read; users see only their own records.</p>
+              </article>
+              <article data-a style="--i: 3" class="card-x lift">
+                <p class="font-display text-[48px] font-semibold leading-none text-bred">I</p>
+                <h4 class="font-display text-[18px] font-semibold mt-3">Integrity</h4>
+                <p class="text-[13px] text-stext leading-relaxed mt-2">Scores rise only with a valid solve, once per challenge; logs cannot be edited; only admins change challenges.</p>
+              </article>
+              <article data-a style="--i: 4" class="card-x lift">
+                <p class="font-display text-[48px] font-semibold leading-none text-bred">A</p>
+                <h4 class="font-display text-[18px] font-semibold mt-3">Availability</h4>
+                <p class="text-[13px] text-stext leading-relaxed mt-2">Static hosting on managed infrastructure, and at most one flag submission every 5 seconds.</p>
+              </article>
+            </div>
+            <div data-a style="--i: 5" class="mt-6 flex flex-wrap gap-2">
+              <span class="chip chip-red">Firebase Auth with lockout &amp; 30-min timeout</span>
+              <span class="chip chip-red">User / Admin roles in server rules</span>
+              <span class="chip chip-red">No SQL built from input; inputs checked</span>
+              <span class="chip chip-red">Immutable, timestamped audit logs</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide" data-short data-ref="testing" data-label="7 · Testing & results">
+          <div class="relative max-w-content mx-auto px-6 w-full">
+            <div class="grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-8 lg:gap-16 items-center">
+              <div>
+                <p data-a class="eyebrow">07 &middot; Testing and Results</p>
+                <h3 data-a="split" class="s-title">Every core feature works</h3>
+                <p data-a style="--i: 3" class="mt-8 font-display font-semibold leading-none text-[88px]">6<span class="text-mtext">/6</span></p>
+                <p data-a style="--i: 4" class="lead mt-3">tests passed on the live platform, with no issues found.</p>
+              </div>
+              <ul data-a="right" style="--i: 3" class="card-x divide-y divide-brder !py-2">
+                <li class="flex items-center justify-between gap-4 py-3"><span class="text-[14px]"><span class="font-mono text-mtext mr-2">T01</span>Login with valid credentials</span><span class="status status-done">Pass</span></li>
+                <li class="flex items-center justify-between gap-4 py-3"><span class="text-[14px]"><span class="font-mono text-mtext mr-2">T02</span>Open a Web Security challenge</span><span class="status status-done">Pass</span></li>
+                <li class="flex items-center justify-between gap-4 py-3"><span class="text-[14px]"><span class="font-mono text-mtext mr-2">T03</span>Correct flag accepted, 50 points</span><span class="status status-done">Pass</span></li>
+                <li class="flex items-center justify-between gap-4 py-3"><span class="text-[14px]"><span class="font-mono text-mtext mr-2">T04</span>Incorrect flag rejected, no points</span><span class="status status-done">Pass</span></li>
+                <li class="flex items-center justify-between gap-4 py-3"><span class="text-[14px]"><span class="font-mono text-mtext mr-2">T05</span>Dashboard shows the solve</span><span class="status status-done">Pass</span></li>
+                <li class="flex items-center justify-between gap-4 py-3"><span class="text-[14px]"><span class="font-mono text-mtext mr-2">T06</span>Scoreboard updates the ranking</span><span class="status status-done">Pass</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide" data-short data-ref="recommendations" data-label="8 · Recommendations">
+          <div class="relative max-w-content mx-auto px-6 w-full">
+            <p data-a class="eyebrow">08 &middot; Application and Recommendations</p>
+            <h3 data-a="split" class="s-title max-w-4xl">For CYS401 courses, clubs, and awareness sessions; four ways to harden it</h3>
+            <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <article data-a style="--i: 2" class="card-x lift"><p class="kicker text-bred">R1</p><h4 class="text-[16px] font-semibold mt-2">Require email verification before submitting flags</h4><p class="text-[13px] text-stext leading-relaxed mt-2">Stops fake accounts from guessing flags in parallel or filling the scoreboard.</p></article>
+              <article data-a style="--i: 3" class="card-x lift"><p class="kicker text-bred">R2</p><h4 class="text-[16px] font-semibold mt-2">Store hashes in the attempts log</h4><p class="text-[13px] text-stext leading-relaxed mt-2">The log keeps auditing but no longer holds real flags.</p></article>
+              <article data-a style="--i: 4" class="card-x lift"><p class="kicker text-bred">R3</p><h4 class="text-[16px] font-semibold mt-2">Multi-factor authentication for admins</h4><p class="text-[13px] text-stext leading-relaxed mt-2">A stolen admin password alone can no longer compromise the platform.</p></article>
+              <article data-a style="--i: 5" class="card-x lift"><p class="kicker text-bred">R4</p><h4 class="text-[16px] font-semibold mt-2">Enable Firebase App Check</h4><p class="text-[13px] text-stext leading-relaxed mt-2">Only our website can call the database, which limits bot flooding (DoS).</p></article>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide" data-short data-ref="conclusion" data-label="9 · Conclusion">
+          <div class="glow-orb" style="--x: 85%; --y: 30%"></div>
+          <div class="relative max-w-content mx-auto px-6 w-full grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-8 lg:gap-16 items-end">
+            <p data-a="num" class="chap-num" aria-hidden="true">09</p>
+            <div>
+              <p data-a class="eyebrow">Conclusion</p>
+              <h2 data-a="split" class="chap-title">Theory, put into practice</h2>
+              <p data-a class="lead mt-8" style="--i: 3">
+                The lab combines technical tracks (Web Security, Cryptography)
+                with human-centered ones (Security Awareness, Ethics), gives
+                immediate feedback, and protects itself with the CYS401
+                controls it teaches.
+              </p>
+              <div data-a style="--i: 4" class="mt-6 flex flex-wrap gap-2">
+                <span class="chip">Non-punitive hints</span>
+                <span class="chip">Post-solve explanations</span>
+                <span class="chip">Live scoreboard</span>
+                <span class="chip chip-red">Hashed flags</span>
+                <span class="chip chip-red">Input validation</span>
+                <span class="chip chip-red">Access control</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="relative bg-main">
-        <div class="slide text-center" data-core data-label="End">
+        <div class="slide text-center" data-core data-in-short data-label="End">
           <div class="absolute inset-0 deck-grid" aria-hidden="true"></div>
           <div class="glow-orb" style="--x: 50%; --y: 55%"></div>
           <div class="relative max-w-content mx-auto px-6 w-full">
@@ -4088,6 +4433,14 @@
           <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
         </svg>
         <span data-present-label>Present</span>
+      </button>
+      <button
+        type="button"
+        data-deck-present-short
+        class="h-9 px-3 rounded-full flex items-center gap-2 text-[12px] font-semibold hover:bg-elevated transition-colors"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="13" r="8" /><path d="M12 9v4l2 2M9 2h6" /></svg>
+        <span data-present-short-label>Short</span>
       </button>
       <span class="w-px h-6 bg-brder mx-1" aria-hidden="true"></span>
       <button
@@ -4276,7 +4629,7 @@
             headerOffset();
           window.scrollTo({
             top: Math.max(0, top),
-            behavior: instant || reduced ? "auto" : "smooth",
+            behavior: instant ? "instant" : reduced ? "auto" : "smooth",
           });
         }
 
@@ -4359,26 +4712,51 @@
         });
 
         // ── Present mode ────────────────────────────────────────────────────
-        function setPresenting(on) {
-          var at = slides[Math.max(current, 0)];
-          root.classList.toggle("presenting", on);
-          buildRail();
-          var target = slides.indexOf(at);
-          if (target < 0) {
-            // The current slide is hidden: go to the next one shown.
-            target = slides.findIndex(function (s) {
+        // mode: "" (normal page), "full" (every slide), "short" (short deck).
+        function landing(at, short) {
+          if (slides.indexOf(at) > -1) return slides.indexOf(at);
+          var sec = at.closest("section");
+          var ref = at.getAttribute("data-ref");
+          var i = -1;
+          if (short && sec) {
+            // Entering the short deck: its slide for the same section.
+            i = slides.findIndex(function (s) {
+              return s.getAttribute("data-ref") === sec.id;
+            });
+          } else if (ref) {
+            // Leaving the short deck: the first slide of the section it summarised.
+            i = slides.findIndex(function (s) {
+              var p = s.closest("section");
+              return p && p.id === ref;
+            });
+          }
+          if (i < 0)
+            i = slides.findIndex(function (s) {
               return at.compareDocumentPosition(s) & Node.DOCUMENT_POSITION_FOLLOWING;
             });
-            if (target < 0) target = slides.length - 1;
-          }
+          return i < 0 ? slides.length - 1 : i;
+        }
+        function setPresenting(mode) {
+          if (mode === true) mode = "full";
+          if (!mode) mode = "";
+          var at = slides[Math.max(current, 0)];
+          root.classList.toggle("presenting", !!mode);
+          root.classList.toggle("presenting-short", mode === "short");
+          buildRail();
+          var target = landing(at, mode === "short");
           document
             .querySelectorAll("[data-present-label]")
             .forEach(function (l) {
-              l.textContent = on ? "Exit" : "Present";
+              l.textContent = mode === "full" ? "Exit" : "Present";
             });
-          if (on && root.requestFullscreen && !document.fullscreenElement) {
+          document
+            .querySelectorAll("[data-present-short-label]")
+            .forEach(function (l) {
+              l.textContent = mode === "short" ? "Exit" : "Short";
+            });
+          if (mode && root.requestFullscreen && !document.fullscreenElement) {
             root.requestFullscreen().catch(function () {});
-          } else if (!on && document.fullscreenElement) {
+          } else if (!mode && document.fullscreenElement) {
             document.exitFullscreen().catch(function () {});
           }
           requestAnimationFrame(function () {
@@ -4386,11 +4764,22 @@
             update();
           });
         }
+        function modeNow() {
+          if (root.classList.contains("presenting-short")) return "short";
+          return root.classList.contains("presenting") ? "full" : "";
+        }
         document.querySelectorAll("[data-deck-present]").forEach(function (b) {
           b.addEventListener("click", function () {
-            setPresenting(!root.classList.contains("presenting"));
+            setPresenting(modeNow() === "full" ? "" : "full");
           });
         });
+        document
+          .querySelectorAll("[data-deck-present-short]")
+          .forEach(function (b) {
+            b.addEventListener("click", function () {
+              setPresenting(modeNow() === "short" ? "" : "short");
+            });
+          });
         document.addEventListener("fullscreenchange", function () {
           if (
             !document.fullscreenElement &&
