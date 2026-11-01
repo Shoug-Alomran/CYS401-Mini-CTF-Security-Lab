@@ -565,9 +565,6 @@
         scroll-snap-type: y mandatory;
         scroll-padding-top: 0;
       }
-      html.presenting .slide:not([data-core]) {
-        display: none !important;
-      }
       html.presenting .slide {
         scroll-snap-align: start;
         padding: clamp(40px, 7vh, 88px) 0;
@@ -724,7 +721,7 @@
               >
                 <span class="kbd">&larr;</span
                 ><span class="kbd">&rarr;</span> move between slides &middot;
-                Present shows the short version for the 10-minute talk
+                Esc exits present mode
               </p>
             </div>
           </div>
@@ -4236,8 +4233,8 @@
         themeBtns.forEach(function (button) { button.addEventListener("click", function () {
           setLightMode(!root.classList.contains("light-mode"));
         }); });
-        // Present mode shows only the [data-core] slides, so the rail and
-        // counter are rebuilt from whichever slides are visible.
+        // The rail and counter are rebuilt from whichever slides are visible
+        // (e.g. when entering or leaving present mode).
         var all = slides;
         var dots = [];
         function buildRail() {
@@ -4368,7 +4365,7 @@
           buildRail();
           var target = slides.indexOf(at);
           if (target < 0) {
-            // The current slide is hidden in the short version: go to the next one shown.
+            // The current slide is hidden: go to the next one shown.
             target = slides.findIndex(function (s) {
               return at.compareDocumentPosition(s) & Node.DOCUMENT_POSITION_FOLLOWING;
             });
