@@ -1,6 +1,6 @@
 # CYS401 CTF Lab
 
-The website for our CYS401 semester project: the **Mini Capture-the-Flag (CTF) Security Lab Platform** — an educational lab where users solve cybersecurity challenges, capture flags, and track their progress across four categories (Web Security, Cryptography, Security Awareness, and Cybersecurity Ethics).
+The website for our CYS401 semester project: the **Mini Capture-the-Flag (CTF) Security Lab Platform** — an educational lab where users solve cybersecurity challenges, capture flags, and track their progress across four categories (Web Security, Cryptography, Security Awareness, and Cybersecurity Ethics). The project received a final grade of **15/15**.
 
 **Live site:** https://ctf-lab.shoug-tech.com/
 
